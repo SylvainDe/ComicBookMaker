@@ -133,8 +133,32 @@ class ExtraFabulousComics(GenericComic):
 
     @classmethod
     def update(cls):
-        archive_url = 'http://extrafabulouscomics.com/archives/'
-        print(archive_url)
+        cls.create_output_dir()
+        comics = [] # cls.load_db()
+        home_url = 'http://extrafabulouscomics.com'
+        reComicLink = re.compile('^http://extrafabulouscomics.com/wp-content/uploads/')
+        next_comic = get_soup_at_url(comics[-1]['url']).find('a', title='next') if comics else \
+                    get_soup_at_url(home_url).find('a', title='first')
+        try:
+            while next_comic:
+                url = next_comic.get('href')
+                soup = get_soup_at_url(url)
+                image = soup.find('img', src=reComicLink)
+                image_url = image.get('src')
+                next_comic = soup.find('a', title='next')
+                title = soup.find_all('meta', attrs={'name': 'twitter:title'})
+                comic_info = {
+                    'url': url,
+                    'img': image_url,
+                    'local_img': cls.get_file_in_output_dir(image_url),
+                    'title': title
+                }
+                print(cls.name, ':', url, image_url, ' ' * 10, '\r', end='')
+                comics.append(comic_info)
+        finally:
+            cls.save_db(comics)
+            print(cls.long_name, "updated")
+
 
 class Dilbert(GenericComic):
     name = 'dilbert'
@@ -252,7 +276,7 @@ def main():
     """Main function"""
     print("Hello, world!")
     # for c in [SaturdayMorningBreakfastCereal]:
-    for c in [Xkcd, PerryBibleFellowship, CyanideAndHappiness]:
+    for c in [Xkcd, PerryBibleFellowship, CyanideAndHappiness, ExtraFabulousComics]:
         c.update()
 
 if __name__ == "__main__":
