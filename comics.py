@@ -195,8 +195,8 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
 
 class PerryBibleFellowship(GenericComic):
-    name = 'perry bible fellowship'
-    long_name = 'pbf'
+    name = 'pbf'
+    long_name = 'perry bible fellowship'
     output_dir = 'pbf'
     json_file = 'pbf.json'
 
@@ -230,8 +230,8 @@ class PerryBibleFellowship(GenericComic):
 
 
 class CyanideAndHappiness(GenericComic):
-    long_name = 'cyanide and happiness'
     name = 'cyanide'
+    long_name = 'cyanide and happiness'
     output_dir = 'cyanide'
     json_file = 'cyanide.json'
 
@@ -252,7 +252,7 @@ class CyanideAndHappiness(GenericComic):
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
             author = soup.find('a', href=author_url_re)
-            comic_info = {
+            comic = {
                 'num': num,
                 'url': comic_url,
                 'author': author.string if author is not None else 'none'
@@ -260,12 +260,12 @@ class CyanideAndHappiness(GenericComic):
             image = soup.find('img', src=img_src_re)
             if image:
                 img = image.get('src')
-                comic_info['img'] = img
-                comic_info['local_img'] = cls.get_file_in_output_dir(img, '%d-' % num)
+                comic['img'] = img
+                comic['local_img'] = cls.get_file_in_output_dir(img, '%d-' % num)
             else:
-                comic_info['error'] = 'no image'  # weird shit man
-            print(cls.name, ':', comic_url, comic_info['author'], ' ' * 10, '\r', end='')
-            yield comic_info
+                comic['error'] = 'no image'  # weird shit man
+            print(cls.name, ':', comic_url, comic['author'], ' ' * 10, '\r', end='')
+            yield comic
 
 
 def main():
