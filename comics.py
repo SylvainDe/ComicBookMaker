@@ -97,7 +97,7 @@ class Xkcd(GenericComic):
         last_num = load_json_at_url("http://xkcd.com/info.0.json")['num']
 
         for num in range(first_num + 1, last_num + 1):
-            try:
+            if num != 404:
                 json_url = "http://xkcd.com/%d/info.0.json" % num
                 comic = load_json_at_url(json_url)
                 comic['local_img'] = cls.get_file_in_output_dir(
@@ -107,9 +107,6 @@ class Xkcd(GenericComic):
                 assert comic['num'] == num
                 print(cls.name, ':', comic['year'], comic['month'], comic['day'], comic['num'], comic['img'], ' ' * 10, '\r', end='')
                 yield comic
-            except urllib.error.HTTPError as exc:
-                if num != 404:
-                    print(exc, num)
 
     def get_date_as_int(comic):
         return 10000 * int(comic['year']) + \
