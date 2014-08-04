@@ -8,7 +8,7 @@ import urllib.request
 import urllib.parse
 import re
 from bs4 import BeautifulSoup
-
+import time
 
 def get_content(url):
     return urllib.request.urlopen(url).read()
@@ -51,7 +51,10 @@ class GenericComic(object):
 
     @classmethod
     def get_file_in_output_dir(cls, url, prefix=None):
-        filename = os.path.join(cls.output_dir, ('' if prefix is None else prefix) + urllib.parse.unquote(url).split('/')[-1])
+        filename = os.path.join(
+            cls.output_dir,
+            ('' if prefix is None else prefix) +
+            urllib.parse.unquote(url).split('/')[-1])
         urllib.request.urlretrieve(url, filename)
         return filename
 
@@ -60,15 +63,26 @@ class GenericComic(object):
         pass
 
     @classmethod
+    def get_next_comic(cls, _):
+        pass
+
+    @classmethod
     def update(cls):
         cls.create_output_dir()
         comics = cls.load_db()
+        new_comics = []
+        start = time.time()
         try:
-            for c in cls.get_next_comic(comics[-1] if comics else None):
-                comics.append(c)
+            for comic in cls.get_next_comic(comics[-1] if comics else None):
+                new_comics.append(comic)
         finally:
-            cls.save_db(comics)
-            print(cls.long_name, "updated")
+            end = time.time()
+            if new_comics:
+                print()
+                cls.save_db(comics + new_comics)
+                print(cls.long_name, ": added", len(new_comics), "comics in ", end-start, "seconds")
+            else:
+                print(cls.long_name, ": nothing new")
 
 
 class Xkcd(GenericComic):
@@ -86,18 +100,21 @@ class Xkcd(GenericComic):
             try:
                 json_url = "http://xkcd.com/%d/info.0.json" % num
                 comic = load_json_at_url(json_url)
-                comic['local_img'] = cls.get_file_in_output_dir(comic['img'], '%d-' % num)
+                comic['local_img'] = cls.get_file_in_output_dir(
+                    comic['img'], '%d-' % num)
                 comic['json_url'] = json_url
                 comic['url'] = "http://xkcd.com/%d/" % num
                 assert comic['num'] == num
                 print(cls.name, ':', comic['year'], comic['month'], comic['day'], comic['num'], comic['img'], ' ' * 10, '\r', end='')
                 yield comic
-            except urllib.error.HTTPError as e:
+            except urllib.error.HTTPError as exc:
                 if num != 404:
-                    print(e, num)
+                    print(exc, num)
 
     def get_date_as_int(comic):
-        return 10000 * int(comic['year']) + 100 * int(comic['month']) + int(comic['day'])
+        return 10000 * int(comic['year']) + \
+            100 * int(comic['month']) + \
+            int(comic['day'])
 
     @classmethod
     def check_everything_is_ok(cls):
@@ -107,7 +124,7 @@ class Xkcd(GenericComic):
         for comic in comics:
             num = comic['num']
             assert isinstance(num, int)
-            assert os.path.isfile(comic['local_img']), "Image does not exist" % num
+            assert os.path.isfile(comic['local_img']), "Image %s does not exist" % num
         prev = comics[0]
         for comic in comics[1:]:
             prev_num, curr_num = prev['num'], comic['num']
@@ -115,11 +132,11 @@ class Xkcd(GenericComic):
             assert cls.get_date_as_int(prev) <= cls.get_date_as_int(comic), "Comics are not sorted by date (%d %d)" % (prev_num, curr_num)
             prev = comic
         images = dict()
-        for c in comics:
-            images.setdefault(c['img'], []).append(c['url'])
-        for img, l in images.items():
-            if len(l) > 1:
-                print(img, l)
+        for com in comics:
+            images.setdefault(com['img'], []).append(com['url'])
+        for img, lis in images.items():
+            if len(lis) > 1:
+                print(img, lis)
 
 
 class ExtraFabulousComics(GenericComic):
@@ -131,13 +148,15 @@ class ExtraFabulousComics(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         home_url = 'http://extrafabulouscomics.com'
-        reComicLink = re.compile('^http://extrafabulouscomics.com/wp-content/uploads/')
-        next_comic = get_soup_at_url(last_comic['url']).find('a', title='next') if last_comic else \
+        img_src_re = re.compile('^http://extrafabulouscomics.com/wp-content/uploads/')
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', title='next') \
+            if last_comic else \
             get_soup_at_url(home_url).find('a', title='first')
         while next_comic:
             url = next_comic.get('href')
             soup = get_soup_at_url(url)
-            image_url = soup.find('img', src=reComicLink).get('src')
+            image_url = soup.find('img', src=img_src_re).get('src')
             next_comic = soup.find('a', title='next')
             comic = {
                 'url': url,
@@ -166,6 +185,7 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     def get_next_comic(cls, last_comic):
         base_url = "http://www.smbc-comics.com"
         next_comic = {'href': "?id=1#comic"}
+        print(last_comic)
         while next_comic:
             comic_url = base_url + next_comic.get('href')
             soup = get_soup_at_url(comic_url)
@@ -184,16 +204,16 @@ class PerryBibleFellowship(GenericComic):
         last_num = last_comic['num'] if last_comic else 0
 
         home_url = 'http://pbfcomics.com'
-        reComicLink = re.compile('^/[0-9]*/$')
+        comic_link_re = re.compile('^/[0-9]*/$')
         soup = get_soup_at_url(home_url)
-        links = soup.find_all('a', href=reComicLink)
+        links = soup.find_all('a', href=comic_link_re)
 
-        for l in reversed(links):
-            num = int(l.get('name'))
+        for link in reversed(links):
+            num = int(link.get('name'))
             if num > last_num:
-                url = home_url + l.get('href')
+                url = home_url + link.get('href')
                 assert url == home_url + "/" + str(num) + "/"
-                name = l.string
+                name = link.string
                 image = get_soup_at_url(url).find('img', src=re.compile('^/archive_b/PBF.*'))
                 assert image.get('alt') == name
                 image_url = home_url + image.get('src')
@@ -217,9 +237,9 @@ class CyanideAndHappiness(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         base_url = "http://explosm.net"
-        reAuthorSrc = re.compile('^http://explosm.net/comics/author/.*')
-        reComicSrc = re.compile('^http://(www.)?explosm.net/db/files/Comics/.*')
-        reComicUrl = re.compile('^http://explosm.net/comics/([0-9]*)/$')
+        author_url_re = re.compile('^http://explosm.net/comics/author/.*')
+        img_src_re = re.compile('^http://(www.)?explosm.net/db/files/Comics/.*')
+        comic_num_re = re.compile('^http://explosm.net/comics/([0-9]*)/$')
 
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', rel='next') if last_comic else \
@@ -227,16 +247,16 @@ class CyanideAndHappiness(GenericComic):
 
         while next_comic:
             comic_url = base_url + next_comic.get('href')
-            num = int(reComicUrl.match(comic_url).groups()[0])
+            num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
-            author = soup.find('a', href=reAuthorSrc)
+            author = soup.find('a', href=author_url_re)
             comic_info = {
                 'num': num,
                 'url': comic_url,
                 'author': author.string if author is not None else 'none'
                 }
-            image = soup.find('img', src=reComicSrc)
+            image = soup.find('img', src=img_src_re)
             if image:
                 img = image.get('src')
                 comic_info['img'] = img
@@ -251,8 +271,11 @@ def main():
     """Main function"""
     print("Hello, world!")
     # for c in [SaturdayMorningBreakfastCereal]:
-    for c in [Xkcd, PerryBibleFellowship, CyanideAndHappiness, ExtraFabulousComics]:
-        c.update()
+    for comic in [Xkcd,
+                  PerryBibleFellowship,
+                  CyanideAndHappiness,
+                  ExtraFabulousComics]:
+        comic.update()
 
 if __name__ == "__main__":
     main()
