@@ -153,15 +153,19 @@ class ExtraFabulousComics(GenericComic):
         while next_comic:
             url = next_comic.get('href')
             soup = get_soup_at_url(url)
-            image_url = soup.find('img', src=img_src_re).get('src')
             next_comic = soup.find('a', title='next')
             comic = {
                 'url': url,
-                'img': image_url,
-                'local_img': cls.get_file_in_output_dir(image_url),
                 'title': soup.find('meta', attrs={'name': 'twitter:title'}).get('content')
             }
-            print(cls.name, ':', url, image_url, ' ' * 10, '\r', end='')
+            image = soup.find('img', src=img_src_re)
+            if image:
+                image_url = image.get('src')
+                comic['img'] = image_url
+                comic['local_img'] = cls.get_file_in_output_dir(image_url)
+            else:
+                comic['error'] = 'no image'  # weird shit man
+            print(cls.name, ':', url, ' ' * 10, '\r', end='')
             yield comic
 
 
