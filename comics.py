@@ -9,6 +9,8 @@ import urllib.parse
 import re
 from bs4 import BeautifulSoup
 import time
+from datetime import date, timedelta
+
 
 def get_content(url):
     return urllib.request.urlopen(url).read()
@@ -175,6 +177,32 @@ class Dilbert(GenericComic):
     output_dir = 'dilbert'
     json_file = 'dilbert.json'
 
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        img_src_re = re.compile('^/dyn/str_strip/')
+        home_url = 'http://dilbert.com'
+        first_day = date(last_comic['year'], last_comic['month'], last_comic['day']) + timedelta(days=1) if last_comic else date(1989, 4, 16)
+        for i in range((date.today() - first_day).days + 1):
+            day = first_day + timedelta(days=i)
+            day_str = day.isoformat()
+            url = "%s/strips/comic/%s/" % (home_url, day_str)
+            soup = get_soup_at_url(url)
+            img = soup.find('img', src=img_src_re)
+            img_url = home_url + img.get('src')
+            title = img.get('title')  # "The Dilbert Strip for January 4, 2014"
+            assert title == "The Dilbert Strip for %s" % (day.strftime("%B %d, %Y").replace(" 0", " "))
+            comic = {
+                'url': url,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': img_url,
+                'name': title,
+                'local_img': cls.get_file_in_output_dir(img_url, '%s-' % day_str)
+            }
+            print(cls.name, ':', url, ' ' * 10, '\r', end='')
+            yield comic
+
 
 class SaturdayMorningBreakfastCereal(GenericComic):
     name = 'smbc'
@@ -270,12 +298,11 @@ class CyanideAndHappiness(GenericComic):
 
 def main():
     """Main function"""
-    print("Hello, world!")
-    # for c in [SaturdayMorningBreakfastCereal]:
     for comic in [Xkcd,
-                  PerryBibleFellowship,
                   CyanideAndHappiness,
-                  ExtraFabulousComics]:
+                  PerryBibleFellowship,
+                  ExtraFabulousComics,
+                  Dilbert]:
         comic.update()
 
 if __name__ == "__main__":
