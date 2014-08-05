@@ -186,8 +186,7 @@ class Dilbert(GenericComic):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
             url = "%s/strips/comic/%s/" % (home_url, day_str)
-            soup = get_soup_at_url(url)
-            img = soup.find('img', src=img_src_re)
+            img = get_soup_at_url(url).find('img', src=img_src_re)
             img_url = home_url + img.get('src')
             title = img.get('title')  # "The Dilbert Strip for January 4, 2014"
             assert title == "The Dilbert Strip for %s" % (day.strftime("%B %d, %Y").replace(" 0", " "))
@@ -234,10 +233,8 @@ class PerryBibleFellowship(GenericComic):
 
         home_url = 'http://pbfcomics.com'
         comic_link_re = re.compile('^/[0-9]*/$')
-        soup = get_soup_at_url(home_url)
-        links = soup.find_all('a', href=comic_link_re)
 
-        for link in reversed(links):
+        for link in reversed(get_soup_at_url(home_url).find_all('a', href=comic_link_re)):
             num = int(link.get('name'))
             if num > last_num:
                 url = home_url + link.get('href')
