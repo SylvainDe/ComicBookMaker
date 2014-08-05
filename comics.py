@@ -211,14 +211,33 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        last_num = last_comic['num'] if last_comic else 0
+
         base_url = "http://www.smbc-comics.com"
-        next_comic = {'href': "?id=1#comic"}
-        print(last_comic)
-        while next_comic:
-            comic_url = base_url + next_comic.get('href')
-            soup = get_soup_at_url(comic_url)
-            print(soup)
-            next_comic = False
+        archive_page = base_url + "/archives.php"
+        comic_link_re = re.compile('^/index.php\?id=([0-9]*)$')
+
+        for link in get_soup_at_url(archive_page).find_all('a', href=comic_link_re):
+            link_url = link.get('href')
+            num = int(comic_link_re.match(link_url).groups()[0])
+            if num > last_num:
+                title = link.string
+                url = base_url + link_url
+                soup = get_soup_at_url(url)
+                image_url = soup.find('div', id='comicimage').find('img').get('src')
+                comic = {
+                    'url': url,
+                    'num': num,
+                    'img': image_url,
+                    'local_img': cls.get_file_in_output_dir(image_url),
+                    'title': title
+                }
+                image_url2 = soup.find('div', id='aftercomic').find('img').get('src')
+                if image_url2:
+                    comic['img2'] = image_url2
+                    comic['local_img2'] = cls.get_file_in_output_dir(image_url2)
+                print(cls.name, ':', num, url, image_url, ' ' * 10, '\r', end='')
+                yield comic
 
 
 class PerryBibleFellowship(GenericComic):
@@ -295,7 +314,8 @@ class CyanideAndHappiness(GenericComic):
 
 def main():
     """Main function"""
-    for comic in [Xkcd,
+    for comic in [SaturdayMorningBreakfastCereal,
+                  Xkcd,
                   CyanideAndHappiness,
                   PerryBibleFellowship,
                   ExtraFabulousComics,
