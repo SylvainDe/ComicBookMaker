@@ -69,6 +69,10 @@ class GenericComic(object):
         pass
 
     @classmethod
+    def print_comic(cls, comic):
+        print(cls.name, ':', comic['url'], ' ' * 10, '\r', end='')
+
+    @classmethod
     def update(cls):
         cls.create_output_dir()
         comics = cls.load_db()
@@ -77,6 +81,7 @@ class GenericComic(object):
         try:
             for comic in cls.get_next_comic(comics[-1] if comics else None):
                 new_comics.append(comic)
+                cls.print_comic(comic)
         finally:
             end = time.time()
             if new_comics:
@@ -107,7 +112,6 @@ class Xkcd(GenericComic):
                 comic['json_url'] = json_url
                 comic['url'] = "http://xkcd.com/%d/" % num
                 assert comic['num'] == num
-                print(cls.name, ':', comic['year'], comic['month'], comic['day'], comic['num'], comic['img'], ' ' * 10, '\r', end='')
                 yield comic
 
     def get_date_as_int(comic):
@@ -167,7 +171,6 @@ class ExtraFabulousComics(GenericComic):
                 comic['local_img'] = cls.get_file_in_output_dir(image_url)
             else:
                 comic['error'] = 'no image'  # weird shit man
-            print(cls.name, ':', url, ' ' * 10, '\r', end='')
             yield comic
 
 
@@ -190,7 +193,7 @@ class Dilbert(GenericComic):
             img_url = home_url + img.get('src')
             title = img.get('title')  # "The Dilbert Strip for January 4, 2014"
             assert title == "The Dilbert Strip for %s" % (day.strftime("%B %d, %Y").replace(" 0", " "))
-            comic = {
+            yield {
                 'url': url,
                 'month': day.month,
                 'year': day.year,
@@ -199,8 +202,6 @@ class Dilbert(GenericComic):
                 'name': title,
                 'local_img': cls.get_file_in_output_dir(img_url, '%s-' % day_str)
             }
-            print(cls.name, ':', url, ' ' * 10, '\r', end='')
-            yield comic
 
 
 class SaturdayMorningBreakfastCereal(GenericComic):
@@ -236,7 +237,6 @@ class SaturdayMorningBreakfastCereal(GenericComic):
                 if image_url2:
                     comic['img2'] = image_url2
                     comic['local_img2'] = cls.get_file_in_output_dir(image_url2)
-                print(cls.name, ':', num, url, image_url, ' ' * 10, '\r', end='')
                 yield comic
 
 
@@ -262,15 +262,13 @@ class PerryBibleFellowship(GenericComic):
                 image = get_soup_at_url(url).find('img', src=re.compile('^/archive_b/PBF.*'))
                 assert image.get('alt') == name
                 image_url = home_url + image.get('src')
-                comic = {
+                yield {
                     'url': url,
                     'num': num,
                     'name': name,
                     'img': image_url,
                     'local_img': cls.get_file_in_output_dir(image_url, '%d-' % num)
                 }
-                print(cls.name, ':', url, num, name, image_url, ' ' * 10, '\r', end='')
-                yield comic
 
 
 class CyanideAndHappiness(GenericComic):
@@ -308,7 +306,6 @@ class CyanideAndHappiness(GenericComic):
                 comic['local_img'] = cls.get_file_in_output_dir(img, '%d-' % num)
             else:
                 comic['error'] = 'no image'  # weird shit man
-            print(cls.name, ':', comic_url, comic['author'], ' ' * 10, '\r', end='')
             yield comic
 
 
