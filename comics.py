@@ -208,6 +208,34 @@ class ExtraFabulousComics(GenericComic):
             yield comic
 
 
+class Garfield(GenericComic):
+    """Class to retrieve Garfield comics."""
+    name = 'garfield'
+    long_name = 'garfield'
+    output_dir = 'garfield'
+    json_file = 'garfield.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        first_day = date(last_comic['year'],
+                         last_comic['month'],
+                         last_comic['day']) + timedelta(days=1) \
+            if last_comic else date(1978, 6, 19)
+        home_url = 'http://garfield.com'
+        for i in range((date.today() - first_day).days + 1):
+            day = first_day + timedelta(days=i)
+            day_str = day.isoformat()
+            img_url = "%s/uploads/strips/%s.jpg" % (home_url, day_str)
+            yield {
+                'url': "%s/comic/%s" % (home_url, day_str),
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': img_url,
+                'local_img': cls.get_file_in_output_dir(img_url)
+            }
+
+
 class Dilbert(GenericComic):
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
@@ -366,7 +394,8 @@ def main():
                   CyanideAndHappiness,
                   PerryBibleFellowship,
                   ExtraFabulousComics,
-                  Dilbert]:
+                  Dilbert,
+                  Garfield]:
         comic.update()
 
 if __name__ == "__main__":
