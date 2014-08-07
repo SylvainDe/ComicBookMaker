@@ -12,6 +12,17 @@ import time
 from datetime import date, timedelta
 
 
+def convert_iri_to_plain_ascii_uri(uri):
+    """Convert IRI to plain ASCII URL
+    Based on http://stackoverflow.com/questions/4389572/how-to-fetch-a-non-ascii-url-with-python-urlopen."""
+    lis = list(urllib.parse.urlsplit(uri))
+    lis[2] = urllib.parse.quote(lis[2])
+    url = urllib.parse.urlunsplit(lis)
+    if False and url != uri:
+        print(uri, '->', url)
+    return url
+
+
 def get_content(url):
     """Get content at url."""
     return urllib.request.urlopen(url).read()
@@ -362,6 +373,44 @@ class PerryBibleFellowship(GenericComic):
                 }
 
 
+class BouletCorp(GenericComic):
+    """Class to retrieve BouletCorp comics."""
+    name = 'boulet'
+    long_name = 'boulet corp'
+    output_dir = 'boulet'
+    json_file = 'boulet.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        home_url = 'http://www.bouletcorp.com'
+        date_re = re.compile('^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/' % home_url)
+        prev_url = last_comic['url'] if last_comic else None
+        comic_url = (
+            get_soup_at_url(prev_url).find('div', id='centered_nav').find_all('a')[3]
+            if prev_url
+            else get_soup_at_url(home_url).find('div', id='centered_nav').find_all('a')[0]).get('href')
+
+        while comic_url != prev_url:
+            year, month, day = [int(s) for s in date_re.match(comic_url).groups()]
+            soup = get_soup_at_url(comic_url)
+            imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
+            image_urls = [convert_iri_to_plain_ascii_uri(i.get('src')) for i in imgs]
+            texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
+            title = soup.find('title').string
+            comic = {
+                'url': comic_url,
+                'img': image_urls,
+                'local_img': [path for path in (cls.get_file_in_output_dir(i) for i in image_urls) if path is not None],
+                'title': title,
+                'texts': texts,
+                'year': year,
+                'month': month,
+                'day': day,
+            }
+            yield comic
+            prev_url, comic_url = comic_url, soup.find('div', id='centered_nav').find_all('a')[3].get('href')
+
+
 class CyanideAndHappiness(GenericComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
@@ -413,6 +462,7 @@ def main():
                   PerryBibleFellowship,
                   ExtraFabulousComics,
                   Dilbert,
+                  BouletCorp,
                   Garfield]:
         comic.update()
 
