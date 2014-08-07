@@ -17,6 +17,15 @@ def get_content(url):
     return urllib.request.urlopen(url).read()
 
 
+def get_file_at_url(url, path):
+    """Save content at url in path on file system."""
+    try:
+        urllib.request.urlretrieve(url, path)
+        return path
+    except (ValueError, urllib.error.ContentTooShortError):
+        return None
+
+
 def load_json_at_url(url):
     """Get content at url as JSON."""
     return json.loads(get_content(url).decode())
@@ -29,9 +38,9 @@ def get_soup_at_url(url):
 
 def get_date_as_int(comic):
     """Tmp function to convert comic to dummy date."""
-    return 10000 * int(comic['year']) + \
-        100 * int(comic['month']) + \
-        int(comic['day'])
+    return 10000 * comic['year'] + \
+        100 * comic['month'] + \
+        comic['day']
 
 
 class GenericComic(object):
@@ -79,8 +88,7 @@ class GenericComic(object):
             cls.output_dir,
             ('' if prefix is None else prefix) +
             urllib.parse.unquote(url).split('/')[-1])
-        urllib.request.urlretrieve(url, filename)
-        return filename
+        return get_file_at_url(url, filename)
 
     @classmethod
     def check_everything_is_ok(cls):
@@ -111,6 +119,12 @@ class GenericComic(object):
         start = time.time()
         try:
             for comic in cls.get_next_comic(comics[-1] if comics else None):
+                if 'day' in comic:
+                    assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
+                else:
+                    assert all(k not in comic for k in ['day', 'month', 'year'])
+                    day = date.today()
+                    comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
                 new_comics.append(comic)
                 cls.print_comic(comic)
         finally:
@@ -144,6 +158,9 @@ class Xkcd(GenericComic):
                     comic['img'], '%d-' % num)
                 comic['json_url'] = json_url
                 comic['url'] = "http://xkcd.com/%d/" % num
+                comic['day'] = int(comic['day'])
+                comic['month'] = int(comic['month'])
+                comic['year'] = int(comic['year'])
                 assert comic['num'] == num
                 yield comic
 
@@ -384,6 +401,7 @@ class CyanideAndHappiness(GenericComic):
                     '%d-' % num)
             else:
                 comic['error'] = 'no image'  # weird shit man
+            # TODO: date can be parsed from the page
             yield comic
 
 
