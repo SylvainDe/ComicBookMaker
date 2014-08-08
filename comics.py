@@ -454,6 +454,43 @@ class CyanideAndHappiness(GenericComic):
             yield comic
 
 
+class CalvinAndHobbes(GenericComic):
+    name = 'calvin'
+    long_name = 'calvin and hobbes'
+    output_dir = 'calvin'
+    json_file = 'calvin.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        last_date = date(last_comic['year'], last_comic['month'], last_comic['day']) if last_comic else date(1985, 11, 1)
+
+        # This is not through any official webpage but eh...
+        base_url = 'http://marcel-oehler.marcellosendos.ch/comics/ch/'
+        link_re = re.compile('^([0-9]*)/([0-9]*)/')
+        img_re = re.compile('')
+        for link in get_soup_at_url(base_url).find_all('a', href=link_re):
+            url = link.get('href')
+            year, month = link_re.match(url).groups()
+            if date(int(year), int(month), 1) > last_date:
+                img_re = re.compile('^%s%s([0-9]*)' % (year, month))
+                month_url = base_url + url
+                for img in get_soup_at_url(month_url).find_all('img', src=img_re):
+                    img_src = img.get('src')
+                    day = int(img_re.match(img_src).groups()[0])
+                    comic_date = date(int(year), int(month), day)
+                    if comic_date > last_date:
+                        img_url = '%s%s/%s/%s' % (base_url, year, month, img_src)
+                        yield {
+                            'url': month_url,
+                            'year': int(year),
+                            'month': int(month),
+                            'day': int(day),
+                            'img': img_url,
+                            'local_img': cls.get_file_in_output_dir(img_url)
+                        }
+                        last_date = comic_date
+
+
 def main():
     """Main function"""
     for comic in [SaturdayMorningBreakfastCereal,
@@ -463,7 +500,8 @@ def main():
                   ExtraFabulousComics,
                   Dilbert,
                   BouletCorp,
-                  Garfield]:
+                  Garfield,
+                  CalvinAndHobbes]:
         comic.update()
 
 if __name__ == "__main__":
