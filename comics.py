@@ -449,7 +449,7 @@ class CalvinAndHobbes(GenericComic):
         for link in get_soup_at_url(base_url).find_all('a', href=link_re):
             url = link.get('href')
             year, month = link_re.match(url).groups()
-            if date(int(year), int(month), 1) > last_date:
+            if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
                 img_re = re.compile('^%s%s([0-9]*)' % (year, month))
                 month_url = base_url + url
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
