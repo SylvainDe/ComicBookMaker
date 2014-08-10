@@ -136,6 +136,8 @@ class GenericComic(object):
                     assert all(k not in comic for k in ['day', 'month', 'year'])
                     day = date.today()
                     comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
+                prefix = comic.get('prefix', '')
+                comic['local_img']  = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in comic['img']) if path is not None],
                 new_comics.append(comic)
                 cls.print_comic(comic)
         finally:
@@ -165,8 +167,8 @@ class Xkcd(GenericComic):
             if num != 404:
                 json_url = "http://xkcd.com/%d/info.0.json" % num
                 comic = load_json_at_url(json_url)
-                comic['local_img'] = cls.get_file_in_output_dir(
-                    comic['img'], '%d-' % num)
+                comic['img'] = [comic['img']]
+                comic['prefix'] = '%d-' % num
                 comic['json_url'] = json_url
                 comic['url'] = "http://xkcd.com/%d/" % num
                 comic['day'] = int(comic['day'])
@@ -222,17 +224,12 @@ class ExtraFabulousComics(GenericComic):
             url = next_comic.get('href')
             soup = get_soup_at_url(url)
             next_comic = soup.find('a', title='next')
+            image = soup.find('img', src=img_src_re)
             comic = {
                 'url': url,
-                'title': soup.find('meta', attrs={'name': 'twitter:title'}).get('content')
+                'title': soup.find('meta', attrs={'name': 'twitter:title'}).get('content'),
+                'img': [image.get('src')] if image else []
             }
-            image = soup.find('img', src=img_src_re)
-            if image:
-                image_url = image.get('src')
-                comic['img'] = image_url
-                comic['local_img'] = cls.get_file_in_output_dir(image_url)
-            else:
-                comic['error'] = 'no image'  # weird shit man
             yield comic
 
 
@@ -253,14 +250,12 @@ class Garfield(GenericComic):
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
-            img_url = "%s/uploads/strips/%s.jpg" % (home_url, day_str)
             yield {
                 'url': "%s/comic/%s" % (home_url, day_str),
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': img_url,
-                'local_img': cls.get_file_in_output_dir(img_url)
+                'img': ["%s/uploads/strips/%s.jpg" % (home_url, day_str)],
             }
 
 
@@ -284,7 +279,6 @@ class Dilbert(GenericComic):
             day_str = day.isoformat()
             url = "%s/strips/comic/%s/" % (home_url, day_str)
             img = get_soup_at_url(url).find('img', src=img_src_re)
-            img_url = home_url + img.get('src')
             title = img.get('title')
             assert title == "The Dilbert Strip for %s" % \
                 (day.strftime("%B %d, %Y").replace(" 0", " "))
@@ -293,11 +287,9 @@ class Dilbert(GenericComic):
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': img_url,
+                'img': [home_url + img.get('src')],
                 'name': title,
-                'local_img': cls.get_file_in_output_dir(
-                    img_url,
-                    '%s-' % day_str)
+                'prefix': '%s-' % day_str
             }
 
 
@@ -323,18 +315,14 @@ class SaturdayMorningBreakfastCereal(GenericComic):
                 title = link.string
                 url = base_url + link_url
                 soup = get_soup_at_url(url)
-                image_url = soup.find('div', id='comicimage').find('img').get('src')
+                image_url1 = soup.find('div', id='comicimage').find('img').get('src')
+                image_url2 = soup.find('div', id='aftercomic').find('img').get('src')
                 comic = {
                     'url': url,
                     'num': num,
-                    'img': image_url,
-                    'local_img': cls.get_file_in_output_dir(image_url),
+                    'img': [image_url1] + ([image_url2] if image_url2 else []),
                     'title': title
                 }
-                image_url2 = soup.find('div', id='aftercomic').find('img').get('src')
-                if image_url2:
-                    comic['img2'] = image_url2
-                    comic['local_img2'] = cls.get_file_in_output_dir(image_url2)
                 yield comic
 
 
@@ -361,15 +349,12 @@ class PerryBibleFellowship(GenericComic):
                 name = link.string
                 image = get_soup_at_url(url).find('img', src=comic_img_re)
                 assert image.get('alt') == name
-                image_url = home_url + image.get('src')
                 yield {
                     'url': url,
                     'num': num,
                     'name': name,
-                    'img': image_url,
-                    'local_img': cls.get_file_in_output_dir(
-                        image_url,
-                        '%d-' % num)
+                    'img': [home_url + image.get('src')],
+                    'prefix': '%d-' % num
                 }
 
 
@@ -400,7 +385,6 @@ class BouletCorp(GenericComic):
             comic = {
                 'url': comic_url,
                 'img': image_urls,
-                'local_img': [path for path in (cls.get_file_in_output_dir(i) for i in image_urls) if path is not None],
                 'title': title,
                 'texts': texts,
                 'year': year,
@@ -436,20 +420,14 @@ class CyanideAndHappiness(GenericComic):
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
             author = soup.find('a', href=author_url_re)
+            image = soup.find('img', src=img_src_re)
             comic = {
                 'num': num,
                 'url': comic_url,
-                'author': author.string if author is not None else 'none'
+                'author': author.string if author is not None else 'none',
+                'prefix': '%d-' % num,
+                'img': [image.get('src')] if image else []
                 }
-            image = soup.find('img', src=img_src_re)
-            if image:
-                img = image.get('src')
-                comic['img'] = img
-                comic['local_img'] = cls.get_file_in_output_dir(
-                    img,
-                    '%d-' % num)
-            else:
-                comic['error'] = 'no image'  # weird shit man
             # TODO: date can be parsed from the page
             yield comic
 
@@ -479,14 +457,12 @@ class CalvinAndHobbes(GenericComic):
                     day = int(img_re.match(img_src).groups()[0])
                     comic_date = date(int(year), int(month), day)
                     if comic_date > last_date:
-                        img_url = '%s%s/%s/%s' % (base_url, year, month, img_src)
                         yield {
                             'url': month_url,
                             'year': int(year),
                             'month': int(month),
                             'day': int(day),
-                            'img': img_url,
-                            'local_img': cls.get_file_in_output_dir(img_url)
+                            'img': ['%s%s/%s/%s' % (base_url, year, month, img_src)],
                         }
                         last_date = comic_date
 
