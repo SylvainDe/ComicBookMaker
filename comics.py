@@ -439,6 +439,33 @@ class CyanideAndHappiness(GenericComic):
             yield comic
 
 
+class MrLovenstein(GenericComic):
+    name = 'mrlovenstein'
+    long_name = 'mrlovenstein'
+    json_file = 'mrlovenstein.json'
+    output_dir = 'mrlovenstein'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        # TODO: more info from http://www.mrlovenstein.com/archive
+        home_url = 'http://www.mrlovenstein.com'
+        comic_num_re = re.compile('^/comic/([0-9]*)$')
+        nums = [int(comic_num_re.match(link.get('href')).groups()[0]) for link in get_soup_at_url(home_url).find_all('a', href=comic_num_re)]
+        first, last = min(nums), max(nums)
+        if last_comic:
+            first = last_comic['num'] + 1
+        for num in range(first, last+1):
+            url = "%s/comic/%d" % (home_url, num)
+            soup = get_soup_at_url(url)
+            imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
+            yield {
+                'url': url,
+                'num': num,
+                'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
+                'img': [home_url + i.get('src') for i in imgs],
+            }
+
+
 class CalvinAndHobbes(GenericComic):
     name = 'calvin'
     long_name = 'calvin and hobbes'
@@ -483,6 +510,7 @@ def main():
                   ExtraFabulousComics,
                   Dilbert,
                   BouletCorp,
+                  MrLovenstein,
                   Garfield,
                   CalvinAndHobbes]:
         comic.update()
