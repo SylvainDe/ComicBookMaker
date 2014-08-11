@@ -137,7 +137,7 @@ class GenericComic(object):
                     day = date.today()
                     comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
                 prefix = comic.get('prefix', '')
-                comic['local_img']  = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in comic['img']) if path is not None],
+                comic['local_img'] = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in comic['img']) if path is not None]
                 new_comics.append(comic)
                 cls.print_comic(comic)
         finally:
