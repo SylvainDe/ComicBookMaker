@@ -104,7 +104,14 @@ class GenericComic(object):
     @classmethod
     def check_everything_is_ok(cls):
         """Perform tests on the database to check that everything is ok."""
-        pass
+        comics = cls.load_db()
+        for comic in comics:
+            cls.print_comic(comic)
+            assert isinstance(comic.get('url'), str)
+            assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
+            assert isinstance(comic.get('img'), list)
+            assert isinstance(comic.get('local_img'), list)
+            assert len(comic.get('local_img')) <= len(comic.get('img')), comic['url']
 
     @classmethod
     def get_next_comic(cls, _):
@@ -146,7 +153,7 @@ class GenericComic(object):
                 print()
                 cls.save_db(comics + new_comics)
                 print(cls.long_name, ": added", len(new_comics),
-                      "comics in ", end-start, "seconds")
+                      "comics in", end-start, "seconds")
             else:
                 print(cls.long_name, ": nothing new")
 
