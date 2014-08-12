@@ -108,6 +108,7 @@ class GenericComic(object):
         for comic in comics:
             cls.print_comic(comic)
             assert isinstance(comic.get('url'), str)
+            assert comic.get('comic') == cls.long_name
             assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
             assert isinstance(comic.get('img'), list)
             assert isinstance(comic.get('local_img'), list)
@@ -131,6 +132,7 @@ class GenericComic(object):
     @classmethod
     def update(cls):
         """Update the database : get the latest comics and save in the DB."""
+        print(cls.name, ': about to update')
         cls.create_output_dir()
         comics = cls.load_db()
         new_comics = []
@@ -145,6 +147,7 @@ class GenericComic(object):
                     comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
                 prefix = comic.get('prefix', '')
                 comic['local_img'] = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in comic['img']) if path is not None]
+                comic['comic'] = cls.long_name
                 new_comics.append(comic)
                 cls.print_comic(comic)
         finally:
@@ -214,7 +217,7 @@ class Xkcd(GenericComic):
 class ExtraFabulousComics(GenericComic):
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
-    long_name = 'extra fabulous comics'
+    long_name = 'Extra Fabulous Comics'
     output_dir = 'efc'
     json_file = 'efc.json'
 
@@ -243,7 +246,7 @@ class ExtraFabulousComics(GenericComic):
 class Garfield(GenericComic):
     """Class to retrieve Garfield comics."""
     name = 'garfield'
-    long_name = 'garfield'
+    long_name = 'Garfield'
     output_dir = 'garfield'
     json_file = 'garfield.json'
 
@@ -269,7 +272,7 @@ class Garfield(GenericComic):
 class Dilbert(GenericComic):
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
-    long_name = 'dilbert'
+    long_name = 'Dilbert'
     output_dir = 'dilbert'
     json_file = 'dilbert.json'
 
@@ -303,7 +306,7 @@ class Dilbert(GenericComic):
 class SaturdayMorningBreakfastCereal(GenericComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     name = 'smbc'
-    long_name = 'saturday morning breakfast cereal'
+    long_name = 'Saturday Morning Breakfast Cereal'
     output_dir = 'smbc'
     json_file = 'smbc.json'
 
@@ -336,7 +339,7 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 class PerryBibleFellowship(GenericComic):
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
-    long_name = 'perry bible fellowship'
+    long_name = 'Perry Bible Fellowship'
     output_dir = 'pbf'
     json_file = 'pbf.json'
 
@@ -368,7 +371,7 @@ class PerryBibleFellowship(GenericComic):
 class BouletCorp(GenericComic):
     """Class to retrieve BouletCorp comics."""
     name = 'boulet'
-    long_name = 'boulet corp'
+    long_name = 'Boulet Corp'
     output_dir = 'boulet'
     json_file = 'boulet.json'
 
@@ -405,7 +408,7 @@ class BouletCorp(GenericComic):
 class CyanideAndHappiness(GenericComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
-    long_name = 'cyanide and happiness'
+    long_name = 'Cyanide and Happiness'
     output_dir = 'cyanide'
     json_file = 'cyanide.json'
 
@@ -441,7 +444,7 @@ class CyanideAndHappiness(GenericComic):
 
 class MrLovenstein(GenericComic):
     name = 'mrlovenstein'
-    long_name = 'mrlovenstein'
+    long_name = 'Mr. Lovenstein'
     json_file = 'mrlovenstein.json'
     output_dir = 'mrlovenstein'
 
@@ -468,7 +471,7 @@ class MrLovenstein(GenericComic):
 
 class CalvinAndHobbes(GenericComic):
     name = 'calvin'
-    long_name = 'calvin and hobbes'
+    long_name = 'Calvin and Hobbes'
     output_dir = 'calvin'
     json_file = 'calvin.json'
 
