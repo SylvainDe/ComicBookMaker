@@ -157,6 +157,24 @@ class GenericComic(object):
             else:
                 print(cls.long_name, ": nothing new")
 
+    @classmethod
+    def try_to_get_missing_resources(cls):
+        print(cls.name, ': about to try to get missing resources')
+        cls.create_output_dir()
+        comics = cls.load_db()
+        for comic in comics:
+            old_local = comic.get('local_img')
+            imgs = comic.get('img')
+            url = comic['url']
+            if len(old_local) < len(imgs):
+                print(url, len(old_local), len(imgs))
+                prefix = comic.get('prefix', '')
+                new_imgs = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in imgs) if path is not None]
+                print(url, len(old_local), len(new_imgs), len(imgs))
+                if len(new_imgs) > len(old_local):
+                    comic['local_img'] = new_imgs
+        cls.save_db(comics)
+
 
 class Xkcd(GenericComic):
     """Class to retrieve Xkcd comics."""
