@@ -37,6 +37,10 @@ def get_file_at_url(url, path):
         return None
 
 
+def get_date_for_comic(comic):
+    return date(comic['year'], comic['month'], comic['day'])
+
+
 def load_json_at_url(url):
     """Get content at url as JSON."""
     return json.loads(get_content(url).decode())
@@ -45,13 +49,6 @@ def load_json_at_url(url):
 def get_soup_at_url(url):
     """Get content at url as BeautifulSoup."""
     return BeautifulSoup(get_content(url))
-
-
-def get_date_as_int(comic):
-    """Tmp function to convert comic to dummy date."""
-    return 10000 * comic['year'] + \
-        100 * comic['month'] + \
-        comic['day']
 
 
 class GenericComic(object):
@@ -187,31 +184,31 @@ class Xkcd(GenericComic):
                 assert comic['num'] == num
                 yield comic
 
-    @classmethod
-    def check_everything_is_ok(cls):
-        comics = cls.load_db()
-        if not comics:
-            return True
-        for comic in comics:
-            num = comic['num']
-            assert isinstance(num, int)
-            assert os.path.isfile(comic['local_img']), \
-                "Image %s does not exist" % num
-
-        prev = comics[0]
-        for comic in comics[1:]:
-            prev_num, curr_num = prev['num'], comic['num']
-            assert prev_num < curr_num, \
-                "Comics are not sorted by num (%d %d)" % (prev_num, curr_num)
-            assert get_date_as_int(prev) <= get_date_as_int(comic), \
-                "Comics are not sorted by date (%d %d)" % (prev_num, curr_num)
-            prev = comic
-        images = dict()
-        for com in comics:
-            images.setdefault(com['img'], []).append(com['url'])
-        for img, lis in images.items():
-            if len(lis) > 1:
-                print(img, lis)
+#     @classmethod
+#     def check_everything_is_ok(cls):
+#         comics = cls.load_db()
+#         if not comics:
+#             return True
+#         for comic in comics:
+#             num = comic['num']
+#             assert isinstance(num, int)
+#             assert os.path.isfile(comic['local_img']), \
+#                 "Image %s does not exist" % num
+#
+#         prev = comics[0]
+#         for comic in comics[1:]:
+#             prev_num, curr_num = prev['num'], comic['num']
+#             assert prev_num < curr_num, \
+#                 "Comics are not sorted by num (%d %d)" % (prev_num, curr_num)
+#             assert get_date_as_int(prev) <= get_date_as_int(comic), \
+#                 "Comics are not sorted by date (%d %d)" % (prev_num, curr_num)
+#             prev = comic
+#         images = dict()
+#         for com in comics:
+#             images.setdefault(com['img'], []).append(com['url'])
+#         for img, lis in images.items():
+#             if len(lis) > 1:
+#                 print(img, lis)
 
 
 class ExtraFabulousComics(GenericComic):
@@ -252,9 +249,7 @@ class Garfield(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        first_day = date(last_comic['year'],
-                         last_comic['month'],
-                         last_comic['day']) + timedelta(days=1) \
+        first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
             if last_comic else date(1978, 6, 19)
         home_url = 'http://garfield.com'
         for i in range((date.today() - first_day).days + 1):
@@ -280,9 +275,7 @@ class Dilbert(GenericComic):
     def get_next_comic(cls, last_comic):
         img_src_re = re.compile('^/dyn/str_strip/')
         home_url = 'http://dilbert.com'
-        first_day = date(last_comic['year'],
-                         last_comic['month'],
-                         last_comic['day']) + timedelta(days=1) \
+        first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
             if last_comic else date(1989, 4, 16)
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
@@ -477,7 +470,7 @@ class CalvinAndHobbes(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        last_date = date(last_comic['year'], last_comic['month'], last_comic['day']) if last_comic else date(1985, 11, 1)
+        last_date = get_date_for_comic(last_comic) if last_comic else date(1985, 11, 1)
 
         # This is not through any official webpage but eh...
         base_url = 'http://marcel-oehler.marcellosendos.ch/comics/ch/'
