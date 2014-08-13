@@ -250,12 +250,13 @@ class ExtraFabulousComics(GenericComic):
             soup = get_soup_at_url(url)
             next_comic = soup.find('a', title='next')
             image = soup.find('img', src=img_src_re)
-            comic = {
+            title = soup.find('meta', attrs={'name': 'twitter:title'}).get('content')
+            yield {
                 'url': url,
-                'title': soup.find('meta', attrs={'name': 'twitter:title'}).get('content'),
-                'img': [image.get('src')] if image else []
+                'title': title,
+                'img': [image.get('src')] if image else [],
+                'prefix': title + '-'
             }
-            yield comic
 
 
 class Garfield(GenericComic):
