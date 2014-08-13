@@ -10,6 +10,7 @@ import re
 from bs4 import BeautifulSoup
 import time
 from datetime import date, timedelta
+import argparse
 
 
 def convert_iri_to_plain_ascii_uri(uri):
@@ -537,19 +538,33 @@ class CalvinAndHobbes(GenericComic):
                         last_date = comic_date
 
 
+def get_subclasses(klass):
+    """Gets the list of direct/indirect subclasses of a class"""
+    subclasses = klass.__subclasses__()
+    for derived in list(subclasses):
+        subclasses.extend(get_subclasses(derived))
+    return subclasses
+
+COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not None}
+
+
 def main():
     """Main function"""
-    for comic in [SaturdayMorningBreakfastCereal,
-                  Xkcd,
-                  CyanideAndHappiness,
-                  PerryBibleFellowship,
-                  ExtraFabulousComics,
-                  Dilbert,
-                  BouletCorp,
-                  MrLovenstein,
-                  Garfield,
-                  CalvinAndHobbes]:
-        comic.update()
+    comic_names = sorted(COMIC_NAMES.keys())
+    parser = argparse.ArgumentParser(
+        description='Downloads webcomics and generates ebooks for offline reading (not yet)')
+    parser.add_argument(
+        '--comic', '-c',
+        action='append',
+        help=('comics to be considered (default: ALL)'),
+        choices=comic_names,
+        default=[])
+    args = parser.parse_args()
+    if not args.comic:
+        args.comic = comic_names
+    assert all(c in COMIC_NAMES for c in args.comic)
+    for c in args.comic:
+        COMIC_NAMES[c].update()
 
 if __name__ == "__main__":
     main()
