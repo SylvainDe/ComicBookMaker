@@ -101,15 +101,35 @@ class GenericComic(object):
     @classmethod
     def check_everything_is_ok(cls):
         """Perform tests on the database to check that everything is ok."""
+        print(cls.name, ': about to check')
         comics = cls.load_db()
-        for comic in comics:
+        imgs_paths = {}
+        imgs_urls = {}
+        for i, comic in enumerate(comics):
             cls.print_comic(comic)
-            assert isinstance(comic.get('url'), str)
+            url = comic.get('url')
+            assert isinstance(url, str)
             assert comic.get('comic') == cls.long_name
             assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
-            assert isinstance(comic.get('img'), list)
-            assert isinstance(comic.get('local_img'), list)
-            assert len(comic.get('local_img')) <= len(comic.get('img')), comic['url']
+            img = comic.get('img')
+            local_img = comic.get('local_img')
+            assert isinstance(img, list)
+            assert isinstance(local_img, list)
+            assert len(local_img) == len(img)
+            for path in local_img:
+                if path is not None:
+                    assert os.path.isfile(path)
+                    imgs_paths.setdefault(path, set()).add(i)
+            for img_url in img:
+                imgs_urls.setdefault(img_url, set()).add(i)
+        if False:  # To check if we imgs are not overriding themselves
+            for path, nums in imgs_paths.items():
+                if len(nums) > 1:
+                    print(path, nums)
+            for img_url, nums in imgs_urls.items():
+                if len(nums) > 1:
+                    print(img_url, nums)
+        print()
 
     @classmethod
     def get_next_comic(cls, _):
@@ -143,7 +163,7 @@ class GenericComic(object):
                     day = date.today()
                     comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
                 prefix = comic.get('prefix', '')
-                comic['local_img'] = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in comic['img']) if path is not None]
+                comic['local_img'] = [cls.get_file_in_output_dir(i, prefix) for i in comic['img']]
                 comic['comic'] = cls.long_name
                 new_comics.append(comic)
                 cls.print_comic(comic)
@@ -162,18 +182,19 @@ class GenericComic(object):
         print(cls.name, ': about to try to get missing resources')
         cls.create_output_dir()
         comics = cls.load_db()
+        change = False
         for comic in comics:
-            old_local = comic.get('local_img')
-            imgs = comic.get('img')
-            url = comic['url']
-            if len(old_local) < len(imgs):
-                print(url, len(old_local), len(imgs))
-                prefix = comic.get('prefix', '')
-                new_imgs = [path for path in (cls.get_file_in_output_dir(i, prefix) for i in imgs) if path is not None]
-                print(url, len(old_local), len(new_imgs), len(imgs))
-                if len(new_imgs) > len(old_local):
-                    comic['local_img'] = new_imgs
-        cls.save_db(comics)
+            local = comic['local_img']
+            for i, (path, url) in enumerate(zip(local, comic['img'])):
+                if path is None:
+                    new_path = cls.get_file_in_output_dir(url, comic.get('prefix', ''))
+                    if new_path is not None:
+                        print(cls.name, ': got', url, 'at', new_path)
+                        local[i] = new_path
+                        change = True
+        if change:
+            cls.save_db(comics)
+            print(cls.long_name, ": some missing resources have been downloaded")
 
 
 class Xkcd(GenericComic):
