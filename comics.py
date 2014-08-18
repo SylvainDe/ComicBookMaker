@@ -10,6 +10,7 @@ import re
 from bs4 import BeautifulSoup
 import time
 from datetime import date, timedelta
+import datetime
 import argparse
 
 
@@ -521,6 +522,45 @@ class MrLovenstein(GenericComic):
                 'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
                 'img': [home_url + i.get('src') for i in imgs],
             }
+
+
+class DinosaurComics(GenericComic):
+    name = 'dinosaur'
+    long_name = 'Dinosaur Comics'
+    output_dir = 'dinosaur'
+    json_file = 'dinosaur.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        last_num = last_comic['num'] if last_comic else 0
+        comic_link_re = re.compile('^http://www.qwantz.com/index.php\\?comic=([0-9]*)$')
+        archive_url = 'http://www.qwantz.com/archive.php'
+        # first link is random -> skip it
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)[1:]):
+            url = link.get('href')
+            num = int(comic_link_re.match(url).groups()[0])
+            if num > last_num:
+                text = link.next_sibling.string
+                # Hackish way to convert string with numeral "1st"/"2nd"/etc to date
+                day = datetime.datetime.strptime(
+                    link.string
+                    .replace('st', '')
+                    .replace('nd', '')
+                    .replace('rd', '')
+                    .replace('th', '')
+                    .replace('Augu', 'August'), "%B %d, %Y").date()
+                soup = get_soup_at_url(url)
+                img = soup.find('img', src=re.compile('^http://www.qwantz.com/comics/'))
+                yield {
+                    'url': url,
+                    'month': day.month,
+                    'year': day.year,
+                    'day': day.day,
+                    'img': [img.get('src')],
+                    'title': img.get('title'),
+                    'text': text,
+                    'num': num,
+                }
 
 
 class CalvinAndHobbes(GenericComic):
