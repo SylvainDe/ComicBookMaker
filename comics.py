@@ -106,12 +106,16 @@ class GenericComic(object):
         comics = cls.load_db()
         imgs_paths = {}
         imgs_urls = {}
+        prev_date = None
         for i, comic in enumerate(comics):
             cls.print_comic(comic)
             url = comic.get('url')
             assert isinstance(url, str)
             assert comic.get('comic') == cls.long_name
             assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
+            date = get_date_for_comic(comic)
+            assert prev_date is None or prev_date <= date
+            prev_date = date
             img = comic.get('img')
             local_img = comic.get('local_img')
             assert isinstance(img, list)
@@ -447,9 +451,24 @@ class CyanideAndHappiness(GenericComic):
     json_file = 'cyanide.json'
 
     @classmethod
+    def extract_author_and_data_from_data(cls, data):
+        author_date_re = re.compile('^by (.*)  ([0-9]*).([0-9]*).([0-9]*)$')
+        date_author_re = re.compile('^([0-9]*).([0-9]*).([0-9]*) by (.*)$')
+
+        match = author_date_re.match(data)
+        if match:
+            author, month, day, year = match.groups()
+        else:
+            match = date_author_re.match(data)
+            if match:
+                month, day, year, author = match.groups()
+            else:
+                assert False
+        return (int(day), int(month), int(year), author.strip())
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         base_url = "http://explosm.net"
-        author_url_re = re.compile('^http://explosm.net/comics/author/.*')
         img_src_re = re.compile('^http://(www.)?explosm.net/db/files/Comics/.*')
         comic_num_re = re.compile('^http://explosm.net/comics/([0-9]*)/$')
 
@@ -463,17 +482,18 @@ class CyanideAndHappiness(GenericComic):
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
-            author = soup.find('a', href=author_url_re)
+            day, month, year, author = cls.extract_author_and_data_from_data(soup.find('table').find('tr').find('td').text)
             image = soup.find('img', src=img_src_re)
-            comic = {
+            yield {
                 'num': num,
                 'url': comic_url,
-                'author': author.string if author is not None else 'none',
+                'author': author,
+                'day': day,
+                'month': month,
+                'year': year,
                 'prefix': '%d-' % num,
                 'img': [image.get('src')] if image else []
                 }
-            # TODO: date can be parsed from the page
-            yield comic
 
 
 class MrLovenstein(GenericComic):
