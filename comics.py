@@ -27,7 +27,8 @@ def convert_iri_to_plain_ascii_uri(uri):
 
 def get_content(url):
     """Get content at url."""
-    return urllib.request.urlopen(url).read()
+    user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"
+    return urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': user_agent})).read()
 
 
 def get_file_at_url(url, path):
@@ -596,6 +597,39 @@ class CalvinAndHobbes(GenericComic):
                             'img': ['%s%s/%s/%s' % (base_url, year, month, img_src)],
                         }
                         last_date = comic_date
+
+
+class Peanuts(GenericComic):
+    name = 'peanuts'
+    long_name = 'Peanuts'
+    output_dir = 'peanuts'
+    json_file = 'peanuts.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        # logic here will probably be the same for all gocomic comics
+        gocomics = 'http://www.gocomics.com'
+        url = gocomics + '/peanuts'
+        url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
+
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='next') \
+            if last_comic else \
+            get_soup_at_url(url).find('a', class_='beginning')
+
+        while next_comic:
+            url_comic = gocomics + next_comic.get('href')
+            year, month, day = [int(s) for s in url_date_re.match(url_comic).groups()]
+            soup = get_soup_at_url(url_comic)
+            next_comic = soup.find('a', class_='next')
+            yield {
+                'url': url_comic,
+                'day': day,
+                'month': month,
+                'year': year,
+                'img': [soup.find_all('img', class_='strip')[-1].get('src')],
+                'author': soup.find('meta', attrs={'name': 'author'}).get('content')
+                }
 
 
 def get_subclasses(klass):
