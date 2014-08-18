@@ -41,6 +41,7 @@ def get_file_at_url(url, path):
 
 
 def get_date_for_comic(comic):
+    """Return date object for a given comic."""
     return date(comic['year'], comic['month'], comic['day'])
 
 
@@ -115,9 +116,9 @@ class GenericComic(object):
             assert isinstance(url, str)
             assert comic.get('comic') == cls.long_name
             assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
-            date = get_date_for_comic(comic)
-            assert prev_date is None or prev_date <= date
-            prev_date = date
+            curr_date = get_date_for_comic(comic)
+            assert prev_date is None or prev_date <= curr_date
+            prev_date = curr_date
             img = comic.get('img')
             local_img = comic.get('local_img')
             assert isinstance(img, list)
@@ -186,6 +187,7 @@ class GenericComic(object):
 
     @classmethod
     def try_to_get_missing_resources(cls):
+        """Download images that might not have been downloaded properly in the first place."""
         print(cls.name, ': about to try to get missing resources')
         cls.create_output_dir()
         comics = cls.load_db()
@@ -453,7 +455,8 @@ class CyanideAndHappiness(GenericComic):
     json_file = 'cyanide.json'
 
     @classmethod
-    def extract_author_and_data_from_data(cls, data):
+    def get_author_and_data_from_str(cls, data):
+        """Extract author and date from the string which can have different formats."""
         author_date_re = re.compile('^by (.*)  ([0-9]*).([0-9]*).([0-9]*)$')
         date_author_re = re.compile('^([0-9]*).([0-9]*).([0-9]*) by (.*)$')
 
@@ -484,7 +487,7 @@ class CyanideAndHappiness(GenericComic):
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
-            day, month, year, author = cls.extract_author_and_data_from_data(soup.find('table').find('tr').find('td').text)
+            day, month, year, author = cls.get_author_and_data_from_str(soup.find('table').find('tr').find('td').text)
             image = soup.find('img', src=img_src_re)
             yield {
                 'num': num,
@@ -499,6 +502,7 @@ class CyanideAndHappiness(GenericComic):
 
 
 class MrLovenstein(GenericComic):
+    """Class to retrieve Mr Lovenstein comics."""
     name = 'mrlovenstein'
     long_name = 'Mr. Lovenstein'
     json_file = 'mrlovenstein.json'
@@ -526,6 +530,7 @@ class MrLovenstein(GenericComic):
 
 
 class DinosaurComics(GenericComic):
+    """Class to retrieve Dinosaur Comics comics."""
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
     output_dir = 'dinosaur'
@@ -565,6 +570,7 @@ class DinosaurComics(GenericComic):
 
 
 class CalvinAndHobbes(GenericComic):
+    """Class to retrieve Calvin and Hobbes comics."""
     name = 'calvin'
     long_name = 'Calvin and Hobbes'
     output_dir = 'calvin'
@@ -599,17 +605,18 @@ class CalvinAndHobbes(GenericComic):
                         last_date = comic_date
 
 
-class Peanuts(GenericComic):
-    name = 'peanuts'
-    long_name = 'Peanuts'
-    output_dir = 'peanuts'
-    json_file = 'peanuts.json'
+class GenericGoComic(GenericComic):
+    """Generic class to handle the logic common to retrieve comics from gocomics.com
+
+    Attributes :
+        gocomic_name        Name of the comic on gocomics."""
+    gocomic_name = None
 
     @classmethod
     def get_next_comic(cls, last_comic):
         # logic here will probably be the same for all gocomic comics
         gocomics = 'http://www.gocomics.com'
-        url = gocomics + '/peanuts'
+        url = gocomics + '/' + cls.gocomic_name
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
         next_comic = \
@@ -630,6 +637,24 @@ class Peanuts(GenericComic):
                 'img': [soup.find_all('img', class_='strip')[-1].get('src')],
                 'author': soup.find('meta', attrs={'name': 'author'}).get('content')
                 }
+
+
+class PearlsBeforeSwine(GenericGoComic):
+    """Class to retrieve Pearls Before Swine comics."""
+    name = 'pearls'
+    long_name = 'Pearls Before Swine'
+    output_dir = 'pearls'
+    json_file = 'pearls.json'
+    gocomic_name = 'pearlsbeforeswine'
+
+
+class Peanuts(GenericGoComic):
+    """Class to retrieve Peanuts comics."""
+    name = 'peanuts'
+    long_name = 'Peanuts'
+    output_dir = 'peanuts'
+    json_file = 'peanuts.json'
+    gocomic_name = 'peanuts'
 
 
 def get_subclasses(klass):
