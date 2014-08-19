@@ -109,16 +109,18 @@ class GenericComic(object):
         comics = cls.load_db()
         imgs_paths = {}
         imgs_urls = {}
-        prev_date = None
+        prev_date, prev_num = None, None
         for i, comic in enumerate(comics):
             cls.print_comic(comic)
             url = comic.get('url')
-            assert isinstance(url, str)
+            assert isinstance(url, str), "Url %s not a string" % url
             assert comic.get('comic') == cls.long_name
-            assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
+            assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year']), "Invalid date data (%s)" % url
             curr_date = get_date_for_comic(comic)
-            assert prev_date is None or prev_date <= curr_date
-            prev_date = curr_date
+            curr_num = comic.get('num', 0)
+            assert isinstance(curr_num, int)
+            assert prev_date is None or prev_date <= curr_date or prev_num < curr_num, "Comics are not in order (%s)" % url
+            prev_date, prev_num = curr_date, curr_num
             img = comic.get('img')
             local_img = comic.get('local_img')
             assert isinstance(img, list)
@@ -130,7 +132,7 @@ class GenericComic(object):
                     imgs_paths.setdefault(path, set()).add(i)
             for img_url in img:
                 imgs_urls.setdefault(img_url, set()).add(i)
-        if False:  # To check if we imgs are not overriding themselves
+        if False:  # To check if imgs are not overriding themselves
             for path, nums in imgs_paths.items():
                 if len(nums) > 1:
                     print(path, nums)
@@ -636,6 +638,36 @@ class CalvinAndHobbes(GenericComic):
                         last_date = comic_date
 
 
+class PhDComics(GenericComic):
+    """Class to retrieve PHD Comics."""
+    name = 'phd'
+    long_name = 'PhD Comics'
+    output_dir = 'phd'
+    json_file = 'phd.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        archive_url = 'http://phdcomics.com/comics/archive_list.php'
+        comic_url_num_re = re.compile('^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
+
+        last_num = last_comic['num'] if last_comic else 0
+
+        for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_num_re):
+            comic_url = link.get('href')
+            num = int(comic_url_num_re.match(comic_url).groups()[0])
+            if num > last_num:
+                month, day, year = [int(s) for s in link.string.split('/')]
+                yield {
+                    'url': comic_url,
+                    'num': num,
+                    'year': year,
+                    'month': month,
+                    'day': day if day else 1,
+                    'img': [get_soup_at_url(comic_url).find('img', id='comic').get('src')],
+                    'title': link.parent.parent.next_sibling.string
+                }
+
+
 class GenericGoComic(GenericComic):
     """Generic class to handle the logic common to retrieve comics from gocomics.com
 
@@ -645,7 +677,6 @@ class GenericGoComic(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        # logic here will probably be the same for all gocomic comics
         gocomics = 'http://www.gocomics.com'
         url = gocomics + '/' + cls.gocomic_name
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
