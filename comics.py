@@ -291,6 +291,50 @@ class ExtraFabulousComics(GenericComic):
             }
 
 
+class NeDroid(GenericComic):
+    """Class to retrieve NeDroid comics."""
+    name = 'nedroid'
+    long_name = 'NeDroid'
+    output_dir = 'nedroid'
+    json_file = 'nedroid.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        home_url = 'http://nedroid.com/'
+        comic_url_re = re.compile('^http://nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
+        short_url_re = re.compile('^http://nedroid.com/\\?p=([0-9]*)')
+
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
+            if last_comic else \
+            get_soup_at_url(home_url).find('div', class_='nav-first').find('a')
+
+        while next_comic:
+            url = next_comic.get('href')
+            soup = get_soup_at_url(url)
+            img = soup.find('img', src=comic_url_re)
+            img_url = img.get('src')
+            title = img.get('alt')
+            title2 = img.get('title')
+            assert title == soup.find_all('h2')[-1].string
+            assert url == soup.find('link', rel='canonical').get('href')
+            next_comic = soup.find('div', class_='nav-next').find('a')
+            short_url = soup.find('link', rel='shortlink').get('href')
+            year, month, day = [int(s) for s in comic_url_re.match(img_url).groups()]
+            num = int(short_url_re.match(short_url).groups()[0])
+            yield {
+                'url': url,
+                'short_url': short_url,
+                'title': title,
+                'title2': title,
+                'img': [img_url],
+                'day': day,
+                'month': month,
+                'year': year,
+                'num': num,
+            }
+
+
 class Garfield(GenericComic):
     """Class to retrieve Garfield comics."""
     name = 'garfield'
