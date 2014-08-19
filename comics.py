@@ -27,8 +27,11 @@ def convert_iri_to_plain_ascii_uri(uri):
 
 def get_content(url):
     """Get content at url."""
-    user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"
-    return urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': user_agent})).read()
+    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
+    return urllib.request.urlopen(
+        urllib.request.Request(
+            url,
+            headers={'User-Agent': user_agent})).read()
 
 
 def get_file_at_url(url, path):
@@ -115,11 +118,15 @@ class GenericComic(object):
             url = comic.get('url')
             assert isinstance(url, str), "Url %s not a string" % url
             assert comic.get('comic') == cls.long_name
-            assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year']), "Invalid date data (%s)" % url
+            assert all(isinstance(comic.get(k), int)
+                       for k in ['day', 'month', 'year']), \
+                "Invalid date data (%s)" % url
             curr_date = get_date_for_comic(comic)
             curr_num = comic.get('num', 0)
             assert isinstance(curr_num, int)
-            assert prev_date is None or prev_date <= curr_date or prev_num < curr_num, "Comics are not in order (%s)" % url
+            assert prev_date is None or prev_date <= curr_date or \
+                prev_num < curr_num, \
+                "Comics are not in order (%s)" % url
             prev_date, prev_num = curr_date, curr_num
             img = comic.get('img')
             local_img = comic.get('local_img')
@@ -171,9 +178,11 @@ class GenericComic(object):
                 else:
                     assert all(k not in comic for k in ['day', 'month', 'year'])
                     day = date.today()
-                    comic['day'], comic['month'], comic['year'] = day.day, day.month, day.year
+                    comic['day'], comic['month'], comic['year'] = \
+                        day.day, day.month, day.year
                 prefix = comic.get('prefix', '')
-                comic['local_img'] = [cls.get_file_in_output_dir(i, prefix) for i in comic['img']]
+                comic['local_img'] = [cls.get_file_in_output_dir(i, prefix)
+                                      for i in comic['img']]
                 comic['comic'] = cls.long_name
                 new_comics.append(comic)
                 cls.print_comic(comic)
@@ -189,7 +198,8 @@ class GenericComic(object):
 
     @classmethod
     def try_to_get_missing_resources(cls):
-        """Download images that might not have been downloaded properly in the first place."""
+        """Download images that might not have been downloaded properly in
+        the first place."""
         print(cls.name, ': about to try to get missing resources')
         cls.create_output_dir()
         comics = cls.load_db()
@@ -198,14 +208,17 @@ class GenericComic(object):
             local = comic['local_img']
             for i, (path, url) in enumerate(zip(local, comic['img'])):
                 if path is None:
-                    new_path = cls.get_file_in_output_dir(url, comic.get('prefix', ''))
+                    new_path = cls.get_file_in_output_dir(
+                        url,
+                        comic.get('prefix', ''))
                     if new_path is not None:
                         print(cls.name, ': got', url, 'at', new_path)
                         local[i] = new_path
                         change = True
         if change:
             cls.save_db(comics)
-            print(cls.long_name, ": some missing resources have been downloaded")
+            print(cls.long_name,
+                  ": some missing resources have been downloaded")
 
 
 class Xkcd(GenericComic):
@@ -234,32 +247,6 @@ class Xkcd(GenericComic):
                 assert comic['num'] == num
                 yield comic
 
-#     @classmethod
-#     def check_everything_is_ok(cls):
-#         comics = cls.load_db()
-#         if not comics:
-#             return True
-#         for comic in comics:
-#             num = comic['num']
-#             assert isinstance(num, int)
-#             assert os.path.isfile(comic['local_img']), \
-#                 "Image %s does not exist" % num
-#
-#         prev = comics[0]
-#         for comic in comics[1:]:
-#             prev_num, curr_num = prev['num'], comic['num']
-#             assert prev_num < curr_num, \
-#                 "Comics are not sorted by num (%d %d)" % (prev_num, curr_num)
-#             assert get_date_as_int(prev) <= get_date_as_int(comic), \
-#                 "Comics are not sorted by date (%d %d)" % (prev_num, curr_num)
-#             prev = comic
-#         images = dict()
-#         for com in comics:
-#             images.setdefault(com['img'], []).append(com['url'])
-#         for img, lis in images.items():
-#             if len(lis) > 1:
-#                 print(img, lis)
-
 
 class ExtraFabulousComics(GenericComic):
     """Class to retrieve Extra Fabulous Comics."""
@@ -282,7 +269,9 @@ class ExtraFabulousComics(GenericComic):
             soup = get_soup_at_url(url)
             next_comic = soup.find('a', title='next')
             image = soup.find('img', src=img_src_re)
-            title = soup.find('meta', attrs={'name': 'twitter:title'}).get('content')
+            title = soup.find(
+                'meta',
+                attrs={'name': 'twitter:title'}).get('content')
             yield {
                 'url': url,
                 'title': title,
@@ -315,7 +304,6 @@ class NeDroid(GenericComic):
             img = soup.find('img', src=comic_url_re)
             img_url = img.get('src')
             title = img.get('alt')
-            title2 = img.get('title')
             assert title == soup.find_all('h2')[-1].string
             assert url == soup.find('link', rel='canonical').get('href')
             next_comic = soup.find('div', class_='nav-next').find('a')
@@ -326,7 +314,7 @@ class NeDroid(GenericComic):
                 'url': url,
                 'short_url': short_url,
                 'title': title,
-                'title2': title,
+                'title2': img.get('title'),
                 'img': [img_url],
                 'day': day,
                 'month': month,
