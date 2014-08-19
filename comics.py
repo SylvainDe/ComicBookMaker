@@ -569,6 +569,37 @@ class DinosaurComics(GenericComic):
                 }
 
 
+class ButterSafe(GenericComic):
+    """Class to retrieve Butter Safe comics."""
+    name = 'butter'
+    long_name = 'ButterSafe'
+    output_dir = 'butter'
+    json_file = 'butter.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        archive_url = 'http://buttersafe.com/archive/'
+        comic_link_re = re.compile('^http://buttersafe.com/([0-9]*)/([0-9]*)/([0-9]*)/.*')
+
+        prev_date = get_date_for_comic(last_comic) if last_comic else date(2006, 1, 1)
+
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)):
+            url = link.get('href')
+            title = link.string
+            year, month, day = [int(s) for s in comic_link_re.match(url).groups()]
+            if prev_date < date(year, month, day):
+                img = get_soup_at_url(url).find('div', id='comic').find('img')
+                assert img.get('alt') == title
+                yield {
+                    'title': title,
+                    'day': day,
+                    'month': month,
+                    'year': year,
+                    'url': url,
+                    'img': [img.get('src')],
+                }
+
+
 class CalvinAndHobbes(GenericComic):
     """Class to retrieve Calvin and Hobbes comics."""
     name = 'calvin'
