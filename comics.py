@@ -743,6 +743,38 @@ class PhDComics(GenericComic):
                 }
 
 
+class TheDoghouseDiaries(GenericComic):
+    """Class to retrieve The Dog House Diaries comics."""
+    name = 'doghouse'
+    long_name = 'The Dog House Diaries'
+    output_dir = 'doghouse'
+    json_file = 'doghouse.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        url = 'http://thedoghousediaries.com/'
+        comic_img_re = re.compile('^dhdcomics/.*')
+        prev_url = last_comic['url'] if last_comic else None
+        comic_url = (
+            get_soup_at_url(prev_url).find('a', id='nextlink')
+            if prev_url else
+            get_soup_at_url(url).find('a', id='firstlink')).get('href')
+
+        while comic_url != prev_url:
+            soup = get_soup_at_url(comic_url)
+            img = soup.find('img', src=comic_img_re)
+            # TODO : date
+            yield {
+                'url': comic_url,
+                'title': soup.find('h2', id='titleheader').string,
+                'title2': soup.find('div', id='subtext').string,
+                'alt': img.get('title'),
+                'img': [url + img.get('src').strip()],
+                'num': int(comic_url.split('/')[-1]),
+            }
+            prev_url, comic_url = comic_url, soup.find('a', id='nextlink').get('href')
+
+
 class GenericGoComic(GenericComic):
     """Generic class to handle the logic common to retrieve comics from gocomics.com
 
