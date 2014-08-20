@@ -688,6 +688,31 @@ class CalvinAndHobbes(GenericComic):
                         last_date = comic_date
 
 
+class AbstruseGoose(GenericComic):
+    """Class to retrieve AbstruseGoose Comics."""
+    name = 'abstruse'
+    long_name = 'Abstruse Goose'
+    output_dir = 'abstruse'
+    json_file = 'abstruse.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        archive_url = 'http://abstrusegoose.com/archive'
+        last_num = last_comic['num'] if last_comic else 0
+        comic_url_re = re.compile('^http://abstrusegoose.com/([0-9]*)$')
+        comic_img_re = re.compile('^http://abstrusegoose.com/strips/.*')
+        for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_re):
+            url_comic = link.get('href')
+            num = int(comic_url_re.match(url_comic).groups()[0])
+            if num > last_num:
+                yield {
+                    'url': url_comic,
+                    'num': num,
+                    'title': link.string,
+                    'img': [get_soup_at_url(url_comic).find('img', src=comic_img_re).get('src')]
+                }
+
+
 class PhDComics(GenericComic):
     """Class to retrieve PHD Comics."""
     name = 'phd'
