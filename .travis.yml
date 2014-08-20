@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  - pip install beautifulsoup4
+  - pip install pep8
+  - pip install --upgrade pyflakes
+
+before_script:
+ - pyflakes .
+ - pep8 *.py --ignore=E501
+  # to have the list anyway
+ - pep8 *.py --select=E501 || true
