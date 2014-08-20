@@ -62,8 +62,8 @@ class GenericComic(object):
     """Generic class to handle the logic common to all comics
 
     Attributes :
-        name        Name of the comic
-        long_name   Long name of the comic
+        name        Name of the comic (for logging and CLI)
+        long_name   Long name of the comic (to be added in the comic info)
         output_dir  Output directory to put/get data (comics + database)
         json_file   Name of the JSON file used to store the database."""
     name = None
@@ -139,6 +139,7 @@ class GenericComic(object):
                     imgs_paths.setdefault(path, set()).add(i)
             for img_url in img:
                 imgs_urls.setdefault(img_url, set()).add(i)
+        print()
         if False:  # To check if imgs are not overriding themselves
             for path, nums in imgs_paths.items():
                 if len(nums) > 1:
@@ -146,11 +147,22 @@ class GenericComic(object):
             for img_url, nums in imgs_urls.items():
                 if len(nums) > 1:
                     print(img_url, nums)
-        print()
 
     @classmethod
     def get_next_comic(cls, _):
-        """Generator to get the next comic."""
+        """Generator to get the next comic.
+
+        First argument is the last properly downloaded comic which gives
+        a starting point to download more.
+
+        This is the method called by update(). It should yield comics which
+        are basically dictionnaries with the following property :
+            - 'url' is linked to a string
+            - 'img' is linked to a list of url (that will get downloaded)
+            - 'day'/'month'/'year' are self explicit. They are linked to
+                integers corresponding to the comic dates. There should be
+                all of them or none of them
+            - more fields can be provided."""
         return
 
     @classmethod
@@ -165,7 +177,15 @@ class GenericComic(object):
 
     @classmethod
     def update(cls):
-        """Update the database : get the latest comics and save in the DB."""
+        """Update the database : get the latest comics and save in the DB.
+
+        This is a wrapper around get_next_comic() providing the following
+        generic features :
+            - logging
+            - database handling (open and save)
+            - exception handling (properly retrieved data are always saved)
+            - file download
+            - data management (adds current date if no date is provided)."""
         print(cls.name, ': about to update')
         cls.create_output_dir()
         comics = cls.load_db()
@@ -191,10 +211,10 @@ class GenericComic(object):
             if new_comics:
                 print()
                 cls.save_db(comics + new_comics)
-                print(cls.long_name, ": added", len(new_comics),
+                print(cls.name, ": added", len(new_comics),
                       "comics in", end-start, "seconds")
             else:
-                print(cls.long_name, ": nothing new")
+                print(cls.name, ": nothing new")
 
     @classmethod
     def try_to_get_missing_resources(cls):
@@ -206,19 +226,17 @@ class GenericComic(object):
         change = False
         for comic in comics:
             local = comic['local_img']
+            prefix = comic.get('prefix', '')
             for i, (path, url) in enumerate(zip(local, comic['img'])):
                 if path is None:
-                    new_path = cls.get_file_in_output_dir(
-                        url,
-                        comic.get('prefix', ''))
+                    new_path = cls.get_file_in_output_dir(url, prefix)
                     if new_path is not None:
                         print(cls.name, ': got', url, 'at', new_path)
                         local[i] = new_path
                         change = True
         if change:
             cls.save_db(comics)
-            print(cls.long_name,
-                  ": some missing resources have been downloaded")
+            print(cls.name, ": some missing resources have been downloaded")
 
 
 class Xkcd(GenericComic):
@@ -730,7 +748,7 @@ class GenericGoComic(GenericComic):
                 'year': year,
                 'img': [soup.find_all('img', class_='strip')[-1].get('src')],
                 'author': soup.find('meta', attrs={'name': 'author'}).get('content')
-                }
+            }
 
 
 class PearlsBeforeSwine(GenericGoComic):
