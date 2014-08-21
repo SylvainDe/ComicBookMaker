@@ -230,7 +230,9 @@ class GenericComic(object):
             for i, (path, url) in enumerate(zip(local, comic['img'])):
                 if path is None:
                     new_path = cls.get_file_in_output_dir(url, prefix)
-                    if new_path is not None:
+                    if new_path is None:
+                        print(cls.name, ': failed to get', url)
+                    else:
                         print(cls.name, ': got', url, 'at', new_path)
                         local[i] = new_path
                         change = True
@@ -395,6 +397,40 @@ class Dilbert(GenericComic):
                 'name': title,
                 'prefix': '%s-' % day_str
             }
+
+
+class ThreeWordPhrase(GenericComic):
+    """Class to retrieve Three Word Phrase comics."""
+    name = 'threeword'
+    long_name = 'Three Word Phrase'
+    output_dir = 'threeword'
+    json_file = 'threeword.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        url = 'http://threewordphrase.com'
+        next_url = (
+            get_soup_at_url(last_comic['url']).find('img', src='/nextlink.gif')
+            if last_comic else
+            get_soup_at_url(url).find('img', src='/firstlink.gif')
+            ).parent.get('href')
+
+        while next_url:
+            comic_url = url + '/' + next_url
+            soup = get_soup_at_url(comic_url)
+            title = soup.find('title')
+            # hackish way to get the image
+            imgs = [img for img in soup.find_all('img')
+                    if not img.get('src').endswith(
+                        ('link.gif', '32.png', 'twpbookad.jpg',
+                            'merchad.jpg', 'header.gif', 'tipjar.jpg'))]
+            yield {
+                'url': comic_url,
+                'title': title.string if title else None,
+                'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
+                'img': [('' if src.startswith('http://') else (url + '/')) + src for src in (img.get('src') for img in imgs)],
+            }
+            next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
 
 
 class SaturdayMorningBreakfastCereal(GenericComic):
