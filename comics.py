@@ -423,7 +423,7 @@ class ThreeWordPhrase(GenericComic):
             imgs = [img for img in soup.find_all('img')
                     if not img.get('src').endswith(
                         ('link.gif', '32.png', 'twpbookad.jpg',
-                            'merchad.jpg', 'header.gif', 'tipjar.jpg'))]
+                         'merchad.jpg', 'header.gif', 'tipjar.jpg'))]
             yield {
                 'url': comic_url,
                 'title': title.string if title else None,
@@ -777,6 +777,36 @@ class PhDComics(GenericComic):
                     'img': [get_soup_at_url(comic_url).find('img', id='comic').get('src')],
                     'title': link.parent.parent.next_sibling.string
                 }
+
+
+class OverCompensating(GenericComic):
+    """Class to retrieve the Over Compensating comics."""
+    name = 'compensating'
+    long_name = 'Over Compensating'
+    output_dir = 'compensating'
+    json_file = 'compensating.json'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        url = 'http://www.overcompensating.com'
+        img_src_re = re.compile('^/oc/comics/.*')
+        comic_num_re = re.compile('.*comic=([0-9]*)$')
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', title='next comic') \
+            if last_comic else \
+            get_soup_at_url(url).find('a', href=re.compile('comic=1$'))
+        while next_comic:
+            comic_url = url + next_comic.get('href')
+            num = int(comic_num_re.match(comic_url).groups()[0])
+            soup = get_soup_at_url(comic_url)
+            img = soup.find('img', src=img_src_re)
+            yield {
+                'url': comic_url,
+                'num': num,
+                'img': [url + img.get('src')],
+                'title': img.get('title')
+            }
+            next_comic = soup.find('a', title='next comic')
 
 
 class TheDoghouseDiaries(GenericComic):
