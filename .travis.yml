@@ -14,6 +14,6 @@ install:
 
 before_script:
  - pyflakes .
- - pep8 *.py --ignore=E501
+ - pep8 *.py --ignore=E501,E123
   # to have the list anyway
- - pep8 *.py --select=E501 || true
+ - pep8 *.py --select=E501,E123 || true

@@ -214,7 +214,7 @@ class GenericComic(object):
                 print()
                 cls.save_db(comics + new_comics)
                 print(cls.name, ": added", len(new_comics),
-                      "comics in", end-start, "seconds")
+                      "comics in", end - start, "seconds")
             else:
                 print(cls.name, ": nothing new")
 
@@ -607,7 +607,7 @@ class MrLovenstein(GenericComic):
         first, last = min(nums), max(nums)
         if last_comic:
             first = last_comic['num'] + 1
-        for num in range(first, last+1):
+        for num in range(first, last + 1):
             url = urllib.parse.urljoin(cls.url, '/comic/%d' % num)
             soup = get_soup_at_url(url)
             imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
