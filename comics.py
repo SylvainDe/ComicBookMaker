@@ -254,16 +254,16 @@ class Xkcd(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         first_num = last_comic['num'] if last_comic else 0
-        last_num = load_json_at_url(cls.url + '/info.0.json')['num']
+        last_num = load_json_at_url(urllib.parse.urljoin(cls.url, 'info.0.json'))['num']
 
         for num in range(first_num + 1, last_num + 1):
             if num != 404:
-                json_url = '%s/%d/info.0.json' % (cls.url, num)
+                json_url = urllib.parse.urljoin(cls.url, '%d/info.0.json' % num)
                 comic = load_json_at_url(json_url)
                 comic['img'] = [comic['img']]
                 comic['prefix'] = '%d-' % num
                 comic['json_url'] = json_url
-                comic['url'] = '%s/%d/' % (cls.url, num)
+                comic['url'] = urllib.parse.urljoin(cls.url, str(num))
                 comic['day'] = int(comic['day'])
                 comic['month'] = int(comic['month'])
                 comic['year'] = int(comic['year'])
@@ -361,11 +361,11 @@ class Garfield(GenericComic):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
             yield {
-                'url': "%s/comic/%s" % (cls.url, day_str),
+                'url': urllib.parse.urljoin(cls.url, 'comic/%s' % day_str),
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': ["%s/uploads/strips/%s.jpg" % (cls.url, day_str)],
+                'img': [urllib.parse.urljoin(cls.url, 'uploads/strips/%s.jpg' % day_str)],
             }
 
 
@@ -385,7 +385,7 @@ class Dilbert(GenericComic):
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
-            url = "%s/strips/comic/%s/" % (cls.url, day_str)
+            url = urllib.parse.urljoin(cls.url, 'strips/comic/%s/' % day_str)
             img = get_soup_at_url(url).find('img', src=img_src_re)
             title = img.get('title')
             assert title == "The Dilbert Strip for %s" % \
@@ -395,7 +395,7 @@ class Dilbert(GenericComic):
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': [cls.url + img.get('src')],
+                'img': [urllib.parse.urljoin(url, img.get('src'))],
                 'name': title,
                 'prefix': '%s-' % day_str
             }
@@ -418,7 +418,7 @@ class ThreeWordPhrase(GenericComic):
             ).parent.get('href')
 
         while next_url:
-            comic_url = cls.url + '/' + next_url
+            comic_url = urllib.parse.urljoin(cls.url, next_url)
             soup = get_soup_at_url(comic_url)
             title = soup.find('title')
             # hackish way to get the image
@@ -430,7 +430,7 @@ class ThreeWordPhrase(GenericComic):
                 'url': comic_url,
                 'title': title.string if title else None,
                 'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
-                'img': [('' if src.startswith('http://') else (cls.url + '/')) + src for src in (img.get('src') for img in imgs)],
+                'img': [urllib.parse.urljoin(comic_url, img.get('src')) for img in imgs],
             }
             next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
 
@@ -447,14 +447,14 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
 
-        archive_page = cls.url + "/archives.php"
+        archive_page = urllib.parse.urljoin(cls.url, '/archives.php')
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
 
         for link in get_soup_at_url(archive_page).find_all('a', href=comic_link_re):
             link_url = link.get('href')
             num = int(comic_link_re.match(link_url).groups()[0])
             if num > last_num:
-                url = cls.url + link_url
+                url = urllib.parse.urljoin(cls.url, link_url)
                 soup = get_soup_at_url(url)
                 image_url1 = soup.find('div', id='comicimage').find('img').get('src')
                 image_url2 = soup.find('div', id='aftercomic').find('img').get('src')
@@ -485,8 +485,9 @@ class PerryBibleFellowship(GenericComic):
         for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re)):
             num = int(link.get('name'))
             if num > last_num:
-                url = cls.url + link.get('href')
-                assert url == cls.url + "/" + str(num) + "/"
+                href = link.get('href')
+                assert href == '/%d/' % num
+                url = urllib.parse.urljoin(cls.url, href)
                 name = link.string
                 image = get_soup_at_url(url).find('img', src=comic_img_re)
                 assert image.get('alt') == name
@@ -494,7 +495,7 @@ class PerryBibleFellowship(GenericComic):
                     'url': url,
                     'num': num,
                     'name': name,
-                    'img': [cls.url + image.get('src')],
+                    'img': [urllib.parse.urljoin(url, image.get('src'))],
                     'prefix': '%d-' % num
                 }
 
@@ -569,10 +570,10 @@ class CyanideAndHappiness(GenericComic):
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', rel='next') \
             if last_comic else \
-            get_soup_at_url('%s/comics/' % cls.url).find('a', rel='first')
+            get_soup_at_url(urllib.parse.urljoin(cls.url, '/comics/')).find('a', rel='first')
 
         while next_comic:
-            comic_url = cls.url + next_comic.get('href')
+            comic_url = urllib.parse.urljoin(cls.url, next_comic.get('href'))
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
@@ -607,14 +608,14 @@ class MrLovenstein(GenericComic):
         if last_comic:
             first = last_comic['num'] + 1
         for num in range(first, last+1):
-            url = "%s/comic/%d" % (cls.url, num)
+            url = urllib.parse.urljoin(cls.url, '/comic/%d' % num)
             soup = get_soup_at_url(url)
             imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
             yield {
                 'url': url,
                 'num': num,
                 'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
-                'img': [cls.url + i.get('src') for i in imgs],
+                'img': [urllib.parse.urljoin(url, i.get('src')) for i in imgs],
             }
 
 
@@ -711,7 +712,7 @@ class CalvinAndHobbes(GenericComic):
             year, month = link_re.match(url).groups()
             if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
                 img_re = re.compile('^%s%s([0-9]*)' % (year, month))
-                month_url = cls.url + url
+                month_url = urllib.parse.urljoin(cls.url, url)
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
                     img_src = img.get('src')
                     day = int(img_re.match(img_src).groups()[0])
@@ -801,14 +802,14 @@ class OverCompensating(GenericComic):
             if last_comic else \
             get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
         while next_comic:
-            comic_url = cls.url + next_comic.get('href')
+            comic_url = urllib.parse.urljoin(cls.url, next_comic.get('href'))
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             img = soup.find('img', src=img_src_re)
             yield {
                 'url': comic_url,
                 'num': num,
-                'img': [cls.url + img.get('src')],
+                'img': [urllib.parse.urljoin(comic_url, img.get('src'))],
                 'title': img.get('title')
             }
             next_comic = soup.find('a', title='next comic')
@@ -840,7 +841,7 @@ class TheDoghouseDiaries(GenericComic):
                 'title': soup.find('h2', id='titleheader').string,
                 'title2': soup.find('div', id='subtext').string,
                 'alt': img.get('title'),
-                'img': [cls.url + img.get('src').strip()],
+                'img': [urllib.parse.urljoin(comic_url, img.get('src').strip())],
                 'num': int(comic_url.split('/')[-1]),
             }
             prev_url, comic_url = comic_url, soup.find('a', id='nextlink').get('href')
@@ -861,7 +862,7 @@ class GenericGoComic(GenericComic):
             get_soup_at_url(cls.url).find('a', class_='beginning')
 
         while next_comic:
-            url_comic = gocomics + next_comic.get('href')
+            url_comic = urllib.parse.urljoin(gocomics, next_comic.get('href'))
             year, month, day = [int(s) for s in url_date_re.match(url_comic).groups()]
             soup = get_soup_at_url(url_comic)
             next_comic = soup.find('a', class_='next')
