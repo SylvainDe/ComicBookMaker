@@ -65,11 +65,13 @@ class GenericComic(object):
         name        Name of the comic (for logging and CLI)
         long_name   Long name of the comic (to be added in the comic info)
         output_dir  Output directory to put/get data (comics + database)
-        json_file   Name of the JSON file used to store the database."""
+        json_file   Name of the JSON file used to store the database
+        url         Base url for the comic (without trailing slash)."""
     name = None
     long_name = None
     output_dir = None
     json_file = None
+    url = None
 
     @classmethod
     def create_output_dir(cls):
@@ -247,20 +249,21 @@ class Xkcd(GenericComic):
     long_name = 'xkcd'
     output_dir = 'xkcd'
     json_file = 'xkcd.json'
+    url = 'http://xkcd.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         first_num = last_comic['num'] if last_comic else 0
-        last_num = load_json_at_url("http://xkcd.com/info.0.json")['num']
+        last_num = load_json_at_url(cls.url + '/info.0.json')['num']
 
         for num in range(first_num + 1, last_num + 1):
             if num != 404:
-                json_url = "http://xkcd.com/%d/info.0.json" % num
+                json_url = '%s/%d/info.0.json' % (cls.url, num)
                 comic = load_json_at_url(json_url)
                 comic['img'] = [comic['img']]
                 comic['prefix'] = '%d-' % num
                 comic['json_url'] = json_url
-                comic['url'] = "http://xkcd.com/%d/" % num
+                comic['url'] = '%s/%d/' % (cls.url, num)
                 comic['day'] = int(comic['day'])
                 comic['month'] = int(comic['month'])
                 comic['year'] = int(comic['year'])
@@ -274,16 +277,15 @@ class ExtraFabulousComics(GenericComic):
     long_name = 'Extra Fabulous Comics'
     output_dir = 'efc'
     json_file = 'efc.json'
+    url = 'http://extrafabulouscomics.com',
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        home_url = 'http://extrafabulouscomics.com'
-        img_src_re = re.compile(
-            '^http://extrafabulouscomics.com/wp-content/uploads/')
+        img_src_re = re.compile('^%s/wp-content/uploads/' % cls.url)
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', title='next') \
             if last_comic else \
-            get_soup_at_url(home_url).find('a', title='first')
+            get_soup_at_url(cls.url).find('a', title='first')
         while next_comic:
             url = next_comic.get('href')
             soup = get_soup_at_url(url)
@@ -306,17 +308,17 @@ class NeDroid(GenericComic):
     long_name = 'NeDroid'
     output_dir = 'nedroid'
     json_file = 'nedroid.json'
+    url = 'http://nedroid.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        home_url = 'http://nedroid.com/'
-        comic_url_re = re.compile('^http://nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
-        short_url_re = re.compile('^http://nedroid.com/\\?p=([0-9]*)')
+        comic_url_re = re.compile('^%s/comics/([0-9]*)-([0-9]*)-([0-9]*).*' % cls.url)
+        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
 
         next_comic = \
             get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
             if last_comic else \
-            get_soup_at_url(home_url).find('div', class_='nav-first').find('a')
+            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
 
         while next_comic:
             url = next_comic.get('href')
@@ -349,21 +351,21 @@ class Garfield(GenericComic):
     long_name = 'Garfield'
     output_dir = 'garfield'
     json_file = 'garfield.json'
+    url = 'http://garfield.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
             if last_comic else date(1978, 6, 19)
-        home_url = 'http://garfield.com'
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
             yield {
-                'url': "%s/comic/%s" % (home_url, day_str),
+                'url': "%s/comic/%s" % (cls.url, day_str),
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': ["%s/uploads/strips/%s.jpg" % (home_url, day_str)],
+                'img': ["%s/uploads/strips/%s.jpg" % (cls.url, day_str)],
             }
 
 
@@ -373,17 +375,17 @@ class Dilbert(GenericComic):
     long_name = 'Dilbert'
     output_dir = 'dilbert'
     json_file = 'dilbert.json'
+    url = 'http://dilbert.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         img_src_re = re.compile('^/dyn/str_strip/')
-        home_url = 'http://dilbert.com'
         first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
             if last_comic else date(1989, 4, 16)
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
-            url = "%s/strips/comic/%s/" % (home_url, day_str)
+            url = "%s/strips/comic/%s/" % (cls.url, day_str)
             img = get_soup_at_url(url).find('img', src=img_src_re)
             title = img.get('title')
             assert title == "The Dilbert Strip for %s" % \
@@ -393,7 +395,7 @@ class Dilbert(GenericComic):
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': [home_url + img.get('src')],
+                'img': [cls.url + img.get('src')],
                 'name': title,
                 'prefix': '%s-' % day_str
             }
@@ -405,18 +407,18 @@ class ThreeWordPhrase(GenericComic):
     long_name = 'Three Word Phrase'
     output_dir = 'threeword'
     json_file = 'threeword.json'
+    url = 'http://threewordphrase.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        url = 'http://threewordphrase.com'
         next_url = (
             get_soup_at_url(last_comic['url']).find('img', src='/nextlink.gif')
             if last_comic else
-            get_soup_at_url(url).find('img', src='/firstlink.gif')
+            get_soup_at_url(cls.url).find('img', src='/firstlink.gif')
             ).parent.get('href')
 
         while next_url:
-            comic_url = url + '/' + next_url
+            comic_url = cls.url + '/' + next_url
             soup = get_soup_at_url(comic_url)
             title = soup.find('title')
             # hackish way to get the image
@@ -428,7 +430,7 @@ class ThreeWordPhrase(GenericComic):
                 'url': comic_url,
                 'title': title.string if title else None,
                 'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
-                'img': [('' if src.startswith('http://') else (url + '/')) + src for src in (img.get('src') for img in imgs)],
+                'img': [('' if src.startswith('http://') else (cls.url + '/')) + src for src in (img.get('src') for img in imgs)],
             }
             next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
 
@@ -439,21 +441,20 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     long_name = 'Saturday Morning Breakfast Cereal'
     output_dir = 'smbc'
     json_file = 'smbc.json'
+    url = 'http://www.smbc-comics.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
 
-        base_url = "http://www.smbc-comics.com"
-        archive_page = base_url + "/archives.php"
+        archive_page = cls.url + "/archives.php"
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
 
         for link in get_soup_at_url(archive_page).find_all('a', href=comic_link_re):
             link_url = link.get('href')
             num = int(comic_link_re.match(link_url).groups()[0])
             if num > last_num:
-                title = link.string
-                url = base_url + link_url
+                url = cls.url + link_url
                 soup = get_soup_at_url(url)
                 image_url1 = soup.find('div', id='comicimage').find('img').get('src')
                 image_url2 = soup.find('div', id='aftercomic').find('img').get('src')
@@ -461,7 +462,7 @@ class SaturdayMorningBreakfastCereal(GenericComic):
                     'url': url,
                     'num': num,
                     'img': [image_url1] + ([image_url2] if image_url2 else []),
-                    'title': title
+                    'title': link.string
                 }
                 yield comic
 
@@ -472,20 +473,20 @@ class PerryBibleFellowship(GenericComic):
     long_name = 'Perry Bible Fellowship'
     output_dir = 'pbf'
     json_file = 'pbf.json'
+    url = 'http://pbfcomics.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
 
-        home_url = 'http://pbfcomics.com'
         comic_link_re = re.compile('^/[0-9]*/$')
         comic_img_re = re.compile('^/archive_b/PBF.*')
 
-        for link in reversed(get_soup_at_url(home_url).find_all('a', href=comic_link_re)):
+        for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re)):
             num = int(link.get('name'))
             if num > last_num:
-                url = home_url + link.get('href')
-                assert url == home_url + "/" + str(num) + "/"
+                url = cls.url + link.get('href')
+                assert url == cls.url + "/" + str(num) + "/"
                 name = link.string
                 image = get_soup_at_url(url).find('img', src=comic_img_re)
                 assert image.get('alt') == name
@@ -493,7 +494,7 @@ class PerryBibleFellowship(GenericComic):
                     'url': url,
                     'num': num,
                     'name': name,
-                    'img': [home_url + image.get('src')],
+                    'img': [cls.url + image.get('src')],
                     'prefix': '%d-' % num
                 }
 
@@ -504,16 +505,16 @@ class BouletCorp(GenericComic):
     long_name = 'Boulet Corp'
     output_dir = 'boulet'
     json_file = 'boulet.json'
+    url = 'http://www.bouletcorp.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        home_url = 'http://www.bouletcorp.com'
-        date_re = re.compile('^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/' % home_url)
+        date_re = re.compile('^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
         prev_url = last_comic['url'] if last_comic else None
         comic_url = (
             get_soup_at_url(prev_url).find('div', id='centered_nav').find_all('a')[3]
             if prev_url
-            else get_soup_at_url(home_url).find('div', id='centered_nav').find_all('a')[0]).get('href')
+            else get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]).get('href')
 
         while comic_url != prev_url:
             year, month, day = [int(s) for s in date_re.match(comic_url).groups()]
@@ -541,6 +542,7 @@ class CyanideAndHappiness(GenericComic):
     long_name = 'Cyanide and Happiness'
     output_dir = 'cyanide'
     json_file = 'cyanide.json'
+    url = 'http://explosm.net'
 
     @classmethod
     def get_author_and_data_from_str(cls, data):
@@ -561,17 +563,16 @@ class CyanideAndHappiness(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        base_url = "http://explosm.net"
         img_src_re = re.compile('^http://(www.)?explosm.net/db/files/Comics/.*')
-        comic_num_re = re.compile('^http://explosm.net/comics/([0-9]*)/$')
+        comic_num_re = re.compile('^%s/comics/([0-9]*)/$' % cls.url)
 
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', rel='next') \
             if last_comic else \
-            get_soup_at_url("http://explosm.net/comics/").find('a', rel='first')
+            get_soup_at_url('%s/comics/' % cls.url).find('a', rel='first')
 
         while next_comic:
-            comic_url = base_url + next_comic.get('href')
+            comic_url = cls.url + next_comic.get('href')
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
@@ -595,25 +596,25 @@ class MrLovenstein(GenericComic):
     long_name = 'Mr. Lovenstein'
     json_file = 'mrlovenstein.json'
     output_dir = 'mrlovenstein'
+    url = 'http://www.mrlovenstein.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         # TODO: more info from http://www.mrlovenstein.com/archive
-        home_url = 'http://www.mrlovenstein.com'
         comic_num_re = re.compile('^/comic/([0-9]*)$')
-        nums = [int(comic_num_re.match(link.get('href')).groups()[0]) for link in get_soup_at_url(home_url).find_all('a', href=comic_num_re)]
+        nums = [int(comic_num_re.match(link.get('href')).groups()[0]) for link in get_soup_at_url(cls.url).find_all('a', href=comic_num_re)]
         first, last = min(nums), max(nums)
         if last_comic:
             first = last_comic['num'] + 1
         for num in range(first, last+1):
-            url = "%s/comic/%d" % (home_url, num)
+            url = "%s/comic/%d" % (cls.url, num)
             soup = get_soup_at_url(url)
             imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
             yield {
                 'url': url,
                 'num': num,
                 'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
-                'img': [home_url + i.get('src') for i in imgs],
+                'img': [cls.url + i.get('src') for i in imgs],
             }
 
 
@@ -623,12 +624,14 @@ class DinosaurComics(GenericComic):
     long_name = 'Dinosaur Comics'
     output_dir = 'dinosaur'
     json_file = 'dinosaur.json'
+    url = 'http://www.qwantz.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
-        comic_link_re = re.compile('^http://www.qwantz.com/index.php\\?comic=([0-9]*)$')
-        archive_url = 'http://www.qwantz.com/archive.php'
+        comic_link_re = re.compile('^%s/index.php\\?comic=([0-9]*)$' % cls.url)
+        comic_img_re = re.compile('^%s/comics/' % cls.url)
+        archive_url = '%s/archive.php' % cls.url
         # first link is random -> skip it
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)[1:]):
             url = link.get('href')
@@ -644,7 +647,7 @@ class DinosaurComics(GenericComic):
                     .replace('th', '')
                     .replace('Augu', 'August'), "%B %d, %Y").date()
                 soup = get_soup_at_url(url)
-                img = soup.find('img', src=re.compile('^http://www.qwantz.com/comics/'))
+                img = soup.find('img', src=comic_img_re)
                 yield {
                     'url': url,
                     'month': day.month,
@@ -663,11 +666,12 @@ class ButterSafe(GenericComic):
     long_name = 'ButterSafe'
     output_dir = 'butter'
     json_file = 'butter.json'
+    url = 'http://buttersafe.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        archive_url = 'http://buttersafe.com/archive/'
-        comic_link_re = re.compile('^http://buttersafe.com/([0-9]*)/([0-9]*)/([0-9]*)/.*')
+        archive_url = '%s/archive/' % cls.url
+        comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % cls.url)
 
         prev_date = get_date_for_comic(last_comic) if last_comic else date(2006, 1, 1)
 
@@ -694,21 +698,20 @@ class CalvinAndHobbes(GenericComic):
     long_name = 'Calvin and Hobbes'
     output_dir = 'calvin'
     json_file = 'calvin.json'
+    # This is not through any official webpage but eh...
+    url = 'http://marcel-oehler.marcellosendos.ch/comics/ch/'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         last_date = get_date_for_comic(last_comic) if last_comic else date(1985, 11, 1)
-
-        # This is not through any official webpage but eh...
-        base_url = 'http://marcel-oehler.marcellosendos.ch/comics/ch/'
         link_re = re.compile('^([0-9]*)/([0-9]*)/')
         img_re = re.compile('')
-        for link in get_soup_at_url(base_url).find_all('a', href=link_re):
+        for link in get_soup_at_url(cls.url).find_all('a', href=link_re):
             url = link.get('href')
             year, month = link_re.match(url).groups()
             if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
                 img_re = re.compile('^%s%s([0-9]*)' % (year, month))
-                month_url = base_url + url
+                month_url = cls.url + url
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
                     img_src = img.get('src')
                     day = int(img_re.match(img_src).groups()[0])
@@ -719,7 +722,7 @@ class CalvinAndHobbes(GenericComic):
                             'year': int(year),
                             'month': int(month),
                             'day': int(day),
-                            'img': ['%s%s/%s/%s' % (base_url, year, month, img_src)],
+                            'img': ['%s%s/%s/%s' % (cls.url, year, month, img_src)],
                         }
                         last_date = comic_date
 
@@ -730,13 +733,14 @@ class AbstruseGoose(GenericComic):
     long_name = 'Abstruse Goose'
     output_dir = 'abstruse'
     json_file = 'abstruse.json'
+    url = 'http://abstrusegoose.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        archive_url = 'http://abstrusegoose.com/archive'
+        archive_url = '%s/archive' % cls.url
         last_num = last_comic['num'] if last_comic else 0
-        comic_url_re = re.compile('^http://abstrusegoose.com/([0-9]*)$')
-        comic_img_re = re.compile('^http://abstrusegoose.com/strips/.*')
+        comic_url_re = re.compile('^%s/([0-9]*)$' % cls.url)
+        comic_img_re = re.compile('^%s/strips/.*' % cls.url)
         for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_re):
             url_comic = link.get('href')
             num = int(comic_url_re.match(url_comic).groups()[0])
@@ -755,10 +759,11 @@ class PhDComics(GenericComic):
     long_name = 'PhD Comics'
     output_dir = 'phd'
     json_file = 'phd.json'
+    url = 'http://phdcomics.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        archive_url = 'http://phdcomics.com/comics/archive_list.php'
+        archive_url = '%s/comics/archive_list.php' % cls.url
         comic_url_num_re = re.compile('^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
 
         last_num = last_comic['num'] if last_comic else 0
@@ -785,25 +790,25 @@ class OverCompensating(GenericComic):
     long_name = 'Over Compensating'
     output_dir = 'compensating'
     json_file = 'compensating.json'
+    url = 'http://www.overcompensating.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        url = 'http://www.overcompensating.com'
         img_src_re = re.compile('^/oc/comics/.*')
         comic_num_re = re.compile('.*comic=([0-9]*)$')
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', title='next comic') \
             if last_comic else \
-            get_soup_at_url(url).find('a', href=re.compile('comic=1$'))
+            get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
         while next_comic:
-            comic_url = url + next_comic.get('href')
+            comic_url = cls.url + next_comic.get('href')
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             img = soup.find('img', src=img_src_re)
             yield {
                 'url': comic_url,
                 'num': num,
-                'img': [url + img.get('src')],
+                'img': [cls.url + img.get('src')],
                 'title': img.get('title')
             }
             next_comic = soup.find('a', title='next comic')
@@ -815,16 +820,16 @@ class TheDoghouseDiaries(GenericComic):
     long_name = 'The Dog House Diaries'
     output_dir = 'doghouse'
     json_file = 'doghouse.json'
+    url = 'http://thedoghousediaries.com/'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        url = 'http://thedoghousediaries.com/'
         comic_img_re = re.compile('^dhdcomics/.*')
         prev_url = last_comic['url'] if last_comic else None
         comic_url = (
             get_soup_at_url(prev_url).find('a', id='nextlink')
             if prev_url else
-            get_soup_at_url(url).find('a', id='firstlink')).get('href')
+            get_soup_at_url(cls.url).find('a', id='firstlink')).get('href')
 
         while comic_url != prev_url:
             soup = get_soup_at_url(comic_url)
@@ -835,29 +840,25 @@ class TheDoghouseDiaries(GenericComic):
                 'title': soup.find('h2', id='titleheader').string,
                 'title2': soup.find('div', id='subtext').string,
                 'alt': img.get('title'),
-                'img': [url + img.get('src').strip()],
+                'img': [cls.url + img.get('src').strip()],
                 'num': int(comic_url.split('/')[-1]),
             }
             prev_url, comic_url = comic_url, soup.find('a', id='nextlink').get('href')
 
 
 class GenericGoComic(GenericComic):
-    """Generic class to handle the logic common to retrieve comics from gocomics.com
-
-    Attributes :
-        gocomic_name        Name of the comic on gocomics."""
+    """Generic class to handle the logic common to comics from gocomics.com."""
     gocomic_name = None
 
     @classmethod
     def get_next_comic(cls, last_comic):
         gocomics = 'http://www.gocomics.com'
-        url = gocomics + '/' + cls.gocomic_name
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', class_='next') \
             if last_comic else \
-            get_soup_at_url(url).find('a', class_='beginning')
+            get_soup_at_url(cls.url).find('a', class_='beginning')
 
         while next_comic:
             url_comic = gocomics + next_comic.get('href')
@@ -880,7 +881,7 @@ class PearlsBeforeSwine(GenericGoComic):
     long_name = 'Pearls Before Swine'
     output_dir = 'pearls'
     json_file = 'pearls.json'
-    gocomic_name = 'pearlsbeforeswine'
+    url = 'http://www.gocomics.com/pearlsbeforeswine'
 
 
 class Peanuts(GenericGoComic):
@@ -889,7 +890,7 @@ class Peanuts(GenericGoComic):
     long_name = 'Peanuts'
     output_dir = 'peanuts'
     json_file = 'peanuts.json'
-    gocomic_name = 'peanuts'
+    url = 'http://www.gocomics.com/peanuts'
 
 
 def get_subclasses(klass):
