@@ -572,6 +572,39 @@ class BouletCorp(GenericComic):
             prev_url, comic_url = comic_url, soup.find('div', id='centered_nav').find_all('a')[3].get('href')
 
 
+class AmazingSuperPowers(GenericComic):
+    """Class to retrieve Amazing Super Powers comics."""
+    name = 'asp'
+    long_name = 'Amazing Super Powers'
+    output_dir = 'asp'
+    json_file = 'asp.json'
+    url = 'http://www.amazingsuperpowers.com'
+    # images are not retrieved properly, I guess the user-agent it not ok
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        link_re = re.compile('^%s/([0-9]*)/([0-9]*)/.*$' % cls.url)
+        img_re = re.compile('^%s/comics/.*$' % cls.url)
+        archive_url = urllib.parse.urljoin(cls.url, 'category/comics/')
+        last_date = get_date_for_comic(last_comic) if last_comic else date(2000, 1, 1)
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re)):
+            comic_date = datetime.datetime.strptime(link.parent.previous_sibling.string, "%b %d, %Y").date()
+            if comic_date > last_date:
+                title = link.string
+                comic_url = link.get('href')
+                imgs = get_soup_at_url(comic_url).find_all('img', src=img_re)
+                title = ' '.join(img.get('title') for img in imgs)
+                assert ' '.join(img.get('alt') for img in imgs) == title
+                yield {
+                    'url': comic_url,
+                    'title': title,
+                    'img': [img.get('src') for img in imgs],
+                    'day': comic_date.day,
+                    'month': comic_date.month,
+                    'year': comic_date.year
+                }
+
+
 class CyanideAndHappiness(GenericComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
