@@ -6,6 +6,7 @@ import os
 import json
 import urllib.request
 import urllib.parse
+import shutil
 import html
 import re
 from bs4 import BeautifulSoup
@@ -30,21 +31,40 @@ def convert_iri_to_plain_ascii_uri(uri):
     return url
 
 
-def get_content(url):
-    """Get content at url."""
+def urlopen_wrapper(url):
+    """Wrapper around urllib.request.urlopen (user-agent, etc).
+
+    url is a string
+    Returns a byte object."""
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
     return urllib.request.urlopen(
         urllib.request.Request(
             url,
-            headers={'User-Agent': user_agent})).read()
+            headers={'User-Agent': user_agent}))
+
+
+def get_content(url):
+    """Get content at url.
+
+    url is a string
+    Returns a string"""
+    return urlopen_wrapper(url).read()
 
 
 def get_file_at_url(url, path):
-    """Save content at url in path on file system."""
+    """Save content at url in path on file system.
+    In theory, this could have been achieved with urlretrieve but it seems
+    to be about to get deprecated and adding a user-agent seems to be quite
+    awkward.
+
+    url is a string
+    path is a string corresponding to the file location
+    Returns the path if the file is retrieved properly, None otherwise."""
     try:
-        urllib.request.urlretrieve(url, path)
-        return path
-    except (ValueError, urllib.error.ContentTooShortError):
+        with urlopen_wrapper(url) as response, open(path, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
+            return path
+    except (urllib.error.HTTPError):
         return None
 
 
@@ -54,12 +74,15 @@ def get_date_for_comic(comic):
 
 
 def load_json_at_url(url):
-    """Get content at url as JSON."""
+    """Get content at url as JSON and return it."""
     return json.loads(get_content(url).decode())
 
 
 def get_soup_at_url(url):
-    """Get content at url as BeautifulSoup."""
+    """Get content at url as BeautifulSoup.
+
+    url is a string
+    Returns a BeautifulSoup object."""
     return BeautifulSoup(get_content(url))
 
 
