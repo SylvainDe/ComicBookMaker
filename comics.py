@@ -6,12 +6,17 @@ import os
 import json
 import urllib.request
 import urllib.parse
+import html
 import re
 from bs4 import BeautifulSoup
 import time
+import sys
 from datetime import date, timedelta
 import datetime
 import argparse
+from subprocess import call
+
+KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
 
 
 def convert_iri_to_plain_ascii_uri(uri):
@@ -972,6 +977,62 @@ def get_subclasses(klass):
 COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not None}
 
 
+def make_book(comic_classes):
+    """Create ebook - not finished."""
+    cover = 'empty.jpg'
+    comics = sum((c.load_db() for c in comic_classes), [])
+    html_book = 'book_%s.html' % ("_".join(c.name for c in comic_classes))
+    with open(html_book, 'w+') as book:
+        book.write("""
+<html>
+    <head>
+        <title>%s</title>
+        <meta name='book-type' content='comic'/>
+        <meta name='orientation-lock' content='landscape'/>
+        <meta name='cover' content='%s'>
+    </head>
+    <body>
+        Generated with '%s' at %s<br>
+        <a name='TOC'><h1>Table of Contents</h1></a>""" % (
+            ' - '.join(c.long_name for c in comic_classes),
+            cover,
+            ' '.join(sys.argv),
+            datetime.datetime.now().strftime('%c')
+            ))
+
+        for i, com in enumerate(comics):
+            book.write("""
+        <a href='#%d'>%s</a><br>""" % (i, com['url']))
+
+        book.write("""
+    <mbp:pagebreak />
+    <a name='start' />""")
+
+        for i, com in enumerate(comics):
+            book.write("""
+        <mbp:pagebreak />
+        <a name='%d'/><h1>%s</h1>
+            %s %s<br>""" % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+            author = com.get('author')
+            if author:
+                book.write("""
+            by %s<br>""" % author)
+            for path in com['local_img']:
+                if path is not None:
+                    assert os.path.isfile(path)
+                    book.write("""
+            <img src='%s'>""" % urllib.parse.quote(path))
+            alt = com.get('alt')
+            if alt:
+                book.write("""
+            %s<br>""" % html.escape(alt))
+        book.write("""
+    </body>
+</html>""")
+
+    call([KINDLEGEN_PATH, html_book])
+
+
 def main():
     """Main function"""
     comic_names = sorted(COMIC_NAMES.keys())
@@ -983,12 +1044,31 @@ def main():
         help=('comics to be considered (default: ALL)'),
         choices=comic_names,
         default=[])
+    parser.add_argument(
+        '--action', '-a',
+        action='append',
+        help=('actions required'),
+        default=[])
     args = parser.parse_args()
     if not args.comic:
         args.comic = comic_names
-    assert all(c in COMIC_NAMES for c in args.comic)
-    for c in args.comic:
-        COMIC_NAMES[c].update()
+    if not args.action:
+        args.action = ['update']
+    comic_classes = [COMIC_NAMES[c] for c in args.comic]
+    for action in args.action:
+        if action == 'book':
+            make_book(comic_classes)
+        elif action == 'update':
+            for com in comic_classes:
+                com.update()
+        elif action == 'check':
+            for com in comic_classes:
+                com.check_everything_is_ok()
+        elif action == 'fix':
+            for com in comic_classes:
+                com.try_to_get_missing_resources()
+        else:
+            print("Unknown action : %s" % action)
 
 if __name__ == "__main__":
     main()
