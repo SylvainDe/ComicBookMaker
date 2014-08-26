@@ -500,6 +500,41 @@ class PerryBibleFellowship(GenericComic):
                 }
 
 
+class BerkeleyMews(GenericComic):
+    """Class to retrieve Berkeley Mews comics."""
+    name = 'berkeley'
+    long_name = 'Berkeley Mews'
+    output_dir = 'berkeley'
+    json_file = 'berkeley.json'
+    url = 'http://www.berkeleymews.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        last_num = last_comic['num'] if last_comic else 0
+
+        comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % cls.url)
+        comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
+        for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_num_re, class_='')):
+            comic_url = link.get('href')
+            num = int(comic_num_re.match(comic_url).groups()[0])
+            if num > last_num:
+                img = get_soup_at_url(comic_url).find('div', id='comic').find('img')
+                img_url = img.get('src')
+                year, month, day = [int(s) for s in comic_date_re.match(img_url).groups()]
+                title2 = img.get('title')
+                assert title2 == img.get('alt')
+                yield {
+                    'url': comic_url,
+                    'num': num,
+                    'title': link.string,
+                    'title2': title2,
+                    'img': [img_url],
+                    'year': year,
+                    'month': month,
+                    'day': day,
+                }
+
+
 class BouletCorp(GenericComic):
     """Class to retrieve BouletCorp comics."""
     name = 'boulet'
