@@ -953,7 +953,7 @@ class GenericGoComic(GenericComic):
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
         next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='next') \
+            get_soup_at_url(last_comic['url']).find('a', class_='next', href=url_date_re) \
             if last_comic else \
             get_soup_at_url(cls.url).find('a', class_='beginning')
 
@@ -961,7 +961,7 @@ class GenericGoComic(GenericComic):
             url_comic = urllib.parse.urljoin(gocomics, next_comic.get('href'))
             year, month, day = [int(s) for s in url_date_re.match(url_comic).groups()]
             soup = get_soup_at_url(url_comic)
-            next_comic = soup.find('a', class_='next')
+            next_comic = soup.find('a', class_='next', href=url_date_re)
             yield {
                 'url': url_comic,
                 'day': day,
