@@ -1044,7 +1044,7 @@ def make_book(comic_classes):
                 if path is not None:
                     assert os.path.isfile(path)
                     book.write("""
-            <img src='%s'>""" % urllib.parse.quote(path))
+            <img src='%s'><br>""" % urllib.parse.quote(path))
             alt = com.get('alt')
             if alt:
                 book.write("""
