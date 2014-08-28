@@ -18,6 +18,31 @@ import argparse
 from subprocess import call
 
 KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
+HTML_HEADER = """
+<html>
+    <head>
+        <title>%s</title>
+        <meta name='book-type' content='comic'/>
+        <meta name='orientation-lock' content='landscape'/>
+        <meta name='cover' content='%s'>
+    </head>
+    <body>
+        Generated with '%s' at %s<br>
+        <a name='TOC'><h1>Table of Contents</h1></a>"""
+HTML_TOC_ITEM = """
+        <a href='#%d'>%s</a><br>"""
+HTML_START = """
+    <mbp:pagebreak />
+    <a name='start' />"""
+HTML_COMIC_INFO = """
+        <mbp:pagebreak />
+        <a name='%d'/><h1>%s</h1>
+            %s %s<br>"""
+HTML_COMIC_IMG = """
+            <img src='%s'><br>"""
+HTML_FOOTER = """
+    </body>
+</html>"""
 
 
 def convert_iri_to_plain_ascii_uri(uri):
@@ -66,6 +91,14 @@ def get_file_at_url(url, path):
             return path
     except (urllib.error.HTTPError):
         return None
+
+
+def get_filename_from_url(url):
+    """Get filename from url
+
+    url is a string
+    Returns a string corresponding to the name of the file."""
+    return urllib.parse.unquote(url).split('/')[-1]
 
 
 def get_date_for_comic(comic):
@@ -132,7 +165,7 @@ class GenericComic(object):
         filename = os.path.join(
             cls.output_dir,
             ('' if prefix is None else prefix) +
-            urllib.parse.unquote(url).split('/')[-1])
+            get_filename_from_url(url))
         return get_file_at_url(url, filename)
 
     @classmethod
@@ -143,6 +176,7 @@ class GenericComic(object):
         imgs_paths = {}
         imgs_urls = {}
         prev_date, prev_num = None, None
+        today = date.today()
         for i, comic in enumerate(comics):
             cls.print_comic(comic)
             url = comic.get('url')
@@ -152,6 +186,7 @@ class GenericComic(object):
                        for k in ['day', 'month', 'year']), \
                 "Invalid date data (%s)" % url
             curr_date = get_date_for_comic(comic)
+            assert curr_date <= today
             curr_num = comic.get('num', 0)
             assert isinstance(curr_num, int)
             assert prev_date is None or prev_date <= curr_date or \
@@ -584,12 +619,11 @@ class BouletCorp(GenericComic):
             year, month, day = [int(s) for s in date_re.match(comic_url).groups()]
             soup = get_soup_at_url(comic_url)
             imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
-            image_urls = [convert_iri_to_plain_ascii_uri(i.get('src')) for i in imgs]
             texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
             title = soup.find('title').string
             comic = {
                 'url': comic_url,
-                'img': image_urls,
+                'img': [convert_iri_to_plain_ascii_uri(i.get('src')) for i in imgs],
                 'title': title,
                 'texts': texts,
                 'year': year,
@@ -1002,21 +1036,16 @@ COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not 
 
 def make_book(comic_classes):
     """Create ebook - not finished."""
+    output_dir = 'generated_books'
     cover = 'empty.jpg'
     comics = sum((c.load_db() for c in comic_classes), [])
-    html_book = 'book_%s.html' % ("_".join(c.name for c in comic_classes))
+    html_book = os.path.join(
+        output_dir,
+        'book_%s.html' % ("_".join(c.name for c in comic_classes))
+    )
+    os.makedirs(output_dir, exist_ok=True)
     with open(html_book, 'w+') as book:
-        book.write("""
-<html>
-    <head>
-        <title>%s</title>
-        <meta name='book-type' content='comic'/>
-        <meta name='orientation-lock' content='landscape'/>
-        <meta name='cover' content='%s'>
-    </head>
-    <body>
-        Generated with '%s' at %s<br>
-        <a name='TOC'><h1>Table of Contents</h1></a>""" % (
+        book.write(HTML_HEADER % (
             ' - '.join(c.long_name for c in comic_classes),
             cover,
             ' '.join(sys.argv),
@@ -1024,18 +1053,12 @@ def make_book(comic_classes):
             ))
 
         for i, com in enumerate(comics):
-            book.write("""
-        <a href='#%d'>%s</a><br>""" % (i, com['url']))
+            book.write(HTML_TOC_ITEM % (i, com['url']))
 
-        book.write("""
-    <mbp:pagebreak />
-    <a name='start' />""")
+        book.write(HTML_START)
 
         for i, com in enumerate(comics):
-            book.write("""
-        <mbp:pagebreak />
-        <a name='%d'/><h1>%s</h1>
-            %s %s<br>""" % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+            book.write(HTML_COMIC_INFO % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
             author = com.get('author')
             if author:
                 book.write("""
