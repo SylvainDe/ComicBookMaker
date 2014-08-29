@@ -281,13 +281,13 @@ class NeDroid(GenericComic):
             get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
 
         while next_comic:
-            url = next_comic.get('href')
+            url = next_comic['href']
             soup = get_soup_at_url(url)
             img = soup.find('img', src=comic_url_re)
-            img_url = img.get('src')
-            assert url == soup.find('link', rel='canonical').get('href')
+            img_url = img['src']
+            assert url == soup.find('link', rel='canonical')['href']
             next_comic = soup.find('div', class_='nav-next').find('a')
-            short_url = soup.find('link', rel='shortlink').get('href')
+            short_url = soup.find('link', rel='shortlink')['href']
             year, month, day = [int(s) for s in comic_url_re.match(img_url).groups()]
             num = int(short_url_re.match(short_url).groups()[0])
             yield {
@@ -443,17 +443,17 @@ class PerryBibleFellowship(GenericComic):
         for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re)):
             num = int(link['name'])
             if num > last_num:
-                href = link.get('href')
+                href = link['href']
                 assert href == '/%d/' % num
                 url = urljoin_wrapper(cls.url, href)
                 name = link.string
                 image = get_soup_at_url(url).find('img', src=comic_img_re)
-                assert image.get('alt') == name
+                assert image['alt'] == name
                 yield {
                     'url': url,
                     'num': num,
                     'name': name,
-                    'img': [urljoin_wrapper(url, image.get('src'))],
+                    'img': [urljoin_wrapper(url, image['src'])],
                     'prefix': '%d-' % num
                 }
 
@@ -473,11 +473,11 @@ class BerkeleyMews(GenericComic):
         comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % cls.url)
         comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
         for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_num_re, class_='')):
-            comic_url = link.get('href')
+            comic_url = link['href']
             num = int(comic_num_re.match(comic_url).groups()[0])
             if num > last_num:
                 img = get_soup_at_url(comic_url).find('div', id='comic').find('img')
-                img_url = img.get('src')
+                img_url = img['src']
                 year, month, day = [int(s) for s in comic_date_re.match(img_url).groups()]
                 title2 = img.get('title')
                 assert title2 == img.get('alt')
@@ -518,7 +518,7 @@ class BouletCorp(GenericComic):
             title = soup.find('title').string
             comic = {
                 'url': comic_url,
-                'img': [convert_iri_to_plain_ascii_uri(i.get('src')) for i in imgs],
+                'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
                 'title': title,
                 'texts': texts,
                 'year': year,
@@ -548,7 +548,7 @@ class AmazingSuperPowers(GenericComic):
             comic_date = datetime.datetime.strptime(link.parent.previous_sibling.string, "%b %d, %Y").date()
             if comic_date > last_date:
                 title = link.string
-                comic_url = link.get('href')
+                comic_url = link['href']
                 imgs = get_soup_at_url(comic_url).find_all('img', src=img_re)
                 title = ' '.join(img.get('title') for img in imgs)
                 assert ' '.join(img.get('alt') for img in imgs) == title
