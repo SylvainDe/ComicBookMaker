@@ -390,8 +390,6 @@ class NeDroid(GenericComic):
             soup = get_soup_at_url(url)
             img = soup.find('img', src=comic_url_re)
             img_url = img.get('src')
-            title = img.get('alt')
-            assert title == soup.find_all('h2')[-1].string
             assert url == soup.find('link', rel='canonical').get('href')
             next_comic = soup.find('div', class_='nav-next').find('a')
             short_url = soup.find('link', rel='shortlink').get('href')
@@ -400,7 +398,7 @@ class NeDroid(GenericComic):
             yield {
                 'url': url,
                 'short_url': short_url,
-                'title': title,
+                'title': img.get('alt'),
                 'title2': img.get('title'),
                 'img': [img_url],
                 'day': day,
