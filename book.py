@@ -66,7 +66,6 @@ def make_book(comic_classes):
 
         for i, com in enumerate(comics):
             book.write(HTML_COMIC_INFO % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
-            author = com.get('author')
             for info in get_info_before_comic(com):
                 book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
             for path in com['local_img']:
