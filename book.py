@@ -8,8 +8,9 @@ import subprocess
 import os
 import urllib.parse
 import datetime
-from comics import get_date_for_comic
+from comics import get_date_for_comic, get_info_before_comic, get_info_after_comic
 
+# http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
 KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
 HTML_HEADER = """
 <html>
@@ -66,15 +67,14 @@ def make_book(comic_classes):
         for i, com in enumerate(comics):
             book.write(HTML_COMIC_INFO % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
             author = com.get('author')
-            if author:
-                book.write(HTML_COMIC_ADDITIONAL_INFO % ('by' + author))
+            for info in get_info_before_comic(com):
+                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
             for path in com['local_img']:
                 if path is not None:
                     assert os.path.isfile(path)
                     book.write(HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
-            alt = com.get('alt')
-            if alt:
-                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(alt))
+            for info in get_info_after_comic(com):
+                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
         book.write(HTML_FOOTER)
 
     subprocess.call([KINDLEGEN_PATH, html_book])

@@ -16,6 +16,21 @@ def get_date_for_comic(comic):
     return date(comic['year'], comic['month'], comic['day'])
 
 
+def get_info_before_comic(comic):
+    """Generates the info to be put before the images."""
+    author = comic.get('author')
+    if author:
+        yield 'by ' + author
+
+
+def get_info_after_comic(comic):
+    """Generates the info to be put after the images."""
+    for name in ['alt', 'title', 'title2', 'texts']:
+        info = comic.get(name)
+        if info:
+            yield info
+
+
 class GenericComic(object):
     """Generic class to handle the logic common to all comics
 
