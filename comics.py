@@ -2,123 +2,18 @@
 # vim: set expandtab tabstop=4 shiftwidth=4 :
 """Module to retrieve webcomics"""
 
-import os
 import json
-import urllib.request
-import urllib.parse
-import shutil
-import html
 import re
-from bs4 import BeautifulSoup
 import time
-import sys
+import os
 from datetime import date, timedelta
 import datetime
-import argparse
-from subprocess import call
-
-KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
-HTML_HEADER = """
-<html>
-    <head>
-        <title>%s</title>
-        <meta name='book-type' content='comic'/>
-        <meta name='orientation-lock' content='landscape'/>
-        <meta name='cover' content='%s'>
-    </head>
-    <body>
-        Generated with '%s' at %s<br>
-        <a name='TOC'><h1>Table of Contents</h1></a>"""
-HTML_TOC_ITEM = """
-        <a href='#%d'>%s</a><br>"""
-HTML_START = """
-    <mbp:pagebreak />
-    <a name='start' />"""
-HTML_COMIC_INFO = """
-        <mbp:pagebreak />
-        <a name='%d'/><h1>%s</h1>
-            %s %s<br>"""
-HTML_COMIC_ADDITIONAL_INFO = """
-            %s<br>"""
-HTML_COMIC_IMG = """
-            <img src='%s'><br>"""
-HTML_FOOTER = """
-    </body>
-</html>"""
-
-
-def convert_iri_to_plain_ascii_uri(uri):
-    """Convert IRI to plain ASCII URL
-    Based on http://stackoverflow.com/questions/4389572/how-to-fetch-a-non-ascii-url-with-python-urlopen."""
-    lis = list(urllib.parse.urlsplit(uri))
-    lis[2] = urllib.parse.quote(lis[2])
-    url = urllib.parse.urlunsplit(lis)
-    if False and url != uri:
-        print(uri, '->', url)
-    return url
-
-
-def urlopen_wrapper(url):
-    """Wrapper around urllib.request.urlopen (user-agent, etc).
-
-    url is a string
-    Returns a byte object."""
-    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
-    return urllib.request.urlopen(
-        urllib.request.Request(
-            url,
-            headers={'User-Agent': user_agent}))
-
-
-def get_content(url):
-    """Get content at url.
-
-    url is a string
-    Returns a string"""
-    return urlopen_wrapper(url).read()
-
-
-def get_file_at_url(url, path):
-    """Save content at url in path on file system.
-    In theory, this could have been achieved with urlretrieve but it seems
-    to be about to get deprecated and adding a user-agent seems to be quite
-    awkward.
-
-    url is a string
-    path is a string corresponding to the file location
-    Returns the path if the file is retrieved properly, None otherwise."""
-    try:
-        with urlopen_wrapper(url) as response, open(path, 'wb') as out_file:
-            shutil.copyfileobj(response, out_file)
-            return path
-    except (urllib.error.HTTPError):
-        return None
-
-
-def get_filename_from_url(url):
-    """Get filename from url
-
-    url is a string
-    Returns a string corresponding to the name of the file."""
-    return urllib.parse.unquote(url).split('/')[-1]
+from urlfunctions import get_soup_at_url, get_filename_from_url, get_file_at_url, urljoin_wrapper, convert_iri_to_plain_ascii_uri, load_json_at_url
 
 
 def get_date_for_comic(comic):
     """Return date object for a given comic."""
     return date(comic['year'], comic['month'], comic['day'])
-
-
-def load_json_at_url(url):
-    """Get content at url as JSON and return it."""
-    return json.loads(get_content(url).decode())
-
-
-def get_soup_at_url(url):
-    """Get content at url as BeautifulSoup.
-
-    url is a string
-    Returns a BeautifulSoup object."""
-    return BeautifulSoup(get_content(url))
 
 
 class GenericComic(object):
@@ -255,7 +150,7 @@ class GenericComic(object):
             - data management (adds current date if no date is provided)."""
         print(cls.name, ': about to update')
         cls.create_output_dir()
-        comics = cls.load_db()[:-2]
+        comics = cls.load_db()
         new_comics = []
         start = time.time()
         try:
@@ -319,16 +214,16 @@ class Xkcd(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         first_num = last_comic['num'] if last_comic else 0
-        last_num = load_json_at_url(urllib.parse.urljoin(cls.url, 'info.0.json'))['num']
+        last_num = load_json_at_url(urljoin_wrapper(cls.url, 'info.0.json'))['num']
 
         for num in range(first_num + 1, last_num + 1):
             if num != 404:
-                json_url = urllib.parse.urljoin(cls.url, '%d/info.0.json' % num)
+                json_url = urljoin_wrapper(cls.url, '%d/info.0.json' % num)
                 comic = load_json_at_url(json_url)
                 comic['img'] = [comic['img']]
                 comic['prefix'] = '%d-' % num
                 comic['json_url'] = json_url
-                comic['url'] = urllib.parse.urljoin(cls.url, str(num))
+                comic['url'] = urljoin_wrapper(cls.url, str(num))
                 comic['day'] = int(comic['day'])
                 comic['month'] = int(comic['month'])
                 comic['year'] = int(comic['year'])
@@ -424,11 +319,11 @@ class Garfield(GenericComic):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
             yield {
-                'url': urllib.parse.urljoin(cls.url, 'comic/%s' % day_str),
+                'url': urljoin_wrapper(cls.url, 'comic/%s' % day_str),
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': [urllib.parse.urljoin(cls.url, 'uploads/strips/%s.jpg' % day_str)],
+                'img': [urljoin_wrapper(cls.url, 'uploads/strips/%s.jpg' % day_str)],
             }
 
 
@@ -448,7 +343,7 @@ class Dilbert(GenericComic):
         for i in range((date.today() - first_day).days + 1):
             day = first_day + timedelta(days=i)
             day_str = day.isoformat()
-            url = urllib.parse.urljoin(cls.url, 'strips/comic/%s/' % day_str)
+            url = urljoin_wrapper(cls.url, 'strips/comic/%s/' % day_str)
             img = get_soup_at_url(url).find('img', src=img_src_re)
             title = img.get('title')
             assert title == "The Dilbert Strip for %s" % \
@@ -458,7 +353,7 @@ class Dilbert(GenericComic):
                 'month': day.month,
                 'year': day.year,
                 'day': day.day,
-                'img': [urllib.parse.urljoin(url, img['src'])],
+                'img': [urljoin_wrapper(url, img['src'])],
                 'name': title,
                 'prefix': '%s-' % day_str
             }
@@ -478,10 +373,10 @@ class ThreeWordPhrase(GenericComic):
             get_soup_at_url(last_comic['url']).find('img', src='/nextlink.gif')
             if last_comic else
             get_soup_at_url(cls.url).find('img', src='/firstlink.gif')
-            ).parent.get('href')
+        ).parent.get('href')
 
         while next_url:
-            comic_url = urllib.parse.urljoin(cls.url, next_url)
+            comic_url = urljoin_wrapper(cls.url, next_url)
             soup = get_soup_at_url(comic_url)
             title = soup.find('title')
             # hackish way to get the image
@@ -493,7 +388,7 @@ class ThreeWordPhrase(GenericComic):
                 'url': comic_url,
                 'title': title.string if title else None,
                 'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
-                'img': [urllib.parse.urljoin(comic_url, img['src']) for img in imgs],
+                'img': [urljoin_wrapper(comic_url, img['src']) for img in imgs],
             }
             next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
 
@@ -510,14 +405,14 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
 
-        archive_page = urllib.parse.urljoin(cls.url, '/archives.php')
+        archive_page = urljoin_wrapper(cls.url, '/archives.php')
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
 
         for link in get_soup_at_url(archive_page).find_all('a', href=comic_link_re):
             link_url = link['href']
             num = int(comic_link_re.match(link_url).groups()[0])
             if num > last_num:
-                url = urllib.parse.urljoin(cls.url, link_url)
+                url = urljoin_wrapper(cls.url, link_url)
                 soup = get_soup_at_url(url)
                 image_url1 = soup.find('div', id='comicimage').find('img')['src']
                 image_url2 = soup.find('div', id='aftercomic').find('img')['src']
@@ -550,7 +445,7 @@ class PerryBibleFellowship(GenericComic):
             if num > last_num:
                 href = link.get('href')
                 assert href == '/%d/' % num
-                url = urllib.parse.urljoin(cls.url, href)
+                url = urljoin_wrapper(cls.url, href)
                 name = link.string
                 image = get_soup_at_url(url).find('img', src=comic_img_re)
                 assert image.get('alt') == name
@@ -558,7 +453,7 @@ class PerryBibleFellowship(GenericComic):
                     'url': url,
                     'num': num,
                     'name': name,
-                    'img': [urllib.parse.urljoin(url, image.get('src'))],
+                    'img': [urljoin_wrapper(url, image.get('src'))],
                     'prefix': '%d-' % num
                 }
 
@@ -647,7 +542,7 @@ class AmazingSuperPowers(GenericComic):
     def get_next_comic(cls, last_comic):
         link_re = re.compile('^%s/([0-9]*)/([0-9]*)/.*$' % cls.url)
         img_re = re.compile('^%s/comics/.*$' % cls.url)
-        archive_url = urllib.parse.urljoin(cls.url, 'category/comics/')
+        archive_url = urljoin_wrapper(cls.url, 'category/comics/')
         last_date = get_date_for_comic(last_comic) if last_comic else date(2000, 1, 1)
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re)):
             comic_date = datetime.datetime.strptime(link.parent.previous_sibling.string, "%b %d, %Y").date()
@@ -700,10 +595,10 @@ class CyanideAndHappiness(GenericComic):
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', rel='next') \
             if last_comic else \
-            get_soup_at_url(urllib.parse.urljoin(cls.url, '/comics/')).find('a', rel='first')
+            get_soup_at_url(urljoin_wrapper(cls.url, '/comics/')).find('a', rel='first')
 
         while next_comic:
-            comic_url = urllib.parse.urljoin(cls.url, next_comic['href'])
+            comic_url = urljoin_wrapper(cls.url, next_comic['href'])
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
@@ -718,7 +613,7 @@ class CyanideAndHappiness(GenericComic):
                 'year': year,
                 'prefix': '%d-' % num,
                 'img': [image.get('src')] if image else []
-                }
+            }
 
 
 class MrLovenstein(GenericComic):
@@ -738,14 +633,14 @@ class MrLovenstein(GenericComic):
         if last_comic:
             first = last_comic['num'] + 1
         for num in range(first, last + 1):
-            url = urllib.parse.urljoin(cls.url, '/comic/%d' % num)
+            url = urljoin_wrapper(cls.url, '/comic/%d' % num)
             soup = get_soup_at_url(url)
             imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
             yield {
                 'url': url,
                 'num': num,
                 'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
-                'img': [urllib.parse.urljoin(url, i['src']) for i in imgs],
+                'img': [urljoin_wrapper(url, i['src']) for i in imgs],
             }
 
 
@@ -842,7 +737,7 @@ class CalvinAndHobbes(GenericComic):
             year, month = link_re.match(url).groups()
             if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
                 img_re = re.compile('^%s%s([0-9]*)' % (year, month))
-                month_url = urllib.parse.urljoin(cls.url, url)
+                month_url = urljoin_wrapper(cls.url, url)
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
                     img_src = img['src']
                     day = int(img_re.match(img_src).groups()[0])
@@ -873,14 +768,14 @@ class AbstruseGoose(GenericComic):
         comic_url_re = re.compile('^%s/([0-9]*)$' % cls.url)
         comic_img_re = re.compile('^%s/strips/.*' % cls.url)
         for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_re):
-            url_comic = link['href']
-            num = int(comic_url_re.match(url_comic).groups()[0])
+            comic_url = link['href']
+            num = int(comic_url_re.match(comic_url).groups()[0])
             if num > last_num:
                 yield {
-                    'url': url_comic,
+                    'url': comic_url,
                     'num': num,
                     'title': link.string,
-                    'img': [get_soup_at_url(url_comic).find('img', src=comic_img_re)['src']]
+                    'img': [get_soup_at_url(comic_url).find('img', src=comic_img_re)['src']]
                 }
 
 
@@ -932,14 +827,14 @@ class OverCompensating(GenericComic):
             if last_comic else \
             get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
         while next_comic:
-            comic_url = urllib.parse.urljoin(cls.url, next_comic['href'])
+            comic_url = urljoin_wrapper(cls.url, next_comic['href'])
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             img = soup.find('img', src=img_src_re)
             yield {
                 'url': comic_url,
                 'num': num,
-                'img': [urllib.parse.urljoin(comic_url, img['src'])],
+                'img': [urljoin_wrapper(comic_url, img['src'])],
                 'title': img.get('title')
             }
             next_comic = soup.find('a', title='next comic')
@@ -971,7 +866,7 @@ class TheDoghouseDiaries(GenericComic):
                 'title': soup.find('h2', id='titleheader').string,
                 'title2': soup.find('div', id='subtext').string,
                 'alt': img.get('title'),
-                'img': [urllib.parse.urljoin(comic_url, img['src'].strip())],
+                'img': [urljoin_wrapper(comic_url, img['src'].strip())],
                 'num': int(comic_url.split('/')[-1]),
             }
             prev_url, comic_url = comic_url, soup.find('a', id='nextlink').get('href')
@@ -979,7 +874,6 @@ class TheDoghouseDiaries(GenericComic):
 
 class GenericGoComic(GenericComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
-    gocomic_name = None
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -992,12 +886,12 @@ class GenericGoComic(GenericComic):
             get_soup_at_url(cls.url).find('a', class_='beginning')
 
         while next_comic:
-            url_comic = urllib.parse.urljoin(gocomics, next_comic['href'])
-            year, month, day = [int(s) for s in url_date_re.match(url_comic).groups()]
-            soup = get_soup_at_url(url_comic)
+            comic_url = urljoin_wrapper(gocomics, next_comic['href'])
+            year, month, day = [int(s) for s in url_date_re.match(comic_url).groups()]
+            soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', class_='next', href=url_date_re)
             yield {
-                'url': url_comic,
+                'url': comic_url,
                 'day': day,
                 'month': month,
                 'year': year,
@@ -1032,84 +926,3 @@ def get_subclasses(klass):
     return subclasses
 
 COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not None}
-
-
-def make_book(comic_classes):
-    """Create ebook - not finished."""
-    output_dir = 'generated_books'
-    cover = 'empty.jpg'
-    comics = sum((c.load_db() for c in comic_classes), [])
-    html_book = os.path.join(
-        output_dir,
-        'book_%s.html' % ("_".join(c.name for c in comic_classes))
-    )
-    os.makedirs(output_dir, exist_ok=True)
-    with open(html_book, 'w+') as book:
-        book.write(HTML_HEADER % (
-            ' - '.join(c.long_name for c in comic_classes),
-            cover,
-            ' '.join(sys.argv),
-            datetime.datetime.now().strftime('%c')
-            ))
-
-        for i, com in enumerate(comics):
-            book.write(HTML_TOC_ITEM % (i, com['url']))
-
-        book.write(HTML_START)
-
-        for i, com in enumerate(comics):
-            book.write(HTML_COMIC_INFO % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
-            author = com.get('author')
-            if author:
-                book.write(HTML_COMIC_ADDITIONAL_INFO % ('by' + author))
-            for path in com['local_img']:
-                if path is not None:
-                    assert os.path.isfile(path)
-                    book.write(HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
-            alt = com.get('alt')
-            if alt:
-                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(alt))
-        book.write(HTML_FOOTER)
-
-    call([KINDLEGEN_PATH, html_book])
-
-
-def main():
-    """Main function"""
-    comic_names = sorted(COMIC_NAMES.keys())
-    parser = argparse.ArgumentParser(
-        description='Downloads webcomics and generates ebooks for offline reading (not yet)')
-    parser.add_argument(
-        '--comic', '-c',
-        action='append',
-        help=('comics to be considered (default: ALL)'),
-        choices=comic_names,
-        default=[])
-    parser.add_argument(
-        '--action', '-a',
-        action='append',
-        help=('actions required'),
-        default=[])
-    args = parser.parse_args()
-    if not args.comic:
-        args.comic = comic_names
-    if not args.action:
-        args.action = ['update']
-    comic_classes = [COMIC_NAMES[c] for c in args.comic]
-    for action in args.action:
-        if action == 'book':
-            make_book(comic_classes)
-        elif action == 'update':
-            for com in comic_classes:
-                com.update()
-        elif action == 'check':
-            for com in comic_classes:
-                com.check_everything_is_ok()
-        elif action == 'fix':
-            for com in comic_classes:
-                com.try_to_get_missing_resources()
-        else:
-            print("Unknown action : %s" % action)
-
-if __name__ == "__main__":
-    main()
