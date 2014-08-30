@@ -8,7 +8,7 @@ import subprocess
 import os
 import urllib.parse
 import datetime
-from comics import get_date_for_comic, get_info_before_comic, get_info_after_comic
+from comic_abstract import get_date_for_comic, get_info_before_comic, get_info_after_comic
 
 # http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
 KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
