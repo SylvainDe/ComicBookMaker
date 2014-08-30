@@ -33,26 +33,28 @@ class GenericComic(object):
     """Generic class to handle the logic common to all comics
 
     Attributes :
-        name        Name of the comic (for logging and CLI)
+        name        Name of the comic (for logging, CLI and default output dir)
         long_name   Long name of the comic (to be added in the comic info)
-        output_dir  Output directory to put/get data (comics + database)
-        json_file   Name of the JSON file used to store the database
         url         Base url for the comic (without trailing slash)."""
     name = None
     long_name = None
-    output_dir = None
-    json_file = None
     url = None
+
+    @classmethod
+    def get_output_dir(cls):
+        """Returns the name of the output directory (for comics and JSON file).
+        To be overridden if needed."""
+        return cls.name
 
     @classmethod
     def create_output_dir(cls):
         """Create output directory for the comic on the file system."""
-        os.makedirs(cls.output_dir, exist_ok=True)
+        os.makedirs(cls.get_output_dir(), exist_ok=True)
 
     @classmethod
     def get_json_file_path(cls):
         """Get the full path to the JSON file."""
-        return os.path.join(cls.output_dir, cls.json_file)
+        return os.path.join(cls.get_output_dir(), cls.name + '.json')
 
     @classmethod
     def load_db(cls):
@@ -73,7 +75,7 @@ class GenericComic(object):
     def get_file_in_output_dir(cls, url, prefix=None):
         """Download file from URL and save it in output folder."""
         filename = os.path.join(
-            cls.output_dir,
+            cls.get_output_dir(),
             ('' if prefix is None else prefix) +
             get_filename_from_url(url))
         return get_file_at_url(url, filename)

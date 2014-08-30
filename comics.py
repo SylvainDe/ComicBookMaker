@@ -13,8 +13,6 @@ class Xkcd(GenericComic):
     """Class to retrieve Xkcd comics."""
     name = 'xkcd'
     long_name = 'xkcd'
-    output_dir = 'xkcd'
-    json_file = 'xkcd.json'
     url = 'http://xkcd.com'
 
     @classmethod
@@ -41,8 +39,6 @@ class ExtraFabulousComics(GenericComic):
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
-    output_dir = 'efc'
-    json_file = 'efc.json'
     url = 'http://extrafabulouscomics.com',
 
     @classmethod
@@ -72,8 +68,6 @@ class NeDroid(GenericComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
     long_name = 'NeDroid'
-    output_dir = 'nedroid'
-    json_file = 'nedroid.json'
     url = 'http://nedroid.com'
 
     @classmethod
@@ -113,8 +107,6 @@ class Garfield(GenericComic):
     """Class to retrieve Garfield comics."""
     name = 'garfield'
     long_name = 'Garfield'
-    output_dir = 'garfield'
-    json_file = 'garfield.json'
     url = 'http://garfield.com'
 
     @classmethod
@@ -137,8 +129,6 @@ class Dilbert(GenericComic):
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
     long_name = 'Dilbert'
-    output_dir = 'dilbert'
-    json_file = 'dilbert.json'
     url = 'http://dilbert.com'
 
     @classmethod
@@ -169,8 +159,6 @@ class ThreeWordPhrase(GenericComic):
     """Class to retrieve Three Word Phrase comics."""
     name = 'threeword'
     long_name = 'Three Word Phrase'
-    output_dir = 'threeword'
-    json_file = 'threeword.json'
     url = 'http://threewordphrase.com'
 
     @classmethod
@@ -203,8 +191,6 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
-    output_dir = 'smbc'
-    json_file = 'smbc.json'
     url = 'http://www.smbc-comics.com'
 
     @classmethod
@@ -235,8 +221,6 @@ class PerryBibleFellowship(GenericComic):
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
-    output_dir = 'pbf'
-    json_file = 'pbf.json'
     url = 'http://pbfcomics.com'
 
     @classmethod
@@ -268,8 +252,6 @@ class BerkeleyMews(GenericComic):
     """Class to retrieve Berkeley Mews comics."""
     name = 'berkeley'
     long_name = 'Berkeley Mews'
-    output_dir = 'berkeley'
-    json_file = 'berkeley.json'
     url = 'http://www.berkeleymews.com'
 
     @classmethod
@@ -303,8 +285,6 @@ class BouletCorp(GenericComic):
     """Class to retrieve BouletCorp comics."""
     name = 'boulet'
     long_name = 'Boulet Corp'
-    output_dir = 'boulet'
-    json_file = 'boulet.json'
     url = 'http://www.bouletcorp.com'
 
     @classmethod
@@ -339,8 +319,6 @@ class AmazingSuperPowers(GenericComic):
     """Class to retrieve Amazing Super Powers comics."""
     name = 'asp'
     long_name = 'Amazing Super Powers'
-    output_dir = 'asp'
-    json_file = 'asp.json'
     url = 'http://www.amazingsuperpowers.com'
     # images are not retrieved properly, I guess the user-agent it not ok
 
@@ -372,8 +350,6 @@ class CyanideAndHappiness(GenericComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
-    output_dir = 'cyanide'
-    json_file = 'cyanide.json'
     url = 'http://explosm.net'
 
     @classmethod
@@ -426,8 +402,6 @@ class MrLovenstein(GenericComic):
     """Class to retrieve Mr Lovenstein comics."""
     name = 'mrlovenstein'
     long_name = 'Mr. Lovenstein'
-    json_file = 'mrlovenstein.json'
-    output_dir = 'mrlovenstein'
     url = 'http://www.mrlovenstein.com'
 
     @classmethod
@@ -454,8 +428,6 @@ class DinosaurComics(GenericComic):
     """Class to retrieve Dinosaur Comics comics."""
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
-    output_dir = 'dinosaur'
-    json_file = 'dinosaur.json'
     url = 'http://www.qwantz.com'
 
     @classmethod
@@ -496,8 +468,6 @@ class ButterSafe(GenericComic):
     """Class to retrieve Butter Safe comics."""
     name = 'butter'
     long_name = 'ButterSafe'
-    output_dir = 'butter'
-    json_file = 'butter.json'
     url = 'http://buttersafe.com'
 
     @classmethod
@@ -528,8 +498,6 @@ class CalvinAndHobbes(GenericComic):
     """Class to retrieve Calvin and Hobbes comics."""
     name = 'calvin'
     long_name = 'Calvin and Hobbes'
-    output_dir = 'calvin'
-    json_file = 'calvin.json'
     # This is not through any official webpage but eh...
     url = 'http://marcel-oehler.marcellosendos.ch/comics/ch/'
 
@@ -563,8 +531,6 @@ class AbstruseGoose(GenericComic):
     """Class to retrieve AbstruseGoose Comics."""
     name = 'abstruse'
     long_name = 'Abstruse Goose'
-    output_dir = 'abstruse'
-    json_file = 'abstruse.json'
     url = 'http://abstrusegoose.com'
 
     @classmethod
@@ -589,8 +555,6 @@ class PhDComics(GenericComic):
     """Class to retrieve PHD Comics."""
     name = 'phd'
     long_name = 'PhD Comics'
-    output_dir = 'phd'
-    json_file = 'phd.json'
     url = 'http://phdcomics.com'
 
     @classmethod
@@ -620,8 +584,6 @@ class OverCompensating(GenericComic):
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
-    output_dir = 'compensating'
-    json_file = 'compensating.json'
     url = 'http://www.overcompensating.com'
 
     @classmethod
@@ -650,8 +612,6 @@ class TheDoghouseDiaries(GenericComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
-    output_dir = 'doghouse'
-    json_file = 'doghouse.json'
     url = 'http://thedoghousediaries.com/'
 
     @classmethod
@@ -710,8 +670,6 @@ class PearlsBeforeSwine(GenericGoComic):
     """Class to retrieve Pearls Before Swine comics."""
     name = 'pearls'
     long_name = 'Pearls Before Swine'
-    output_dir = 'pearls'
-    json_file = 'pearls.json'
     url = 'http://www.gocomics.com/pearlsbeforeswine'
 
 
@@ -719,8 +677,6 @@ class Peanuts(GenericGoComic):
     """Class to retrieve Peanuts comics."""
     name = 'peanuts'
     long_name = 'Peanuts'
-    output_dir = 'peanuts'
-    json_file = 'peanuts.json'
     url = 'http://www.gocomics.com/peanuts'
 
 
