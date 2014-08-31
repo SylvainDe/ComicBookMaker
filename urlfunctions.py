@@ -29,7 +29,7 @@ def urlopen_wrapper(url):
     return urllib.request.urlopen(
         urllib.request.Request(
             url,
-            headers={'User-Agent': user_agent}))
+            headers={'User-Agent': user_agent, 'Accept': '*/*'}))
 
 
 def urljoin_wrapper(base, url):

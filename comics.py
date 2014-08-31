@@ -442,14 +442,9 @@ class DinosaurComics(GenericComic):
             num = int(comic_link_re.match(url).groups()[0])
             if num > last_num:
                 text = link.next_sibling.string
-                # Hackish way to convert string with numeral "1st"/"2nd"/etc to date
                 day = datetime.datetime.strptime(
-                    link.string
-                    .replace('st', '')
-                    .replace('nd', '')
-                    .replace('rd', '')
-                    .replace('th', '')
-                    .replace('Augu', 'August'), "%B %d, %Y").date()
+                    remove_st_nd_rd_th_from_date(link.string),
+                    "%B %d, %Y").date()
                 soup = get_soup_at_url(url)
                 img = soup.find('img', src=comic_img_re)
                 yield {
@@ -608,11 +603,54 @@ class OverCompensating(GenericComic):
             next_comic = soup.find('a', title='next comic')
 
 
+class Wondermark(GenericComic):
+    """Class to retrieve the Wondermark comics."""
+    name = 'wondermark'
+    long_name = 'Wondermark'
+    url = 'http://wondermark.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        archive_url = urljoin_wrapper(cls.url, 'archive/')
+        add = not last_comic
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark')):
+            comic_url = link['href']
+            if add:
+                soup = get_soup_at_url(comic_url)
+                day = datetime.datetime.strptime(
+                    remove_st_nd_rd_th_from_date(soup.find('div', class_='postdate').find('em').string),
+                    "%B %d, %Y").date()
+                div = soup.find('div', id='comic')
+                if div:
+                    img = div.find('img')
+                    img_src = [img['src']]
+                    alt = img['alt']
+                    assert alt == img['title']
+                    title = soup.find('meta', property='og:title')['content']
+                else:
+                    img_src = []
+                    alt = ''
+                    title = ''
+                yield {
+                    'url': comic_url,
+                    'month': day.month,
+                    'year': day.year,
+                    'day': day.day,
+                    'img': img_src,
+                    'title': title,
+                    'alt': alt,
+                    'tags': ' '.join(t.string for t in soup.find('div', class_='postmeta').find_all('a', rel='tag')),
+                }
+            else:
+                assert not add and last_comic
+                add = (last_comic['url'] == comic_url)
+
+
 class TheDoghouseDiaries(GenericComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
-    url = 'http://thedoghousediaries.com/'
+    url = 'http://thedoghousediaries.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -686,5 +724,15 @@ def get_subclasses(klass):
     for derived in list(subclasses):
         subclasses.extend(get_subclasses(derived))
     return subclasses
+
+
+def remove_st_nd_rd_th_from_date(string):
+    """Function to transform 1st/2nd/3rd/4th in a parsable date format."""
+    # Hackish way to convert string with numeral "1st"/"2nd"/etc to date
+    return (string.replace('st', '')
+            .replace('nd', '')
+            .replace('rd', '')
+            .replace('th', '')
+            .replace('Augu', 'August'))
 
 COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not None}
