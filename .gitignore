@@ -1,0 +1,32 @@
+# Compiled sources
+*.pyc
+__pycache__
+
+# Generated folders
+abstruse
+asp
+berkeley
+bitercomics
+boulet
+boulet_en
+butter
+calvin
+compensating
+cyanide
+dilbert
+dinosaur
+doghouse
+efc
+garfield
+generated_books
+mrlovenstein
+nedroid
+pbf
+peanuts
+pearls
+phd
+smbc
+threeword
+toonhole
+wondermark
+xkcd
