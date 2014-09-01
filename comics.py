@@ -281,15 +281,16 @@ class BerkeleyMews(GenericComic):
                 }
 
 
-class BouletCorp(GenericComic):
-    """Class to retrieve BouletCorp comics."""
-    name = 'boulet'
-    long_name = 'Boulet Corp'
-    url = 'http://www.bouletcorp.com'
+class GenericBouletCorp(GenericComic):
+    """Generic class to retrieve BouletCorp comics in different languages.
+
+    Attributes :
+        date_re : regexp to get the date from the url."""
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        date_re = re.compile('^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
+        date_re = re.compile(cls.date_re % cls.url)
+
         prev_url = last_comic['url'] if last_comic else None
         comic_url = (
             get_soup_at_url(prev_url).find('div', id='centered_nav').find_all('a')[3]
@@ -313,6 +314,22 @@ class BouletCorp(GenericComic):
             }
             yield comic
             prev_url, comic_url = comic_url, soup.find('div', id='centered_nav').find_all('a')[3].get('href')
+
+
+class BouletCorp(GenericBouletCorp):
+    """Class to retrieve BouletCorp comics."""
+    name = 'boulet'
+    long_name = 'Boulet Corp'
+    url = 'http://www.bouletcorp.com'
+    date_re = '^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/'
+
+
+class BouletCorpEn(GenericBouletCorp):
+    """Class to retrieve EnglishBouletCorp comics."""
+    name = 'boulet_en'
+    long_name = 'Boulet Corp English'
+    url = 'http://english.bouletcorp.com'
+    date_re = '^%s/([0-9]*)/([0-9]*)/([0-9]*)/'
 
 
 class AmazingSuperPowers(GenericComic):
