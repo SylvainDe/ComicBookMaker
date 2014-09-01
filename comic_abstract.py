@@ -120,10 +120,17 @@ class GenericComic(object):
         if False:  # To check if imgs are not overriding themselves
             for path, nums in imgs_paths.items():
                 if len(nums) > 1:
-                    print(path, nums)
+                    print("Image used multiple times", path, nums)
             for img_url, nums in imgs_urls.items():
                 if len(nums) > 1:
-                    print(img_url, nums)
+                    print("Url used multiple times", img_url, nums)
+        if False:  # To check that all files in folder are useful
+            json = cls.get_json_file_path()
+            output_dir = cls.get_output_dir()
+            for file_ in os.listdir(output_dir):
+                file_path = os.path.join(output_dir, file_)
+                if file_path not in imgs_paths and file_path != json:
+                    print("Unused image", file_path)
 
     @classmethod
     def get_next_comic(cls, _):
