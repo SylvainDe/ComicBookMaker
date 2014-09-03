@@ -43,4 +43,4 @@ Comics supported
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
  * [Peanuts](http://www.gocomics.com/peanuts)
-
+ * [Channelate](http://www.channelate.com)

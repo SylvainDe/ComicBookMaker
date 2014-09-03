@@ -363,6 +363,47 @@ class AmazingSuperPowers(GenericComic):
                 }
 
 
+class Channelate(GenericComic):
+    """Class to retrieve Channelate comics."""
+    name = 'channelate'
+    long_name = 'Channelate'
+    url = 'http://www.channelate.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*$' % cls.url)
+        archive_url = urljoin_wrapper(cls.url, 'note-to-self-archive/')
+        prev_date = get_date_for_comic(last_comic) if last_comic else date(2000, 1, 1)
+
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re, rel='bookmark')):
+            comic_url = link['href']
+            title = link.string
+            year, month, day = [int(s) for s in link_re.match(comic_url).groups()]
+            if prev_date < date(year, month, day):
+                soup = get_soup_at_url(comic_url)
+                img = soup.find('div', id='comic-1').find('img')
+                desc = soup.find('meta', property='og:description')['content']
+                assert title == soup.find('meta', property='og:title')['content']
+                img_urls = []
+                if img:
+                    assert img['alt'] == img['title']  # almost == title but not quite
+                    img_urls.append(img['src'])
+                extra_url = None
+                extra_div = soup.find('div', id='extrapanelbutton')
+                if extra_div:
+                    extra_url = extra_div.find('a')['href']
+                    img_urls.append(get_soup_at_url(extra_url).find('img', class_='extrapanelimage')['src'])
+                yield {
+                    'url': comic_url,
+                    'url_extra': extra_url,
+                    'title': title,
+                    'day': day,
+                    'month': month,
+                    'year': year,
+                    'img': [img['src']] if img else [],
+                }
+
+
 class CyanideAndHappiness(GenericComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
