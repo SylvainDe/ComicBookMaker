@@ -382,7 +382,6 @@ class Channelate(GenericComic):
             if prev_date < date(year, month, day):
                 soup = get_soup_at_url(comic_url)
                 img = soup.find('div', id='comic-1').find('img')
-                desc = soup.find('meta', property='og:description')['content']
                 assert title == soup.find('meta', property='og:title')['content']
                 img_urls = []
                 if img:
