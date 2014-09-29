@@ -49,6 +49,7 @@ def make_book(comic_classes):
         ' - '.join(c.long_name for c in comic_classes),
         'book_%s.html' % ("_".join(c.name for c in comic_classes)))
 
+
 def make_book_from_comic_list(comics, title, file_name):
     cover = 'empty.jpg'
     output_dir = 'generated_books'

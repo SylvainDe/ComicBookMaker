@@ -142,8 +142,9 @@ class Dilbert(GenericComic):
             url = urljoin_wrapper(cls.url, 'strips/comic/%s/' % day_str)
             img = get_soup_at_url(url).find('img', src=img_src_re)
             title = img.get('title')
-            assert title == "The Dilbert Strip for %s" % \
-                (day.strftime("%B %d, %Y").replace(" 0", " "))
+            if title != "The Dilbert Strip for %s" % \
+                    (day.strftime("%B %d, %Y").replace(" 0", " ")):
+                        return  # daily comic might not be published
             yield {
                 'url': url,
                 'month': day.month,
