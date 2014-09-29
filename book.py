@@ -43,17 +43,21 @@ HTML_FOOTER = """
 
 def make_book(comic_classes):
     """Create ebook - not finished."""
-    output_dir = 'generated_books'
-    cover = 'empty.jpg'
     comics = sum((c.load_db() for c in comic_classes), [])
-    html_book = os.path.join(
-        output_dir,
-        'book_%s.html' % ("_".join(c.name for c in comic_classes))
-    )
+    make_book_from_comic_list(
+        comics,
+        ' - '.join(c.long_name for c in comic_classes),
+        'book_%s.html' % ("_".join(c.name for c in comic_classes)))
+
+def make_book_from_comic_list(comics, title, file_name):
+    cover = 'empty.jpg'
+    output_dir = 'generated_books'
     os.makedirs(output_dir, exist_ok=True)
+    html_book = os.path.join(output_dir, file_name)
+
     with open(html_book, 'w+') as book:
         book.write(HTML_HEADER % (
-            ' - '.join(c.long_name for c in comic_classes),
+            title,
             cover,
             ' '.join(sys.argv),
             datetime.datetime.now().strftime('%c')
