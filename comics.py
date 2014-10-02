@@ -661,6 +661,36 @@ class OverCompensating(GenericComic):
             next_comic = soup.find('a', title='next comic')
 
 
+class SomethingOfThatIlk(GenericComic):
+    """Class to retrieve the Something Of That Ilk comics."""
+    name = 'somethingofthatilk'
+    long_name = 'Something Of That Ilk'
+    url = 'http://www.somethingofthatilk.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        img_src_re = re.compile('^/comics/.*')
+        comic_url_re = re.compile('^index.php\?id=([0-9]*)$')
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='next', href=comic_url_re) \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='first', href=comic_url_re)
+        while next_comic:
+            href = next_comic['href']
+            comic_url = urljoin_wrapper(cls.url, href)
+            soup = get_soup_at_url(comic_url)
+            img = soup.find('img', src=img_src_re)
+            next_comic = soup.find('a', class_='next', href=comic_url_re)
+            yield {
+                'url': comic_url,
+                'img': [urljoin_wrapper(comic_url, img['src'])],
+                'alt': img['alt'],
+                'text': soup.find('p', id='captioning').string,
+                'title': soup.find('h1').string,
+                'num': int(comic_url_re.match(href).groups()[0])
+            }
+
+
 class Wondermark(GenericComic):
     """Class to retrieve the Wondermark comics."""
     name = 'wondermark'
