@@ -11,7 +11,7 @@ def main():
     """Main function"""
     comic_names = sorted(COMIC_NAMES.keys())
     parser = argparse.ArgumentParser(
-        description='Downloads webcomics and generates ebooks for offline reading (not yet)')
+        description='Downloads webcomics and generates ebooks for offline reading')
     parser.add_argument(
         '--comic', '-c',
         action='append',
@@ -41,6 +41,9 @@ def main():
         elif action == 'fix':
             for com in comic_classes:
                 com.try_to_get_missing_resources()
+        elif action == 'reset_new':
+            for com in comic_classes:
+                com.reset_new()
         else:
             print("Unknown action : %s" % action)
 
