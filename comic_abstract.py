@@ -229,4 +229,4 @@ class GenericComic(object):
     def reset_new(cls):
         """Remove the 'new' flag on comics in the DB."""
         cls.create_output_dir()
-        cls.save_db([{key:val for key, val in c.items() if key != 'new'} for c in cls.load_db()])
+        cls.save_db([{key: val for key, val in c.items() if key != 'new'} for c in cls.load_db()])
