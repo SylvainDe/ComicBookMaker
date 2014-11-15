@@ -10,6 +10,7 @@ from urlfunctions import get_soup_at_url, urljoin_wrapper, convert_iri_to_plain_
 
 
 class Xkcd(GenericComic):
+
     """Class to retrieve Xkcd comics."""
     name = 'xkcd'
     long_name = 'xkcd'
@@ -18,7 +19,8 @@ class Xkcd(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         first_num = last_comic['num'] if last_comic else 0
-        last_num = load_json_at_url(urljoin_wrapper(cls.url, 'info.0.json'))['num']
+        last_num = load_json_at_url(
+            urljoin_wrapper(cls.url, 'info.0.json'))['num']
 
         for num in range(first_num + 1, last_num + 1):
             if num != 404:
@@ -36,6 +38,7 @@ class Xkcd(GenericComic):
 
 
 class ExtraFabulousComics(GenericComic):
+
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
@@ -65,6 +68,7 @@ class ExtraFabulousComics(GenericComic):
 
 
 class NeDroid(GenericComic):
+
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
     long_name = 'NeDroid'
@@ -72,7 +76,8 @@ class NeDroid(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        comic_url_re = re.compile('^%s/comics/([0-9]*)-([0-9]*)-([0-9]*).*' % cls.url)
+        comic_url_re = re.compile(
+            '^%s/comics/([0-9]*)-([0-9]*)-([0-9]*).*' % cls.url)
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
 
         next_comic = \
@@ -88,7 +93,8 @@ class NeDroid(GenericComic):
             assert url == soup.find('link', rel='canonical')['href']
             next_comic = soup.find('div', class_='nav-next').find('a')
             short_url = soup.find('link', rel='shortlink')['href']
-            year, month, day = [int(s) for s in comic_url_re.match(img_url).groups()]
+            year, month, day = [int(s)
+                                for s in comic_url_re.match(img_url).groups()]
             num = int(short_url_re.match(short_url).groups()[0])
             yield {
                 'url': url,
@@ -104,6 +110,7 @@ class NeDroid(GenericComic):
 
 
 class Garfield(GenericComic):
+
     """Class to retrieve Garfield comics."""
     name = 'garfield'
     long_name = 'Garfield'
@@ -126,6 +133,7 @@ class Garfield(GenericComic):
 
 
 class Dilbert(GenericComic):
+
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
     long_name = 'Dilbert'
@@ -144,7 +152,7 @@ class Dilbert(GenericComic):
             title = img.get('title')
             if title != "The Dilbert Strip for %s" % \
                     (day.strftime("%B %d, %Y").replace(" 0", " ")):
-                        return  # daily comic might not be published
+                return  # daily comic might not be published
             yield {
                 'url': url,
                 'month': day.month,
@@ -157,6 +165,7 @@ class Dilbert(GenericComic):
 
 
 class ThreeWordPhrase(GenericComic):
+
     """Class to retrieve Three Word Phrase comics."""
     name = 'threeword'
     long_name = 'Three Word Phrase'
@@ -189,6 +198,7 @@ class ThreeWordPhrase(GenericComic):
 
 
 class SaturdayMorningBreakfastCereal(GenericComic):
+
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
@@ -207,8 +217,10 @@ class SaturdayMorningBreakfastCereal(GenericComic):
             if num > last_num:
                 url = urljoin_wrapper(cls.url, link_url)
                 soup = get_soup_at_url(url)
-                image_url1 = soup.find('div', id='comicimage').find('img')['src']
-                image_url2 = soup.find('div', id='aftercomic').find('img')['src']
+                image_url1 = soup.find(
+                    'div', id='comicimage').find('img')['src']
+                image_url2 = soup.find(
+                    'div', id='aftercomic').find('img')['src']
                 comic = {
                     'url': url,
                     'num': num,
@@ -219,6 +231,7 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
 
 class PerryBibleFellowship(GenericComic):
+
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
@@ -250,6 +263,7 @@ class PerryBibleFellowship(GenericComic):
 
 
 class BerkeleyMews(GenericComic):
+
     """Class to retrieve Berkeley Mews comics."""
     name = 'berkeley'
     long_name = 'Berkeley Mews'
@@ -265,9 +279,11 @@ class BerkeleyMews(GenericComic):
             comic_url = link['href']
             num = int(comic_num_re.match(comic_url).groups()[0])
             if num > last_num:
-                img = get_soup_at_url(comic_url).find('div', id='comic').find('img')
+                img = get_soup_at_url(comic_url).find(
+                    'div', id='comic').find('img')
                 img_url = img['src']
-                year, month, day = [int(s) for s in comic_date_re.match(img_url).groups()]
+                year, month, day = [
+                    int(s) for s in comic_date_re.match(img_url).groups()]
                 title2 = img.get('title')
                 assert title2 == img.get('alt')
                 yield {
@@ -283,6 +299,7 @@ class BerkeleyMews(GenericComic):
 
 
 class GenericBouletCorp(GenericComic):
+
     """Generic class to retrieve BouletCorp comics in different languages.
 
     Attributes :
@@ -294,14 +311,17 @@ class GenericBouletCorp(GenericComic):
 
         prev_url = last_comic['url'] if last_comic else None
         comic_url = (
-            get_soup_at_url(prev_url).find('div', id='centered_nav').find_all('a')[3]
+            get_soup_at_url(prev_url).find(
+                'div', id='centered_nav').find_all('a')[3]
             if prev_url
             else get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]).get('href')
 
         while comic_url != prev_url:
-            year, month, day = [int(s) for s in date_re.match(comic_url).groups()]
+            year, month, day = [int(s)
+                                for s in date_re.match(comic_url).groups()]
             soup = get_soup_at_url(comic_url)
-            imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
+            imgs = soup.find('div', id='notes').find(
+                'div', class_='storycontent').find_all('img')
             texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
             title = soup.find('title').string
             comic = {
@@ -314,10 +334,12 @@ class GenericBouletCorp(GenericComic):
                 'day': day,
             }
             yield comic
-            prev_url, comic_url = comic_url, soup.find('div', id='centered_nav').find_all('a')[3].get('href')
+            prev_url, comic_url = comic_url, soup.find(
+                'div', id='centered_nav').find_all('a')[3].get('href')
 
 
 class BouletCorp(GenericBouletCorp):
+
     """Class to retrieve BouletCorp comics."""
     name = 'boulet'
     long_name = 'Boulet Corp'
@@ -326,6 +348,7 @@ class BouletCorp(GenericBouletCorp):
 
 
 class BouletCorpEn(GenericBouletCorp):
+
     """Class to retrieve EnglishBouletCorp comics."""
     name = 'boulet_en'
     long_name = 'Boulet Corp English'
@@ -334,6 +357,7 @@ class BouletCorpEn(GenericBouletCorp):
 
 
 class AmazingSuperPowers(GenericComic):
+
     """Class to retrieve Amazing Super Powers comics."""
     name = 'asp'
     long_name = 'Amazing Super Powers'
@@ -345,9 +369,11 @@ class AmazingSuperPowers(GenericComic):
         link_re = re.compile('^%s/([0-9]*)/([0-9]*)/.*$' % cls.url)
         img_re = re.compile('^%s/comics/.*$' % cls.url)
         archive_url = urljoin_wrapper(cls.url, 'category/comics/')
-        last_date = get_date_for_comic(last_comic) if last_comic else date(2000, 1, 1)
+        last_date = get_date_for_comic(
+            last_comic) if last_comic else date(2000, 1, 1)
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re)):
-            comic_date = datetime.datetime.strptime(link.parent.previous_sibling.string, "%b %d, %Y").date()
+            comic_date = datetime.datetime.strptime(
+                link.parent.previous_sibling.string, "%b %d, %Y").date()
             if comic_date > last_date:
                 title = link.string
                 comic_url = link['href']
@@ -365,6 +391,7 @@ class AmazingSuperPowers(GenericComic):
 
 
 class Channelate(GenericComic):
+
     """Class to retrieve Channelate comics."""
     name = 'channelate'
     long_name = 'Channelate'
@@ -374,25 +401,30 @@ class Channelate(GenericComic):
     def get_next_comic(cls, last_comic):
         link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*$' % cls.url)
         archive_url = urljoin_wrapper(cls.url, 'note-to-self-archive/')
-        prev_date = get_date_for_comic(last_comic) if last_comic else date(2000, 1, 1)
+        prev_date = get_date_for_comic(
+            last_comic) if last_comic else date(2000, 1, 1)
 
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re, rel='bookmark')):
             comic_url = link['href']
             title = link.string
-            year, month, day = [int(s) for s in link_re.match(comic_url).groups()]
+            year, month, day = [int(s)
+                                for s in link_re.match(comic_url).groups()]
             if prev_date < date(year, month, day):
                 soup = get_soup_at_url(comic_url)
                 img = soup.find('div', id='comic-1').find('img')
-                assert title == soup.find('meta', property='og:title')['content']
+                assert title == soup.find(
+                    'meta', property='og:title')['content']
                 img_urls = []
                 if img:
-                    assert img['alt'] == img['title']  # almost == title but not quite
+                    # almost == title but not quite
+                    assert img['alt'] == img['title']
                     img_urls.append(img['src'])
                 extra_url = None
                 extra_div = soup.find('div', id='extrapanelbutton')
                 if extra_div:
                     extra_url = extra_div.find('a')['href']
-                    img_urls.append(get_soup_at_url(extra_url).find('img', class_='extrapanelimage')['src'])
+                    img_urls.append(
+                        get_soup_at_url(extra_url).find('img', class_='extrapanelimage')['src'])
                 yield {
                     'url': comic_url,
                     'url_extra': extra_url,
@@ -405,6 +437,7 @@ class Channelate(GenericComic):
 
 
 class CyanideAndHappiness(GenericComic):
+
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
@@ -429,20 +462,23 @@ class CyanideAndHappiness(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        img_src_re = re.compile('^http://(www.)?explosm.net/db/files/Comics/.*')
+        img_src_re = re.compile(
+            '^http://(www.)?explosm.net/db/files/Comics/.*')
         comic_num_re = re.compile('^%s/comics/([0-9]*)/$' % cls.url)
 
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', rel='next') \
             if last_comic else \
-            get_soup_at_url(urljoin_wrapper(cls.url, '/comics/')).find('a', rel='first')
+            get_soup_at_url(
+                urljoin_wrapper(cls.url, '/comics/')).find('a', rel='first')
 
         while next_comic:
             comic_url = urljoin_wrapper(cls.url, next_comic['href'])
             num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', rel='next')
-            day, month, year, author = cls.get_author_and_data_from_str(soup.find('table').find('tr').find('td').text)
+            day, month, year, author = cls.get_author_and_data_from_str(
+                soup.find('table').find('tr').find('td').text)
             image = soup.find('img', src=img_src_re)
             yield {
                 'num': num,
@@ -457,6 +493,7 @@ class CyanideAndHappiness(GenericComic):
 
 
 class MrLovenstein(GenericComic):
+
     """Class to retrieve Mr Lovenstein comics."""
     name = 'mrlovenstein'
     long_name = 'Mr. Lovenstein'
@@ -466,14 +503,16 @@ class MrLovenstein(GenericComic):
     def get_next_comic(cls, last_comic):
         # TODO: more info from http://www.mrlovenstein.com/archive
         comic_num_re = re.compile('^/comic/([0-9]*)$')
-        nums = [int(comic_num_re.match(link['href']).groups()[0]) for link in get_soup_at_url(cls.url).find_all('a', href=comic_num_re)]
+        nums = [int(comic_num_re.match(link['href']).groups()[0])
+                for link in get_soup_at_url(cls.url).find_all('a', href=comic_num_re)]
         first, last = min(nums), max(nums)
         if last_comic:
             first = last_comic['num'] + 1
         for num in range(first, last + 1):
             url = urljoin_wrapper(cls.url, '/comic/%d' % num)
             soup = get_soup_at_url(url)
-            imgs = list(reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
+            imgs = list(
+                reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
             yield {
                 'url': url,
                 'num': num,
@@ -483,6 +522,7 @@ class MrLovenstein(GenericComic):
 
 
 class DinosaurComics(GenericComic):
+
     """Class to retrieve Dinosaur Comics comics."""
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
@@ -518,6 +558,7 @@ class DinosaurComics(GenericComic):
 
 
 class ButterSafe(GenericComic):
+
     """Class to retrieve Butter Safe comics."""
     name = 'butter'
     long_name = 'ButterSafe'
@@ -526,14 +567,17 @@ class ButterSafe(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         archive_url = '%s/archive/' % cls.url
-        comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % cls.url)
+        comic_link_re = re.compile(
+            '^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % cls.url)
 
-        prev_date = get_date_for_comic(last_comic) if last_comic else date(2006, 1, 1)
+        prev_date = get_date_for_comic(
+            last_comic) if last_comic else date(2006, 1, 1)
 
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)):
             url = link['href']
             title = link.string
-            year, month, day = [int(s) for s in comic_link_re.match(url).groups()]
+            year, month, day = [int(s)
+                                for s in comic_link_re.match(url).groups()]
             if prev_date < date(year, month, day):
                 img = get_soup_at_url(url).find('div', id='comic').find('img')
                 assert img['alt'] == title
@@ -548,6 +592,7 @@ class ButterSafe(GenericComic):
 
 
 class CalvinAndHobbes(GenericComic):
+
     """Class to retrieve Calvin and Hobbes comics."""
     name = 'calvin'
     long_name = 'Calvin and Hobbes'
@@ -556,7 +601,8 @@ class CalvinAndHobbes(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        last_date = get_date_for_comic(last_comic) if last_comic else date(1985, 11, 1)
+        last_date = get_date_for_comic(
+            last_comic) if last_comic else date(1985, 11, 1)
         link_re = re.compile('^([0-9]*)/([0-9]*)/')
         img_re = re.compile('')
         for link in get_soup_at_url(cls.url).find_all('a', href=link_re):
@@ -581,6 +627,7 @@ class CalvinAndHobbes(GenericComic):
 
 
 class AbstruseGoose(GenericComic):
+
     """Class to retrieve AbstruseGoose Comics."""
     name = 'abstruse'
     long_name = 'Abstruse Goose'
@@ -605,6 +652,7 @@ class AbstruseGoose(GenericComic):
 
 
 class PhDComics(GenericComic):
+
     """Class to retrieve PHD Comics."""
     name = 'phd'
     long_name = 'PhD Comics'
@@ -613,7 +661,8 @@ class PhDComics(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         archive_url = '%s/comics/archive_list.php' % cls.url
-        comic_url_num_re = re.compile('^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
+        comic_url_num_re = re.compile(
+            '^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
 
         last_num = last_comic['num'] if last_comic else 0
 
@@ -634,6 +683,7 @@ class PhDComics(GenericComic):
 
 
 class Octopuns(GenericComic):
+
     """Class to retrieve Octopuns comics."""
     name = None  # 'octopuns'
     long_name = 'Octopuns'
@@ -642,9 +692,10 @@ class Octopuns(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         next_comic = \
-                get_soup_at_url(last_comic['url']).find('img', src=re.compile('.*/Next.png')).parent \
-                if last_comic else \
-                get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
+            get_soup_at_url(last_comic['url']).find('img', src=re.compile('.*/Next.png')).parent \
+            if last_comic else \
+            get_soup_at_url(cls.url).find(
+                'img', src=re.compile('.*/First.png')).parent
         while 'href' in next_comic:
             comic_url = next_comic['href']
             soup = get_soup_at_url(comic_url)
@@ -658,6 +709,7 @@ class Octopuns(GenericComic):
 
 
 class OverCompensating(GenericComic):
+
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
@@ -686,6 +738,7 @@ class OverCompensating(GenericComic):
 
 
 class SomethingOfThatIlk(GenericComic):
+
     """Class to retrieve the Something Of That Ilk comics."""
     name = 'somethingofthatilk'
     long_name = 'Something Of That Ilk'
@@ -698,7 +751,8 @@ class SomethingOfThatIlk(GenericComic):
         next_comic = \
             get_soup_at_url(last_comic['url']).find('a', class_='next', href=comic_url_re) \
             if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='first', href=comic_url_re)
+            get_soup_at_url(cls.url).find(
+                'a', class_='first', href=comic_url_re)
         while next_comic:
             href = next_comic['href']
             comic_url = urljoin_wrapper(cls.url, href)
@@ -716,6 +770,7 @@ class SomethingOfThatIlk(GenericComic):
 
 
 class Wondermark(GenericComic):
+
     """Class to retrieve the Wondermark comics."""
     name = 'wondermark'
     long_name = 'Wondermark'
@@ -730,7 +785,8 @@ class Wondermark(GenericComic):
             if add:
                 soup = get_soup_at_url(comic_url)
                 day = datetime.datetime.strptime(
-                    remove_st_nd_rd_th_from_date(soup.find('div', class_='postdate').find('em').string),
+                    remove_st_nd_rd_th_from_date(
+                        soup.find('div', class_='postdate').find('em').string),
                     "%B %d, %Y").date()
                 div = soup.find('div', id='comic')
                 if div:
@@ -759,6 +815,7 @@ class Wondermark(GenericComic):
 
 
 class TheDoghouseDiaries(GenericComic):
+
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
@@ -785,10 +842,12 @@ class TheDoghouseDiaries(GenericComic):
                 'img': [urljoin_wrapper(comic_url, img['src'].strip())],
                 'num': int(comic_url.split('/')[-1]),
             }
-            prev_url, comic_url = comic_url, soup.find('a', id='nextlink').get('href')
+            prev_url, comic_url = comic_url, soup.find(
+                'a', id='nextlink').get('href')
 
 
 class GenericGoComic(GenericComic):
+
     """Generic class to handle the logic common to comics from gocomics.com."""
 
     @classmethod
@@ -803,7 +862,8 @@ class GenericGoComic(GenericComic):
 
         while next_comic:
             comic_url = urljoin_wrapper(gocomics, next_comic['href'])
-            year, month, day = [int(s) for s in url_date_re.match(comic_url).groups()]
+            year, month, day = [int(s)
+                                for s in url_date_re.match(comic_url).groups()]
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', class_='next', href=url_date_re)
             yield {
@@ -817,6 +877,7 @@ class GenericGoComic(GenericComic):
 
 
 class PearlsBeforeSwine(GenericGoComic):
+
     """Class to retrieve Pearls Before Swine comics."""
     name = 'pearls'
     long_name = 'Pearls Before Swine'
@@ -824,6 +885,7 @@ class PearlsBeforeSwine(GenericGoComic):
 
 
 class Peanuts(GenericGoComic):
+
     """Class to retrieve Peanuts comics."""
     name = 'peanuts'
     long_name = 'Peanuts'
@@ -847,4 +909,5 @@ def remove_st_nd_rd_th_from_date(string):
             .replace('th', '')
             .replace('Augu', 'August'))
 
-COMIC_NAMES = {c.name: c for c in get_subclasses(GenericComic) if c.name is not None}
+COMIC_NAMES = {c.name: c for c in get_subclasses(
+    GenericComic) if c.name is not None}

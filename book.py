@@ -51,9 +51,9 @@ def make_book(comic_classes):
     make_book_from_comic_list(
         comics,
         '%s from %s to %s' %
-            (' - '.join(sorted({c['comic'] for c in comics})),
-             min(get_date_for_comic(c) for c in comics).strftime('%x'),
-             max(get_date_for_comic(c) for c in comics).strftime('%x')),
+        (' - '.join(sorted({c['comic'] for c in comics})),
+         min(get_date_for_comic(c) for c in comics).strftime('%x'),
+         max(get_date_for_comic(c) for c in comics).strftime('%x')),
         'book.html')
 
 
@@ -77,13 +77,15 @@ def make_book_from_comic_list(comics, title, file_name):
         book.write(HTML_START)
 
         for i, com in enumerate(comics):
-            book.write(HTML_COMIC_INFO % (i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+            book.write(HTML_COMIC_INFO % (
+                i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
             for info in get_info_before_comic(com):
                 book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
             for path in com['local_img']:
                 if path is not None:
                     assert os.path.isfile(path)
-                    book.write(HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
+                    book.write(
+                        HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
             for info in get_info_after_comic(com):
                 book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
         book.write(HTML_FOOTER)
