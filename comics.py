@@ -10,7 +10,6 @@ from urlfunctions import get_soup_at_url, urljoin_wrapper, convert_iri_to_plain_
 
 
 class Xkcd(GenericComic):
-
     """Class to retrieve Xkcd comics."""
     name = 'xkcd'
     long_name = 'xkcd'
@@ -38,7 +37,6 @@ class Xkcd(GenericComic):
 
 
 class ExtraFabulousComics(GenericComic):
-
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
@@ -68,7 +66,6 @@ class ExtraFabulousComics(GenericComic):
 
 
 class NeDroid(GenericComic):
-
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
     long_name = 'NeDroid'
@@ -110,7 +107,6 @@ class NeDroid(GenericComic):
 
 
 class Garfield(GenericComic):
-
     """Class to retrieve Garfield comics."""
     name = 'garfield'
     long_name = 'Garfield'
@@ -133,7 +129,6 @@ class Garfield(GenericComic):
 
 
 class Dilbert(GenericComic):
-
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
     long_name = 'Dilbert'
@@ -165,7 +160,6 @@ class Dilbert(GenericComic):
 
 
 class ThreeWordPhrase(GenericComic):
-
     """Class to retrieve Three Word Phrase comics."""
     name = 'threeword'
     long_name = 'Three Word Phrase'
@@ -198,7 +192,6 @@ class ThreeWordPhrase(GenericComic):
 
 
 class SaturdayMorningBreakfastCereal(GenericComic):
-
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
@@ -231,7 +224,6 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
 
 class PerryBibleFellowship(GenericComic):
-
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
@@ -263,7 +255,6 @@ class PerryBibleFellowship(GenericComic):
 
 
 class BerkeleyMews(GenericComic):
-
     """Class to retrieve Berkeley Mews comics."""
     name = 'berkeley'
     long_name = 'Berkeley Mews'
@@ -299,7 +290,6 @@ class BerkeleyMews(GenericComic):
 
 
 class GenericBouletCorp(GenericComic):
-
     """Generic class to retrieve BouletCorp comics in different languages.
 
     Attributes :
@@ -339,7 +329,6 @@ class GenericBouletCorp(GenericComic):
 
 
 class BouletCorp(GenericBouletCorp):
-
     """Class to retrieve BouletCorp comics."""
     name = 'boulet'
     long_name = 'Boulet Corp'
@@ -348,7 +337,6 @@ class BouletCorp(GenericBouletCorp):
 
 
 class BouletCorpEn(GenericBouletCorp):
-
     """Class to retrieve EnglishBouletCorp comics."""
     name = 'boulet_en'
     long_name = 'Boulet Corp English'
@@ -357,7 +345,6 @@ class BouletCorpEn(GenericBouletCorp):
 
 
 class AmazingSuperPowers(GenericComic):
-
     """Class to retrieve Amazing Super Powers comics."""
     name = 'asp'
     long_name = 'Amazing Super Powers'
@@ -391,7 +378,6 @@ class AmazingSuperPowers(GenericComic):
 
 
 class Channelate(GenericComic):
-
     """Class to retrieve Channelate comics."""
     name = 'channelate'
     long_name = 'Channelate'
@@ -437,7 +423,6 @@ class Channelate(GenericComic):
 
 
 class CyanideAndHappiness(GenericComic):
-
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
@@ -493,7 +478,6 @@ class CyanideAndHappiness(GenericComic):
 
 
 class MrLovenstein(GenericComic):
-
     """Class to retrieve Mr Lovenstein comics."""
     name = 'mrlovenstein'
     long_name = 'Mr. Lovenstein'
@@ -522,7 +506,6 @@ class MrLovenstein(GenericComic):
 
 
 class DinosaurComics(GenericComic):
-
     """Class to retrieve Dinosaur Comics comics."""
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
@@ -558,7 +541,6 @@ class DinosaurComics(GenericComic):
 
 
 class ButterSafe(GenericComic):
-
     """Class to retrieve Butter Safe comics."""
     name = 'butter'
     long_name = 'ButterSafe'
@@ -592,7 +574,6 @@ class ButterSafe(GenericComic):
 
 
 class CalvinAndHobbes(GenericComic):
-
     """Class to retrieve Calvin and Hobbes comics."""
     name = 'calvin'
     long_name = 'Calvin and Hobbes'
@@ -627,7 +608,6 @@ class CalvinAndHobbes(GenericComic):
 
 
 class AbstruseGoose(GenericComic):
-
     """Class to retrieve AbstruseGoose Comics."""
     name = 'abstruse'
     long_name = 'Abstruse Goose'
@@ -652,7 +632,6 @@ class AbstruseGoose(GenericComic):
 
 
 class PhDComics(GenericComic):
-
     """Class to retrieve PHD Comics."""
     name = 'phd'
     long_name = 'PhD Comics'
@@ -683,7 +662,6 @@ class PhDComics(GenericComic):
 
 
 class Octopuns(GenericComic):
-
     """Class to retrieve Octopuns comics."""
     name = None  # 'octopuns'
     long_name = 'Octopuns'
@@ -709,7 +687,6 @@ class Octopuns(GenericComic):
 
 
 class OverCompensating(GenericComic):
-
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
@@ -738,7 +715,6 @@ class OverCompensating(GenericComic):
 
 
 class SomethingOfThatIlk(GenericComic):
-
     """Class to retrieve the Something Of That Ilk comics."""
     name = 'somethingofthatilk'
     long_name = 'Something Of That Ilk'
@@ -770,7 +746,6 @@ class SomethingOfThatIlk(GenericComic):
 
 
 class Wondermark(GenericComic):
-
     """Class to retrieve the Wondermark comics."""
     name = 'wondermark'
     long_name = 'Wondermark'
@@ -814,8 +789,38 @@ class Wondermark(GenericComic):
                 add = (last_comic['url'] == comic_url)
 
 
-class TheDoghouseDiaries(GenericComic):
+class PicturesInBoxes(GenericComic):
+    """Class to retrieve Pictures In Boxes comics."""
+    name = 'picturesinboxes'
+    long_name = 'Pictures in Boxes'
+    url = 'http://www.picturesinboxes.com'
 
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        url_date_re = re.compile('.*/([0-9]+)/([0-9]+)/([0-9]+)')
+        last_date = get_date_for_comic(
+            last_comic) if last_comic else date(2000, 1, 1)
+        for com in reversed(get_soup_at_url(cls.url).find('select', attrs={'name': 'archive-dropdown'}).find_all('option')):
+            comic_url = com['value']
+            if comic_url:
+                year, month, day = [int(s)
+                                    for s in url_date_re.match(comic_url).groups()]
+                comic_date = date(year, month, day)
+                if comic_date > last_date:
+                    title = com.string.strip()
+                    imgs = get_soup_at_url(comic_url).find(
+                        'div', id='comic-1').find_all('img')
+                    yield {
+                        'url': comic_url,
+                        'day': day,
+                        'month': month,
+                        'year': year,
+                        'img': [i['src'] for i in imgs],
+                        'title': title,
+                    }
+
+
+class TheDoghouseDiaries(GenericComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
@@ -847,7 +852,6 @@ class TheDoghouseDiaries(GenericComic):
 
 
 class GenericGoComic(GenericComic):
-
     """Generic class to handle the logic common to comics from gocomics.com."""
 
     @classmethod
@@ -877,7 +881,6 @@ class GenericGoComic(GenericComic):
 
 
 class PearlsBeforeSwine(GenericGoComic):
-
     """Class to retrieve Pearls Before Swine comics."""
     name = 'pearls'
     long_name = 'Pearls Before Swine'
@@ -885,7 +888,6 @@ class PearlsBeforeSwine(GenericGoComic):
 
 
 class Peanuts(GenericGoComic):
-
     """Class to retrieve Peanuts comics."""
     name = 'peanuts'
     long_name = 'Peanuts'
