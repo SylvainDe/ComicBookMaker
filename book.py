@@ -44,10 +44,17 @@ HTML_FOOTER = """
 def make_book(comic_classes):
     """Create ebook - not finished."""
     comics = sum((c.load_db() for c in comic_classes), [])
+    comics.sort(key=get_date_for_comic)
+    comics = comics[-100:]
+    for c in comics:
+        print(c['url'], get_date_for_comic(c))
     make_book_from_comic_list(
         comics,
-        ' - '.join(c.long_name for c in comic_classes),
-        'book_%s.html' % ("_".join(c.name for c in comic_classes)))
+        '%s from %s to %s' %
+            (' - '.join(sorted({c['comic'] for c in comics})),
+             min(get_date_for_comic(c) for c in comics).strftime('%x'),
+             max(get_date_for_comic(c) for c in comics).strftime('%x')),
+        'book.html')
 
 
 def make_book_from_comic_list(comics, title, file_name):
