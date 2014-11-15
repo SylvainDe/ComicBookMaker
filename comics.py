@@ -633,6 +633,30 @@ class PhDComics(GenericComic):
                 }
 
 
+class Octopuns(GenericComic):
+    """Class to retrieve Octopuns comics."""
+    name = None  # 'octopuns'
+    long_name = 'Octopuns'
+    url = 'http://www.octopuns.net'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+                get_soup_at_url(last_comic['url']).find('img', src=re.compile('.*/Next.png')).parent \
+                if last_comic else \
+                get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
+        while 'href' in next_comic:
+            comic_url = next_comic['href']
+            soup = get_soup_at_url(comic_url)
+            next_comic = soup.find('img', src=re.compile('.*/Next.png')).parent
+            yield {
+                'url': comic_url,
+                'img': [],
+                'title': soup.find('h3', class_='post-title entry-title').string,
+                'date': soup.find('h2', class_='date-header').string,
+            }
+
+
 class OverCompensating(GenericComic):
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
