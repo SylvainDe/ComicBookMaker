@@ -789,6 +789,34 @@ class Wondermark(GenericComic):
                 add = (last_comic['url'] == comic_url)
 
 
+class WarehouseComic(GenericComic):
+    """Class to retrieve Warehouse Comic comics."""
+    name = 'warehouse'
+    long_name = 'Warehouse Comic'
+    url = 'http://warehousecomic.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            comic_url = next_comic['href']
+            soup = get_soup_at_url(comic_url)
+            next_comic = soup.find('a', class_='navi navi-next')
+            comic_date = datetime.datetime.strptime(
+                soup.find('span', class_='post-date').string,
+                "%B %d, %Y").date()
+            yield {
+                'url': comic_url,
+                'img': [i['src'] for i in soup.find('div', id='comic').find_all('img')],
+                'title': soup.find('h2', class_='post-title').string,
+                'day': comic_date.day,
+                'month': comic_date.month,
+                'year': comic_date.year,
+            }
+
+
 class PicturesInBoxes(GenericComic):
     """Class to retrieve Pictures In Boxes comics."""
     name = 'picturesinboxes'

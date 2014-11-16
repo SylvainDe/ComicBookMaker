@@ -40,6 +40,7 @@ Comics supported
  * [PhD Comics](http://phdcomics.com)
  * [Over Compensating](http://www.overcompensating.com)
  * [Wondermark](http://wondermark.com)
+ * [WarehouseComic](http://warehousecomic.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
