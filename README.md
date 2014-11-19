@@ -41,6 +41,7 @@ Comics supported
  * [Over Compensating](http://www.overcompensating.com)
  * [Wondermark](http://wondermark.com)
  * [WarehouseComic](http://warehousecomic.com)
+ * [Chuckle-A-Duck](http://chuckleaduck.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)

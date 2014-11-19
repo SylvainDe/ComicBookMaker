@@ -879,6 +879,41 @@ class TheDoghouseDiaries(GenericComic):
                 'a', id='nextlink').get('href')
 
 
+class ChuckleADuck(GenericComic):
+    """Class to retrieve Chuckle-A-Duck comics."""
+    name = 'chuckleaduck'
+    long_name = 'Chuckle-A-duck'
+    url = 'http://chuckleaduck.com/'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            day = datetime.datetime.strptime(
+                remove_st_nd_rd_th_from_date(soup.find('span', class_='post-date').string),
+                "%B %d, %Y").date()
+            author = soup.find('span', class_='post-author')
+            imgs = soup.find('div', id='comic').find_all('img')
+            assert len(imgs) == 1
+            title = ' '.join(i['title'] for i in imgs)
+            alt = ' '.join(i['alt'] for i in imgs)
+            assert title == alt
+            yield {
+                'url': url,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': [i['src'] for i in imgs],
+                'title': title,
+            }
+            next_comic = soup.find('div', class_='nav-next').find('a')
+
+
 class GenericGoComic(GenericComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
 
