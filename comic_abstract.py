@@ -230,3 +230,17 @@ class GenericComic(object):
         """Remove the 'new' flag on comics in the DB."""
         cls.create_output_dir()
         cls.save_db([{key: val for key, val in c.items() if key != 'new'} for c in cls.load_db()])
+
+    @classmethod
+    def info(cls):
+        """Print information about the comics."""
+        print("%s (%s) : " % (cls.long_name, cls.url))
+        cls.create_output_dir()
+        comics = cls.load_db()
+        dates = [get_date_for_comic(c) for c in comics]
+        print("%d comics (%d new)" % (len(comics), sum(1 for c in comics if 'new' in c)))
+        print("%d images" % sum(len(c['img']) for c in comics))
+        if dates:
+            date_min, date_max = min(dates), max(dates)
+            print("from %s to %s (%d days)" % (date_min, date_max, (date_max - date_min).days))
+        print()

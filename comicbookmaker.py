@@ -35,6 +35,9 @@ def main():
         elif action == 'update':
             for com in comic_classes:
                 com.update()
+        elif action == 'info':
+            for com in comic_classes:
+                com.info()
         elif action == 'check':
             for com in comic_classes:
                 com.check_everything_is_ok()
