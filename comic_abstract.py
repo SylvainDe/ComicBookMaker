@@ -188,7 +188,7 @@ class GenericComic(object):
                 comic['local_img'] = [cls.get_file_in_output_dir(i, prefix)
                                       for i in comic['img']]
                 comic['comic'] = cls.long_name
-                comic['new'] = True
+                comic['new'] = None  # "'new' in comic" to check if new
                 new_comics.append(comic)
                 cls.print_comic(comic)
         finally:
