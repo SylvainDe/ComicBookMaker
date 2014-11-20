@@ -200,6 +200,7 @@ class SaturdayMorningBreakfastCereal(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
+        last_date = get_date_for_comic(last_comic) if last_comic else None
 
         archive_page = urljoin_wrapper(cls.url, '/archives.php')
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
@@ -214,12 +215,23 @@ class SaturdayMorningBreakfastCereal(GenericComic):
                     'div', id='comicimage').find('img')['src']
                 image_url2 = soup.find(
                     'div', id='aftercomic').find('img')['src']
+                title = link.string
+                date_str = soup.find('p', class_='date').string  # many of them, take the first
+                assert date_str == title
+                day = last_date if date_str == '(no date)' else \
+                    datetime.datetime.strptime(
+                        date_str,
+                        "%B %d, %Y").date()
                 comic = {
                     'url': url,
                     'num': num,
                     'img': [image_url1] + ([image_url2] if image_url2 else []),
-                    'title': link.string
+                    'title': title,
+                    'month': day.month,
+                    'year': day.year,
+                    'day': day.day,
                 }
+                last_date = get_date_for_comic(comic)
                 yield comic
 
 
