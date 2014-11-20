@@ -897,7 +897,7 @@ class ChuckleADuck(GenericComic):
             day = datetime.datetime.strptime(
                 remove_st_nd_rd_th_from_date(soup.find('span', class_='post-date').string),
                 "%B %d, %Y").date()
-            author = soup.find('span', class_='post-author')
+            author = soup.find('span', class_='post-author').string
             imgs = soup.find('div', id='comic').find_all('img')
             assert len(imgs) == 1
             title = ' '.join(i['title'] for i in imgs)
@@ -910,6 +910,7 @@ class ChuckleADuck(GenericComic):
                 'day': day.day,
                 'img': [i['src'] for i in imgs],
                 'title': title,
+                'author': author,
             }
             next_comic = soup.find('div', class_='nav-next').find('a')
 
