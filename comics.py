@@ -40,7 +40,7 @@ class ExtraFabulousComics(GenericComic):
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
-    url = 'http://extrafabulouscomics.com',
+    url = 'http://extrafabulouscomics.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
