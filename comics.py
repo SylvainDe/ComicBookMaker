@@ -968,6 +968,20 @@ class Peanuts(GenericGoComic):
     url = 'http://www.gocomics.com/peanuts'
 
 
+class MattWuerker(GenericGoComic):
+    """Class to retrieve Matt Wuerker comics."""
+    name = 'wuerker'
+    long_name = 'Matt Wuerker'
+    url = 'http://www.gocomics.com/mattwuerker'
+
+
+class TomToles(GenericGoComic):
+    """Class to retrieve Tom Toles comics."""
+    name = 'toles'
+    long_name = 'Tom Toles'
+    url = 'http://www.gocomics.com/tomtoles'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()

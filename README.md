@@ -48,3 +48,5 @@ Comics supported
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Channelate](http://www.channelate.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
+ * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
+ * [Tom Toles](http://www.gocomics.com/tomtoles)
