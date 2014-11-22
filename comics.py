@@ -218,10 +218,9 @@ class SaturdayMorningBreakfastCereal(GenericComic):
                 title = link.string
                 date_str = soup.find('p', class_='date').string  # many of them, take the first
                 assert date_str == title
-                day = last_date if date_str == '(no date)' else \
-                    datetime.datetime.strptime(
-                        date_str,
-                        "%B %d, %Y").date()
+                day = last_date \
+                    if date_str == '(no date)' else \
+                    string_to_date(date_str, "%B %d, %Y")
                 comic = {
                     'url': url,
                     'num': num,
@@ -371,8 +370,7 @@ class AmazingSuperPowers(GenericComic):
         last_date = get_date_for_comic(
             last_comic) if last_comic else date(2000, 1, 1)
         for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re)):
-            comic_date = datetime.datetime.strptime(
-                link.parent.previous_sibling.string, "%b %d, %Y").date()
+            comic_date = string_to_date(link.parent.previous_sibling.string, "%b %d, %Y")
             if comic_date > last_date:
                 title = link.string
                 comic_url = link['href']
@@ -535,9 +533,9 @@ class DinosaurComics(GenericComic):
             num = int(comic_link_re.match(url).groups()[0])
             if num > last_num:
                 text = link.next_sibling.string
-                day = datetime.datetime.strptime(
+                day = string_to_date(
                     remove_st_nd_rd_th_from_date(link.string),
-                    "%B %d, %Y").date()
+                    "%B %d, %Y")
                 soup = get_soup_at_url(url)
                 img = soup.find('img', src=comic_img_re)
                 yield {
@@ -771,10 +769,10 @@ class Wondermark(GenericComic):
             comic_url = link['href']
             if add:
                 soup = get_soup_at_url(comic_url)
-                day = datetime.datetime.strptime(
+                day = string_to_date(
                     remove_st_nd_rd_th_from_date(
                         soup.find('div', class_='postdate').find('em').string),
-                    "%B %d, %Y").date()
+                    "%B %d, %Y")
                 div = soup.find('div', id='comic')
                 if div:
                     img = div.find('img')
@@ -816,9 +814,9 @@ class WarehouseComic(GenericComic):
             comic_url = next_comic['href']
             soup = get_soup_at_url(comic_url)
             next_comic = soup.find('a', class_='navi navi-next')
-            comic_date = datetime.datetime.strptime(
+            comic_date = string_to_date(
                 soup.find('span', class_='post-date').string,
-                "%B %d, %Y").date()
+                "%B %d, %Y")
             yield {
                 'url': comic_url,
                 'img': [i['src'] for i in soup.find('div', id='comic').find_all('img')],
@@ -906,9 +904,9 @@ class ChuckleADuck(GenericComic):
         while next_comic:
             url = next_comic['href']
             soup = get_soup_at_url(url)
-            day = datetime.datetime.strptime(
+            day = string_to_date(
                 remove_st_nd_rd_th_from_date(soup.find('span', class_='post-date').string),
-                "%B %d, %Y").date()
+                "%B %d, %Y")
             author = soup.find('span', class_='post-author').string
             imgs = soup.find('div', id='comic').find_all('img')
             assert len(imgs) == 1
@@ -986,6 +984,14 @@ def remove_st_nd_rd_th_from_date(string):
             .replace('rd', '')
             .replace('th', '')
             .replace('Augu', 'August'))
+
+
+def string_to_date(string, date_format):
+    """Function to convert string to date object.
+    Wrapper around datetime.datetime.strptime."""
+    # format described in https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+    return datetime.datetime.strptime(string, date_format).date()
+
 
 COMIC_NAMES = {c.name: c for c in get_subclasses(
     GenericComic) if c.name is not None}
