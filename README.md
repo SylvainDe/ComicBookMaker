@@ -20,7 +20,7 @@ Comics supported
 ----------------
 
  * [xkcd](http://xkcd.com)
- * [Extra Fabulous Comics](http://extrafabulouscomics.com),
+ * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [NeDroid](http://nedroid.com)
  * [Garfield](http://garfield.com)
  * [Dilbert](http://dilbert.com)
@@ -48,5 +48,6 @@ Comics supported
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Channelate](http://www.channelate.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
+ * [Invisible Bread](http://invisiblebread.com)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
  * [Tom Toles](http://www.gocomics.com/tomtoles)

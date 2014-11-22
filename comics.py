@@ -889,6 +889,39 @@ class TheDoghouseDiaries(GenericComic):
                 'a', id='nextlink').get('href')
 
 
+class InvisibleBread(GenericComic):
+    """Class to retrieve Invisible Bread comics."""
+    name = 'invisiblebread'
+    long_name = 'Invisible Bread'
+    url = 'http://invisiblebread.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        last_date = get_date_for_comic(
+            last_comic) if last_comic else date(2000, 1, 1)
+        link_re = re.compile('^%s/([0-9]+)/' % cls.url)
+        for l in reversed(get_soup_at_url(urljoin_wrapper(cls.url, '/archives/')).find_all('td', class_='archive-title')):
+            a = l.find('a')
+            title = a.string
+            url = a['href']
+            month_and_day = l.previous_sibling.string
+            year = link_re.match(url).groups()[0]
+            date_com = string_to_date(month_and_day + ' ' + year, '%b %d %Y')
+            if date_com > last_date:
+                soup = get_soup_at_url(url)
+                imgs = soup.find('div', id='comic').find_all('img')
+                assert len(imgs) == 1
+                assert all(i['title'] == i['alt'] == title for i in imgs)
+                yield {
+                    'url': url,
+                    'month': date_com.month,
+                    'year': date_com.year,
+                    'day': date_com.day,
+                    'img': [i['src'] for i in imgs],
+                    'title': title,
+                }
+
+
 class ChuckleADuck(GenericComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'
