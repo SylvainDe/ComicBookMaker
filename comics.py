@@ -922,6 +922,39 @@ class InvisibleBread(GenericComic):
                 }
 
 
+class TubeyToons(GenericComic):
+    """Class to retrieve TubeyToons comics."""
+    name = 'tubeytoons'
+    long_name = 'Tubey Toons'
+    url = 'http://tubeytoons.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        img_src_re = re.compile('^/img/comics/([0-9]+)\..*')
+        img_date_re = re.compile('^Comic posted ([0-9]*)-([0-9]*)-([0-9]*) ')
+        last_num = int(img_src_re.match(get_soup_at_url(cls.url).find('img', src=img_src_re)['src']).groups()[0])
+        first_num = last_comic['num'] + 1 if last_comic else 1
+        for i in range(first_num, last_num + 1):
+            url = urljoin_wrapper(cls.url, str(i))
+            soup = get_soup_at_url(url)
+            title = soup.find('div', class_='title').string
+            img = soup.find('img', src=img_src_re)
+            title2 = img['title']
+            date = img['alt']
+            year, month, day = [int(s)
+                                for s in img_date_re.match(date).groups()]
+            yield {
+                'url': url,
+                'num': i,
+                'day': day,
+                'month': month,
+                'year': year,
+                'img': [urljoin_wrapper(cls.url, img['src'])],
+                'title': title,
+                'title2': title2,
+            }
+
+
 class ChuckleADuck(GenericComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'
