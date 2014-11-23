@@ -52,3 +52,4 @@ Comics supported
  * [Tubey Toons](http://tubeytoons.com)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
+ * [Michael Ramirez](http://www.gocomics.com/michaelramirez)

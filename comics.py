@@ -1048,6 +1048,13 @@ class TomToles(GenericGoComic):
     url = 'http://www.gocomics.com/tomtoles'
 
 
+class MichaelRamirez(GenericGoComic):
+    """Class to retrieve Michael Ramirez comics."""
+    name = 'ramirez'
+    long_name = 'Michael Ramirez'
+    url = 'http://www.gocomics.com/michaelramirez'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
