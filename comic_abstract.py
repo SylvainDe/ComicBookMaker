@@ -244,3 +244,14 @@ class GenericComic(object):
             date_min, date_max = min(dates), max(dates)
             print("from %s to %s (%d days)" % (date_min, date_max, (date_max - date_min).days))
         print()
+
+    @classmethod
+    def readme(cls):
+        """Print information to generate README."""
+        print(' * [%s](%s)' % (cls.long_name, cls.url))
+
+
+    @classmethod
+    def gitignore(cls):
+        """Print information to generate gitignore."""
+        print(cls.name)

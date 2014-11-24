@@ -38,6 +38,12 @@ def main():
         elif action == 'info':
             for com in comic_classes:
                 com.info()
+        elif action == 'gitignore':
+            for com in comic_classes:
+                com.gitignore()
+        elif action == 'readme':
+            for com in comic_classes:
+                com.readme()
         elif action == 'check':
             for com in comic_classes:
                 com.check_everything_is_ok()

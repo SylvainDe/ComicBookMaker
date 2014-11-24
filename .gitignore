@@ -2,11 +2,13 @@
 *.pyc
 __pycache__
 
+# Output dir
+generated_books
+
 # Generated folders
 abstruse
 asp
 berkeley
-bitercomics
 boulet
 boulet_en
 butter
@@ -20,21 +22,19 @@ dinosaur
 doghouse
 efc
 garfield
-generated_books
 invisiblebread
 mrlovenstein
 nedroid
 pbf
 peanuts
 pearls
-picturesinboxes
 phd
+picturesinboxes
 ramirez
 smbc
 somethingofthatilk
 threeword
 toles
-toonhole
 tubeytoons
 warehouse
 wondermark
