@@ -44,7 +44,11 @@ def get_content(url):
 
     url is a string
     Returns a string"""
-    return urlopen_wrapper(url).read()
+    try:
+        return urlopen_wrapper(url).read()
+    except (urllib.error.HTTPError):
+        print(url)
+        raise
 
 
 def get_file_at_url(url, path):
