@@ -975,10 +975,9 @@ class ChuckleADuck(GenericComic):
                 "%B %d, %Y")
             author = soup.find('span', class_='post-author').string
             imgs = soup.find('div', id='comic').find_all('img')
-            assert len(imgs) == 1
-            title = ' '.join(i['title'] for i in imgs)
-            alt = ' '.join(i['alt'] for i in imgs)
-            assert title == alt
+            assert imgs
+            title = imgs[0]['title']
+            assert all(i['title'] == i['alt'] == title for i in imgs)
             yield {
                 'url': url,
                 'month': day.month,
