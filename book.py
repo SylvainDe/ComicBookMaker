@@ -40,21 +40,33 @@ HTML_FOOTER = """
     </body>
 </html>"""
 
+from itertools import chain
+
+def collect_comics(comic_classes):
+    return chain.from_iterable(c.load_db() for c in comic_classes)
+
+def filter_comics(comics):
+    return [c for c in comics if 'new' in c]
+
+def sort_comics(comics):
+    return sorted(comics, key=get_date_for_comic)
+
+def truncate_comics(comics):
+    return comics[-2000:]
 
 def make_book(comic_classes):
     """Create ebook - not finished."""
-    comics = sum((c.load_db() for c in comic_classes), [])
-    comics.sort(key=get_date_for_comic)
-    comics = comics[-100:]
-    for c in comics:
-        print(c['url'], get_date_for_comic(c))
-    make_book_from_comic_list(
-        comics,
-        '%s from %s to %s' %
-        (' - '.join(sorted({c['comic'] for c in comics})),
-         min(get_date_for_comic(c) for c in comics).strftime('%x'),
-         max(get_date_for_comic(c) for c in comics).strftime('%x')),
-        'book.html')
+    comics = truncate_comics(sort_comics(filter_comics(collect_comics(comic_classes))))
+    for i, c in enumerate(comics):
+        print(i, c['url'], get_date_for_comic(c))
+    if comics:
+        make_book_from_comic_list(
+            comics,
+            '%s from %s to %s' %
+            (' - '.join(sorted({c['comic'] for c in comics})),
+             min(get_date_for_comic(c) for c in comics).strftime('%x'),
+             max(get_date_for_comic(c) for c in comics).strftime('%x')),
+            'book.html')
 
 
 def make_book_from_comic_list(comics, title, file_name):
