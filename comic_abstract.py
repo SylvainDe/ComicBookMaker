@@ -250,7 +250,6 @@ class GenericComic(object):
         """Print information to generate README."""
         print(' * [%s](%s)' % (cls.long_name, cls.url))
 
-
     @classmethod
     def gitignore(cls):
         """Print information to generate gitignore."""
