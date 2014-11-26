@@ -26,10 +26,14 @@ def urlopen_wrapper(url):
     url is a string
     Returns a byte object."""
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
-    return urllib.request.urlopen(
-        urllib.request.Request(
-            url,
-            headers={'User-Agent': user_agent, 'Accept': '*/*'}))
+    try:
+        return urllib.request.urlopen(
+            urllib.request.Request(
+                url,
+                headers={'User-Agent': user_agent, 'Accept': '*/*'}))
+    except (urllib.error.HTTPError):
+        print(url)
+        raise
 
 
 def urljoin_wrapper(base, url):
@@ -44,11 +48,21 @@ def get_content(url):
 
     url is a string
     Returns a string"""
-    try:
-        return urlopen_wrapper(url).read()
-    except (urllib.error.HTTPError):
-        print(url)
-        raise
+    return urlopen_wrapper(url).read()
+
+
+def extensions_are_equivalent(ext1, ext2):
+    synonyms = [{'jpg', 'jpeg'}]
+    ext1, ext2 = ext1.lower(), ext2.lower()
+    return ext1 == ext2 or any((ext1 in s and ext2 in s) for s in synonyms)
+
+
+def add_extension_to_filename_if_needed(ext, filename):
+    filename_ext = filename.split('.')[-1]
+    if extensions_are_equivalent(ext, filename_ext):
+        return filename
+    else:
+        return filename + '.' + ext
 
 
 def get_file_at_url(url, path):
@@ -61,9 +75,13 @@ def get_file_at_url(url, path):
     path is a string corresponding to the file location
     Returns the path if the file is retrieved properly, None otherwise."""
     try:
-        with urlopen_wrapper(url) as response, open(path, 'wb') as out_file:
-            shutil.copyfileobj(response, out_file)
-            return path
+        with urlopen_wrapper(url) as response:
+            content_type = response.info().get('Content-Type', '').split('/')
+            assert len(content_type) == 2
+            path = add_extension_to_filename_if_needed(content_type[1], path)
+            with open(path, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
+                return path
     except (urllib.error.HTTPError):
         return None
 
