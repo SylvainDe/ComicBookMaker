@@ -42,17 +42,22 @@ HTML_FOOTER = """
 
 from itertools import chain
 
+
 def collect_comics(comic_classes):
     return chain.from_iterable(c.load_db() for c in comic_classes)
+
 
 def filter_comics(comics):
     return [c for c in comics if 'new' in c]
 
+
 def sort_comics(comics):
     return sorted(comics, key=get_date_for_comic)
 
+
 def truncate_comics(comics):
     return comics[-2000:]
+
 
 def make_book(comic_classes):
     """Create ebook - not finished."""
