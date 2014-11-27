@@ -27,10 +27,11 @@ HTML_TOC_ITEM = """
         <a href='#%d'>%s</a><br>"""
 HTML_START = """
     <mbp:pagebreak />
+    <h1>Comics</h1>
     <a name='start' />"""
 HTML_COMIC_INFO = """
         <mbp:pagebreak />
-        <a name='%d'/><h1>%s</h1>
+        <a name='%d'/><h2>%s</h2>
             %s %s<br>"""
 HTML_COMIC_ADDITIONAL_INFO = """
             %s<br>"""
