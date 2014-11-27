@@ -24,6 +24,7 @@ Comics supported
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Boulet Corp](http://www.bouletcorp.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
+ * [Break Of Day](http://www.gocomics.com/break-of-day)
  * [ButterSafe](http://buttersafe.com)
  * [Calvin and Hobbes](http://marcel-oehler.marcellosendos.ch/comics/ch/)
  * [Channelate](http://www.channelate.com)

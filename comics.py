@@ -1047,6 +1047,13 @@ class TomToles(GenericGoComic):
     url = 'http://www.gocomics.com/tomtoles'
 
 
+class BreakOfDay(GenericGoComic):
+    """Class to retrieve Break Of Day comics."""
+    name = 'breakofday'
+    long_name = 'Break Of Day'
+    url = 'http://www.gocomics.com/break-of-day'
+
+
 class MichaelRamirez(GenericGoComic):
     """Class to retrieve Michael Ramirez comics."""
     name = 'ramirez'
