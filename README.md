@@ -36,6 +36,8 @@ Comics supported
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Garfield](http://garfield.com)
+ * [Horovitz Classic](http://www.horovitzcomics.com)
+ * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)

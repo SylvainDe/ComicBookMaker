@@ -990,6 +990,52 @@ class ChuckleADuck(GenericComic):
             next_comic = soup.find('div', class_='nav-next').find('a')
 
 
+class HorovitzComics(GenericComic):
+    """Generic class to handle the logic common to the different comics from Horovitz."""
+    url = 'http://www.horovitzcomics.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        link_re = re.compile('^' + cls.suffix + '/([0-9]+)$')
+        img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
+        archive = 'http://www.horovitzcomics.com/comics/archive/'
+        waiting_for_url = last_comic['url'] if last_comic else None
+        for a in reversed(get_soup_at_url(archive).find_all('a', href=link_re)):
+            href = a['href']
+            title = a.string
+            num = int(link_re.match(href).groups()[0])
+            url = urljoin_wrapper(cls.url, href)
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                soup = get_soup_at_url(url)
+                imgs = soup.find_all('img', id='comic')
+                assert len(imgs) == 1
+                year, month, day = [int(s)
+                        for s in img_re.match(imgs[0]['src']).groups()]
+                yield {
+                    'url': url,
+                    'title': title,
+                    'day': day,
+                    'month': month,
+                    'year': year,
+                    'img': [i['src'] for i in imgs],
+                    'num': num,
+                }
+
+
+class HorovitzNew(HorovitzComics):
+    name = 'horovitznew'
+    long_name = 'Horovitz New'
+    suffix = '/comics/new'
+
+
+class HorovitzClassic(HorovitzComics):
+    name = 'horovitzclassic'
+    long_name = 'Horovitz Classic'
+    suffix = '/comics/classic'
+
+
 class GenericGoComic(GenericComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
 
