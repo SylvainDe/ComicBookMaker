@@ -1012,7 +1012,7 @@ class HorovitzComics(GenericComic):
                 imgs = soup.find_all('img', id='comic')
                 assert len(imgs) == 1
                 year, month, day = [int(s)
-                        for s in img_re.match(imgs[0]['src']).groups()]
+                                    for s in img_re.match(imgs[0]['src']).groups()]
                 yield {
                     'url': url,
                     'title': title,
