@@ -30,6 +30,7 @@ Comics supported
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com/)
  * [Over Compensating](http://www.overcompensating.com)
+ * [Completely Serious Comics](http://completelyseriouscomics.com/)
  * [Cyanide and Happiness](http://explosm.net)
  * [Dilbert](http://dilbert.com)
  * [Dinosaur Comics](http://www.qwantz.com)

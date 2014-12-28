@@ -955,6 +955,43 @@ class TubeyToons(GenericComic):
             }
 
 
+class CompletelySeriousComics(GenericComic):
+    """Class to retrieve Completely Serious comics."""
+    name = 'completelyserious'
+    long_name = 'Completely Serious Comics'
+    url = 'http://completelyseriouscomics.com/'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find('h2', class_='post-title').string
+            author = soup.find('span', class_='post-author').contents[1].string
+            day = string_to_date(
+                    soup.find('span', class_='post-date').string,
+                    '%B %d, %Y')
+            imgs = soup.find('div', class_='comicpane').find_all('img')
+            assert imgs
+            alt = imgs[0]['title']
+            assert all(i['title'] == i['alt'] == alt for i in imgs)
+            next_comic = soup.find('a', class_='navi navi-next')
+            yield {
+                'url': url,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': [i['src'] for i in imgs],
+                'title': title,
+                'alt': alt,
+                'author': author,
+            }
+
+
 class ChuckleADuck(GenericComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'
