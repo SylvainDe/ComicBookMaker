@@ -161,7 +161,7 @@ class Dilbert(GenericComic):
 
 class ThreeWordPhrase(GenericComic):
     """Class to retrieve Three Word Phrase comics."""
-    name = 'threeword'
+    # name = 'threeword'
     long_name = 'Three Word Phrase'
     url = 'http://threewordphrase.com'
 
@@ -973,8 +973,8 @@ class CompletelySeriousComics(GenericComic):
             title = soup.find('h2', class_='post-title').string
             author = soup.find('span', class_='post-author').contents[1].string
             day = string_to_date(
-                    soup.find('span', class_='post-date').string,
-                    '%B %d, %Y')
+                soup.find('span', class_='post-date').string,
+                '%B %d, %Y')
             imgs = soup.find('div', class_='comicpane').find_all('img')
             assert imgs
             alt = imgs[0]['title']
