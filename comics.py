@@ -344,7 +344,7 @@ class BouletCorp(GenericBouletCorp):
     name = 'boulet'
     long_name = 'Boulet Corp'
     url = 'http://www.bouletcorp.com'
-    date_re = '^%s/blog/([0-9]*)/([0-9]*)/([0-9]*)/'
+    date_re = '^%s/([0-9]*)/([0-9]*)/([0-9]*)/'
 
 
 class BouletCorpEn(GenericBouletCorp):
