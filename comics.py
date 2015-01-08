@@ -1039,12 +1039,12 @@ class HorovitzComics(GenericComic):
         waiting_for_url = last_comic['url'] if last_comic else None
         for a in reversed(get_soup_at_url(archive).find_all('a', href=link_re)):
             href = a['href']
-            title = a.string
-            num = int(link_re.match(href).groups()[0])
             url = urljoin_wrapper(cls.url, href)
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
+                num = int(link_re.match(href).groups()[0])
+                title = a.string
                 soup = get_soup_at_url(url)
                 imgs = soup.find_all('img', id='comic')
                 assert len(imgs) == 1
