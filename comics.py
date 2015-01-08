@@ -992,6 +992,31 @@ class CompletelySeriousComics(GenericComic):
             }
 
 
+class PoorlyDrawnLines(GenericComic):
+    """Class to retrieve Poorly Drawn Lines comics."""
+    name = 'poorlydrawn'
+    long_name = 'Poorly Drawn Lines'
+    url = 'http://poorlydrawnlines.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        url_re = re.compile('^%s/comic/.' % cls.url)
+        for l in reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re)):
+            url = l['href']
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                soup = get_soup_at_url(url)
+                imgs = soup.find('div', id='post').find_all('img')
+                assert len(imgs) <= 1
+                yield {
+                    'url': url,
+                    'img': [i['src'] for i in imgs],
+                    'title': imgs[0].get('title', "") if imgs else "",
+                }
+
+
 class ChuckleADuck(GenericComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'

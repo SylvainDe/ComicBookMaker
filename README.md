@@ -47,6 +47,7 @@ Comics supported
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
  * [PhD Comics](http://phdcomics.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
+ * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
