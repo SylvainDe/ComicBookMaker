@@ -53,6 +53,7 @@ Comics supported
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Three Word Phrase](http://threewordphrase.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
+ * [Toon Hole](http://www.toonhole.com)
  * [Tubey Toons](http://tubeytoons.com)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Wondermark](http://wondermark.com)

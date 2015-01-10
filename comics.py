@@ -387,6 +387,36 @@ class AmazingSuperPowers(GenericComic):
                 }
 
 
+class ToonHole(GenericComic):
+    """Class to retrieve Toon Holes comics."""
+    name = 'toonhole'
+    long_name = 'Toon Hole'
+    url = 'http://www.toonhole.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        archive_url = urljoin_wrapper(cls.url, 'archive/')
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark')):
+            url = link['href']
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                title = link.string
+                soup = get_soup_at_url(url)
+                day = string_to_date(remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip()), "%B %d, %Y")
+                imgs = soup.find('div', id='comic').find_all('img')
+                assert all(i['alt'] == i['title'] == title for i in imgs)
+                yield {
+                    'url': url,
+                    'title': title,
+                    'month': day.month,
+                    'year': day.year,
+                    'day': day.day,
+                    'img': [i['src'] for i in imgs],
+                }
+
+
 class Channelate(GenericComic):
     """Class to retrieve Channelate comics."""
     name = 'channelate'
