@@ -75,6 +75,10 @@ def make_book(comic_classes):
             'book.html')
 
 
+def convert_unicode_to_html(text):
+    return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
+
+
 def make_book_from_comic_list(comics, title, file_name):
     cover = 'empty.jpg'
     output_dir = 'generated_books'
@@ -98,14 +102,14 @@ def make_book_from_comic_list(comics, title, file_name):
             book.write(HTML_COMIC_INFO % (
                 i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
             for info in get_info_before_comic(com):
-                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
+                book.write(HTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
             for path in com['local_img']:
                 if path is not None:
                     assert os.path.isfile(path)
                     book.write(
                         HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
             for info in get_info_after_comic(com):
-                book.write(HTML_COMIC_ADDITIONAL_INFO % html.escape(info))
+                book.write(HTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
         book.write(HTML_FOOTER)
 
     subprocess.call([KINDLEGEN_PATH, html_book])
