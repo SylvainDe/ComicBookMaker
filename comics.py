@@ -413,7 +413,7 @@ class ToonHole(GenericComic):
                     'month': day.month,
                     'year': day.year,
                     'day': day.day,
-                    'img': [i['src'] for i in imgs],
+                    'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
                 }
 
 
