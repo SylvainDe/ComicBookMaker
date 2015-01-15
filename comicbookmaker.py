@@ -19,6 +19,12 @@ def main():
         choices=comic_names,
         default=[])
     parser.add_argument(
+        '--excluded', '-e',
+        action='append',
+        help=('comics to be excluded'),
+        choices=comic_names,
+        default=[])
+    parser.add_argument(
         '--action', '-a',
         action='append',
         help=('actions required'),
@@ -28,7 +34,7 @@ def main():
         args.comic = comic_names
     if not args.action:
         args.action = ['update']
-    comic_classes = [COMIC_NAMES[c] for c in args.comic]
+    comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
     for action in args.action:
         if action == 'book':
             book.make_book(comic_classes)
