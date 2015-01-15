@@ -221,6 +221,7 @@ class GenericComic(object):
                         print(cls.name, ': got', url, 'at', new_path)
                         local[i] = new_path
                         change = True
+                        comic['new'] = None
         if change:
             cls.save_db(comics)
             print(cls.name, ": some missing resources have been downloaded")
