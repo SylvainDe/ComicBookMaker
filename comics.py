@@ -161,7 +161,7 @@ class Dilbert(GenericComic):
 
 class ThreeWordPhrase(GenericComic):
     """Class to retrieve Three Word Phrase comics."""
-    # name = 'threeword'
+    name = 'threeword'
     long_name = 'Three Word Phrase'
     url = 'http://threewordphrase.com'
 
