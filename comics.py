@@ -191,6 +191,37 @@ class ThreeWordPhrase(GenericComic):
             next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
 
 
+class TheGentlemanArmchair(GenericComic):
+    """Class to retrieve The Gentleman Armchair comics."""
+    name = 'gentlemanarmchair'
+    long_name = 'The Gentleman Armchair'
+    url = 'http://thegentlemansarmchair.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        archive_url = urljoin_wrapper(cls.url, 'archive')
+        for tr in reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr')):
+            date_td, content_td = tr.children
+            a_tag = content_td.find('a')
+            url = a_tag['href']
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                title = a_tag.string
+                day = string_to_date(date_td.string, "%b %d %Y")
+                soup = get_soup_at_url(url)
+                imgs = soup.find('div', id='comic').find_all('img')
+                yield {
+                    'url': url,
+                    'img': [i['src'] for i in imgs],
+                    'title': title,
+                    'month': day.month,
+                    'year': day.year,
+                    'day': day.day,
+                }
+
+
 class SaturdayMorningBreakfastCereal(GenericComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     name = 'smbc'
