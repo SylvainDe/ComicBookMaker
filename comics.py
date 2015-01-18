@@ -500,51 +500,32 @@ class CyanideAndHappiness(GenericComic):
     url = 'http://explosm.net'
 
     @classmethod
-    def get_author_and_data_from_str(cls, data):
-        """Extract author and date from the string which can have different formats."""
-        author_date_re = re.compile('^by (.*)  ([0-9]*).([0-9]*).([0-9]*)$')
-        date_author_re = re.compile('^([0-9]*).([0-9]*).([0-9]*) by (.*)$')
-
-        match = author_date_re.match(data)
-        if match:
-            author, month, day, year = match.groups()
-        else:
-            match = date_author_re.match(data)
-            if match:
-                month, day, year, author = match.groups()
-            else:
-                assert False
-        return (int(day), int(month), int(year), author.strip())
-
-    @classmethod
     def get_next_comic(cls, last_comic):
-        img_src_re = re.compile(
-            '^http://(www.)?explosm.net/db/files/Comics/.*')
-        comic_num_re = re.compile('^%s/comics/([0-9]*)/$' % cls.url)
 
         next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', rel='next') \
-            if last_comic else \
-            get_soup_at_url(
-                urljoin_wrapper(cls.url, '/comics/')).find('a', rel='first')
+            get_soup_at_url(last_comic['url']).find('a', class_='next-comic') \
+            if last_comic else {'href': "/comics/15"}
 
-        while next_comic:
+        while next_comic['href'] != '#':
             comic_url = urljoin_wrapper(cls.url, next_comic['href'])
-            num = int(comic_num_re.match(comic_url).groups()[0])
             soup = get_soup_at_url(comic_url)
-            next_comic = soup.find('a', rel='next')
-            day, month, year, author = cls.get_author_and_data_from_str(
-                soup.find('table').find('tr').find('td').text)
-            image = soup.find('img', src=img_src_re)
+            day_url = soup.find('h3').find('a')
+            num = int(day_url['href'].split('/')[-1])
+            day = string_to_date(day_url.string, '%Y.%m.%d')
+            author = soup.find('small', class_="author-credit-name").string
+            assert author.startswith('by ')
+            author = author[3:]
+            next_comic = soup.find('a', class_='next-comic')
+            imgs = soup.find_all('img', id='main-comic')
             yield {
                 'num': num,
                 'url': comic_url,
                 'author': author,
-                'day': day,
-                'month': month,
-                'year': year,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
                 'prefix': '%d-' % num,
-                'img': [image.get('src')] if image else []
+                'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
             }
 
 
