@@ -130,7 +130,7 @@ class Garfield(GenericComic):
 
 class Dilbert(GenericComic):
     """Class to retrieve Dilbert comics."""
-    name = 'dilbert'
+    # name = 'dilbert'
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
 

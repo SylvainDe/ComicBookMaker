@@ -32,7 +32,6 @@ Comics supported
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com/)
  * [Cyanide and Happiness](http://explosm.net)
- * [Dilbert](http://dilbert.com)
  * [Dinosaur Comics](http://www.qwantz.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
