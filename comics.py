@@ -1094,6 +1094,46 @@ class ChuckleADuck(GenericComic):
             next_comic = soup.find('div', class_='nav-next').find('a')
 
 
+class ThingsInSquares(GenericComic):
+    """Class to retrieve Things In Squares comics."""
+    # This can be retrieved in other languages
+    name = 'squares'
+    long_name = 'Things in squares'
+    url = 'http://www.thingsinsquares.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        archive_url = urljoin_wrapper(cls.url, 'archive')
+        for tr in reversed(get_soup_at_url(archive_url).find('tbody').find_all('tr')):
+            _, td2, td3 = tr.find_all('td')
+            a = td2.find('a')
+            url = a['href']
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                day = string_to_date(td3.string, "%m.%d.%y")
+                soup = get_soup_at_url(url)
+                title = a.string
+                title2 = soup.find('meta', property='og:title')['content']
+                desc = soup.find('meta', property='og:description')
+                description = desc['content'] if desc else ''
+                tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
+                imgs = soup.find('div', class_='entry-content').find_all('img')
+                yield {
+                    'url': url,
+                    'day': day.day,
+                    'month': day.month,
+                    'year': day.year,
+                    'title': title,
+                    'title2': title2,
+                    'descriptions': description,
+                    'tags': tags,
+                    'img': [i['src'] for i in imgs],
+                    'alt': ' '.join(i['alt'] for i in imgs),
+                }
+
+
 class HorovitzComics(GenericComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

@@ -51,6 +51,7 @@ Comics supported
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
+ * [Things in squares](http://www.thingsinsquares.com)
  * [Three Word Phrase](http://threewordphrase.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
