@@ -304,11 +304,12 @@ class BerkeleyMews(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        archive_url = urljoin_wrapper(cls.url, "?page_id=2")
         last_num = last_comic['num'] if last_comic else 0
 
         comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % cls.url)
         comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
-        for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_num_re, class_='')):
+        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_num_re)):
             comic_url = link['href']
             num = int(comic_num_re.match(comic_url).groups()[0])
             if num > last_num:
