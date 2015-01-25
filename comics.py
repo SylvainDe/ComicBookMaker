@@ -901,6 +901,38 @@ class PicturesInBoxes(GenericComic):
                     }
 
 
+class Penmen(GenericComic):
+    """Class to retrieve Penmen comics."""
+    name = 'penmen'
+    long_name = 'Penmen'
+    url = 'http://penmen.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='comic-nav-base comic-nav-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
+
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            url2 = soup.find('link', rel='shortlink')['href']
+            title = soup.find('meta', {'name': 'twitter:title'})['content']
+            img = soup.find('meta', property='og:image')['content']
+            day = string_to_date(soup.find('span', class_='post-date').string, '%Y/%m/%d')
+            yield {
+                'url': url,
+                'url2': url2,
+                'title': title,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': [img],
+            }
+            next_comic = soup.find('a', class_='comic-nav-base comic-nav-next')
+
+
 class TheDoghouseDiaries(GenericComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'

@@ -45,6 +45,7 @@ Comics supported
  * [Perry Bible Fellowship](http://pbfcomics.com)
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
+ * [Penmen](http://penmen.com)
  * [PhD Comics](http://phdcomics.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
