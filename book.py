@@ -8,6 +8,7 @@ import subprocess
 import os
 import urllib.parse
 import datetime
+from itertools import chain
 from comic_abstract import get_date_for_comic, get_info_before_comic, get_info_after_comic
 
 # http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
@@ -41,7 +42,6 @@ HTML_FOOTER = """
     </body>
 </html>"""
 
-from itertools import chain
 
 
 def collect_comics(comic_classes):
