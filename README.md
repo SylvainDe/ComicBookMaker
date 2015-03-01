@@ -20,6 +20,7 @@ Comics supported
 ----------------
 
  * [Abstruse Goose](http://abstrusegoose.com)
+ * [Anything Comic](http://www.anythingcomic.com)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Boulet Corp](http://www.bouletcorp.com)

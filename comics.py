@@ -1167,6 +1167,42 @@ class ThingsInSquares(GenericComic):
                 }
 
 
+class AnythingComic(GenericComic):
+    """Class to retrieve Anything Comics."""
+    name = 'anythingcomic'
+    long_name = 'Anything Comic'
+    url = 'http://www.anythingcomic.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        last_num = last_comic['num'] if last_comic else 0
+        archive_url = urljoin_wrapper(cls.url, 'archive')
+        for i, tr in enumerate(get_soup_at_url(archive_url).find('table', id='chapter_table').find_all('tr')):
+            if i > 1:
+                td_num, td_comic, td_date, td_com = tr.find_all('td')
+                num = int(td_num.string)
+                assert num + 1 == i
+                if num > last_num:
+                    link = td_comic.find('a')
+                    comic_url = urljoin_wrapper(cls.url, link['href'])
+                    title = link.string
+                    soup = get_soup_at_url(comic_url)
+                    imgs = soup.find_all('img', id='comic_image')
+                    day = string_to_date(td_date.string, '%d %b %Y %I:%M %p')
+                    assert len(imgs) == 1
+                    assert all(i.get('alt') == i.get('title') for i in imgs)
+                    yield {
+                        'url': comic_url,
+                        'num': num,
+                        'title': title,
+                        'alt': imgs[0].get('alt', ''),
+                        'img': [i['src'] for i in imgs],
+                        'month': day.month,
+                        'year': day.year,
+                        'day': day.day,
+                    }
+
+
 class HorovitzComics(GenericComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
