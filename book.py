@@ -43,7 +43,6 @@ HTML_FOOTER = """
 </html>"""
 
 
-
 def collect_comics(comic_classes):
     return chain.from_iterable(c.load_db() for c in comic_classes)
 
