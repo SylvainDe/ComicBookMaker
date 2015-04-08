@@ -992,7 +992,7 @@ class InvisibleBread(GenericComic):
                     'month': date_com.month,
                     'year': date_com.year,
                     'day': date_com.day,
-                    'img': [i['src'] for i in imgs],
+                    'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
                     'title': title,
                 }
 
