@@ -230,39 +230,27 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        last_num = last_comic['num'] if last_comic else 0
-        last_date = get_date_for_comic(last_comic) if last_comic else None
-
-        archive_page = urljoin_wrapper(cls.url, '/archives.php')
+        # FIXME : Get date
+        next_url = get_soup_at_url(last_comic['url']).find('a', rel='next')
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
 
-        for link in get_soup_at_url(archive_page).find_all('a', href=comic_link_re):
-            link_url = link['href']
-            num = int(comic_link_re.match(link_url).groups()[0])
-            if num > last_num:
-                url = urljoin_wrapper(cls.url, link_url)
-                soup = get_soup_at_url(url)
-                image_url1 = soup.find(
-                    'div', id='comicimage').find('img')['src']
-                image_url2 = soup.find(
-                    'div', id='aftercomic').find('img')['src']
-                title = link.string
-                date_str = soup.find('p', class_='date').string  # many of them, take the first
-                assert date_str == title
-                day = last_date \
-                    if date_str == '(no date)' else \
-                    string_to_date(date_str, "%B %d, %Y")
-                comic = {
-                    'url': url,
-                    'num': num,
-                    'img': [image_url1] + ([image_url2] if image_url2 else []),
-                    'title': title,
-                    'month': day.month,
-                    'year': day.year,
-                    'day': day.day,
-                }
-                last_date = get_date_for_comic(comic)
-                yield comic
+        while next_url:
+            url = urljoin_wrapper(cls.url, next_url['href'])
+            num = int(comic_link_re.match(next_url['href']).groups()[0])
+            soup = get_soup_at_url(url)
+            image1 = soup.find('div', id='comicbody').find('img')
+            image_url1 = image1['src']
+            image_url2 = soup.find(
+                'div', id='aftercomic').find('img')['src']
+            imgs = [image_url1] + ([image_url2] if image_url2 else [])
+            comic = {
+                'url': url,
+                'num': num,
+                'title': image1['title'],
+                'img': [urljoin_wrapper(cls.url, i) for i in imgs],
+            }
+            yield comic
+            next_url = soup.find('a', rel='next')
 
 
 class PerryBibleFellowship(GenericComic):
