@@ -230,8 +230,8 @@ class SaturdayMorningBreakfastCereal(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        # FIXME : Get date
-        next_url = get_soup_at_url(last_comic['url']).find('a', rel='next')
+        next_url = get_soup_at_url(last_comic['url']).find('a', rel='next') \
+            if last_comic else get_soup_at_url(cls.url).find('a', rel='start')
         comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
 
         while next_url:
@@ -240,14 +240,19 @@ class SaturdayMorningBreakfastCereal(GenericComic):
             soup = get_soup_at_url(url)
             image1 = soup.find('div', id='comicbody').find('img')
             image_url1 = image1['src']
-            image_url2 = soup.find(
-                'div', id='aftercomic').find('img')['src']
+            aftercomic = soup.find('div', id='aftercomic')
+            image_url2 = aftercomic.find('img')['src'] if aftercomic else ''
             imgs = [image_url1] + ([image_url2] if image_url2 else [])
+            date_str = soup.find('div', class_='cc-publishtime').contents[0]
+            comic_date = string_to_date(date_str, "%B %d, %Y")
             comic = {
                 'url': url,
                 'num': num,
                 'title': image1['title'],
                 'img': [urljoin_wrapper(cls.url, i) for i in imgs],
+                'day': comic_date.day,
+                'month': comic_date.month,
+                'year': comic_date.year
             }
             yield comic
             next_url = soup.find('a', rel='next')
