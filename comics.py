@@ -977,7 +977,7 @@ class InvisibleBread(GenericComic):
             date_com = string_to_date(month_and_day + ' ' + year, '%b %d %Y')
             if date_com > last_date:
                 soup = get_soup_at_url(url)
-                imgs = soup.find('div', id='comic').find_all('img')
+                imgs = [soup.find('div', id='comic').find('img')]
                 assert len(imgs) == 1
                 assert all(i['title'] == i['alt'] == title for i in imgs)
                 yield {
