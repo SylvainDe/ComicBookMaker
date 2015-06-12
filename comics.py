@@ -1160,6 +1160,42 @@ class ThingsInSquares(GenericComic):
                 }
 
 
+class HappleTea(GenericComic):
+    """Class to retrieve Happle Tea Comics."""
+    name = 'happletea'
+    long_name = 'Happle Tea'
+    url = 'http://www.happletea.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            imgs = soup.find('div', id='comic').find_all('img')
+            post = soup.find('div', class_='post-content')
+            title = post.find('h2', class_='post-title').string
+            author = post.find('a', rel='author').string
+            date_str = post.find('span', class_='post-date').string
+            day = string_to_date(date_str, "%B %d, %Y")
+            assert all(i['alt'] == i['title'] for i in imgs)
+            yield {
+                'url': url,
+                'title': title,
+                'img': [i['src'] for i in imgs],
+                'alt': ''.join(i['alt'] for i in imgs),
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'author': author,
+            }
+            next_comic = soup.find('a', class_='navi navi-next')
+
+
 class AnythingComic(GenericComic):
     """Class to retrieve Anything Comics."""
     name = 'anythingcomic'
