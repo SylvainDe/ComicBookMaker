@@ -42,7 +42,6 @@ Comics supported
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
- * [NeDroid](http://nedroid.com)
  * [Perry Bible Fellowship](http://pbfcomics.com)
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)

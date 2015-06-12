@@ -67,14 +67,14 @@ class ExtraFabulousComics(GenericComic):
 
 class NeDroid(GenericComic):
     """Class to retrieve NeDroid comics."""
-    name = 'nedroid'
+    # name = 'nedroid'
     long_name = 'NeDroid'
     url = 'http://nedroid.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
         comic_url_re = re.compile(
-            '^%s/comics/([0-9]*)-([0-9]*)-([0-9]*).*' % cls.url)
+            '//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
 
         next_comic = \
