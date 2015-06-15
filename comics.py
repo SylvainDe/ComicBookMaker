@@ -1153,7 +1153,7 @@ class ThingsInSquares(GenericComic):
                     'year': day.year,
                     'title': title,
                     'title2': title2,
-                    'descriptions': description,
+                    'description': description,
                     'tags': tags,
                     'img': [i['src'] for i in imgs],
                     'alt': ' '.join(i['alt'] for i in imgs),
@@ -1194,6 +1194,43 @@ class HappleTea(GenericComic):
                 'author': author,
             }
             next_comic = soup.find('a', class_='navi navi-next')
+
+
+class FatAwesomeComics(GenericComic):
+    """Class to retrieve Fat Awesome Comics."""
+    name = 'fatawesome'
+    long_name = 'Fat Awesome'
+    url = 'http://fatawesome.com/comics/'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', rel='next') \
+            if last_comic else \
+            {'href': 'http://fatawesome.com/shortbus/'}
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+            description = soup.find('meta', attrs={'name': 'description'})['content']
+            tags_prop = soup.find('meta', property='article:tag')
+            tags = tags_prop['content'] if tags_prop else ""
+            date_str = soup.find('meta', property='article:published_time')['content'][:10]
+            day = string_to_date(date_str, "%Y-%m-%d")
+            imgs = soup.find_all('img', attrs={'data-recalc-dims': "1"})
+            assert len(imgs) == 1
+            yield {
+                'url': url,
+                'title': title,
+                'description': description,
+                'tags': tags,
+                'alt': "".join(i['alt'] for i in imgs),
+                'img': [i['src'].rsplit('?', 1)[0] for i in imgs],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+            }
+            next_comic = soup.find('a', rel='next')
 
 
 class AnythingComic(GenericComic):

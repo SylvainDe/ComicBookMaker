@@ -23,7 +23,7 @@ def get_info_before_comic(comic):
 
 def get_info_after_comic(comic):
     """Generates the info to be put after the images."""
-    for name in ['alt', 'title', 'title2', 'texts', 'name']:
+    for name in ['alt', 'title', 'title2', 'texts', 'name', 'description']:
         info = comic.get(name)
         if info:
             yield info

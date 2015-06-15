@@ -37,6 +37,7 @@ Comics supported
  * [Dinosaur Comics](http://www.qwantz.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
+ * [Fat Awesome](http://fatawesome.com/comics/)
  * [Garfield](http://garfield.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Happle Tea](http://www.happletea.com)
