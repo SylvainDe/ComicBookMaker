@@ -1269,6 +1269,46 @@ class AnythingComic(GenericComic):
                     }
 
 
+class PainTrainComic(GenericComic):
+    """Class to retrieve Pain Train Comics."""
+    name = 'paintrain'
+    long_name = 'Pain Train Comics'
+    url = 'http://paintraincomic.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('link', rel='next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find('h2', class_='post-title').string
+            short_url = soup.find('link', rel='shortlink')['href']
+            num = int(short_url_re.match(short_url).groups()[0])
+            imgs = soup.find('div', id='comic').find_all('img')
+            alt = imgs[0]['title']
+            assert all(i['alt'] == i['title'] == alt for i in imgs)
+            date_str = soup.find('span', class_='post-date').string
+            day = string_to_date(date_str, "%d/%m/%Y")
+            # text = soup.find('div', class_='entry').contents
+            # print(text)
+            yield {
+                'url': url,
+                'short_url': short_url,
+                'num': num,
+                'img': [i['src'] for i in imgs],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'alt': alt,
+                'title': title,
+            }
+            next_comic = soup.find('link', rel='next')
+
+
 class HorovitzComics(GenericComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
