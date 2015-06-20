@@ -6,7 +6,9 @@ from comic_abstract import GenericComic, get_date_for_comic
 import re
 from datetime import date, timedelta
 import datetime
-from urlfunctions import get_soup_at_url, urljoin_wrapper, convert_iri_to_plain_ascii_uri, load_json_at_url
+from urlfunctions import get_soup_at_url, urljoin_wrapper,\
+    convert_iri_to_plain_ascii_uri, load_json_at_url, urlopen_wrapper
+import json
 
 
 class Xkcd(GenericComic):
@@ -1431,6 +1433,54 @@ class MichaelRamirez(GenericGoComic):
     name = 'ramirez'
     long_name = 'Michael Ramirez'
     url = 'http://www.gocomics.com/michaelramirez'
+
+
+class TapasticComic(GenericComic):
+    """Generic class to handle the logic common to comics from tapastic.com."""
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        pref, suff = 'episodeList : ', ','
+        # Information is stored in the javascript part
+        # I don't know the clean way to get it so this is the ugly way.
+        string = [s[len(pref):-len(suff)] for s in (s.decode('utf-8').strip() for s in urlopen_wrapper(cls.url).readlines()) if s.startswith(pref) and s.endswith(suff)][0]
+        for r in json.loads(string):
+            url = 'http://tapastic.com/episode/' + str(r['id'])
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                date = r['publishDate'].split()[0]
+                year, month, day = [int(e) for e in date.split('-')]
+                soup = get_soup_at_url(url)
+                imgs = soup.find_all('img', class_='art-image')
+                yield {
+                    'url': url,
+                    'day': day,
+                    'year': year,
+                    'month': month,
+                    'img': [i['src'] for i in imgs],
+                    'title': r['title'],
+                }
+
+
+class VegetablesForDessert(TapasticComic):
+    """Class to retrieve Vegetables For Dessert comics."""
+    name = 'vegetables'
+    long_name = 'Vegetables For Dessert'
+    url = 'http://tapastic.com/series/vegetablesfordessert'
+
+
+class FowlLanguageComics(TapasticComic):  # could be downloaded on its own
+    name = 'fowllanguage'
+    long_name = 'Fowl Language Comics'
+    url = 'http://tapastic.com/series/Fowl-Language-Comics'
+
+
+class OscillatingProfundities(TapasticComic):
+    name = 'oscillating'
+    long_name = 'Oscillating Profundities'
+    url = 'http://tapastic.com/series/oscillatingprofundities'
 
 
 def get_subclasses(klass):
