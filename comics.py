@@ -1271,6 +1271,39 @@ class AnythingComic(GenericComic):
                     }
 
 
+class GoneIntoRapture(GenericComic):
+    """Class to retrieve Gone Into Rapture comics."""
+    name = 'rapture'
+    long_name = 'Gone Into Rapture'
+    url = 'http://www.goneintorapture.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            imgs = soup.find('div', id='comic').find_all('img')
+            assert all(i['alt'] == i['title'] == '' for i in imgs)
+            date_str = soup.find('meta', property='article:published_time')['content'][:10]
+            day = string_to_date(date_str, "%Y-%m-%d")
+            title = soup.find('meta', property='og:title')['content']
+            desc = soup.find('meta', property='og:description')['content']
+            yield {
+                'url': url,
+                'img': [i['src'] for i in imgs],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'title': title,
+                'description': desc,
+            }
+            next_comic = soup.find('a', class_='navi navi-next')
+
+
 class PainTrainComic(GenericComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'

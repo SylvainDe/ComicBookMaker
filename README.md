@@ -56,6 +56,7 @@ Comics supported
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
+ * [Gone Into Rapture](http://www.goneintorapture.com)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)
