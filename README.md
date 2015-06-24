@@ -35,6 +35,7 @@ Comics supported
  * [Completely Serious Comics](http://completelyseriouscomics.com/)
  * [Cyanide and Happiness](http://explosm.net)
  * [Dinosaur Comics](http://www.qwantz.com)
+ * [Disco Bleach](http://discobleach.com/)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Fat Awesome](http://fatawesome.com/comics/)

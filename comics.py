@@ -992,6 +992,36 @@ class InvisibleBread(GenericComic):
                 }
 
 
+class DiscoBleach(GenericComic):
+    """Class to retrieve Disco Bleach Comics."""
+    name = 'discobleach'
+    long_name = 'Disco Bleach'
+    url = 'http://discobleach.com/'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            imgs = soup.find('div', class_='comic-content').find_all('img') # WRONG
+            title = soup.find('h1', class_='comic-title').string
+            date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
+            day = string_to_date(date_str, '%B %d, %Y')
+            yield {
+                'url': url,
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'img': [i['src'] for i in imgs],
+                'title': title,
+            }
+            next_comic = soup.find('div', class_='nav-next').find('a')
+
+
 class TubeyToons(GenericComic):
     """Class to retrieve TubeyToons comics."""
     name = 'tubeytoons'
