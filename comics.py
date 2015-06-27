@@ -1024,7 +1024,7 @@ class DiscoBleach(GenericComic):
 
 class TubeyToons(GenericComic):
     """Class to retrieve TubeyToons comics."""
-    name = 'tubeytoons'
+    # name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
 

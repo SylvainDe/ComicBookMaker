@@ -64,7 +64,6 @@ Comics supported
  * [Three Word Phrase](http://threewordphrase.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
- * [Tubey Toons](http://tubeytoons.com)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Wondermark](http://wondermark.com)
