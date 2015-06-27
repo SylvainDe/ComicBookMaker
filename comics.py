@@ -1007,7 +1007,9 @@ class DiscoBleach(GenericComic):
         while next_comic:
             url = next_comic['href']
             soup = get_soup_at_url(url)
-            imgs = soup.find('div', class_='comic-content').find_all('img') # WRONG
+            # FIXME: Img retrieval does not always work, I suspect the HTML
+            # code to be sometimes invalid (and thus unusable)
+            imgs = soup.find('div', class_='comic-content').find_all('img')
             title = soup.find('h1', class_='comic-title').string
             date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
             day = string_to_date(date_str, '%B %d, %Y')
