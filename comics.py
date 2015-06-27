@@ -1110,7 +1110,7 @@ class PoorlyDrawnLines(GenericComic):
                 waiting_for_url = None
             elif waiting_for_url is None:
                 soup = get_soup_at_url(url)
-                imgs = soup.find('div', id='post').find_all('img')
+                imgs = soup.find('div', class_='post').find_all('img')
                 assert len(imgs) <= 1
                 yield {
                     'url': url,
