@@ -764,7 +764,7 @@ class OverCompensating(GenericComic):
 
 class SomethingOfThatIlk(GenericComic):
     """Class to retrieve the Something Of That Ilk comics."""
-    name = 'somethingofthatilk'
+    name = None  # 'somethingofthatilk' does not exist anymore ?
     long_name = 'Something Of That Ilk'
     url = 'http://www.somethingofthatilk.com'
 
@@ -1498,6 +1498,27 @@ class MichaelRamirez(GenericGoComic):
     name = 'ramirez'
     long_name = 'Michael Ramirez'
     url = 'http://www.gocomics.com/michaelramirez'
+
+
+class JimBenton(GenericGoComic):
+    """Class to retrieve Jim Benton comics."""
+    name = 'benton'
+    long_name = 'Jim Benton'
+    url = 'http://www.gocomics.com/jim-benton-cartoons'
+
+
+class TheArgyleSweater(GenericGoComic):
+    """Class to retrieve the Argyle Sweater comics."""
+    name = 'argyle'
+    long_name = 'Argyle Sweater'
+    url = 'http://www.gocomics.com/theargylesweater'
+
+
+class SunnyStreet(GenericGoComic):
+    """Class to retrieve Sunny Stree comics."""
+    name = 'sunny'
+    long_name = 'Sunny Street'
+    url = 'http://www.gocomics.com/sunny-street'
 
 
 class TapasticComic(GenericComic):

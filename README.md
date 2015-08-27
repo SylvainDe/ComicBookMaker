@@ -18,10 +18,11 @@ Command-line interface
 
 Comics supported
 ----------------
-
  * [Abstruse Goose](http://abstrusegoose.com)
  * [Anything Comic](http://www.anythingcomic.com)
+ * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
+ * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Boulet Corp](http://www.bouletcorp.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
@@ -61,6 +62,7 @@ Comics supported
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)
+ * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Three Word Phrase](http://threewordphrase.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
