@@ -502,8 +502,11 @@ class CyanideAndHappiness(GenericComic):
             get_soup_at_url(last_comic['url']).find('a', class_='next-comic') \
             if last_comic else {'href': "/comics/15"}
 
-        while next_comic['href'] != '#':
-            comic_url = urljoin_wrapper(cls.url, next_comic['href'])
+        while True:
+            href = next_comic.get('href', None)
+            if href is None:
+                break
+            comic_url = urljoin_wrapper(cls.url, href)
             soup = get_soup_at_url(comic_url)
             day_url = soup.find('h3').find('a')
             num = int(day_url['href'].split('/')[-1])
