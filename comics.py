@@ -1122,6 +1122,36 @@ class PoorlyDrawnLines(GenericComic):
                 }
 
 
+class LoadingComics(GenericComic):
+    """Class to retrieve Loading Artist comics."""
+    name = 'loadingartist'
+    long_name = 'Loading Artist'
+    url = 'http://www.loadingartist.com/latest/'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', title='Next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', title="First")
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find('h1').string
+            date_str = soup.find('span', class_='date').string.strip()
+            day = string_to_date(date_str, "%B %d, %Y")
+            imgs = soup.find('div', class_='comic').find_all('img', alt='', title='')
+            yield {
+                'url': url,
+                'title': title,
+                'img': [i['src'] for i in imgs],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+            }
+            next_comic = soup.find('a', title='Next')
+
+
 class ChuckleADuck(GenericComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'

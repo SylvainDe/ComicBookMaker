@@ -47,6 +47,7 @@ Comics supported
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
+ * [Loading Artist](http://www.loadingartist.com/latest/)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
  * [Pain Train Comics](http://paintraincomic.com)
