@@ -203,6 +203,9 @@ class TheGentlemanArmchair(GenericComic):
     def get_next_comic(cls, last_comic):
         waiting_for_url = last_comic['url'] if last_comic else None
         archive_url = urljoin_wrapper(cls.url, 'archive')
+        # FIXME: archive is actually spread on multiple pages correspond to the
+        # different years. Default is to reach the one for the current year.
+        # Proper solution would be to iterate over the different relevant years.
         for tr in reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr')):
             date_td, content_td = tr.children
             a_tag = content_td.find('a')
@@ -211,7 +214,7 @@ class TheGentlemanArmchair(GenericComic):
                 waiting_for_url = None
             elif waiting_for_url is None:
                 title = a_tag.string
-                day = string_to_date(date_td.string, "%b %d %Y")
+                day = string_to_date(date_td.string, "%b %d")
                 soup = get_soup_at_url(url)
                 imgs = soup.find('div', id='comic').find_all('img')
                 yield {
