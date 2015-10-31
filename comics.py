@@ -1551,10 +1551,26 @@ class TheArgyleSweater(GenericGoComic):
 
 
 class SunnyStreet(GenericGoComic):
-    """Class to retrieve Sunny Stree comics."""
+    """Class to retrieve Sunny Street comics."""
     name = 'sunny'
     long_name = 'Sunny Street'
     url = 'http://www.gocomics.com/sunny-street'
+
+
+class OffTheMark(GenericGoComic):
+    """Class to retrieve Off The Mark comics."""
+    # From gocomic, not offthemark.com
+    name = 'offthemark'
+    long_name = 'Off The Mark'
+    url = 'http://www.gocomics.com/offthemark'
+
+
+class WuMo(GenericGoComic):
+    """Class to retrieve WuMo comics."""
+    # From gocomic, not wumo.com
+    name = 'wumo'
+    long_name = 'WuMo'
+    url = 'http://www.gocomics.com/wumo'
 
 
 class TapasticComic(GenericComic):
@@ -1604,6 +1620,11 @@ class OscillatingProfundities(TapasticComic):
     long_name = 'Oscillating Profundities'
     url = 'http://tapastic.com/series/oscillatingprofundities'
 
+
+class ZnoflatsComics(TapasticComic):
+    name = 'znoflats'
+    long_name = 'Znoflats Comics'
+    url = 'http://tapastic.com/series/Znoflats-Comics'
 
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
