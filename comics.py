@@ -1626,6 +1626,7 @@ class ZnoflatsComics(TapasticComic):
     long_name = 'Znoflats Comics'
     url = 'http://tapastic.com/series/Znoflats-Comics'
 
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
