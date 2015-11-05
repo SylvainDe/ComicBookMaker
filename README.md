@@ -48,6 +48,7 @@ Comics supported
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [Loading Artist](http://www.loadingartist.com/latest/)
+ * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [Off The Mark](http://www.gocomics.com/offthemark)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)

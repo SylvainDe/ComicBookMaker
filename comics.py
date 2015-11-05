@@ -1559,7 +1559,7 @@ class SunnyStreet(GenericGoComic):
 
 class OffTheMark(GenericGoComic):
     """Class to retrieve Off The Mark comics."""
-    # From gocomic, not offthemark.com
+    # From gocomics, not offthemark.com
     name = 'offthemark'
     long_name = 'Off The Mark'
     url = 'http://www.gocomics.com/offthemark'
@@ -1567,11 +1567,17 @@ class OffTheMark(GenericGoComic):
 
 class WuMo(GenericGoComic):
     """Class to retrieve WuMo comics."""
-    # From gocomic, not wumo.com
+    # From gocomics, not wumo.com
     name = 'wumo'
     long_name = 'WuMo'
     url = 'http://www.gocomics.com/wumo'
 
+class LunarBaboon(GenericGoComic):
+    """Class to retrieve Lunar Baboon comics."""
+    # From gocomics, not lunarbaboon.com
+    name = 'lunarbaboon'
+    long_name = 'Lunar Baboon'
+    url = 'http://www.gocomics.com/lunarbaboon'
 
 class TapasticComic(GenericComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
