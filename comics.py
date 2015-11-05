@@ -1572,12 +1572,14 @@ class WuMo(GenericGoComic):
     long_name = 'WuMo'
     url = 'http://www.gocomics.com/wumo'
 
+
 class LunarBaboon(GenericGoComic):
     """Class to retrieve Lunar Baboon comics."""
     # From gocomics, not lunarbaboon.com
     name = 'lunarbaboon'
     long_name = 'Lunar Baboon'
     url = 'http://www.gocomics.com/lunarbaboon'
+
 
 class TapasticComic(GenericComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
