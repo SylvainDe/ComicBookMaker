@@ -814,13 +814,13 @@ class WarehouseComic(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        next_comic = get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+        next_comic = get_soup_at_url(last_comic['url']).find('link', rel='next') \
             if last_comic else \
             get_soup_at_url(cls.url).find('a', class_='navi navi-first')
         while next_comic:
             comic_url = next_comic['href']
             soup = get_soup_at_url(comic_url)
-            next_comic = soup.find('a', class_='navi navi-next')
+            next_comic = soup.find('link', rel='next')
             comic_date = string_to_date(
                 soup.find('span', class_='post-date').string,
                 "%B %d, %Y")
