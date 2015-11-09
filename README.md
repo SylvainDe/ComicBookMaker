@@ -66,6 +66,7 @@ Comics supported
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)
  * [Sunny Street](http://www.gocomics.com/sunny-street)
+ * [Thor's Thundershack](http://www.thorsthundershack.com)
  * [Three Word Phrase](http://threewordphrase.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)

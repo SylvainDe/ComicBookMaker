@@ -1372,6 +1372,42 @@ class GoneIntoRapture(GenericComic):
             next_comic = soup.find('a', class_='navi navi-next')
 
 
+class ThorsThundershack(GenericComic):
+    """Class to retrieve Thor's Thundershack comics."""
+    name = 'thor'
+    long_name = 'Thor\'s Thundershack'
+    url = 'http://www.thorsthundershack.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_url = \
+            get_soup_at_url(last_comic['url']).find('a', class_='next navlink') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='first navlink')
+
+        while next_url:
+            url = urljoin_wrapper(cls.url, next_url['href'])
+            soup = get_soup_at_url(url)
+            title = soup.find('meta', attrs={'name': 'description'})["content"]
+            description = soup.find('div', itemprop='articleBody').text
+            date_str = soup.find('time', itemprop='datePublished')["datetime"]
+            author = soup.find('span', itemprop='author copyrightHolder').string
+            imgs = soup.find_all('img', itemprop='image')
+            assert all(i['title'] == i['alt'] == title for i in imgs)
+            day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
+            yield {
+                'url': url,
+                'img': [urljoin_wrapper(url, i['src']) for i in imgs],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+                'author': author,
+                'title': title,
+                'description': description,
+            }
+            next_url = soup.find('a', class_='next navlink')
+
+
 class PainTrainComic(GenericComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'
