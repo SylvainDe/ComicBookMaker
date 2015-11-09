@@ -69,12 +69,13 @@ class ExtraFabulousComics(GenericComic):
 
 class NeDroid(GenericComic):
     """Class to retrieve NeDroid comics."""
-    # name = 'nedroid'
+    name = 'nedroid'
     long_name = 'NeDroid'
     url = 'http://nedroid.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        return  # FIXME: Does not work anymore
         comic_url_re = re.compile(
             '//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
@@ -132,12 +133,13 @@ class Garfield(GenericComic):
 
 class Dilbert(GenericComic):
     """Class to retrieve Dilbert comics."""
-    # name = 'dilbert'
+    name = 'dilbert'
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        return  # FIXME: Does not work anymore
         img_src_re = re.compile('^/dyn/str_strip/')
         first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
             if last_comic else date(1989, 4, 16)
@@ -169,28 +171,8 @@ class ThreeWordPhrase(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        next_url = (
-            get_soup_at_url(last_comic['url']).find('img', src='/nextlink.gif')
-            if last_comic else
-            get_soup_at_url(cls.url).find('img', src='/firstlink.gif')
-        ).parent.get('href')
-
-        while next_url:
-            comic_url = urljoin_wrapper(cls.url, next_url)
-            soup = get_soup_at_url(comic_url)
-            title = soup.find('title')
-            # hackish way to get the image
-            imgs = [img for img in soup.find_all('img')
-                    if not img['src'].endswith(
-                        ('link.gif', '32.png', 'twpbookad.jpg',
-                         'merchad.jpg', 'header.gif', 'tipjar.jpg'))]
-            yield {
-                'url': comic_url,
-                'title': title.string if title else None,
-                'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
-                'img': [urljoin_wrapper(comic_url, img['src']) for img in imgs],
-            }
-            next_url = soup.find('img', src='/nextlink.gif').parent.get('href')
+        return  # Does not exist anymore
+        yield
 
 
 class TheGentlemanArmchair(GenericComic):
@@ -770,33 +752,14 @@ class OverCompensating(GenericComic):
 
 class SomethingOfThatIlk(GenericComic):
     """Class to retrieve the Something Of That Ilk comics."""
-    name = None  # 'somethingofthatilk' does not exist anymore ?
+    name = 'somethingofthatilk'
     long_name = 'Something Of That Ilk'
     url = 'http://www.somethingofthatilk.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        img_src_re = re.compile('^/comics/.*')
-        comic_url_re = re.compile('^index.php\?id=([0-9]*)$')
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='next', href=comic_url_re) \
-            if last_comic else \
-            get_soup_at_url(cls.url).find(
-                'a', class_='first', href=comic_url_re)
-        while next_comic:
-            href = next_comic['href']
-            comic_url = urljoin_wrapper(cls.url, href)
-            soup = get_soup_at_url(comic_url)
-            img = soup.find('img', src=img_src_re)
-            next_comic = soup.find('a', class_='next', href=comic_url_re)
-            yield {
-                'url': comic_url,
-                'img': [urljoin_wrapper(comic_url, img['src'])],
-                'alt': img['alt'],
-                'text': soup.find('p', id='captioning').string,
-                'title': soup.find('h1').string,
-                'num': int(comic_url_re.match(href).groups()[0])
-            }
+        return  # Does not exist anymore
+        yield
 
 
 class Wondermark(GenericComic):
@@ -1006,6 +969,7 @@ class DiscoBleach(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        return  # FIXME: Does not work anymore
         next_comic = \
             get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
             if last_comic else \
@@ -1032,12 +996,13 @@ class DiscoBleach(GenericComic):
 
 class TubeyToons(GenericComic):
     """Class to retrieve TubeyToons comics."""
-    # name = 'tubeytoons'
+    name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        return  # FIXME: Does not work anymore
         img_src_re = re.compile('^/img/comics/([0-9]+)\..*')
         img_date_re = re.compile('^Comic posted ([0-9]*)-([0-9]*)-([0-9]*) ')
         last_num = int(img_src_re.match(get_soup_at_url(cls.url).find('img', src=img_src_re)['src']).groups()[0])
