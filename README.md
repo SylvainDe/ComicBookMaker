@@ -64,6 +64,8 @@ Comics supported
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Gone Into Rapture](http://www.goneintorapture.com)
+ * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
+ * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)

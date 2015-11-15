@@ -185,7 +185,7 @@ class TheGentlemanArmchair(GenericComic):
     def get_next_comic(cls, last_comic):
         waiting_for_url = last_comic['url'] if last_comic else None
         archive_url = urljoin_wrapper(cls.url, 'archive')
-        # FIXME: archive is actually spread on multiple pages correspond to the
+        # FIXME: archive is actually spread on multiple pages corresponding to the
         # different years. Default is to reach the one for the current year.
         # Proper solution would be to iterate over the different relevant years.
         for tr in reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr')):
@@ -1582,6 +1582,14 @@ class LunarBaboon(GenericGoComic):
     url = 'http://www.gocomics.com/lunarbaboon'
 
 
+class SandersenGocomic(GenericGoComic):
+    """Class to retrieve Sarah Andersen comics."""
+    # From gocomics, not tapastic or http://sarahcandersen.com/
+    name = 'sandersen-goc'
+    long_name = 'Sarah Andersen (from GoComics)'
+    url = 'http://www.gocomics.com/sarahs-scribbles'
+
+
 class TapasticComic(GenericComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
@@ -1618,22 +1626,34 @@ class VegetablesForDessert(TapasticComic):
     url = 'http://tapastic.com/series/vegetablesfordessert'
 
 
-class FowlLanguageComics(TapasticComic):  # could be downloaded on its own
+class FowlLanguageComics(TapasticComic):
+    """Class to retrieve Fowl Language comics."""
+    # From tapastic, not http://www.fowllanguagecomics.com
     name = 'fowllanguage'
     long_name = 'Fowl Language Comics'
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
 
 
 class OscillatingProfundities(TapasticComic):
+    """Class to retrieve Oscillating Profundities comics."""
     name = 'oscillating'
     long_name = 'Oscillating Profundities'
     url = 'http://tapastic.com/series/oscillatingprofundities'
 
 
 class ZnoflatsComics(TapasticComic):
+    """Class to retrieve Znoflats comics."""
     name = 'znoflats'
     long_name = 'Znoflats Comics'
     url = 'http://tapastic.com/series/Znoflats-Comics'
+
+
+class SandersenTapastic(TapasticComic):
+    """Class to retrieve Sarah Andersen comics."""
+    # From tapastic, not gocomics or http://sarahcandersen.com/
+    name = 'sandersen-tapa'
+    long_name = 'Sarah Andersen (from Tapastic)'
+    url = 'http://tapastic.com/series/Doodle-Time'
 
 
 def get_subclasses(klass):
