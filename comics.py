@@ -1373,6 +1373,32 @@ class ThorsThundershack(GenericComic):
             next_url = soup.find('a', class_='next navlink')
 
 
+class BuniComic(GenericComic):
+    """Class to retrieve Buni Comics."""
+    name = 'buni'
+    long_name = 'BuniComics'
+    url = 'http://www.bunicomic.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='comic-nav-base comic-nav-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            imgs = soup.find('div', id='comic').find_all('img')
+            assert all(i['alt'] == i['title'] for i in imgs)
+            assert len(imgs) == 1
+            next_comic = soup.find('a', class_='comic-nav-base comic-nav-next')
+            yield {
+                'url': url,
+                'img': [i['src'] for i in imgs],
+                'title': imgs[0]['title'],
+            }
+
+
 class PainTrainComic(GenericComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'
