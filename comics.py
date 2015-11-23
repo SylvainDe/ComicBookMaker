@@ -9,6 +9,9 @@ import datetime
 from urlfunctions import get_soup_at_url, urljoin_wrapper,\
     convert_iri_to_plain_ascii_uri, load_json_at_url, urlopen_wrapper
 import json
+import locale
+
+DEFAULT_LOCAL = 'en_GB.UTF-8'
 
 
 class Xkcd(GenericComic):
@@ -1373,6 +1376,40 @@ class ThorsThundershack(GenericComic):
             next_url = soup.find('a', class_='next navlink')
 
 
+class EveryDayBlues(GenericComic):
+    """Class to retrieve EveryDayBlues Comics."""
+    name = "blues"
+    long_name = "Every Day Blues"
+    url = "http://everydayblues.net/"
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find("h2", class_="post-title").string
+            author = soup.find("span", class_="post-author").find("a").string
+            date_str = soup.find("span", class_="post-date").string
+            comic_date = string_to_date(date_str, "%d. %B %Y", "de_DE.utf8")
+            imgs = soup.find("div", id="comic").find_all("img")
+            assert all(i['alt'] == i['title'] == title for i in imgs)
+            assert len(imgs) <= 1
+            yield {
+                'url': url,
+                'img': [i['src'] for i in imgs],
+                'title': title,
+                'author': author,
+                'day': comic_date.day,
+                'month': comic_date.month,
+                'year': comic_date.year
+            }
+            next_comic = soup.find("a", class_="navi navi-next")
+
+
 class BuniComic(GenericComic):
     """Class to retrieve Buni Comics."""
     name = 'buni'
@@ -1700,11 +1737,17 @@ def remove_st_nd_rd_th_from_date(string):
             .replace('Augu', 'August'))
 
 
-def string_to_date(string, date_format):
+def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     """Function to convert string to date object.
     Wrapper around datetime.datetime.strptime."""
     # format described in https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
-    return datetime.datetime.strptime(string, date_format).date()
+    prev_locale = locale.setlocale(locale.LC_ALL)
+    if locale != prev_locale:
+        locale.setlocale(locale.LC_ALL, local)
+    ret = datetime.datetime.strptime(string, date_format).date()
+    if locale != prev_locale:
+        locale.setlocale(locale.LC_ALL, prev_locale)
+    return ret
 
 
 COMIC_NAMES = {c.name: c for c in get_subclasses(

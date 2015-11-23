@@ -24,6 +24,7 @@ Comics supported
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
+ * [Every Day Blues](http://everydayblues.net/)
  * [Boulet Corp](http://www.bouletcorp.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
  * [Break Of Day](http://www.gocomics.com/break-of-day)
