@@ -1446,6 +1446,37 @@ class BiterComics(GenericComic):
             next_comic = soup.find('a', class_='navi comic-nav-next navi-next')
 
 
+class TheAwkwardYeti(GenericComic):
+    """Class to retrieve The Awkward Yeti comics."""
+    name = 'yeti'
+    long_name = 'The Awkward Yeti'
+    url = 'http://theawkwardyeti.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = \
+            get_soup_at_url(last_comic['url']).find('a', class_='navi comic-nav-next navi-next') \
+            if last_comic else \
+            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+        while next_comic:
+            url = next_comic['href']
+            soup = get_soup_at_url(url)
+            title = soup.find('h2', class_='post-title').string
+            date_str = soup.find("span", class_="post-date").string
+            comic_date = string_to_date(date_str, "%B %d, %Y")
+            imgs = soup.find("div", id="comic").find_all("img")
+            assert all(idx > 0 or i['alt'] == i['title'] for idx, i in enumerate(imgs))
+            yield {
+                'url': url,
+                'img': [i['src'] for i in imgs],
+                'title': title,
+                'day': comic_date.day,
+                'month': comic_date.month,
+                'year': comic_date.year
+            }
+            next_comic = soup.find('a', class_='navi comic-nav-next navi-next')
+
+
 class LastPlaceComics(GenericComic):
     """Class to retrieve Last Place Comics."""
     name = 'lastplace'

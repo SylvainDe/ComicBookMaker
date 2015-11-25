@@ -6,6 +6,7 @@ import urllib.request
 import urllib.parse
 import json
 import shutil
+import gzip
 from bs4 import BeautifulSoup
 
 
@@ -27,11 +28,14 @@ def urlopen_wrapper(url):
     Returns a byte object."""
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
     try:
-        return urllib.request.urlopen(
+        response = urllib.request.urlopen(
             urllib.request.Request(
                 url,
                 headers={'User-Agent': user_agent, 'Accept': '*/*'}))
-    except (urllib.error.HTTPError):
+        if response.info().get('Content-Encoding') == 'gzip':
+            return gzip.GzipFile(fileobj=response)
+        return response
+    except (urllib.error.HTTPError, urllib.error.URLError):
         print(url)
         raise
 

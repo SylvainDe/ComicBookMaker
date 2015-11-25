@@ -85,4 +85,5 @@ Comics supported
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
  * [WuMo](http://www.gocomics.com/wumo)
  * [xkcd](http://xkcd.com)
+ * [The Awkward Yeti](http://theawkwardyeti.com)
  * [Znoflats Comics](http://tapastic.com/series/Znoflats-Comics)
