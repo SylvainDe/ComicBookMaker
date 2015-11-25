@@ -57,6 +57,7 @@ Comics supported
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [Off The Mark](http://www.gocomics.com/offthemark)
+ * [Endless Origami](http://endlessorigami.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
  * [Pain Train Comics](http://paintraincomic.com)
  * [Perry Bible Fellowship](http://pbfcomics.com)
