@@ -1536,7 +1536,6 @@ class EndlessOrigami(GenericComic):
             assert all(i['alt'] == i['title'] for i in imgs)
             assert all(i['alt'] == title or i['alt'] == "" for i in imgs)
             assert len(imgs) == 1
-            print(soup.find_all('a'))
             next_comic = soup.find('a', class_='navi navi-next')
             yield {
                 'url': url,
