@@ -1522,7 +1522,7 @@ class EndlessOrigami(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
+            get_soup_at_url(last_comic['url']).find('link', rel='next') \
             if last_comic else \
             get_soup_at_url(cls.url).find('a', class_='navi navi-first')
         while next_comic:
@@ -1534,13 +1534,13 @@ class EndlessOrigami(GenericComic):
             comic_date = string_to_date(date_str, "%B %d, %Y")
             imgs = soup.find("div", id="comic").find_all("img")
             assert all(i['alt'] == i['title'] for i in imgs)
-            assert all(i['alt'] == title or i['alt'] == "" for i in imgs)
-            assert len(imgs) == 1
-            next_comic = soup.find('a', class_='navi navi-next')
+            alt = imgs[0]['alt'] if imgs else ""
+            next_comic = soup.find('link', rel='next')
             yield {
                 'url': url,
                 'img': [i['src'] for i in imgs],
                 'title': title,
+                'alt': alt,
                 'author': author,
                 'day': comic_date.day,
                 'month': comic_date.month,
