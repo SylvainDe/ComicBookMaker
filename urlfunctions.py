@@ -103,9 +103,17 @@ def load_json_at_url(url):
     return json.loads(get_content(url).decode())
 
 
-def get_soup_at_url(url):
+def get_soup_at_url(url, detect_meta=False):
     """Get content at url as BeautifulSoup.
 
     url is a string
+    detect_meta is a hacky flag used to detect comics using similar plugin to
+        be able to reuse code at some point.
     Returns a BeautifulSoup object."""
-    return BeautifulSoup(get_content(url))
+    soup = BeautifulSoup(get_content(url))
+    if detect_meta:
+        for meta_val in ['generator', 'ComicPress', 'Comic-Easel']:
+            meta = soup.find('meta', attrs={'name': meta_val})
+            if meta is not None:
+                print(meta)
+    return soup
