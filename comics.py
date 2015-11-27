@@ -106,38 +106,7 @@ class NeDroid(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        return  # FIXME: Does not work anymore
-        comic_url_re = re.compile(
-            '//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
-        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
-
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
-
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            img = soup.find('img', src=comic_url_re)
-            img_url = img['src']
-            assert url == soup.find('link', rel='canonical')['href']
-            next_comic = soup.find('div', class_='nav-next').find('a')
-            short_url = soup.find('link', rel='shortlink')['href']
-            year, month, day = [int(s)
-                                for s in comic_url_re.match(img_url).groups()]
-            num = int(short_url_re.match(short_url).groups()[0])
-            yield {
-                'url': url,
-                'short_url': short_url,
-                'title': img.get('alt'),
-                'title2': img.get('title'),
-                'img': [img_url],
-                'day': day,
-                'month': month,
-                'year': year,
-                'num': num,
-            }
+        return []  # FIXME: Does not work anymore
 
 
 class Garfield(GenericComic):
@@ -170,28 +139,7 @@ class Dilbert(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        return  # FIXME: Does not work anymore
-        img_src_re = re.compile('^/dyn/str_strip/')
-        first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
-            if last_comic else date(1989, 4, 16)
-        for i in range((date.today() - first_day).days + 1):
-            day = first_day + timedelta(days=i)
-            day_str = day.isoformat()
-            url = urljoin_wrapper(cls.url, 'strips/comic/%s/' % day_str)
-            img = get_soup_at_url(url).find('img', src=img_src_re)
-            title = img.get('title')
-            if title != "The Dilbert Strip for %s" % \
-                    (day.strftime("%B %d, %Y").replace(" 0", " ")):
-                return  # daily comic might not be published
-            yield {
-                'url': url,
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'img': [urljoin_wrapper(url, img['src'])],
-                'name': title,
-                'prefix': '%s-' % day_str
-            }
+        return []  # FIXME: Does not work anymore
 
 
 class ThreeWordPhrase(GenericComic):
@@ -788,8 +736,7 @@ class SomethingOfThatIlk(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        return  # Does not exist anymore
-        yield
+        return []  # Does not exist anymore
 
 
 class Wondermark(GenericComic):
@@ -895,36 +842,37 @@ class PicturesInBoxes(GenericComic):
                     }
 
 
-class Penmen(GenericComic):
+class Penmen(GenericNavigableComic):
     """Class to retrieve Penmen comics."""
     name = 'penmen'
     long_name = 'Penmen'
     url = 'http://penmen.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='comic-nav-base comic-nav-next') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
+    def get_first_comic_link(cls):
+        return {'href': 'http://penmen.com/comic/penmen-comic-strip-the-sprinkler/'}
 
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            url2 = soup.find('link', rel='shortlink')['href']
-            title = soup.find('meta', {'name': 'twitter:title'})['content']
-            img = soup.find('meta', property='og:image')['content']
-            day = string_to_date(soup.find('span', class_='post-date').string, '%Y/%m/%d')
-            yield {
-                'url': url,
-                'url2': url2,
-                'title': title,
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'img': [img],
-            }
-            next_comic = soup.find('a', class_='comic-nav-base comic-nav-next')
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        url2 = soup.find('link', rel='shortlink')['href']
+        title = soup.find("h1", class_="entry-title").string
+        img = soup.find('meta', property='og:image')['content']
+        author = soup.find("span", class_="author vcard").find("a").string
+        date_str = soup.find("time", class_="entry-date published").string
+        day = string_to_date(date_str, '%Y/%m/%d')
+        return {
+            'url2': url2,
+            'title': title,
+            'month': day.month,
+            'author': author,
+            'year': day.year,
+            'day': day.day,
+            'img': [img],
+        }
 
 
 class TheDoghouseDiaries(GenericComic):
@@ -999,29 +947,7 @@ class DiscoBleach(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        return  # FIXME: Does not work anymore
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            # FIXME: Img retrieval does not always work, I suspect the HTML
-            # code to be sometimes invalid (and thus unusable)
-            imgs = soup.find('div', class_='comic-content').find_all('img')
-            title = soup.find('h1', class_='comic-title').string
-            date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
-            day = string_to_date(date_str, '%B %d, %Y')
-            yield {
-                'url': url,
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'img': [i['src'] for i in imgs],
-                'title': title,
-            }
-            next_comic = soup.find('div', class_='nav-next').find('a')
+        return []  # FIXME: Does not work anymore
 
 
 class TubeyToons(GenericComic):
@@ -1032,30 +958,7 @@ class TubeyToons(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        return  # FIXME: Does not work anymore
-        img_src_re = re.compile('^/img/comics/([0-9]+)\..*')
-        img_date_re = re.compile('^Comic posted ([0-9]*)-([0-9]*)-([0-9]*) ')
-        last_num = int(img_src_re.match(get_soup_at_url(cls.url).find('img', src=img_src_re)['src']).groups()[0])
-        first_num = last_comic['num'] + 1 if last_comic else 1
-        for i in range(first_num, last_num + 1):
-            url = urljoin_wrapper(cls.url, str(i))
-            soup = get_soup_at_url(url)
-            title = soup.find('div', class_='title').string
-            img = soup.find('img', src=img_src_re)
-            title2 = img['title']
-            date = img['alt']
-            year, month, day = [int(s)
-                                for s in img_date_re.match(date).groups()]
-            yield {
-                'url': url,
-                'num': i,
-                'day': day,
-                'month': month,
-                'year': year,
-                'img': [urljoin_wrapper(cls.url, img['src'])],
-                'title': title,
-                'title2': title2,
-            }
+        return []  # FIXME: Does not work anymore
 
 
 class CompletelySeriousComics(GenericNavigableComic):
@@ -1119,69 +1022,65 @@ class PoorlyDrawnLines(GenericComic):
                 }
 
 
-class LoadingComics(GenericComic):
+class LoadingComics(GenericNavigableComic):
     """Class to retrieve Loading Artist comics."""
     name = 'loadingartist'
     long_name = 'Loading Artist'
     url = 'http://www.loadingartist.com/latest/'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', title='Next') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', title="First")
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            title = soup.find('h1').string
-            date_str = soup.find('span', class_='date').string.strip()
-            day = string_to_date(date_str, "%B %d, %Y")
-            imgs = soup.find('div', class_='comic').find_all('img', alt='', title='')
-            yield {
-                'url': url,
-                'title': title,
-                'img': [i['src'] for i in imgs],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-            }
-            next_comic = soup.find('a', title='Next')
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', title="First")
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', title='Next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        title = soup.find('h1').string
+        date_str = soup.find('span', class_='date').string.strip()
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', class_='comic').find_all('img', alt='', title='')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
-class ChuckleADuck(GenericComic):
+class ChuckleADuck(GenericNavigableComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'
     long_name = 'Chuckle-A-duck'
     url = 'http://chuckleaduck.com/'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('div', class_='nav-next').find('a') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            day = string_to_date(
-                remove_st_nd_rd_th_from_date(soup.find('span', class_='post-date').string),
-                "%B %d, %Y")
-            author = soup.find('span', class_='post-author').string
-            imgs = soup.find('div', id='comic').find_all('img')
-            assert imgs
-            title = imgs[0]['title']
-            assert all(i['title'] == i['alt'] == title for i in imgs)
-            yield {
-                'url': url,
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'img': [i['src'] for i in imgs],
-                'title': title,
-                'author': author,
-            }
-            next_comic = soup.find('div', class_='nav-next').find('a')
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('div', class_='nav-first').find('a')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', class_='nav-next').find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
+        author = soup.find('span', class_='post-author').string
+        imgs = soup.find('div', id='comic').find_all('img')
+        title = imgs[0]['title'] if imgs else ""
+        assert all(i['title'] == i['alt'] == title for i in imgs)
+        return {
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'author': author,
+        }
 
 
 class ThingsInSquares(GenericComic):
@@ -1258,41 +1157,40 @@ class HappleTea(GenericNavigableComic):
         }
 
 
-class FatAwesomeComics(GenericComic):
+class FatAwesomeComics(GenericNavigableComic):
     """Class to retrieve Fat Awesome Comics."""
     name = 'fatawesome'
     long_name = 'Fat Awesome'
     url = 'http://fatawesome.com/comics/'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', rel='next') \
-            if last_comic else \
-            {'href': 'http://fatawesome.com/shortbus/'}
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
-            description = soup.find('meta', attrs={'name': 'description'})['content']
-            tags_prop = soup.find('meta', property='article:tag')
-            tags = tags_prop['content'] if tags_prop else ""
-            date_str = soup.find('meta', property='article:published_time')['content'][:10]
-            day = string_to_date(date_str, "%Y-%m-%d")
-            imgs = soup.find_all('img', attrs={'data-recalc-dims': "1"})
-            assert len(imgs) == 1
-            yield {
-                'url': url,
-                'title': title,
-                'description': description,
-                'tags': tags,
-                'alt': "".join(i['alt'] for i in imgs),
-                'img': [i['src'].rsplit('?', 1)[0] for i in imgs],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-            }
-            next_comic = soup.find('a', rel='next')
+    def get_first_comic_link(cls):
+        return {'href': 'http://fatawesome.com/shortbus/'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        description = soup.find('meta', attrs={'name': 'description'})['content']
+        tags_prop = soup.find('meta', property='article:tag')
+        tags = tags_prop['content'] if tags_prop else ""
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find_all('img', attrs={'data-recalc-dims': "1"})
+        assert len(imgs) == 1
+        return {
+            'title': title,
+            'description': description,
+            'tags': tags,
+            'alt': "".join(i['alt'] for i in imgs),
+            'img': [i['src'].rsplit('?', 1)[0] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
 class AnythingComic(GenericComic):
@@ -1331,37 +1229,36 @@ class AnythingComic(GenericComic):
                     }
 
 
-class GoneIntoRapture(GenericComic):
+class GoneIntoRapture(GenericNavigableComic):
     """Class to retrieve Gone Into Rapture comics."""
     name = 'rapture'
     long_name = 'Gone Into Rapture'
     url = 'http://www.goneintorapture.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='navi navi-next') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            imgs = soup.find('div', id='comic').find_all('img')
-            assert all(i['alt'] == i['title'] == '' for i in imgs)
-            date_str = soup.find('meta', property='article:published_time')['content'][:10]
-            day = string_to_date(date_str, "%Y-%m-%d")
-            title = soup.find('meta', property='og:title')['content']
-            desc = soup.find('meta', property='og:description')['content']
-            yield {
-                'url': url,
-                'img': [i['src'] for i in imgs],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'title': title,
-                'description': desc,
-            }
-            next_comic = soup.find('a', class_='navi navi-next')
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='navi navi-next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['alt'] == i['title'] == '' for i in imgs)
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        return {
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'title': title,
+            'description': desc,
+        }
 
 
 class ThorsThundershack(GenericComic):
@@ -1385,7 +1282,8 @@ class ThorsThundershack(GenericComic):
             date_str = soup.find('time', itemprop='datePublished')["datetime"]
             author = soup.find('span', itemprop='author copyrightHolder').string
             imgs = soup.find_all('img', itemprop='image')
-            assert all(i['title'] == i['alt'] == title for i in imgs)
+            assert all(i['title'] == i['alt'] for i in imgs)
+            alt = imgs[0]['alt'] if imgs else ""
             day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
             yield {
                 'url': url,
@@ -1395,6 +1293,7 @@ class ThorsThundershack(GenericComic):
                 'day': day.day,
                 'author': author,
                 'title': title,
+                'alt': alt,
                 'description': description,
             }
             next_url = soup.find('a', class_='next navlink')
@@ -1592,44 +1491,41 @@ class BuniComic(GenericNavigableComic):
         }
 
 
-class PainTrainComic(GenericComic):
+class PainTrainComic(GenericNavigableComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'
     long_name = 'Pain Train Comics'
     url = 'http://paintraincomic.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        title = soup.find('h2', class_='post-title').string
+        short_url = soup.find('link', rel='shortlink')['href']
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('link', rel='next') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='navi navi-first')
-        while next_comic:
-            url = next_comic['href']
-            soup = get_soup_at_url(url)
-            title = soup.find('h2', class_='post-title').string
-            short_url = soup.find('link', rel='shortlink')['href']
-            num = int(short_url_re.match(short_url).groups()[0])
-            imgs = soup.find('div', id='comic').find_all('img')
-            alt = imgs[0]['title']
-            assert all(i['alt'] == i['title'] == alt for i in imgs)
-            date_str = soup.find('span', class_='post-date').string
-            day = string_to_date(date_str, "%d/%m/%Y")
-            # text = soup.find('div', class_='entry').contents
-            # print(text)
-            yield {
-                'url': url,
-                'short_url': short_url,
-                'num': num,
-                'img': [i['src'] for i in imgs],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'alt': alt,
-                'title': title,
-            }
-            next_comic = soup.find('link', rel='next')
+        num = int(short_url_re.match(short_url).groups()[0])
+        imgs = soup.find('div', id='comic').find_all('img')
+        alt = imgs[0]['title']
+        assert all(i['alt'] == i['title'] == alt for i in imgs)
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%d/%m/%Y")
+        return {
+            'short_url': short_url,
+            'num': num,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'alt': alt,
+            'title': title,
+        }
 
 
 class HorovitzComics(GenericComic):
