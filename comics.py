@@ -117,11 +117,46 @@ class ZepWorld(GenericNavigableComic):
         url2 = soup.find('link', rel='shortlink')['href']
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find("span", class_="entry-date").string
+        day = string_to_date(date_str, "%d %B %Y", "fr_FR.utf8")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'url2': url2,
-            'img': [i["content"] for i in imgs],
+            'img': [convert_iri_to_plain_ascii_uri(i['content']) for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
+class Vidberg(GenericNavigableComic):
+    name = 'vidberg'
+    long_name = "Vidberg -l'actu en patates"
+    url = "http://vidberg.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_link(cls):
+        # Not the first but I didn't find an efficient way to retrieve it
+        return {'href': "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/" }
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        url2 = soup.find('link', rel='shortlink')['href']
+        title = soup.find('meta', property='og:title')['content']
+        date_str = soup.find("span", class_="entry-date").string
+        day = string_to_date(date_str, "%d %B %Y", "fr_FR.utf8")
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'url2': url2,
+            'img': [convert_iri_to_plain_ascii_uri(i['content']) for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
         }
 
 

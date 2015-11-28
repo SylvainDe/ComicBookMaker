@@ -81,6 +81,7 @@ Comics supported
  * [Toon Hole](http://www.toonhole.com)
  * [Tubey Toons](http://tubeytoons.com)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
+ * [Vidberg -l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Wondermark](http://wondermark.com)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
