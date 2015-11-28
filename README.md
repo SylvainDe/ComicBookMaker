@@ -87,4 +87,5 @@ Comics supported
  * [WuMo](http://www.gocomics.com/wumo)
  * [xkcd](http://xkcd.com)
  * [The Awkward Yeti](http://theawkwardyeti.com)
+ * [Zep World](http://zepworld.blog.lemonde.fr)
  * [Znoflats Comics](http://tapastic.com/series/Znoflats-Comics)

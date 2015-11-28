@@ -98,6 +98,33 @@ class ExtraFabulousComics(GenericNavigableComic):
         }
 
 
+class ZepWorld(GenericNavigableComic):
+    """Class to retrieve Zep World comics."""
+    name = "zep"
+    long_name = "Zep World"
+    url = "http://zepworld.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        url2 = soup.find('link', rel='shortlink')['href']
+        title = soup.find('meta', property='og:title')['content']
+        date_str = soup.find("span", class_="entry-date").string
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'url2': url2,
+            'img': [i["content"] for i in imgs],
+        }
+
+
 class NeDroid(GenericComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
