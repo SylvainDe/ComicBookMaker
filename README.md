@@ -67,6 +67,7 @@ Comics supported
  * [PhD Comics](http://phdcomics.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
+ * [Ted Rall](http://rall.com/comic/)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Gone Into Rapture](http://www.goneintorapture.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)

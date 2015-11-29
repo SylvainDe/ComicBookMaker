@@ -81,12 +81,13 @@ def get_file_at_url(url, path):
     try:
         with urlopen_wrapper(url) as response:
             content_type = response.info().get('Content-Type', '').split('/')
-            assert len(content_type) == 2
-            path = add_extension_to_filename_if_needed(content_type[1], path)
+            assert 1 <= len(content_type) <= 2
+            if len(content_type) == 2:
+                path = add_extension_to_filename_if_needed(content_type[1], path)
             with open(path, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
                 return path
-    except (urllib.error.HTTPError):
+    except (urllib.error.HTTPError, urllib.error.URLError):
         return None
 
 

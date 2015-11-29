@@ -161,6 +161,41 @@ class Vidberg(GenericNavigableComic):
         }
 
 
+class Rall(GenericNavigableComic):
+    """Class to retrieve Ted Rall comics."""
+    name = 'rall'
+    long_name = "Ted Rall"
+    url = "http://rall.com/comic/"
+
+    @classmethod
+    def get_first_comic_link(cls):
+        # Not the first but I didn't find an efficient way to retrieve it
+        return {'href': "http://rall.com/2014/01/30/los-angeles-times-cartoon-well-miss-those-california-flowers"}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        title = soup.find('meta', property='og:title')['content']
+        author = soup.find("span", class_="author vcard").find("a").string
+        date_str = soup.find("span", class_="entry-date").string
+        day = string_to_date(date_str, "%B %d, %Y")
+        desc = soup.find('meta', property='og:description')['content']
+        imgs = soup.find('div', class_='entry-content').find_all('img')
+        imgs = imgs[:-7]  # remove social media buttons
+        return {
+            'title': title,
+            'author': author,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'description': desc,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class NeDroid(GenericComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
