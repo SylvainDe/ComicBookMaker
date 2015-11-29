@@ -66,6 +66,7 @@ Comics supported
  * [Penmen](http://penmen.com)
  * [PhD Comics](http://phdcomics.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
+ * [Plantu](http://plantu.blog.lemonde.fr)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Ted Rall](http://rall.com/comic/)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
