@@ -130,6 +130,7 @@ class ZepWorld(GenericNavigableComic):
 
 
 class Vidberg(GenericNavigableComic):
+    """Class to retrieve Vidberg comics."""
     name = 'vidberg'
     long_name = "Vidberg -l'actu en patates"
     url = "http://vidberg.blog.lemonde.fr"
@@ -929,8 +930,8 @@ class Penmen(GenericNavigableComic):
         return {
             'url2': url2,
             'title': title,
-            'month': day.month,
             'author': author,
+            'month': day.month,
             'year': day.year,
             'day': day.day,
             'img': [img],
