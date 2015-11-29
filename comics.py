@@ -137,7 +137,7 @@ class Vidberg(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         # Not the first but I didn't find an efficient way to retrieve it
-        return {'href': "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/" }
+        return {'href': "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"}
 
     @classmethod
     def get_next_comic_link(cls, last_soup):
