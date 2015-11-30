@@ -102,8 +102,36 @@ class GenericLeMondeBlog(GenericNavigableComic):
     """Generic class to retrieve comics from Le Monde blogs."""
 
     @classmethod
+    def get_first_comic_url(cls):
+        # First comic cannot be reached directly so to start from
+        # the first comic one has to go to the previous comic until
+        # there is no previous comics. Once this URL is reached, it
+        # is better to hardcode it but for development purposes, it
+        # is convenient to have an automatic way to find it.
+        if True:
+            raise NotImplementedError
+        else:
+            url = input("Get starting URL: ")
+            prev_comic = cls.get_prev_comic_link(get_soup_at_url(url))
+            print(url)
+            while prev_comic:
+                url = prev_comic['href']
+                print(url)
+                soup = get_soup_at_url(url)
+                prev_comic = cls.get_prev_comic_link(soup)
+            return url
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': cls.get_first_comic_url()}
+
+    @classmethod
     def get_next_comic_link(cls, last_soup):
         return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_prev_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='prev')
 
     @classmethod
     def get_comic_info(cls, soup):
@@ -129,8 +157,8 @@ class ZepWorld(GenericLeMondeBlog):
     url = "http://zepworld.blog.lemonde.fr"
 
     @classmethod
-    def get_first_comic_link(cls):
-        return {'href': "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"}
+    def get_first_comic_url(cls):
+        return "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"
 
 
 class Vidberg(GenericLeMondeBlog):
@@ -140,9 +168,9 @@ class Vidberg(GenericLeMondeBlog):
     url = "http://vidberg.blog.lemonde.fr"
 
     @classmethod
-    def get_first_comic_link(cls):
+    def get_first_comic_url(cls):
         # Not the first but I didn't find an efficient way to retrieve it
-        return {'href': "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"}
+        return "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"
 
 
 class Plantu(GenericLeMondeBlog):
@@ -152,8 +180,41 @@ class Plantu(GenericLeMondeBlog):
     url = "http://plantu.blog.lemonde.fr"
 
     @classmethod
-    def get_first_comic_link(cls):
-        return {'href': "http://plantu.blog.lemonde.fr/2014/10/28/stress-test-a-bruxelles/"}
+    def get_first_comic_url(cls):
+        return "http://plantu.blog.lemonde.fr/2014/10/28/stress-test-a-bruxelles/"
+
+
+class XavierGorce(GenericLeMondeBlog):
+    """Class to retrieve Xavier Gorce comics."""
+    name = 'gorce'
+    long_name = "GavierGorce"
+    url = "http://xaviergorce.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://xaviergorce.blog.lemonde.fr/2015/01/09/distinction/"
+
+
+class CartooningForPeace(GenericLeMondeBlog):
+    """Class to retrieve Cartooning For Peace comics."""
+    name = 'forpeace'
+    long_name = "Cartooning For Peace"
+    url = "http://cartooningforpeace.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://cartooningforpeace.blog.lemonde.fr/2014/12/15/bado/"
+
+
+class Aurel(GenericLeMondeBlog):
+    """Class to retrieve Aurel comics."""
+    name = 'aurel'
+    long_name = "Aurel"
+    url = "http://cartooningforpeace.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://aurel.blog.lemonde.fr/2014/09/29/le-senat-repasse-a-droite/"
 
 
 class Rall(GenericNavigableComic):
