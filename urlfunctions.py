@@ -83,7 +83,8 @@ def get_file_at_url(url, path):
             content_type = response.info().get('Content-Type', '').split('/')
             assert 1 <= len(content_type) <= 2
             if len(content_type) == 2:
-                path = add_extension_to_filename_if_needed(content_type[1], path)
+                data = content_type[1].split(';')
+                path = add_extension_to_filename_if_needed(data[0], path)
             with open(path, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
                 return path
