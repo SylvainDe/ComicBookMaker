@@ -57,13 +57,17 @@ class GenericNavigableComic(GenericComic):
         raise NotImplementedError
 
     @classmethod
+    def get_url_from_link(cls, link):
+        return link['href']
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         next_comic = \
             cls.get_next_comic_link(get_soup_at_url(last_comic['url'])) \
             if last_comic else \
             cls.get_first_comic_link()
         while next_comic:
-            url = next_comic['href']
+            url = cls.get_url_from_link(next_comic)
             soup = get_soup_at_url(url)
             comic = cls.get_comic_info(soup)
             if comic is not None:
@@ -285,15 +289,44 @@ class Garfield(GenericComic):
             }
 
 
-class Dilbert(GenericComic):
+class Dilbert(GenericNavigableComic):
     """Class to retrieve Dilbert comics."""
     name = 'dilbert'
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # FIXME: Does not work anymore
+    def get_first_comic_link(cls):
+        return {'href': 'http://dilbert.com/strip/1989-04-16'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        next_ = last_soup.find('div', class_="nav-comic nav-right")
+        return next_.find('a') if next_ else None
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('meta', property='article:publish_date')['content']
+        comic_date = string_to_date(date_str, "%B %d, %Y")
+        author = soup.find('meta', property='article:author')['content']
+        tags = soup.find('meta', property='article:tag')['content']
+        return {
+            'title': title,
+            'description': desc,
+            'img': [i['content'] for i in imgs],
+            'author': author,
+            'tags': tags,
+            'day': comic_date.day,
+            'month': comic_date.month,
+            'year': comic_date.year
+        }
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
 
 
 class ThreeWordPhrase(GenericComic):

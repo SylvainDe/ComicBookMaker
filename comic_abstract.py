@@ -147,7 +147,7 @@ class GenericComic(object):
                 integers corresponding to the comic dates. There should be
                 all of them or none of them
             - more fields can be provided."""
-        return
+        raise NotImplementedError
 
     @classmethod
     def print_text(cls, text):
