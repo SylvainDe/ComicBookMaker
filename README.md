@@ -59,6 +59,7 @@ Comics supported
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
+ * [Octopuns](http://www.octopuns.net)
  * [Off The Mark](http://www.gocomics.com/offthemark)
  * [Endless Origami](http://endlessorigami.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)

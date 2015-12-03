@@ -868,29 +868,34 @@ class PhDComics(GenericComic):
                 }
 
 
-class Octopuns(GenericComic):
+class Octopuns(GenericNavigableComic):
     """Class to retrieve Octopuns comics."""
-    name = None  # 'octopuns'
+    name = 'octopuns'
     long_name = 'Octopuns'
     url = 'http://www.octopuns.net'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('img', src=re.compile('.*/Next.png')).parent \
-            if last_comic else \
-            get_soup_at_url(cls.url).find(
-                'img', src=re.compile('.*/First.png')).parent
-        while 'href' in next_comic:
-            comic_url = next_comic['href']
-            soup = get_soup_at_url(comic_url)
-            next_comic = soup.find('img', src=re.compile('.*/Next.png')).parent
-            yield {
-                'url': comic_url,
-                'img': [],
-                'title': soup.find('h3', class_='post-title entry-title').string,
-                'date': soup.find('h2', class_='date-header').string,
-            }
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        next_ = last_soup.find('img', src=re.compile('.*/Next.png')).parent
+        return None if next_.get('href', None) is None else next_
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h3', class_='post-title entry-title').string
+        date_str = soup.find('h2', class_='date-header').string
+        day = string_to_date(date_str, "%A, %B %d, %Y")
+        imgs = soup.find_all('link', rel='image_src')
+        return {
+            'img': [i['href'] for i in imgs],
+            'title': title,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+        }
 
 
 class OverCompensating(GenericNavigableComic):
