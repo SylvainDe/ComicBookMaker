@@ -1771,33 +1771,35 @@ class HorovitzClassic(HorovitzComics):
     suffix = '/comics/classic'
 
 
-class GenericGoComic(GenericComic):
+class GenericGoComic(GenericNavigableComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
+    url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='beginning')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='next', href=cls.url_date_re)
+
+    @classmethod
+    def get_url_from_link(cls, link):
         gocomics = 'http://www.gocomics.com'
-        url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
+        return urljoin_wrapper(gocomics, link['href'])
 
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='next', href=url_date_re) \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='beginning')
-
-        while next_comic:
-            comic_url = urljoin_wrapper(gocomics, next_comic['href'])
-            year, month, day = [int(s)
-                                for s in url_date_re.match(comic_url).groups()]
-            soup = get_soup_at_url(comic_url)
-            next_comic = soup.find('a', class_='next', href=url_date_re)
-            yield {
-                'url': comic_url,
-                'day': day,
-                'month': month,
-                'year': year,
-                'img': [soup.find_all('img', class_='strip')[-1]['src']],
-                'author': soup.find('meta', attrs={'name': 'author'})['content']
-            }
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_link(link)
+        year, month, day = [int(s)
+                            for s in cls.url_date_re.match(url).groups()]
+        return {
+            'day': day,
+            'month': month,
+            'year': year,
+            'img': [soup.find_all('img', class_='strip')[-1]['src']],
+            'author': soup.find('meta', attrs={'name': 'author'})['content']
+        }
 
 
 class PearlsBeforeSwine(GenericGoComic):
