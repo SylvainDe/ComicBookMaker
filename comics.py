@@ -330,16 +330,37 @@ class Dilbert(GenericNavigableComic):
         return urljoin_wrapper(cls.url, link['href'])
 
 
-class ThreeWordPhrase(GenericComic):
+class ThreeWordPhrase(GenericNavigableComic):
     """Class to retrieve Three Word Phrase comics."""
     name = 'threeword'
     long_name = 'Three Word Phrase'
     url = 'http://threewordphrase.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        return  # Does not exist anymore
-        yield
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('img', src='/firstlink.gif').parent
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        next_ = last_soup.find('img', src='/nextlink.gif').parent
+        return None if next_.get('href', None) is None else next_
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('title')
+        imgs = [img for img in soup.find_all('img')
+                if not img['src'].endswith(
+                    ('link.gif', '32.png', 'twpbookad.jpg',
+                     'merchad.jpg', 'header.gif', 'tipjar.jpg'))]
+        return {
+            'title': title.string if title else None,
+            'title2': '  '.join(img.get('alt') for img in imgs if img.get('alt')),
+            'img': [urljoin_wrapper(cls.url, img['src']) for img in imgs],
+        }
 
 
 class TheGentlemanArmchair(GenericComic):
