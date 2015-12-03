@@ -640,42 +640,44 @@ class Channelate(GenericComic):
                 }
 
 
-class CyanideAndHappiness(GenericComic):
+class CyanideAndHappiness(GenericNavigableComic):
     """Class to retrieve Cyanide And Happiness comics."""
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
     url = 'http://explosm.net'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', class_='next-comic') \
-            if last_comic else {'href': "/comics/15"}
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', title='Oldest comic')
 
-        while True:
-            href = next_comic.get('href', None)
-            if href is None:
-                break
-            comic_url = urljoin_wrapper(cls.url, href)
-            soup = get_soup_at_url(comic_url)
-            day_url = soup.find('h3').find('a')
-            num = int(day_url['href'].split('/')[-1])
-            day = string_to_date(day_url.string, '%Y.%m.%d')
-            author = soup.find('small', class_="author-credit-name").string
-            assert author.startswith('by ')
-            author = author[3:]
-            next_comic = soup.find('a', class_='next-comic')
-            imgs = soup.find_all('img', id='main-comic')
-            yield {
-                'num': num,
-                'url': comic_url,
-                'author': author,
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'prefix': '%d-' % num,
-                'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
-            }
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        next_ = last_soup.find('a', class_='next-comic')
+        return None if next_.get('href', None) is None else next_
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup):
+        url2 = soup.find('meta', property='og:url')['content']
+        num = int(url2.split('/')[-2])
+        date_str = soup.find('h3').find('a').string
+        day = string_to_date(date_str, '%Y.%m.%d')
+        author = soup.find('small', class_="author-credit-name").string
+        assert author.startswith('by ')
+        author = author[3:]
+        imgs = soup.find_all('img', id='main-comic')
+        return {
+            'num': num,
+            'author': author,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'prefix': '%d-' % num,
+            'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
+        }
 
 
 class MrLovenstein(GenericComic):
