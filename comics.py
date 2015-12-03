@@ -893,32 +893,36 @@ class Octopuns(GenericComic):
             }
 
 
-class OverCompensating(GenericComic):
+class OverCompensating(GenericNavigableComic):
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
     url = 'http://www.overcompensating.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', title='next comic')
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
         img_src_re = re.compile('^/oc/comics/.*')
         comic_num_re = re.compile('.*comic=([0-9]*)$')
-        next_comic = \
-            get_soup_at_url(last_comic['url']).find('a', title='next comic') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
-        while next_comic:
-            comic_url = urljoin_wrapper(cls.url, next_comic['href'])
-            num = int(comic_num_re.match(comic_url).groups()[0])
-            soup = get_soup_at_url(comic_url)
-            img = soup.find('img', src=img_src_re)
-            yield {
-                'url': comic_url,
-                'num': num,
-                'img': [urljoin_wrapper(comic_url, img['src'])],
-                'title': img.get('title')
-            }
-            next_comic = soup.find('a', title='next comic')
+        comic_url = cls.get_url_from_link(link)
+        num = int(comic_num_re.match(comic_url).groups()[0])
+        img = soup.find('img', src=img_src_re)
+        return {
+            'num': num,
+            'img': [urljoin_wrapper(comic_url, img['src'])],
+            'title': img.get('title')
+        }
 
 
 class SomethingOfThatIlk(GenericComic):
