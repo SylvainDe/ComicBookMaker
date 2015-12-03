@@ -1463,42 +1463,44 @@ class GoneIntoRapture(GenericNavigableComic):
         }
 
 
-class ThorsThundershack(GenericComic):
+class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        next_url = \
-            get_soup_at_url(last_comic['url']).find('a', class_='next navlink') \
-            if last_comic else \
-            get_soup_at_url(cls.url).find('a', class_='first navlink')
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='first navlink')
 
-        while next_url:
-            url = urljoin_wrapper(cls.url, next_url['href'])
-            soup = get_soup_at_url(url)
-            title = soup.find('meta', attrs={'name': 'description'})["content"]
-            description = soup.find('div', itemprop='articleBody').text
-            date_str = soup.find('time', itemprop='datePublished')["datetime"]
-            author = soup.find('span', itemprop='author copyrightHolder').string
-            imgs = soup.find_all('img', itemprop='image')
-            assert all(i['title'] == i['alt'] for i in imgs)
-            alt = imgs[0]['alt'] if imgs else ""
-            day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
-            yield {
-                'url': url,
-                'img': [urljoin_wrapper(url, i['src']) for i in imgs],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'author': author,
-                'title': title,
-                'alt': alt,
-                'description': description,
-            }
-            next_url = soup.find('a', class_='next navlink')
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='next navlink')
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', attrs={'name': 'description'})["content"]
+        description = soup.find('div', itemprop='articleBody').text
+        date_str = soup.find('time', itemprop='datePublished')["datetime"]
+        author = soup.find('span', itemprop='author copyrightHolder').string
+        imgs = soup.find_all('img', itemprop='image')
+        assert all(i['title'] == i['alt'] for i in imgs)
+        alt = imgs[0]['alt'] if imgs else ""
+        day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
+        return {
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'author': author,
+            'title': title,
+            'alt': alt,
+            'description': description,
+        }
 
 
 class EveryDayBlues(GenericNavigableComic):
