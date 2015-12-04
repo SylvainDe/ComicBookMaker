@@ -62,12 +62,15 @@ class GenericNavigableComic(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        url = last_comic['url'] if last_comic else None
         next_comic = \
             cls.get_next_comic_link(get_soup_at_url(last_comic['url'])) \
             if last_comic else \
             cls.get_first_comic_link()
         while next_comic:
-            url = cls.get_url_from_link(next_comic)
+            prev_url, url = url, cls.get_url_from_link(next_comic)
+            if prev_url == url:
+                break
             soup = get_soup_at_url(url)
             comic = cls.get_comic_info(soup, next_comic)
             if comic is not None:
@@ -503,43 +506,33 @@ class BerkeleyMews(GenericComic):
                 }
 
 
-class GenericBouletCorp(GenericComic):
-    """Generic class to retrieve BouletCorp comics in different languages.
-
-    Attributes :
-        date_re : regexp to get the date from the url."""
+class GenericBouletCorp(GenericNavigableComic):
+    """Generic class to retrieve BouletCorp comics in different languages."""
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        date_re = re.compile(cls.date_re % cls.url)
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]
 
-        prev_url = last_comic['url'] if last_comic else None
-        comic_url = (
-            get_soup_at_url(prev_url).find(
-                'div', id='centered_nav').find_all('a')[3]
-            if prev_url
-            else get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]).get('href')
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', id='centered_nav').find_all('a')[3]
 
-        while comic_url != prev_url:
-            year, month, day = [int(s)
-                                for s in date_re.match(comic_url).groups()]
-            soup = get_soup_at_url(comic_url)
-            imgs = soup.find('div', id='notes').find(
-                'div', class_='storycontent').find_all('img')
-            texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
-            title = soup.find('title').string
-            comic = {
-                'url': comic_url,
-                'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
-                'title': title,
-                'texts': texts,
-                'year': year,
-                'month': month,
-                'day': day,
-            }
-            yield comic
-            prev_url, comic_url = comic_url, soup.find(
-                'div', id='centered_nav').find_all('a')[3].get('href')
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_link(link)
+        date_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
+        year, month, day = [int(s) for s in date_re.match(url).groups()]
+        imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
+        texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
+        title = soup.find('title').string
+        return {
+            'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
+            'title': title,
+            'texts': texts,
+            'year': year,
+            'month': month,
+            'day': day,
+        }
 
 
 class BouletCorp(GenericBouletCorp):
@@ -547,7 +540,6 @@ class BouletCorp(GenericBouletCorp):
     name = 'boulet'
     long_name = 'Boulet Corp'
     url = 'http://www.bouletcorp.com'
-    date_re = '^%s/([0-9]*)/([0-9]*)/([0-9]*)/'
 
 
 class BouletCorpEn(GenericBouletCorp):
@@ -555,7 +547,6 @@ class BouletCorpEn(GenericBouletCorp):
     name = 'boulet_en'
     long_name = 'Boulet Corp English'
     url = 'http://english.bouletcorp.com'
-    date_re = '^%s/([0-9]*)/([0-9]*)/([0-9]*)/'
 
 
 class AmazingSuperPowers(GenericComic):
