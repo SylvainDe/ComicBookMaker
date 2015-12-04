@@ -57,6 +57,7 @@ Comics supported
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Loading Artist](http://www.loadingartist.com/latest/)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
+ * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [Octopuns](http://www.octopuns.net)

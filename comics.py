@@ -1484,6 +1484,38 @@ class GoneIntoRapture(GenericNavigableComic):
         }
 
 
+class LonnieMillsap(GenericNavigableComic):
+    """Class to retrieve Lonnie Millsap's comics."""
+    name = 'millsap'
+    long_name = 'Lonnie Millsap'
+    url = 'http://www.lonniemillsap.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.lonniemillsap.com/?p=42'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        post = soup.find('div', class_='post-content')
+        author = post.find("span", class_="post-author").find("a").string
+        date_str = post.find("span", class_="post-date").string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = post.find("div", class_="entry").find_all("img")
+        return {
+            'title': title,
+            'author': author,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
     name = 'thor'
