@@ -1089,35 +1089,32 @@ class Penmen(GenericNavigableComic):
         }
 
 
-class TheDoghouseDiaries(GenericComic):
+class TheDoghouseDiaries(GenericNavigableComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
     url = 'http://thedoghousediaries.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        comic_img_re = re.compile('^dhdcomics/.*')
-        prev_url = last_comic['url'] if last_comic else None
-        comic_url = (
-            get_soup_at_url(prev_url).find('a', id='nextlink')
-            if prev_url else
-            get_soup_at_url(cls.url).find('a', id='firstlink')).get('href')
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', id='firstlink')
 
-        while comic_url != prev_url:
-            soup = get_soup_at_url(comic_url)
-            img = soup.find('img', src=comic_img_re)
-            # TODO : date
-            yield {
-                'url': comic_url,
-                'title': soup.find('h2', id='titleheader').string,
-                'title2': soup.find('div', id='subtext').string,
-                'alt': img.get('title'),
-                'img': [urljoin_wrapper(comic_url, img['src'].strip())],
-                'num': int(comic_url.split('/')[-1]),
-            }
-            prev_url, comic_url = comic_url, soup.find(
-                'a', id='nextlink').get('href')
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', id='nextlink')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        comic_img_re = re.compile('^dhdcomics/.*')
+        img = soup.find('img', src=comic_img_re)
+        comic_url = cls.get_url_from_link(link)
+        return {
+            'title': soup.find('h2', id='titleheader').string,
+            'title2': soup.find('div', id='subtext').string,
+            'alt': img.get('title'),
+            'img': [urljoin_wrapper(comic_url, img['src'].strip())],
+            'num': int(comic_url.split('/')[-1]),
+        }
 
 
 class InvisibleBread(GenericComic):
