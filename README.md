@@ -55,6 +55,7 @@ Comics supported
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
+ * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Loading Artist](http://www.loadingartist.com/latest/)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)

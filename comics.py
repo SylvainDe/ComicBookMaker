@@ -1803,6 +1803,37 @@ class PainTrainComic(GenericNavigableComic):
         }
 
 
+class IrwinCardozo(GenericNavigableComic):
+    """Class to retrieve Irwin Cardozo Comics."""
+    name = 'irwinc'
+    long_name = 'Irwin Cardozo'
+    url = 'http://irwincardozocomics.tumblr.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': "http://irwincardozocomics.tumblr.com/post/72201129995/only-human-irwinc"}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', class_='nextprev').find('a', class_='prev')  # prev is next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        desc = soup.find('meta', property='og:description')
+        title = desc['content'] if desc else ""
+        imgs = soup.find_all('meta', property='og:image')
+        date_li = soup.find('li', class_='date') or soup.find('li', class_='date-reblogged')
+        date_str = date_li.find('a')['title']
+        day = string_to_date(date_str, "%a. %B %d, %Y @ %I:%M %p")
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+        }
+
+
 class HorovitzComics(GenericComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
