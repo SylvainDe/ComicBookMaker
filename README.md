@@ -44,6 +44,7 @@ Comics supported
  * [Disco Bleach](http://discobleach.com/)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
+ * [My Extra Life](http://www.myextralife.com/)
  * [Fat Awesome](http://fatawesome.com/comics/)
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)
  * [Fowl Language Comics](http://tapastic.com/series/Fowl-Language-Comics)
