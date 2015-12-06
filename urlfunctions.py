@@ -105,12 +105,13 @@ def load_json_at_url(url):
     return json.loads(get_content(url).decode())
 
 
-def get_soup_at_url(url, detect_meta=False):
+def get_soup_at_url(url, detect_meta=False, detect_rel=False):
     """Get content at url as BeautifulSoup.
 
     url is a string
     detect_meta is a hacky flag used to detect comics using similar plugin to
-        be able to reuse code at some point.
+        be able to reuse code at some point
+    detect_rel is a hacky flag to detect next/first comics automatically
     Returns a BeautifulSoup object."""
     soup = BeautifulSoup(get_content(url))
     if detect_meta:
@@ -118,4 +119,9 @@ def get_soup_at_url(url, detect_meta=False):
             meta = soup.find('meta', attrs={'name': meta_val})
             if meta is not None:
                 print(meta)
+    if detect_rel:
+        for tag in ['a', 'link']:
+            next_ = soup.find(tag, rel='next')
+            if next_ is not None:
+                print(next_)
     return soup
