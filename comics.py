@@ -1803,19 +1803,20 @@ class PainTrainComic(GenericNavigableComic):
         }
 
 
-class IrwinCardozo(GenericNavigableComic):
-    """Class to retrieve Irwin Cardozo Comics."""
-    name = 'irwinc'
-    long_name = 'Irwin Cardozo'
-    url = 'http://irwincardozocomics.tumblr.com'
+class GenericTumblr(GenericNavigableComic):
+    """Generic class to retrieve comics from Tumblr."""
 
     @classmethod
     def get_first_comic_link(cls):
-        return {'href': "http://irwincardozocomics.tumblr.com/post/72201129995/only-human-irwinc"}
+        return {'href': cls.get_first_comic_url()}
 
     @classmethod
     def get_next_comic_link(cls, last_soup):
         return last_soup.find('div', class_='nextprev').find('a', class_='prev')  # prev is next
+
+    @classmethod
+    def get_prev_comic_link(cls, last_soup):
+        return last_soup.find('div', class_='nextprev').find('a', class_='next')  # next is prev
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1832,6 +1833,28 @@ class IrwinCardozo(GenericNavigableComic):
             'month': day.month,
             'year': day.year,
         }
+
+
+class IrwinCardozo(GenericTumblr):
+    """Class to retrieve Irwin Cardozo Comics."""
+    name = 'irwinc'
+    long_name = 'Irwin Cardozo'
+    url = 'http://irwincardozocomics.tumblr.com'
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://irwincardozocomics.tumblr.com/post/72201129995/only-human-irwinc"
+
+
+class AccordingToDevin(GenericTumblr):
+    """Class to retrieve According To Devin comics."""
+    name = 'devin'
+    long_name = 'According To Devin'
+    url = 'http://accordingtodevin.tumblr.com'
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://accordingtodevin.tumblr.com/post/40112722337"
 
 
 class HorovitzComics(GenericComic):
