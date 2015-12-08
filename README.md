@@ -51,7 +51,7 @@ Comics supported
  * [Fowl Language Comics](http://tapastic.com/series/Fowl-Language-Comics)
  * [Garfield](http://garfield.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
- * [GavierGorce](http://xaviergorce.blog.lemonde.fr)
+ * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
  * [Happle Tea](http://www.happletea.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)

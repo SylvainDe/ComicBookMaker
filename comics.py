@@ -195,7 +195,7 @@ class Plantu(GenericLeMondeBlog):
 class XavierGorce(GenericLeMondeBlog):
     """Class to retrieve Xavier Gorce comics."""
     name = 'gorce'
-    long_name = "GavierGorce"
+    long_name = "Xavier Gorce"
     url = "http://xaviergorce.blog.lemonde.fr"
 
     @classmethod
