@@ -218,7 +218,7 @@ class Aurel(GenericLeMondeBlog):
     """Class to retrieve Aurel comics."""
     name = 'aurel'
     long_name = "Aurel"
-    url = "http://cartooningforpeace.blog.lemonde.fr"
+    url = "http://aurel.blog.lemonde.fr"
 
     @classmethod
     def get_first_comic_url(cls):
@@ -229,7 +229,7 @@ class Rall(GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
     name = 'rall'
     long_name = "Ted Rall"
-    url = "http://rall.com/comic/"
+    url = "http://rall.com/comic"
 
     @classmethod
     def get_first_comic_link(cls):
@@ -404,7 +404,7 @@ class MyExtraLife(GenericNavigableComic):
     """Class to retrieve My Extra Life comics."""
     name = 'extralife'
     long_name = 'My Extra Life'
-    url = 'http://www.myextralife.com/'
+    url = 'http://www.myextralife.com'
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1184,7 +1184,7 @@ class DiscoBleach(GenericComic):
     """Class to retrieve Disco Bleach Comics."""
     name = 'discobleach'
     long_name = 'Disco Bleach'
-    url = 'http://discobleach.com/'
+    url = 'http://discobleach.com'
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -1206,7 +1206,7 @@ class CompletelySeriousComics(GenericNavigableComic):
     """Class to retrieve Completely Serious comics."""
     name = 'completelyserious'
     long_name = 'Completely Serious Comics'
-    url = 'http://completelyseriouscomics.com/'
+    url = 'http://completelyseriouscomics.com'
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1267,7 +1267,7 @@ class LoadingComics(GenericNavigableComic):
     """Class to retrieve Loading Artist comics."""
     name = 'loadingartist'
     long_name = 'Loading Artist'
-    url = 'http://www.loadingartist.com/latest/'
+    url = 'http://www.loadingartist.com/latest'
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1296,7 +1296,7 @@ class ChuckleADuck(GenericNavigableComic):
     """Class to retrieve Chuckle-A-Duck comics."""
     name = 'chuckleaduck'
     long_name = 'Chuckle-A-duck'
-    url = 'http://chuckleaduck.com/'
+    url = 'http://chuckleaduck.com'
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1402,7 +1402,7 @@ class FatAwesomeComics(GenericNavigableComic):
     """Class to retrieve Fat Awesome Comics."""
     name = 'fatawesome'
     long_name = 'Fat Awesome'
-    url = 'http://fatawesome.com/comics/'
+    url = 'http://fatawesome.com/comics'
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1578,7 +1578,7 @@ class EveryDayBlues(GenericNavigableComic):
     """Class to retrieve EveryDayBlues Comics."""
     name = "blues"
     long_name = "Every Day Blues"
-    url = "http://everydayblues.net/"
+    url = "http://everydayblues.net"
 
     @classmethod
     def get_first_comic_link(cls):
