@@ -260,15 +260,42 @@ class Rall(GenericNavigableComic):
         }
 
 
-class NeDroid(GenericComic):
+class NeDroid(GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
     long_name = 'NeDroid'
     url = 'http://nedroid.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # FIXME: Does not work anymore
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('div', class_="nav-first").find('a')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', class_="nav-next").find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        comic_url_re = re.compile('//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
+        date_str = soup.find('div', class_='comicdate')
+        short_url = urljoin_wrapper(cls.url, soup.find('link', rel='shortlink')['href'])
+        num = int(short_url_re.match(short_url).groups()[0])
+        imgs = soup.find('div', id='comic').find_all('img')
+        year, month, day = [int(s) for s in comic_url_re.match(imgs[0]['src']).groups()]
+        assert len(imgs) == 1
+        title = imgs[0]['alt']
+        title2 = imgs[0]['title']
+        return {
+            'short_url': short_url,
+            'title': title,
+            'title2': title2,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'day': day,
+            'month': month,
+            'year': year,
+            'num': num,
+        }
 
 
 class Garfield(GenericComic):
