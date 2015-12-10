@@ -526,6 +526,41 @@ class PerryBibleFellowship(GenericComic):
                 }
 
 
+class Mercworks(GenericNavigableComic):
+    """Class to retrieve Mercworks comics."""
+    name = 'mercworks'
+    long_name = 'Mercworks'
+    url = 'http://mercworks.net'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='comic-nav-base comic-nav-next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        metadesc = soup.find('meta', property='og:description')
+        desc = metadesc['content'] if metadesc else ""
+        author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
+        date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
+        date_str = date_str[:10]
+        comic_date = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'img': [i['content'] for i in imgs],
+            'title': title,
+            'author': author,
+            'desc': desc,
+            'day': comic_date.day,
+            'month': comic_date.month,
+            'year': comic_date.year
+        }
+
+
 class BerkeleyMews(GenericComic):
     """Class to retrieve Berkeley Mews comics."""
     name = 'berkeley'
