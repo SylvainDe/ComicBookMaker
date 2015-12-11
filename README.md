@@ -62,6 +62,7 @@ Comics supported
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Mercworks](http://mercworks.net)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
+ * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [Octopuns](http://www.octopuns.net)

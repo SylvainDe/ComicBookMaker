@@ -1044,6 +1044,30 @@ class SomethingOfThatIlk(GenericComic):
         return []  # Does not exist anymore
 
 
+class InfiniteMonkeyBusiness(GenericNavigableComic):
+    """Generic class to retrieve InfiniteMonkeyBusiness comics."""
+    name = 'monkey'
+    long_name = 'Infinite Monkey Business'
+    url = 'http://infinitemonkeybusiness.net'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://infinitemonkeybusiness.net/comic/pillory/'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='navi comic-nav-next navi-next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class Wondermark(GenericComic):
     """Class to retrieve the Wondermark comics."""
     name = 'wondermark'
