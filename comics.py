@@ -227,6 +227,7 @@ class Aurel(GenericLeMondeBlog):
 
 class Rall(GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
+    # Also on : http://www.gocomics.com/tedrall
     name = 'rall'
     long_name = "Ted Rall"
     url = "http://rall.com/comic"
@@ -885,6 +886,7 @@ class ButterSafe(GenericComic):
 
 class CalvinAndHobbes(GenericComic):
     """Class to retrieve Calvin and Hobbes comics."""
+    # Also on http://www.gocomics.com/calvinandhobbes/
     name = 'calvin'
     long_name = 'Calvin and Hobbes'
     # This is not through any official webpage but eh...
@@ -2129,6 +2131,13 @@ class MichaelRamirez(GenericGoComic):
     url = 'http://www.gocomics.com/michaelramirez'
 
 
+class MikeLuckovich(GenericGoComic):
+    """Class to retrieve Mike Luckovich comics."""
+    name = 'luckovich'
+    long_name = 'Mike Luckovich'
+    url = 'http://www.gocomics.com/mikeluckovich'
+
+
 class JimBenton(GenericGoComic):
     """Class to retrieve Jim Benton comics."""
     name = 'benton'
@@ -2180,6 +2189,14 @@ class SandersenGocomic(GenericGoComic):
     name = 'sandersen-goc'
     long_name = 'Sarah Andersen (from GoComics)'
     url = 'http://www.gocomics.com/sarahs-scribbles'
+
+
+class CalvinAndHobbesGoComic(GenericGoComic):
+    """Class to retrieve Calvin and Hobbes comics."""
+    # From gocomics, not http://marcel-oehler.marcellosendos.ch/comics/ch/
+    name = 'calvin-goc'
+    long_name = 'Calvin and Hobbes (from GoComics)'
+    url = 'http://www.gocomics.com/calvinandhobbes'
 
 
 class TapasticComic(GenericComic):
