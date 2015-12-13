@@ -1033,6 +1033,41 @@ class OverCompensating(GenericNavigableComic):
         }
 
 
+class Oglaf(GenericNavigableComic):
+    """Class to retrieve Oglaf comics."""
+    name = 'oglaf'
+    long_name = 'Oglaf [NSFW]'
+    url = 'http://oglaf.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find("div", id="st").parent
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        div = last_soup.find("div", id="nx")
+        return div.parent if div else None
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('title').string
+        title_imgs = soup.find('div', id='tt').find_all('img')
+        assert len(title_imgs) == 1
+        strip_imgs = soup.find_all('img', id='strip')
+        assert len(strip_imgs) == 1
+        imgs = title_imgs + strip_imgs
+        desc = ' '.join(i['title'] for i in imgs)
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+            'description': desc,
+        }
+
+
 class ScandinaviaAndTheWorld(GenericNavigableComic):
     """Class to retrieve Scandinavia And The World comics."""
     name = 'satw'

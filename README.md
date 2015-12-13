@@ -67,6 +67,7 @@ Comics supported
  * [NeDroid](http://nedroid.com)
  * [Octopuns](http://www.octopuns.net)
  * [Off The Mark](http://www.gocomics.com/offthemark)
+ * [Oglaf [NSFW]](http://oglaf.com)
  * [Endless Origami](http://endlessorigami.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
  * [Pain Train Comics](http://paintraincomic.com)
