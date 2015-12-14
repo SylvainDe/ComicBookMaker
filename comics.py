@@ -261,6 +261,42 @@ class Rall(GenericNavigableComic):
         }
 
 
+class ZenPencils(GenericNavigableComic):
+    """Class to retrieve ZenPencils comics."""
+    name = 'zenpencils'
+    long_name = 'Zen Pencils'
+    url = 'http://zenpencils.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find('div', id='comic').find_all('img')
+        post = soup.find('div', class_='post-content')
+        author = post.find("span", class_="post-author").find("a").string
+        title = post.find('h2', class_='post-title').string
+        date_str = post.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        assert imgs
+        assert all(i['alt'] == i['title']  == "" for i in imgs)
+        desc = soup.find('meta', property='og:description')['content']
+        return {
+            'title': title,
+            'description': desc,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class NeDroid(GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'

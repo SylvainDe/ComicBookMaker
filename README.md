@@ -104,5 +104,6 @@ Comics supported
  * [WuMo](http://www.gocomics.com/wumo)
  * [xkcd](http://xkcd.com)
  * [The Awkward Yeti](http://theawkwardyeti.com)
+ * [Zen Pencils](http://zenpencils.com)
  * [Zep World](http://zepworld.blog.lemonde.fr)
  * [Znoflats Comics](http://tapastic.com/series/Znoflats-Comics)
