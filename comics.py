@@ -1405,6 +1405,7 @@ class DiscoBleach(GenericComic):
 
 class TubeyToons(GenericComic):
     """Class to retrieve TubeyToons comics."""
+    # Also on http://tapastic.com/series/Tubey-Toons
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
@@ -2327,6 +2328,14 @@ class SandersenTapastic(TapasticComic):
     name = 'sandersen-tapa'
     long_name = 'Sarah Andersen (from Tapastic)'
     url = 'http://tapastic.com/series/Doodle-Time'
+
+
+class TubeyToonsTapastic(TapasticComic):
+    """Class to retrieve TubeyToons comics."""
+    # From tapastic, not http://tubeytoons.com
+    name = 'tubeytoons-tapa'
+    long_name = 'Tubey Toons (from Tapastic)'
+    url = 'http://tapastic.com/series/Tubey-Toons'
 
 
 def get_subclasses(klass):

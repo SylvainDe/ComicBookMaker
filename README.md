@@ -97,6 +97,7 @@ Comics supported
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
  * [Tubey Toons](http://tubeytoons.com)
+ * [Tubey Toons (from Tapastic)](http://tapastic.com/series/Tubey-Toons)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg -l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Warehouse Comic](http://warehousecomic.com)
