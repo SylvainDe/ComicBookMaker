@@ -37,6 +37,7 @@ Comics supported
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
+ * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
  * [Cyanide and Happiness](http://explosm.net)

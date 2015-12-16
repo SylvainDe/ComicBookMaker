@@ -396,6 +396,34 @@ class Dilbert(GenericNavigableComic):
         return urljoin_wrapper(cls.url, link['href'])
 
 
+class VictimsOfCircumsolar(GenericNavigableComic):
+    """Class to retrieve VictimsOfCircumsolar comics."""
+    name = 'circumsolar'
+    long_name = 'Victims Of Circumsolar'
+    url = 'http://www.victimsofcircumsolar.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.victimsofcircumsolar.com/comic/modern-addiction'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='navi comic-nav-next navi-next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        # Date is on the archive page
+        title = soup.find_all('meta', property='og:title')[-1]['content']
+        desc = soup.find_all('meta', property='og:description')[-1]['content']
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['title'] == i['alt'] == title for i in imgs)
+        return {
+            'title': title,
+            'description': desc,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class ThreeWordPhrase(GenericNavigableComic):
     """Class to retrieve Three Word Phrase comics."""
     name = 'threeword'
