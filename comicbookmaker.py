@@ -60,7 +60,7 @@ def main():
             for com in comic_classes:
                 com.reset_new()
         else:
-            print("Unknown action : %s" % action)
+            print("Unknown action : {0!s}".format(action))
 
 if __name__ == "__main__":
     main()
