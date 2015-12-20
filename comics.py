@@ -1537,6 +1537,34 @@ class ChuckleADuck(GenericNavigableComic):
         }
 
 
+class DepressedAlien(GenericNavigableComic):
+    """Class to retrieve Depressed Alien Comics."""
+    name = 'depressedalien'
+    long_name = 'Depressed Alien'
+    url = 'http://depressedalien.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('img', attrs={'name': 'beginArrow'}).parent
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('img', attrs={'name': 'rightArrow'}).parent
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class ThingsInSquares(GenericComic):
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages
