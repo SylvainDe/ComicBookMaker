@@ -19,6 +19,7 @@ Command-line interface
 Comics supported
 ----------------
  * [Abstruse Goose](http://abstrusegoose.com)
+ * [Tales of Absurdity](http://talesofabsurdity.com)
  * [Anything Comic](http://www.anythingcomic.com)
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)

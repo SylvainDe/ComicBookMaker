@@ -1948,6 +1948,41 @@ class LastPlaceComics(GenericNavigableComic):
         }
 
 
+class TalesOfAbsurdity(GenericNavigableComic):
+    """Class to retrieve Tales Of Absurdity comics."""
+    # Also on http://tapastic.com/series/Tales-Of-Absurdity
+    name = 'absurdity'
+    long_name = 'Tales of Absurdity'
+    url = 'http://talesofabsurdity.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find("span", class_="post-date").string
+        comic_date = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find("div", id="comic").find_all("img")
+        assert all(i['alt'] == i['title'] for i in imgs)
+        alt = imgs[0]['alt'] if imgs else ""
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'alt': alt,
+            'author': author,
+            'day': comic_date.day,
+            'month': comic_date.month,
+            'year': comic_date.year
+        }
+
+
 class EndlessOrigami(GenericNavigableComic):
     """Class to retrieve Endless Origami Comics."""
     name = "origami"
