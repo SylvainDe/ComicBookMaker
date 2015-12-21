@@ -2042,6 +2042,43 @@ class BuniComic(GenericNavigableComic):
         }
 
 
+class UnearthedComics(GenericNavigableComic):
+    """Class to retrieve Unearthed comics."""
+    # Also on http://tapastic.com/series/UnearthedComics
+    # Also on http://unearthedcomics.tumblr.com
+    name = 'unearthed'
+    long_name = 'Unearthed Comics'
+    url = 'http://unearthedcomics.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://unearthedcomics.com/comics/world-with-turn-signals/'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        short_url = soup.find('link', rel='shortlink')['href']
+        title_elt = soup.find('h1') or soup.find('h2')
+        title = title_elt.string if title_elt else ""
+        desc = soup.find('meta', property='og:description')
+        date_str = soup.find('time', class_='published updated hidden')['datetime']
+        day = string_to_date(date_str, "%Y-%m-%d")
+        post = soup.find('div', class_="entry content entry-content type-portfolio")
+        imgs = post.find_all('img')
+        return {
+            'title': title,
+            'description': desc,
+            'url2': short_url,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class PainTrainComic(GenericNavigableComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'
@@ -2399,6 +2436,15 @@ class TubeyToonsTapastic(TapasticComic):
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
+
+
+class UnearthedComicsTapastic(TapasticComic):
+    """Class to retrieve Unearthed comics."""
+    # Also on http://unearthedcomics.com
+    # Also on http://unearthedcomics.tumblr.com
+    name = 'unearthed-tapa'
+    long_name = 'Unearthed Comics (from Tapastic)'
+    url = 'http://tapastic.com/series/UnearthedComics'
 
 
 def get_subclasses(klass):
