@@ -24,6 +24,7 @@ Comics supported
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
  * [Aurel](http://aurel.blog.lemonde.fr)
+ * [Space Avalanche](http://www.spaceavalanche.com)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Biter Comics](http://www.bitercomics.com)

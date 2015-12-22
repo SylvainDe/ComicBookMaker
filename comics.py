@@ -261,6 +261,37 @@ class Rall(GenericNavigableComic):
         }
 
 
+class SpaceAvalanche(GenericNavigableComic):
+    """Class to retrieve Space Avalanche comics."""
+    name = 'avalanche'
+    long_name = 'Space Avalanche'
+    url = 'http://www.spaceavalanche.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': "http://www.spaceavalanche.com/2009/02/02/irish-sea/", 'title': "Irish Sea"}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
+        title = link['title']
+        url = cls.get_url_from_link(link)
+        year, month, day = [int(s)
+                            for s in url_date_re.match(url).groups()]
+        imgs = soup.find("div", class_="entry").find_all("img")
+        return {
+            'title': title,
+            'day': day,
+            'month': month,
+            'year': year,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class ZenPencils(GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
     name = 'zenpencils'
