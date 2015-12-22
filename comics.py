@@ -1255,7 +1255,7 @@ class WarehouseComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        date_str = post.find('span', class_='post-date').string
+        date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
         return {
             'img': [i['src'] for i in soup.find('div', id='comic').find_all('img')],
@@ -1432,7 +1432,7 @@ class CompletelySeriousComics(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('h2', class_='post-title').string
         author = soup.find('span', class_='post-author').contents[1].string
-        date_str = post.find('span', class_='post-date').string
+        date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', class_='comicpane').find_all('img')
         assert imgs
