@@ -2116,6 +2116,38 @@ class PainTrainComic(GenericNavigableComic):
         }
 
 
+class MakeItStoopid(GenericNavigableComic):
+    """Class to retrieve Make It Stoopid Comics."""
+    name = 'stoopid'
+    long_name = 'Make it stoopid'
+    url = 'http://makeitstoopid.com/comic.php'
+
+    @classmethod
+    def get_nav(cls, soup):
+        cnav = soup.find_all(class_='cnav')
+        nav1, nav2 = cnav[:5], cnav[5:]
+        assert nav1 == nav2
+        # begin, prev, archive, next_, end = nav1
+        return [None if i.get('href', None) is None else i for i in nav1]
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return cls.get_nav(get_soup_at_url(cls.url))[0]
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return cls.get_nav(last_soup)[3]
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = link['title']
+        imgs = soup.find_all('img', id='comicimg')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class GenericTumblr(GenericNavigableComic):
     """Generic class to retrieve comics from Tumblr."""
 

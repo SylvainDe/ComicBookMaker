@@ -93,6 +93,7 @@ Comics supported
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)
+ * [Make it stoopid](http://makeitstoopid.com/comic.php)
  * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Thor's Thundershack](http://www.thorsthundershack.com)
  * [Three Word Phrase](http://threewordphrase.com)
