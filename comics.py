@@ -377,7 +377,7 @@ class Dilbert(GenericNavigableComic):
         imgs = soup.find_all('meta', property='og:image')
         desc = soup.find('meta', property='og:description')['content']
         date_str = soup.find('meta', property='article:publish_date')['content']
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         author = soup.find('meta', property='article:author')['content']
         tags = soup.find('meta', property='article:tag')['content']
         return {
@@ -386,9 +386,9 @@ class Dilbert(GenericNavigableComic):
             'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
     @classmethod
@@ -613,16 +613,16 @@ class Mercworks(GenericNavigableComic):
         author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
         date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
         date_str = date_str[:10]
-        comic_date = string_to_date(date_str, "%Y-%m-%d")
+        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'img': [i['content'] for i in imgs],
             'title': title,
             'author': author,
             'desc': desc,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -1255,15 +1255,14 @@ class WarehouseComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        comic_date = string_to_date(
-            soup.find('span', class_='post-date').string,
-            "%B %d, %Y")
+        date_str = post.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
         return {
             'img': [i['src'] for i in soup.find('div', id='comic').find_all('img')],
             'title': soup.find('h2', class_='post-title').string,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
         }
 
 
@@ -1433,9 +1432,8 @@ class CompletelySeriousComics(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('h2', class_='post-title').string
         author = soup.find('span', class_='post-author').contents[1].string
-        day = string_to_date(
-            soup.find('span', class_='post-date').string,
-            '%B %d, %Y')
+        date_str = post.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', class_='comicpane').find_all('img')
         assert imgs
         alt = imgs[0]['title']
@@ -1834,7 +1832,7 @@ class EveryDayBlues(GenericNavigableComic):
         title = soup.find("h2", class_="post-title").string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        comic_date = string_to_date(date_str, "%d. %B %Y", "de_DE.utf8")
+        day = string_to_date(date_str, "%d. %B %Y", "de_DE.utf8")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] == title for i in imgs)
         assert len(imgs) <= 1
@@ -1842,9 +1840,9 @@ class EveryDayBlues(GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -1867,7 +1865,7 @@ class BiterComics(GenericNavigableComic):
         title = soup.find("h1", class_="entry-title").string
         author = soup.find("span", class_="author vcard").find("a").string
         date_str = soup.find("span", class_="entry-date").string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) == 1
@@ -1877,9 +1875,9 @@ class BiterComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -1901,15 +1899,15 @@ class TheAwkwardYeti(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find("span", class_="post-date").string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(idx > 0 or i['alt'] == i['title'] for idx, i in enumerate(imgs))
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -1932,7 +1930,7 @@ class LastPlaceComics(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) <= 1
@@ -1942,9 +1940,9 @@ class LastPlaceComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -1968,7 +1966,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
@@ -1977,9 +1975,9 @@ class TalesOfAbsurdity(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
@@ -2002,7 +2000,7 @@ class EndlessOrigami(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
@@ -2011,9 +2009,9 @@ class EndlessOrigami(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
