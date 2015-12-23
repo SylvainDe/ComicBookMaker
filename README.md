@@ -98,6 +98,7 @@ Comics supported
  * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Thor's Thundershack](http://www.thorsthundershack.com)
  * [Three Word Phrase](http://threewordphrase.com)
+ * [It's the tie](http://itsthetie.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
  * [Tubey Toons](http://tubeytoons.com)
