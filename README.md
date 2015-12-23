@@ -18,6 +18,7 @@ Command-line interface
 
 Comics supported
 ----------------
+ * [1111 Comics](http://www.1111comics.me)
  * [Abstruse Goose](http://abstrusegoose.com)
  * [Tales of Absurdity](http://talesofabsurdity.com)
  * [Anything Comic](http://www.anythingcomic.com)

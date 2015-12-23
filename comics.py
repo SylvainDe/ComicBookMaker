@@ -358,6 +358,35 @@ class ItsTheTie(GenericNavigableComic):
         }
 
 
+class OneOneOneOneComic(GenericNavigableComic):
+    """Class to retrieve 1111 Comics."""
+    name = '1111'
+    long_name = '1111 Comics'
+    url = 'http://www.1111comics.me'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('div', class_="nav-first").find('a')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', class_="nav-next").find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h1', class_='comic-title').find('a').string
+        date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class NeDroid(GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
