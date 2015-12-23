@@ -780,7 +780,6 @@ class ToonHole(GenericComic):
         date_str = remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip())
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
-        print(imgs)
         assert all(i['alt'] == i['title'] == title for i in imgs)
         return {
             'title': title,
