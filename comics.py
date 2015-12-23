@@ -64,8 +64,8 @@ class GenericNavigableComic(GenericComic):
     def get_next_comic(cls, last_comic):
         url = last_comic['url'] if last_comic else None
         next_comic = \
-            cls.get_next_comic_link(get_soup_at_url(last_comic['url'])) \
-            if last_comic else \
+            cls.get_next_comic_link(get_soup_at_url(url)) \
+            if url else \
             cls.get_first_comic_link()
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
@@ -775,27 +775,40 @@ class ToonHole(GenericComic):
     url = 'http://www.toonhole.com'
 
     @classmethod
+    def get_comic_info(cls, soup, link):
+        title = link.string
+        date_str = remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip())
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', id='comic').find_all('img')
+        print(imgs)
+        assert all(i['alt'] == i['title'] == title for i in imgs)
+        return {
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
+        }
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return link['href']
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         waiting_for_url = last_comic['url'] if last_comic else None
         archive_url = urljoin_wrapper(cls.url, 'archive/')
         for link in reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark')):
-            url = link['href']
+            url = cls.get_url_from_link(link)
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
-                title = link.string
                 soup = get_soup_at_url(url)
-                day = string_to_date(remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip()), "%B %d, %Y")
-                imgs = soup.find('div', id='comic').find_all('img')
-                assert all(i['alt'] == i['title'] == title for i in imgs)
-                yield {
-                    'url': url,
-                    'title': title,
-                    'month': day.month,
-                    'year': day.year,
-                    'day': day.day,
-                    'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
-                }
+                comic = cls.get_comic_info(soup, link)
+                if comic is not None:
+                    assert 'url' not in comic
+                    comic['url'] = url
+                    yield comic
 
 
 class Channelate(GenericComic):
@@ -1487,22 +1500,33 @@ class PoorlyDrawnLines(GenericComic):
     url = 'http://poorlydrawnlines.com'
 
     @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find('div', class_='post').find_all('img')
+        assert len(imgs) <= 1
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': imgs[0].get('title', "") if imgs else "",
+        }
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return link['href']
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         waiting_for_url = last_comic['url'] if last_comic else None
         url_re = re.compile('^%s/comic/.' % cls.url)
-        for l in reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re)):
-            url = l['href']
+        for link in reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re)):
+            url = cls.get_url_from_link(link)
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
                 soup = get_soup_at_url(url)
-                imgs = soup.find('div', class_='post').find_all('img')
-                assert len(imgs) <= 1
-                yield {
-                    'url': url,
-                    'img': [i['src'] for i in imgs],
-                    'title': imgs[0].get('title', "") if imgs else "",
-                }
+                comic = cls.get_comic_info(soup, link)
+                if comic is not None:
+                    assert 'url' not in comic
+                    comic['url'] = url
+                    yield comic
 
 
 class LoadingComics(GenericNavigableComic):
@@ -2234,47 +2258,58 @@ class AccordingToDevin(GenericTumblr):
 class HorovitzComics(GenericComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
+    img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
+    link_re = NotImplemented
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        href = link['href']
+        num = int(cls.link_re.match(href).groups()[0])
+        title = link.string
+        imgs = soup.find_all('img', id='comic')
+        assert len(imgs) == 1
+        year, month, day = [int(s)
+                            for s in cls.img_re.match(imgs[0]['src']).groups()]
+        return {
+            'title': title,
+            'day': day,
+            'month': month,
+            'year': year,
+            'img': [i['src'] for i in imgs],
+            'num': num,
+        }
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        link_re = re.compile('^' + cls.suffix + '/([0-9]+)$')
-        img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
         archive = 'http://www.horovitzcomics.com/comics/archive/'
         waiting_for_url = last_comic['url'] if last_comic else None
-        for a in reversed(get_soup_at_url(archive).find_all('a', href=link_re)):
-            href = a['href']
-            url = urljoin_wrapper(cls.url, href)
+        for link in reversed(get_soup_at_url(archive).find_all('a', href=cls.link_re)):
+            url = cls.get_url_from_link(link)
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
-                num = int(link_re.match(href).groups()[0])
-                title = a.string
                 soup = get_soup_at_url(url)
-                imgs = soup.find_all('img', id='comic')
-                assert len(imgs) == 1
-                year, month, day = [int(s)
-                                    for s in img_re.match(imgs[0]['src']).groups()]
-                yield {
-                    'url': url,
-                    'title': title,
-                    'day': day,
-                    'month': month,
-                    'year': year,
-                    'img': [i['src'] for i in imgs],
-                    'num': num,
-                }
+                comic = cls.get_comic_info(soup, link)
+                if comic is not None:
+                    assert 'url' not in comic
+                    comic['url'] = url
+                    yield comic
 
 
 class HorovitzNew(HorovitzComics):
     name = 'horovitznew'
     long_name = 'Horovitz New'
-    suffix = '/comics/new'
+    link_re = re.compile('^/comics/new/([0-9]+)$')
 
 
 class HorovitzClassic(HorovitzComics):
     name = 'horovitzclassic'
     long_name = 'Horovitz Classic'
-    suffix = '/comics/classic'
+    link_re = re.compile('^/comics/classics/([0-9]+)$')
 
 
 class GenericGoComic(GenericNavigableComic):
