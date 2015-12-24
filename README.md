@@ -1,20 +1,45 @@
 ComicBookMaker
 ==============
-Script to fetch webcomics and use them to create ebooks.
+
+Script to fetch webcomics, archive them and use them to create ebooks.
 
 [![Build Status](https://travis-ci.org/SylvainDe/ComicBookMaker.svg?branch=master)](https://travis-ci.org/SylvainDe/ComicBookMaker)
 
 
-
 Longer explanation
 ------------------
+
 Web crawlers are defined to retrieve comic information and store them into files. This can then be used to generated ebooks.
+
+These webcrawlers are supposed to be easy to write with a minimal amount of boilerplate code whilst trying to keep some flexibility.
+
+Under the hood, there is one class per webcrawler, each of them inherits, directly or not, from an abstract class `GenericComic` which handles all the common logic. Each webcrawler just need to provide specific information (`name` and `url`) and a way to get the comics after a given one (if any) which is done by implementing the `get_next_comic` generator.
+
+Other abstract classes, inheriting from `GenericComic` provide a convenient way to define `get_next_comic`. The most common is `GenericNavigableComic`, used for comics where next/previous strips are available using the relevant link.
+
+The whole project relies heavily on BeautifulSoup.
 
 Command-line interface
 ----------------------
 `comicbookmaker.py` takes multiple arguments.
  * `--comic` (or `-c`) can be used to tell which comic(s) is/are to be considered (defaults to all of them).
  * `--action` (or `-a`) specifies which actions are to be performed on these comics : update (default behavior), book, etc.
+
+
+See also
+--------
+[dosage](http://dosage.rocks/) is a project with similar purpose. It seems to be a very nice project but it doesn't handle ebooks generation.
+
+
+Contributing
+------------
+
+Feel free to open issues/open pull requests/ask questions/give comments.
+
+Here is the little to know before contributing :
+ - license is MIT
+ - all pep8 rules apply except for the length of the lines
+
 
 Comics supported
 ----------------
