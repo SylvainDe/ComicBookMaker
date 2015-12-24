@@ -42,7 +42,15 @@ class Xkcd(GenericComic):
 
 
 class GenericNavigableComic(GenericComic):
-    """Generic class for "navigable" comics : with first/next arrows."""
+    """Generic class for "navigable" comics : with first/next arrows.
+
+    The method `get_next_comic` methods is implemented in terms of new
+    more specialized methods to be implemented/overridden:
+        - get_first_comic_link
+        - get_next_comic_link
+        - get_comic_info
+        - get_url_from_link
+    """
 
     @classmethod
     def get_first_comic_link(cls):
@@ -78,6 +86,44 @@ class GenericNavigableComic(GenericComic):
                 comic['url'] = url
                 yield comic
             next_comic = cls.get_next_comic_link(soup)
+
+
+class GenericListableComic(GenericComic):
+    """Generic class for "listable" comics : with a list of comics (aka 'archive')
+
+    The method `get_next_comic` methods is implemented in terms of new
+    more specialized methods to be implemented/overridden:
+        - get_archive_elements
+        - get_url_from_archive_element
+        - get_comic_info
+    """
+
+    @classmethod
+    def get_archive_elements(cls):
+        raise NotImplementedError
+
+    @classmethod
+    def get_url_from_archive_element(cls, archive_elt):
+        raise NotImplementedError
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_element):
+        raise NotImplementedError
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        waiting_for_url = last_comic['url'] if last_comic else None
+        for archive_elt in cls.get_archive_elements():
+            url = cls.get_url_from_archive_element(archive_elt)
+            if waiting_for_url and waiting_for_url == url:
+                waiting_for_url = None
+            elif waiting_for_url is None:
+                soup = get_soup_at_url(url)
+                comic = cls.get_comic_info(soup, archive_elt)
+                if comic is not None:
+                    assert 'url' not in comic
+                    comic['url'] = url
+                    yield comic
 
 
 class ExtraFabulousComics(GenericNavigableComic):
@@ -547,38 +593,40 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
-class TheGentlemanArmchair(GenericComic):
+class TheGentlemanArmchair(GenericListableComic):
     """Class to retrieve The Gentleman Armchair comics."""
     name = 'gentlemanarmchair'
     long_name = 'The Gentleman Armchair'
     url = 'http://thegentlemansarmchair.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        waiting_for_url = last_comic['url'] if last_comic else None
-        archive_url = urljoin_wrapper(cls.url, 'archive')
+    def get_comic_info(cls, soup, tr):
+        date_td, content_td = tr.children
+        date_str = date_td.string
+        a_tag = content_td.find('a')
+        title = a_tag.string
+        day = string_to_date(date_str, "%b %d")
+        imgs = soup.find('div', id='comic').find_all('img')
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+    @classmethod
+    def get_url_from_archive_element(cls, tr):
+        _, content_td = tr.children
+        return content_td.find('a')['href']
+
+    @classmethod
+    def get_archive_elements(cls):
         # FIXME: archive is actually spread on multiple pages corresponding to the
         # different years. Default is to reach the one for the current year.
         # Proper solution would be to iterate over the different relevant years.
-        for tr in reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr')):
-            date_td, content_td = tr.children
-            a_tag = content_td.find('a')
-            url = a_tag['href']
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                title = a_tag.string
-                day = string_to_date(date_td.string, "%b %d")
-                soup = get_soup_at_url(url)
-                imgs = soup.find('div', id='comic').find_all('img')
-                yield {
-                    'url': url,
-                    'img': [i['src'] for i in imgs],
-                    'title': title,
-                    'month': day.month,
-                    'year': day.year,
-                    'day': day.day,
-                }
+        archive_url = urljoin_wrapper(cls.url, 'archive')
+        return reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr'))
 
 
 class MyExtraLife(GenericNavigableComic):
@@ -827,7 +875,7 @@ class AmazingSuperPowers(GenericComic):
                 }
 
 
-class ToonHole(GenericComic):
+class ToonHole(GenericListableComic):
     """Class to retrieve Toon Holes comics."""
     name = 'toonhole'
     long_name = 'Toon Hole'
@@ -849,24 +897,13 @@ class ToonHole(GenericComic):
         }
 
     @classmethod
-    def get_url_from_link(cls, link):
+    def get_url_from_archive_element(cls, link):
         return link['href']
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        waiting_for_url = last_comic['url'] if last_comic else None
+    def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive/')
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark')):
-            url = cls.get_url_from_link(link)
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                soup = get_soup_at_url(url)
-                comic = cls.get_comic_info(soup, link)
-                if comic is not None:
-                    assert 'url' not in comic
-                    comic['url'] = url
-                    yield comic
+        return reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark'))
 
 
 class Channelate(GenericComic):
@@ -1551,7 +1588,7 @@ class CompletelySeriousComics(GenericNavigableComic):
         }
 
 
-class PoorlyDrawnLines(GenericComic):
+class PoorlyDrawnLines(GenericListableComic):
     """Class to retrieve Poorly Drawn Lines comics."""
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
@@ -1567,24 +1604,13 @@ class PoorlyDrawnLines(GenericComic):
         }
 
     @classmethod
-    def get_url_from_link(cls, link):
+    def get_url_from_archive_element(cls, link):
         return link['href']
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        waiting_for_url = last_comic['url'] if last_comic else None
+    def get_archive_elements(cls):
         url_re = re.compile('^%s/comic/.' % cls.url)
-        for link in reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re)):
-            url = cls.get_url_from_link(link)
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                soup = get_soup_at_url(url)
-                comic = cls.get_comic_info(soup, link)
-                if comic is not None:
-                    assert 'url' not in comic
-                    comic['url'] = url
-                    yield comic
+        return reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re))
 
 
 class LoadingComics(GenericNavigableComic):
@@ -1676,7 +1702,7 @@ class DepressedAlien(GenericNavigableComic):
         }
 
 
-class ThingsInSquares(GenericComic):
+class ThingsInSquares(GenericListableComic):
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages
     name = 'squares'
@@ -1684,36 +1710,38 @@ class ThingsInSquares(GenericComic):
     url = 'http://www.thingsinsquares.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        waiting_for_url = last_comic['url'] if last_comic else None
+    def get_comic_info(cls, soup, tr):
+        _, td2, td3 = tr.find_all('td')
+        a = td2.find('a')
+        date_str = td3.string
+        day = string_to_date(date_str, "%m.%d.%y")
+        title = a.string
+        title2 = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')
+        description = desc['content'] if desc else ''
+        tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
+        imgs = soup.find('div', class_='entry-content').find_all('img')
+        return {
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'title': title,
+            'title2': title2,
+            'description': description,
+            'tags': tags,
+            'img': [i['src'] for i in imgs],
+            'alt': ' '.join(i['alt'] for i in imgs),
+        }
+
+    @classmethod
+    def get_url_from_archive_element(cls, tr):
+        _, td2, td3 = tr.find_all('td')
+        return td2.find('a')['href']
+
+    @classmethod
+    def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive')
-        for tr in reversed(get_soup_at_url(archive_url).find('tbody').find_all('tr')):
-            _, td2, td3 = tr.find_all('td')
-            a = td2.find('a')
-            url = a['href']
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                day = string_to_date(td3.string, "%m.%d.%y")
-                soup = get_soup_at_url(url)
-                title = a.string
-                title2 = soup.find('meta', property='og:title')['content']
-                desc = soup.find('meta', property='og:description')
-                description = desc['content'] if desc else ''
-                tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
-                imgs = soup.find('div', class_='entry-content').find_all('img')
-                yield {
-                    'url': url,
-                    'day': day.day,
-                    'month': day.month,
-                    'year': day.year,
-                    'title': title,
-                    'title2': title2,
-                    'description': description,
-                    'tags': tags,
-                    'img': [i['src'] for i in imgs],
-                    'alt': ' '.join(i['alt'] for i in imgs),
-                }
+        return reversed(get_soup_at_url(archive_url).find('tbody').find_all('tr'))
 
 
 class HappleTea(GenericNavigableComic):
@@ -2313,7 +2341,7 @@ class AccordingToDevin(GenericTumblr):
         return "http://accordingtodevin.tumblr.com/post/40112722337"
 
 
-class HorovitzComics(GenericComic):
+class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
     img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
@@ -2338,24 +2366,13 @@ class HorovitzComics(GenericComic):
         }
 
     @classmethod
-    def get_url_from_link(cls, link):
+    def get_url_from_archive_element(cls, link):
         return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_archive_elements(cls):
         archive = 'http://www.horovitzcomics.com/comics/archive/'
-        waiting_for_url = last_comic['url'] if last_comic else None
-        for link in reversed(get_soup_at_url(archive).find_all('a', href=cls.link_re)):
-            url = cls.get_url_from_link(link)
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                soup = get_soup_at_url(url)
-                comic = cls.get_comic_info(soup, link)
-                if comic is not None:
-                    assert 'url' not in comic
-                    comic['url'] = url
-                    yield comic
+        return reversed(get_soup_at_url(archive).find_all('a', href=cls.link_re))
 
 
 class HorovitzNew(HorovitzComics):
@@ -2518,33 +2535,33 @@ class CalvinAndHobbesGoComic(GenericGoComic):
     url = 'http://www.gocomics.com/calvinandhobbes'
 
 
-class TapasticComic(GenericComic):
+class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        waiting_for_url = last_comic['url'] if last_comic else None
+    def get_comic_info(cls, soup, archive_element):
+        date_str = archive_element['publishDate'].split()[0]
+        year, month, day = [int(e) for e in date_str.split('-')]
+        imgs = soup.find_all('img', class_='art-image')
+        return {
+            'day': day,
+            'year': year,
+            'month': month,
+            'img': [i['src'] for i in imgs],
+            'title': archive_element['title'],
+        }
+
+    @classmethod
+    def get_url_from_archive_element(cls, archive_element):
+        return 'http://tapastic.com/episode/' + str(archive_element['id'])
+
+    @classmethod
+    def get_archive_elements(cls):
         pref, suff = 'episodeList : ', ','
         # Information is stored in the javascript part
         # I don't know the clean way to get it so this is the ugly way.
         string = [s[len(pref):-len(suff)] for s in (s.decode('utf-8').strip() for s in urlopen_wrapper(cls.url).readlines()) if s.startswith(pref) and s.endswith(suff)][0]
-        for r in json.loads(string):
-            url = 'http://tapastic.com/episode/' + str(r['id'])
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
-                date = r['publishDate'].split()[0]
-                year, month, day = [int(e) for e in date.split('-')]
-                soup = get_soup_at_url(url)
-                imgs = soup.find_all('img', class_='art-image')
-                yield {
-                    'url': url,
-                    'day': day,
-                    'year': year,
-                    'month': month,
-                    'img': [i['src'] for i in imgs],
-                    'title': r['title'],
-                }
+        return json.loads(string)
 
 
 class VegetablesForDessert(TapasticComic):
