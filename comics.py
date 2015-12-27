@@ -1547,6 +1547,7 @@ class DiscoBleach(GenericComic):
 class TubeyToons(GenericComic):
     """Class to retrieve TubeyToons comics."""
     # Also on http://tapastic.com/series/Tubey-Toons
+    # Also on http://tubeytoons.tumblr.com/
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
@@ -2607,6 +2608,7 @@ class SandersenTapastic(TapasticComic):
 class TubeyToonsTapastic(TapasticComic):
     """Class to retrieve TubeyToons comics."""
     # From tapastic, not http://tubeytoons.com
+    # Also on http://tubeytoons.tumblr.com/
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
