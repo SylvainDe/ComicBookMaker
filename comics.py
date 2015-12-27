@@ -1334,48 +1334,45 @@ class InfiniteMonkeyBusiness(GenericNavigableComic):
         }
 
 
-class Wondermark(GenericComic):
+class Wondermark(GenericListableComic):
     """Class to retrieve the Wondermark comics."""
     name = 'wondermark'
     long_name = 'Wondermark'
     url = 'http://wondermark.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_url_from_archive_element(cls, link):
+        return link['href']
+
+    @classmethod
+    def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive/')
-        add = not last_comic
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark')):
-            comic_url = link['href']
-            if add:
-                soup = get_soup_at_url(comic_url)
-                day = string_to_date(
-                    remove_st_nd_rd_th_from_date(
-                        soup.find('div', class_='postdate').find('em').string),
-                    "%B %d, %Y")
-                div = soup.find('div', id='comic')
-                if div:
-                    img = div.find('img')
-                    img_src = [img['src']]
-                    alt = img['alt']
-                    assert alt == img['title']
-                    title = soup.find('meta', property='og:title')['content']
-                else:
-                    img_src = []
-                    alt = ''
-                    title = ''
-                yield {
-                    'url': comic_url,
-                    'month': day.month,
-                    'year': day.year,
-                    'day': day.day,
-                    'img': img_src,
-                    'title': title,
-                    'alt': alt,
-                    'tags': ' '.join(t.string for t in soup.find('div', class_='postmeta').find_all('a', rel='tag')),
-                }
-            else:
-                assert not add and last_comic
-                add = (last_comic['url'] == comic_url)
+        return reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark'))
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        date_str = soup.find('div', class_='postdate').find('em').string
+        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
+        div = soup.find('div', id='comic')
+        if div:
+            img = div.find('img')
+            img_src = [img['src']]
+            alt = img['alt']
+            assert alt == img['title']
+            title = soup.find('meta', property='og:title')['content']
+        else:
+            img_src = []
+            alt = ''
+            title = ''
+        return {
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': img_src,
+            'title': title,
+            'alt': alt,
+            'tags': ' '.join(t.string for t in soup.find('div', class_='postmeta').find_all('a', rel='tag')),
+        }
 
 
 class WarehouseComic(GenericNavigableComic):
