@@ -700,35 +700,38 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         }
 
 
-class PerryBibleFellowship(GenericComic):
+class PerryBibleFellowship(GenericListableComic):
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
     url = 'http://pbfcomics.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        last_num = last_comic['num'] if last_comic else 0
-
+    def get_archive_elements(cls):
         comic_link_re = re.compile('^/[0-9]*/$')
-        comic_img_re = re.compile('^/archive_b/PBF.*')
+        return reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re))
 
-        for link in reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re)):
-            num = int(link['name'])
-            if num > last_num:
-                href = link['href']
-                assert href == '/%d/' % num
-                url = urljoin_wrapper(cls.url, href)
-                name = link.string
-                image = get_soup_at_url(url).find('img', src=comic_img_re)
-                assert image['alt'] == name
-                yield {
-                    'url': url,
-                    'num': num,
-                    'name': name,
-                    'img': [urljoin_wrapper(url, image['src'])],
-                    'prefix': '%d-' % num
-                }
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_archive_element(link)
+        comic_img_re = re.compile('^/archive_b/PBF.*')
+        name = link.string
+        num = int(link['name'])
+        href = link['href']
+        assert href == '/%d/' % num
+        imgs = soup.find_all('img', src=comic_img_re)
+        assert len(imgs) == 1
+        assert imgs[0]['alt'] == name
+        return {
+            'num': num,
+            'name': name,
+            'img': [urljoin_wrapper(url, i['src']) for i in imgs],
+            'prefix': '%d-' % num,
+        }
 
 
 class Mercworks(GenericNavigableComic):
@@ -766,40 +769,41 @@ class Mercworks(GenericNavigableComic):
         }
 
 
-class BerkeleyMews(GenericComic):
+class BerkeleyMews(GenericListableComic):
     """Class to retrieve Berkeley Mews comics."""
     name = 'berkeley'
     long_name = 'Berkeley Mews'
     url = 'http://www.berkeleymews.com'
+    comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % url)
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, "?page_id=2")
-        last_num = last_comic['num'] if last_comic else 0
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_num_re))
 
-        comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % cls.url)
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
         comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_num_re)):
-            comic_url = link['href']
-            num = int(comic_num_re.match(comic_url).groups()[0])
-            if num > last_num:
-                img = get_soup_at_url(comic_url).find(
-                    'div', id='comic').find('img')
-                img_url = img['src']
-                year, month, day = [
-                    int(s) for s in comic_date_re.match(img_url).groups()]
-                title2 = img.get('title')
-                assert title2 == img.get('alt')
-                yield {
-                    'url': comic_url,
-                    'num': num,
-                    'title': link.string,
-                    'title2': title2,
-                    'img': [img_url],
-                    'year': year,
-                    'month': month,
-                    'day': day,
-                }
+        url = cls.get_url_from_archive_element(link)
+        num = int(cls.comic_num_re.match(url).groups()[0])
+        img = soup.find('div', id='comic').find('img')
+        assert all(i['alt'] == i['title'] for i in [img])
+        title2 = img['title']
+        img_url = img['src']
+        year, month, day = [int(s) for s in comic_date_re.match(img_url).groups()]
+        return {
+            'num': num,
+            'title': link.string,
+            'title2': title2,
+            'img': [img_url],
+            'year': year,
+            'month': month,
+            'day': day,
+        }
 
 
 class GenericBouletCorp(GenericNavigableComic):
