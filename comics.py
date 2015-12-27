@@ -124,6 +124,8 @@ class GenericListableComic(GenericComic):
                     assert 'url' not in comic
                     comic['url'] = url
                     yield comic
+        if waiting_for_url is not None:
+            print("Did not find %s : there might be a problem", waiting_for_url)
 
 
 class ExtraFabulousComics(GenericNavigableComic):
