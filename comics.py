@@ -2381,7 +2381,7 @@ class HorovitzNew(HorovitzComics):
 class HorovitzClassic(HorovitzComics):
     name = 'horovitzclassic'
     long_name = 'Horovitz Classic'
-    link_re = re.compile('^/comics/classics/([0-9]+)$')
+    link_re = re.compile('^/comics/classic/([0-9]+)$')
 
 
 class GenericGoComic(GenericNavigableComic):
