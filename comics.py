@@ -912,49 +912,48 @@ class ToonHole(GenericListableComic):
         return reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark'))
 
 
-class Channelate(GenericComic):
+class Channelate(GenericListableComic):
     """Class to retrieve Channelate comics."""
     name = 'channelate'
     long_name = 'Channelate'
     url = 'http://www.channelate.com'
+    link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*$' % url)
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*$' % cls.url)
+    def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'note-to-self-archive/')
-        prev_date = get_date_for_comic(
-            last_comic) if last_comic else date(2000, 1, 1)
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.link_re, rel='bookmark'))
 
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re, rel='bookmark')):
-            comic_url = link['href']
-            title = link.string
-            year, month, day = [int(s)
-                                for s in link_re.match(comic_url).groups()]
-            if prev_date < date(year, month, day):
-                soup = get_soup_at_url(comic_url)
-                img = soup.find('div', id='comic-1').find('img')
-                assert title == soup.find(
-                    'meta', property='og:title')['content']
-                img_urls = []
-                if img:
-                    # almost == title but not quite
-                    assert img['alt'] == img['title']
-                    img_urls.append(img['src'])
-                extra_url = None
-                extra_div = soup.find('div', id='extrapanelbutton')
-                if extra_div:
-                    extra_url = extra_div.find('a')['href']
-                    img_urls.append(
-                        get_soup_at_url(extra_url).find('img', class_='extrapanelimage')['src'])
-                yield {
-                    'url': comic_url,
-                    'url_extra': extra_url,
-                    'title': title,
-                    'day': day,
-                    'month': month,
-                    'year': year,
-                    'img': [img['src']] if img else [],
-                }
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_archive_element(link)
+        title = link.string
+        year, month, day = [int(s) for s in cls.link_re.match(url).groups()]
+        img = soup.find('div', id='comic-1').find('img')
+        assert title == soup.find('meta', property='og:title')['content']
+        img_urls = []
+        if img:
+            # almost == title but not quite
+            assert img['alt'] == img['title']
+            img_urls.append(img['src'])
+        extra_url = None
+        extra_div = soup.find('div', id='extrapanelbutton')
+        if extra_div:
+            extra_url = extra_div.find('a')['href']
+            extra_soup = get_soup_at_url(extra_url)
+            img_urls.append(extra_soup.find('img', class_='extrapanelimage')['src'])
+        return {
+            'url_extra': extra_url,
+            'title': title,
+            'day': day,
+            'month': month,
+            'year': year,
+            'img': [img['src']] if img else [],
+        }
 
 
 class CyanideAndHappiness(GenericNavigableComic):
