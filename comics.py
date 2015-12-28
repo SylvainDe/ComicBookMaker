@@ -912,29 +912,27 @@ class ToonHole(GenericListableComic):
         return reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark'))
 
 
-class Channelate(GenericListableComic):
+class Channelate(GenericNavigableComic):
     """Class to retrieve Channelate comics."""
     name = 'channelate'
     long_name = 'Channelate'
     url = 'http://www.channelate.com'
-    link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*$' % url)
 
     @classmethod
-    def get_archive_elements(cls):
-        archive_url = urljoin_wrapper(cls.url, 'note-to-self-archive/')
-        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.link_re, rel='bookmark'))
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('div', class_="nav-first").find('a')
 
     @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('div', class_="nav-next").find('a')
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        url = cls.get_url_from_archive_element(link)
-        title = link.string
-        year, month, day = [int(s) for s in cls.link_re.match(url).groups()]
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%Y/%m/%d')
+        title = soup.find('meta', property='og:title')['content']
         img = soup.find('div', id='comic-1').find('img')
-        assert title == soup.find('meta', property='og:title')['content']
         img_urls = []
         if img:
             # almost == title but not quite
@@ -949,9 +947,9 @@ class Channelate(GenericListableComic):
         return {
             'url_extra': extra_url,
             'title': title,
-            'day': day,
-            'month': month,
-            'year': year,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
             'img': [img['src']] if img else [],
         }
 
