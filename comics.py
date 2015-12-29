@@ -849,7 +849,7 @@ class BouletCorpEn(GenericBouletCorp):
     url = 'http://english.bouletcorp.com'
 
 
-class AmazingSuperPowers(GenericComic):
+class AmazingSuperPowers(GenericListableComic):
     """Class to retrieve Amazing Super Powers comics."""
     name = 'asp'
     long_name = 'Amazing Super Powers'
@@ -857,28 +857,30 @@ class AmazingSuperPowers(GenericComic):
     # images are not retrieved properly, I guess the user-agent it not ok
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_archive_elements(cls):
         link_re = re.compile('^%s/([0-9]*)/([0-9]*)/.*$' % cls.url)
-        img_re = re.compile('^%s/comics/.*$' % cls.url)
         archive_url = urljoin_wrapper(cls.url, 'category/comics/')
-        last_date = get_date_for_comic(
-            last_comic) if last_comic else date(2000, 1, 1)
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=link_re)):
-            comic_date = string_to_date(link.parent.previous_sibling.string, "%b %d, %Y")
-            if comic_date > last_date:
-                title = link.string
-                comic_url = link['href']
-                imgs = get_soup_at_url(comic_url).find_all('img', src=img_re)
-                title = ' '.join(img.get('title') for img in imgs)
-                assert ' '.join(img.get('alt') for img in imgs) == title
-                yield {
-                    'url': comic_url,
-                    'title': title,
-                    'img': [img.get('src') for img in imgs],
-                    'day': comic_date.day,
-                    'month': comic_date.month,
-                    'year': comic_date.year
-                }
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=link_re))
+
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        img_re = re.compile('^%s/comics/.*$' % cls.url)
+        date_str = link.parent.previous_sibling.string
+        comic_date = string_to_date(date_str, "%b %d, %Y")
+        imgs = soup.find_all('img', src=img_re)
+        title = ' '.join(img.get('title') for img in imgs)
+        assert all(i['alt'] == i['title'] for i in imgs)
+        return {
+            'title': title,
+            'img': [img.get('src') for img in imgs],
+            'day': comic_date.day,
+            'month': comic_date.month,
+            'year': comic_date.year
+        }
 
 
 class ToonHole(GenericListableComic):
