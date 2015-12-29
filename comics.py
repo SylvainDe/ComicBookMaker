@@ -849,34 +849,31 @@ class BouletCorpEn(GenericBouletCorp):
     url = 'http://english.bouletcorp.com'
 
 
-class AmazingSuperPowers(GenericListableComic):
+class AmazingSuperPowers(GenericNavigableComic):
     """Class to retrieve Amazing Super Powers comics."""
     name = 'asp'
     long_name = 'Amazing Super Powers'
     url = 'http://www.amazingsuperpowers.com'
-    # images are not retrieved properly, I guess the user-agent it not ok
 
     @classmethod
-    def get_archive_elements(cls):
-        link_re = re.compile('^%s/([0-9]*)/([0-9]*)/.*$' % cls.url)
-        archive_url = urljoin_wrapper(cls.url, 'category/comics/')
-        return reversed(get_soup_at_url(archive_url).find_all('a', href=link_re))
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
 
     @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='navi navi-next')
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        img_re = re.compile('^%s/comics/.*$' % cls.url)
-        date_str = link.parent.previous_sibling.string
-        comic_date = string_to_date(date_str, "%b %d, %Y")
-        imgs = soup.find_all('img', src=img_re)
-        title = ' '.join(img.get('title') for img in imgs)
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        comic_date = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', id='comic').find_all('img')
+        title = ' '.join(i['title'] for i in imgs)
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
             'title': title,
-            'img': [img.get('src') for img in imgs],
+            'img': [img['src'] for img in imgs],
             'day': comic_date.day,
             'month': comic_date.month,
             'year': comic_date.year
