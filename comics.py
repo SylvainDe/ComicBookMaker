@@ -2182,6 +2182,49 @@ class BuniComic(GenericNavigableComic):
         }
 
 
+class GenericCommitStrip(GenericNavigableComic):
+    """Generic class to retrieve Commit Strips in different languages."""
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        desc = soup.find('meta', property='og:description')['content']
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find('div', class_='entry-content').find_all('img')
+        title2 = ' '.join(i.get('title', '') for i in imgs)
+        return {
+            'title': title,
+            'title2': title2,
+            'description': desc,
+            'img': [urljoin_wrapper(cls.url, convert_iri_to_plain_ascii_uri(i['src'])) for i in imgs],
+        }
+
+
+class CommitStripFr(GenericCommitStrip):
+    """Class to retrieve Commit Strips in French."""
+    name = 'commit_fr'
+    long_name = 'Commit Strip (Fr)'
+    url = 'http://www.commitstrip.com/fr'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.commitstrip.com/fr/2012/02/22/interview/'}
+
+
+class CommitStripEn(GenericCommitStrip):
+    """Class to retrieve Commit Strips in English."""
+    name = 'commit_en'
+    long_name = 'Commit Strip (En)'
+    url = 'http://www.commitstrip.com/en'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.commitstrip.com/en/2012/02/22/interview/'}
+
+
 class UnearthedComics(GenericNavigableComic):
     """Class to retrieve Unearthed comics."""
     # Also on http://tapastic.com/series/UnearthedComics

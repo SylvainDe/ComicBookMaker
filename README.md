@@ -66,6 +66,8 @@ Comics supported
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
+ * [Commit Strip (En)](http://www.commitstrip.com/en)
+ * [Commit Strip (Fr)](http://www.commitstrip.com/fr)
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
  * [Cyanide and Happiness](http://explosm.net)
