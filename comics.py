@@ -1056,37 +1056,36 @@ class DinosaurComics(GenericListableComic):
         }
 
 
-class ButterSafe(GenericComic):
+class ButterSafe(GenericListableComic):
     """Class to retrieve Butter Safe comics."""
     name = 'butter'
     long_name = 'ButterSafe'
     url = 'http://buttersafe.com'
+    comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % url)
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_archive_elements(cls):
         archive_url = '%s/archive/' % cls.url
-        comic_link_re = re.compile(
-            '^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % cls.url)
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re))
 
-        prev_date = get_date_for_comic(
-            last_comic) if last_comic else date(2006, 1, 1)
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
 
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)):
-            url = link['href']
-            title = link.string
-            year, month, day = [int(s)
-                                for s in comic_link_re.match(url).groups()]
-            if prev_date < date(year, month, day):
-                img = get_soup_at_url(url).find('div', id='comic').find('img')
-                assert img['alt'] == title
-                yield {
-                    'title': title,
-                    'day': day,
-                    'month': month,
-                    'year': year,
-                    'url': url,
-                    'img': [img['src']],
-                }
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_archive_element(link)
+        title = link.string
+        year, month, day = [int(s) for s in cls.comic_link_re.match(url).groups()]
+        img = soup.find('div', id='comic').find('img')
+        assert img['alt'] == title
+        return {
+            'title': title,
+            'day': day,
+            'month': month,
+            'year': year,
+            'img': [img['src']],
+        }
 
 
 class CalvinAndHobbes(GenericComic):
