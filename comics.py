@@ -1020,39 +1020,41 @@ class MrLovenstein(GenericComic):
             }
 
 
-class DinosaurComics(GenericComic):
+class DinosaurComics(GenericListableComic):
     """Class to retrieve Dinosaur Comics comics."""
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
     url = 'http://www.qwantz.com'
+    comic_link_re = re.compile('^%s/index.php\\?comic=([0-9]*)$' % url)
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        last_num = last_comic['num'] if last_comic else 0
-        comic_link_re = re.compile('^%s/index.php\\?comic=([0-9]*)$' % cls.url)
-        comic_img_re = re.compile('^%s/comics/' % cls.url)
+    def get_archive_elements(cls):
         archive_url = '%s/archive.php' % cls.url
         # first link is random -> skip it
-        for link in reversed(get_soup_at_url(archive_url).find_all('a', href=comic_link_re)[1:]):
-            url = link['href']
-            num = int(comic_link_re.match(url).groups()[0])
-            if num > last_num:
-                text = link.next_sibling.string
-                day = string_to_date(
-                    remove_st_nd_rd_th_from_date(link.string),
-                    "%B %d, %Y")
-                soup = get_soup_at_url(url)
-                img = soup.find('img', src=comic_img_re)
-                yield {
-                    'url': url,
-                    'month': day.month,
-                    'year': day.year,
-                    'day': day.day,
-                    'img': [img.get('src')],
-                    'title': img.get('title'),
-                    'text': text,
-                    'num': num,
-                }
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re)[1:])
+
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_archive_element(link)
+        num = int(cls.comic_link_re.match(url).groups()[0])
+        date_str = link.string
+        text = link.next_sibling.string
+        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
+        comic_img_re = re.compile('^%s/comics/' % cls.url)
+        img = soup.find('img', src=comic_img_re)
+        return {
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [img.get('src')],
+            'title': img.get('title'),
+            'text': text,
+            'num': num,
+        }
 
 
 class ButterSafe(GenericComic):
