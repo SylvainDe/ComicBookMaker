@@ -932,25 +932,22 @@ class Channelate(GenericNavigableComic):
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, '%Y/%m/%d')
         title = soup.find('meta', property='og:title')['content']
-        img = soup.find('div', id='comic-1').find('img')
-        img_urls = []
-        if img:
-            # almost == title but not quite
-            assert img['alt'] == img['title']
-            img_urls.append(img['src'])
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['alt'] == i['title'] for i in imgs)
         extra_url = None
         extra_div = soup.find('div', id='extrapanelbutton')
         if extra_div:
             extra_url = extra_div.find('a')['href']
             extra_soup = get_soup_at_url(extra_url)
-            img_urls.append(extra_soup.find('img', class_='extrapanelimage')['src'])
+            extra_imgs = extra_soup.find_all('img', class_='extrapanelimage')
+            imgs.extend(extra_imgs)
         return {
             'url_extra': extra_url,
             'title': title,
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'img': [img['src']] if img else [],
+            'img': [i['src'] for i in imgs],
         }
 
 
