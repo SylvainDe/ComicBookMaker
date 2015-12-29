@@ -873,6 +873,7 @@ class AmazingSuperPowers(GenericNavigableComic):
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
             'title': title,
+            'author': author,
             'img': [img['src'] for img in imgs],
             'day': comic_date.day,
             'month': comic_date.month,
