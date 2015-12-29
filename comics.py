@@ -944,6 +944,7 @@ class Channelate(GenericNavigableComic):
         return {
             'url_extra': extra_url,
             'title': title,
+            'author': author,
             'month': day.month,
             'year': day.year,
             'day': day.day,
