@@ -1147,34 +1147,35 @@ class AbstruseGoose(GenericComic):
                 }
 
 
-class PhDComics(GenericComic):
+class PhDComics(GenericListableComic):
     """Class to retrieve PHD Comics."""
     name = 'phd'
     long_name = 'PhD Comics'
     url = 'http://phdcomics.com'
+    comic_url_num_re = re.compile('^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
 
     @classmethod
-    def get_next_comic(cls, last_comic):
+    def get_archive_elements(cls):
         archive_url = '%s/comics/archive_list.php' % cls.url
-        comic_url_num_re = re.compile(
-            '^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
+        return get_soup_at_url(archive_url).find_all('a', href=cls.comic_url_num_re)
 
-        last_num = last_comic['num'] if last_comic else 0
+    @classmethod
+    def get_url_from_archive_element(cls, link):
+        return link['href']
 
-        for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_num_re):
-            comic_url = link['href']
-            num = int(comic_url_num_re.match(comic_url).groups()[0])
-            if num > last_num:
-                month, day, year = [int(s) for s in link.string.split('/')]
-                yield {
-                    'url': comic_url,
-                    'num': num,
-                    'year': year,
-                    'month': month,
-                    'day': day if day else 1,
-                    'img': [get_soup_at_url(comic_url).find('img', id='comic')['src']],
-                    'title': link.parent.parent.next_sibling.string
-                }
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_archive_element(link)
+        num = int(cls.comic_url_num_re.match(url).groups()[0])
+        month, day, year = [int(s) for s in link.string.split('/')]
+        return {
+            'num': num,
+            'year': year,
+            'month': month,
+            'day': day if day else 1,
+            'img': [soup.find('img', id='comic')['src']],
+            'title': link.parent.parent.next_sibling.string
+        }
 
 
 class Octopuns(GenericNavigableComic):
