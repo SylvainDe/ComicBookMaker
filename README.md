@@ -78,6 +78,7 @@ Comics supported
  * [Disco Bleach](http://discobleach.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
+ * [Safely Endangered](http://www.safelyendangered.com)
  * [My Extra Life](http://www.myextralife.com)
  * [Fat Awesome](http://fatawesome.com/comics)
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)

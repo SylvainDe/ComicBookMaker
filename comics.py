@@ -1405,6 +1405,38 @@ class WarehouseComic(GenericNavigableComic):
         }
 
 
+class SafelyEndangered(GenericNavigableComic):
+    """Class to retrieve Safely Endangered comics."""
+    name = 'endangered'
+    long_name = 'Safely Endangered'
+    url = 'http://www.safelyendangered.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.safelyendangered.com/comic/ignored/'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%B %d, %Y')
+        imgs = soup.find('div', id='comic').find_all('img')
+        alt = imgs[0]['alt']
+        assert all(i['alt'] == i['title'] for i in imgs)
+        return {
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'alt': alt,
+        }
+
+
 class PicturesInBoxes(GenericNavigableComic):
     """Class to retrieve Pictures In Boxes comics."""
     # Also on http://picturesinboxescomic.tumblr.com/
