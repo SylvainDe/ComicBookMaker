@@ -1405,34 +1405,38 @@ class WarehouseComic(GenericNavigableComic):
         }
 
 
-class PicturesInBoxes(GenericListableComic):
+class PicturesInBoxes(GenericNavigableComic):
     """Class to retrieve Pictures In Boxes comics."""
+    # Also on http://picturesinboxescomic.tumblr.com/
     name = 'picturesinboxes'
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
-    url_date_re = re.compile('.*/([0-9]+)/([0-9]+)/([0-9]+)')
 
     @classmethod
-    def get_archive_elements(cls):
-        return reversed(get_soup_at_url(cls.url).find('select', attrs={'name': 'archive-dropdown'}).find_all('option', value=cls.url_date_re))
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.picturesinboxes.com/2013/10/26/tetris/'}
 
     @classmethod
-    def get_url_from_archive_element(cls, com):
-        return com['value']
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='navi navi-next')
 
     @classmethod
-    def get_comic_info(cls, soup, com):
-       url = cls.get_url_from_archive_element(com)
-       year, month, day = [int(s) for s in cls.url_date_re.match(url).groups()]
-       title = com.string.strip()
-       imgs = soup.find('div', id='comic-1').find_all('img')
-       return {
-           'day': day,
-           'month': month,
-           'year': year,
-           'img': [i['src'] for i in imgs],
-           'title': title,
-       }
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%B %d, %Y')
+        imgs = soup.find('div', class_='comicpane').find_all('img')
+        assert imgs
+        assert all(i['title'] == i['alt'] == title for i in imgs)
+        return {
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'author': author,
+        }
 
 
 class Penmen(GenericNavigableComic):
