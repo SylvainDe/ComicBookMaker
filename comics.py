@@ -575,7 +575,7 @@ class ThreeWordPhrase(GenericNavigableComic):
     @classmethod
     def get_next_comic_link(cls, last_soup):
         next_ = last_soup.find('img', src='/nextlink.gif').parent
-        return None if next_.get('href', None) is None else next_
+        return None if next_.get('href') is None else next_
 
     @classmethod
     def get_url_from_link(cls, link):
@@ -965,7 +965,7 @@ class CyanideAndHappiness(GenericNavigableComic):
     @classmethod
     def get_next_comic_link(cls, last_soup):
         next_ = last_soup.find('a', class_='next-comic')
-        return None if next_.get('href', None) is None else next_
+        return None if next_.get('href') is None else next_
 
     @classmethod
     def get_url_from_link(cls, link):
@@ -1192,7 +1192,7 @@ class Octopuns(GenericNavigableComic):
     @classmethod
     def get_next_comic_link(cls, last_soup):
         next_ = last_soup.find('img', src=re.compile('.*/Next.png')).parent
-        return None if next_.get('href', None) is None else next_
+        return None if next_.get('href') is None else next_
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2317,7 +2317,7 @@ class MakeItStoopid(GenericNavigableComic):
         nav1, nav2 = cnav[:5], cnav[5:]
         assert nav1 == nav2
         # begin, prev, archive, next_, end = nav1
-        return [None if i.get('href', None) is None else i for i in nav1]
+        return [None if i.get('href') is None else i for i in nav1]
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2426,12 +2426,14 @@ class HorovitzComics(GenericListableComic):
 
 
 class HorovitzNew(HorovitzComics):
+    """Class to retrieve Horovitz new comics."""
     name = 'horovitznew'
     long_name = 'Horovitz New'
     link_re = re.compile('^/comics/new/([0-9]+)$')
 
 
 class HorovitzClassic(HorovitzComics):
+    """Class to retrieve Horovitz classic comics."""
     name = 'horovitzclassic'
     long_name = 'Horovitz Classic'
     link_re = re.compile('^/comics/classic/([0-9]+)$')
