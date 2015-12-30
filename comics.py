@@ -1497,37 +1497,40 @@ class TheDoghouseDiaries(GenericNavigableComic):
         }
 
 
-class InvisibleBread(GenericComic):
+class InvisibleBread(GenericListableComic):
     """Class to retrieve Invisible Bread comics."""
     name = 'invisiblebread'
     long_name = 'Invisible Bread'
     url = 'http://invisiblebread.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        last_date = get_date_for_comic(
-            last_comic) if last_comic else date(2000, 1, 1)
+    def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, '/archives/')
+        return reversed(get_soup_at_url(archive_url).find_all('td', class_='archive-title'))
+
+    @classmethod
+    def get_url_from_archive_element(cls, td):
+        return td.find('a')['href']
+
+    @classmethod
+    def get_comic_info(cls, soup, td):
+        url = cls.get_url_from_archive_element(td)
+        title = td.find('a').string
+        month_and_day = td.previous_sibling.string
         link_re = re.compile('^%s/([0-9]+)/' % cls.url)
-        for l in reversed(get_soup_at_url(urljoin_wrapper(cls.url, '/archives/')).find_all('td', class_='archive-title')):
-            a = l.find('a')
-            title = a.string
-            url = a['href']
-            month_and_day = l.previous_sibling.string
-            year = link_re.match(url).groups()[0]
-            date_com = string_to_date(month_and_day + ' ' + year, '%b %d %Y')
-            if date_com > last_date:
-                soup = get_soup_at_url(url)
-                imgs = [soup.find('div', id='comic').find('img')]
-                assert len(imgs) == 1
-                assert all(i['title'] == i['alt'] == title for i in imgs)
-                yield {
-                    'url': url,
-                    'month': date_com.month,
-                    'year': date_com.year,
-                    'day': date_com.day,
-                    'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-                    'title': title,
-                }
+        year = link_re.match(url).groups()[0]
+        date_str = month_and_day + ' ' + year
+        day = string_to_date(date_str, '%b %d %Y')
+        imgs = [soup.find('div', id='comic').find('img')]
+        assert len(imgs) == 1
+        assert all(i['title'] == i['alt'] == title for i in imgs)
+        return {
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'title': title,
+        }
 
 
 class DiscoBleach(GenericComic):
