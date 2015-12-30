@@ -1405,35 +1405,34 @@ class WarehouseComic(GenericNavigableComic):
         }
 
 
-class PicturesInBoxes(GenericComic):
+class PicturesInBoxes(GenericListableComic):
     """Class to retrieve Pictures In Boxes comics."""
     name = 'picturesinboxes'
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
+    url_date_re = re.compile('.*/([0-9]+)/([0-9]+)/([0-9]+)')
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        url_date_re = re.compile('.*/([0-9]+)/([0-9]+)/([0-9]+)')
-        last_date = get_date_for_comic(
-            last_comic) if last_comic else date(2000, 1, 1)
-        for com in reversed(get_soup_at_url(cls.url).find('select', attrs={'name': 'archive-dropdown'}).find_all('option')):
-            comic_url = com['value']
-            if comic_url:
-                year, month, day = [int(s)
-                                    for s in url_date_re.match(comic_url).groups()]
-                comic_date = date(year, month, day)
-                if comic_date > last_date:
-                    title = com.string.strip()
-                    imgs = get_soup_at_url(comic_url).find(
-                        'div', id='comic-1').find_all('img')
-                    yield {
-                        'url': comic_url,
-                        'day': day,
-                        'month': month,
-                        'year': year,
-                        'img': [i['src'] for i in imgs],
-                        'title': title,
-                    }
+    def get_archive_elements(cls):
+        return reversed(get_soup_at_url(cls.url).find('select', attrs={'name': 'archive-dropdown'}).find_all('option', value=cls.url_date_re))
+
+    @classmethod
+    def get_url_from_archive_element(cls, com):
+        return com['value']
+
+    @classmethod
+    def get_comic_info(cls, soup, com):
+       url = cls.get_url_from_archive_element(com)
+       year, month, day = [int(s) for s in cls.url_date_re.match(url).groups()]
+       title = com.string.strip()
+       imgs = soup.find('div', id='comic-1').find_all('img')
+       return {
+           'day': day,
+           'month': month,
+           'year': year,
+           'img': [i['src'] for i in imgs],
+           'title': title,
+       }
 
 
 class Penmen(GenericNavigableComic):
