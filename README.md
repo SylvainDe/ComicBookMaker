@@ -86,6 +86,7 @@ Comics supported
  * [Garfield](http://garfield.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
+ * [A Ham A Day](http://www.ahammaday.com)
  * [Happle Tea](http://www.happletea.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)

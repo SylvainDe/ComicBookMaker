@@ -171,7 +171,7 @@ class GenericLeMondeBlog(GenericNavigableComic):
             prev_comic = cls.get_prev_comic_link(get_soup_at_url(url))
             print(url)
             while prev_comic:
-                url = prev_comic['href']
+                url = cls.get_url_from_link(prev_comic)
                 print(url)
                 soup = get_soup_at_url(url)
                 prev_comic = cls.get_prev_comic_link(soup)
@@ -1975,11 +1975,11 @@ class ThorsThundershack(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('meta', attrs={'name': 'description'})["content"]
         description = soup.find('div', itemprop='articleBody').text
-        date_str = soup.find('time', itemprop='datePublished')["datetime"]
         author = soup.find('span', itemprop='author copyrightHolder').string
         imgs = soup.find_all('img', itemprop='image')
         assert all(i['title'] == i['alt'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
+        date_str = soup.find('time', itemprop='datePublished')["datetime"]
         day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
         return {
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
@@ -2334,6 +2334,45 @@ class PainTrainComic(GenericNavigableComic):
             'day': day.day,
             'alt': alt,
             'title': title,
+        }
+
+
+class AHamADay(GenericNavigableComic):
+    """Class to retrieve class A Ham A Day comics."""
+    name = 'ham'
+    long_name = 'A Ham A Day'
+    url = 'http://www.ahammaday.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.ahammaday.com/today/3/6/french'}
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='prev-item')  # next is prev
+
+    @classmethod
+    def get_prev_comic_link(cls, last_soup):
+        return last_soup.find('a', class_='next-item')  # prev is next
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        date_str = soup.find('time', itemprop='datePublished')["datetime"]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        author = soup.find('a', rel='author').string
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', itemprop='image')
+        return {
+            'img': [i['content'] for i in imgs],
+            'title': title,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
         }
 
 
