@@ -125,7 +125,7 @@ class GenericListableComic(GenericComic):
                     comic['url'] = url
                     yield comic
         if waiting_for_url is not None:
-            print("Did not find %s : there might be a problem", waiting_for_url)
+            print("Did not find %s : there might be a problem" % waiting_for_url)
 
 
 class ExtraFabulousComics(GenericNavigableComic):
@@ -595,40 +595,35 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
-class TheGentlemanArmchair(GenericListableComic):
+class TheGentlemanArmchair(GenericNavigableComic):
     """Class to retrieve The Gentleman Armchair comics."""
     name = 'gentlemanarmchair'
     long_name = 'The Gentleman Armchair'
     url = 'http://thegentlemansarmchair.com'
 
     @classmethod
-    def get_comic_info(cls, soup, tr):
-        date_td, content_td = tr.children
-        date_str = date_td.string
-        a_tag = content_td.find('a')
-        title = a_tag.string
-        day = string_to_date(date_str, "%b %d")
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+    @classmethod
+    def get_next_comic_link(cls, last_soup):
+        return last_soup.find('link', rel='next')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
+            'author': author,
             'month': day.month,
             'year': day.year,
             'day': day.day,
         }
-
-    @classmethod
-    def get_url_from_archive_element(cls, tr):
-        _, content_td = tr.children
-        return content_td.find('a')['href']
-
-    @classmethod
-    def get_archive_elements(cls):
-        # FIXME: archive is actually spread on multiple pages corresponding to the
-        # different years. Default is to reach the one for the current year.
-        # Proper solution would be to iterate over the different relevant years.
-        archive_url = urljoin_wrapper(cls.url, 'archive')
-        return reversed(get_soup_at_url(archive_url).find_all('tr', class_='archive-tr'))
 
 
 class MyExtraLife(GenericNavigableComic):
@@ -867,7 +862,7 @@ class AmazingSuperPowers(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        comic_date = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         title = ' '.join(i['title'] for i in imgs)
         assert all(i['alt'] == i['title'] for i in imgs)
@@ -875,9 +870,9 @@ class AmazingSuperPowers(GenericNavigableComic):
             'title': title,
             'author': author,
             'img': [img['src'] for img in imgs],
-            'day': comic_date.day,
-            'month': comic_date.month,
-            'year': comic_date.year
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
         }
 
 
