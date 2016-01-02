@@ -1880,12 +1880,11 @@ class GoneIntoRapture(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        return None  # FIXME: Things have changed and it wasn't detected because nav was broken
+        title = soup.find('meta', property='og:title')['content']
         imgs = soup.find('div', id='comic').find_all('img')
-        assert all(i['alt'] == i['title'] == '' for i in imgs)
+        assert all(i['alt'] == i['title'] == title for i in imgs)
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
-        title = soup.find('meta', property='og:title')['content']
         desc = soup.find('meta', property='og:description')['content']
         return {
             'img': [i['src'] for i in imgs],
