@@ -179,12 +179,6 @@ def get_a_rel_next(cls, last_soup, next_=True):
 
 
 @classmethod
-def get_div_navnext_a(cls, last_soup, next_=True):
-    """Implementation of get_next_comic_link."""
-    return last_soup.find('div', class_="nav-next" if next_ else "nav-previous").find('a')
-
-
-@classmethod
 def get_a_navi_navinext(cls, last_soup, next_=True):
     """Implementation of get_next_comic_link."""
     return last_soup.find('a', class_='navi navi-next' if next_ else 'navi navi-prev')
@@ -194,12 +188,6 @@ def get_a_navi_navinext(cls, last_soup, next_=True):
 def get_a_navi_comicnavnext_navinext(cls, last_soup, next_=True):
     """Implementation of get_next_comic_link."""
     return last_soup.find('a', class_='navi comic-nav-next navi-next' if next_ else 'navi comic-nav-previous navi-prev')
-
-
-@classmethod
-def get_a_comicnavbase_comicnavnext(cls, last_soup, next_=True):
-    """Implementation of get_next_comic_link."""
-    return last_soup.find('a', class_='comic-nav-base comic-nav-next' if next_ else 'comic-nav-base comic-nav-previous')
 
 
 @classmethod
@@ -225,14 +213,11 @@ class ExtraFabulousComics(GenericNavigableComic):
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
     url = 'http://extrafabulouscomics.com'
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_first_comic_link(cls):
         return get_soup_at_url(cls.url).find('a', title='FIRST')
-
-    @classmethod
-    def get_next_comic_link(cls, last_soup, next_=True):  # could be get_link_rel_next
-        return last_soup.find('a', title='NEXT' if next_ else 'PREV')
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -459,7 +444,7 @@ class ItsTheTie(GenericNavigableComic):
     long_name = "It's the tie"
     url = "http://itsthetie.com"
     get_first_comic_link = get_div_navfirst_a
-    get_next_comic_link = get_div_navnext_a
+    get_next_comic_link = get_a_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -482,7 +467,7 @@ class OneOneOneOneComic(GenericNavigableComic):
     long_name = '1111 Comics'
     url = 'http://www.1111comics.me'
     get_first_comic_link = get_div_navfirst_a
-    get_next_comic_link = get_div_navnext_a
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -505,7 +490,11 @@ class NeDroid(GenericNavigableComic):
     long_name = 'NeDroid'
     url = 'http://nedroid.com'
     get_first_comic_link = get_div_navfirst_a
-    get_next_comic_link = get_div_navnext_a
+    get_next_comic_link = get_link_rel_next
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -778,7 +767,7 @@ class Mercworks(GenericNavigableComic):
     long_name = 'Mercworks'
     url = 'http://mercworks.net'
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_next_comic_link = get_a_comicnavbase_comicnavnext
+    get_next_comic_link = get_a_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -840,14 +829,11 @@ class BerkeleyMews(GenericListableComic):
 
 class GenericBouletCorp(GenericNavigableComic):
     """Generic class to retrieve BouletCorp comics in different languages."""
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_first_comic_link(cls):
         return get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]
-
-    @classmethod
-    def get_next_comic_link(cls, last_soup, next_=True):
-        return last_soup.find('div', id='centered_nav').find_all('a')[3 if next_ else 1]
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -944,7 +930,7 @@ class Channelate(GenericNavigableComic):
     long_name = 'Channelate'
     url = 'http://www.channelate.com'
     get_first_comic_link = get_div_navfirst_a
-    get_next_comic_link = get_div_navnext_a
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1683,7 +1669,7 @@ class ChuckleADuck(GenericNavigableComic):
     long_name = 'Chuckle-A-duck'
     url = 'http://chuckleaduck.com'
     get_first_comic_link = get_div_navfirst_a
-    get_next_comic_link = get_div_navnext_a
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1779,7 +1765,7 @@ class HappleTea(GenericNavigableComic):
     long_name = 'Happle Tea'
     url = 'http://www.happletea.com'
     get_first_comic_link = get_a_navi_navifirst
-    get_next_comic_link = get_a_navi_navinext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1876,7 +1862,7 @@ class GoneIntoRapture(GenericNavigableComic):
     long_name = 'Gone Into Rapture'
     url = 'http://www.goneintorapture.com'
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_next_comic_link = get_a_comicnavbase_comicnavnext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1930,14 +1916,11 @@ class ThorsThundershack(GenericNavigableComic):
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
+    get_next_comic_link = get_a_rel_next
 
     @classmethod
     def get_first_comic_link(cls):
         return get_soup_at_url(cls.url).find('a', class_='first navlink')
-
-    @classmethod
-    def get_next_comic_link(cls, last_soup, next_=True):  # could be get_a_rel_next
-        return last_soup.find('a', class_='next navlink' if next_ else 'prev navlink')
 
     @classmethod
     def get_url_from_link(cls, link):
@@ -1971,7 +1954,7 @@ class EveryDayBlues(GenericNavigableComic):
     long_name = "Every Day Blues"
     url = "http://everydayblues.net"
     get_first_comic_link = get_a_navi_navifirst
-    get_next_comic_link = get_a_navi_navinext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1998,7 +1981,7 @@ class BiterComics(GenericNavigableComic):
     long_name = "Biter Comics"
     url = "http://www.bitercomics.com"
     get_first_comic_link = get_a_navi_navifirst
-    get_next_comic_link = get_a_navi_comicnavnext_navinext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2027,7 +2010,7 @@ class TheAwkwardYeti(GenericNavigableComic):
     long_name = 'The Awkward Yeti'
     url = 'http://theawkwardyeti.com'
     get_first_comic_link = get_a_navi_navifirst
-    get_next_comic_link = get_a_navi_comicnavnext_navinext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2051,7 +2034,7 @@ class LastPlaceComics(GenericNavigableComic):
     long_name = 'LastPlaceComics'
     url = "http://lastplacecomics.com"
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_next_comic_link = get_a_comicnavbase_comicnavnext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2137,7 +2120,7 @@ class BuniComic(GenericNavigableComic):
     long_name = 'BuniComics'
     url = 'http://www.bunicomic.com'
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_next_comic_link = get_a_comicnavbase_comicnavnext
+    get_next_comic_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
