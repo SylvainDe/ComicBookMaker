@@ -1841,6 +1841,7 @@ class FatAwesomeComics(GenericNavigableComic):
 
 class AnythingComic(GenericComic):
     """Class to retrieve Anything Comics."""
+    # Also on http://tapastic.com/series/anything
     name = 'anythingcomic'
     long_name = 'Anything Comic'
     url = 'http://www.anythingcomic.com'
@@ -2650,6 +2651,14 @@ class TubeyToonsTapastic(TapasticComic):
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
+
+
+class AnythingComicTapastic(TapasticComic):
+    """Class to retrieve Anything Comics."""
+    # Also on http://www.anythingcomic.com
+    name = 'anythingcomic-tapa'
+    long_name = 'Anything Comic (from Tapastic)'
+    url = 'http://tapastic.com/series/anything'
 
 
 class UnearthedComicsTapastic(TapasticComic):

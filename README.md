@@ -47,6 +47,7 @@ Comics supported
  * [Abstruse Goose](http://abstrusegoose.com)
  * [Tales of Absurdity](http://talesofabsurdity.com)
  * [Anything Comic](http://www.anythingcomic.com)
+ * [Anything Comic (from Tapastic)](http://tapastic.com/series/anything)
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
  * [Aurel](http://aurel.blog.lemonde.fr)
