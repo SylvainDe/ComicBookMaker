@@ -2294,6 +2294,34 @@ class AHamADay(GenericNavigableComic):
         }
 
 
+class EverythingsStupid(GenericNavigableComic):
+    """Class to retrieve Everything's stupid Comics."""
+    # Also on http://tapastic.com/series/EverythingsStupid
+    # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
+    name = 'stupid'
+    long_name = "Everything's Stupid"
+    url = 'http://everythingsstupid.net'
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('a', class_='webcomic-link webcomic1-link first-webcomic-link first-webcomic1-link')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find('div', class_='webcomic-image').find_all('img')
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        return {
+            'title': title,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class MakeItStoopid(GenericNavigableComic):
     """Class to retrieve Make It Stoopid Comics."""
     name = 'stoopid'
@@ -2668,6 +2696,15 @@ class UnearthedComicsTapastic(TapasticComic):
     name = 'unearthed-tapa'
     long_name = 'Unearthed Comics (from Tapastic)'
     url = 'http://tapastic.com/series/UnearthedComics'
+
+
+class EverythingsStupidTapastic(TapasticComic):
+    """Class to retrieve Everything's stupid Comics."""
+    # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
+    # Also on http://everythingsstupid.net
+    name = 'stupid-tapa'
+    long_name = "Everything's Stupid (from Tapastic)"
+    url = 'http://tapastic.com/series/EverythingsStupid'
 
 
 def get_subclasses(klass):

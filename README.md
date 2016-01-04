@@ -126,6 +126,8 @@ Comics supported
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Things in squares](http://www.thingsinsquares.com)
  * [Make it stoopid](http://makeitstoopid.com/comic.php)
+ * [Everything's Stupid](http://everythingsstupid.net)
+ * [Everything's Stupid (from Tapastic)](http://tapastic.com/series/EverythingsStupid)
  * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Thor's Thundershack](http://www.thorsthundershack.com)
  * [Three Word Phrase](http://threewordphrase.com)
