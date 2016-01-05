@@ -1410,14 +1410,42 @@ class WarehouseComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', id='comic').find_all('img')
         return {
-            'img': [i['src'] for i in soup.find('div', id='comic').find_all('img')],
-            'title': soup.find('h2', class_='post-title').string,
+            'img': [i['src'] for i in imgs],
+            'title': title,
             'day': day.day,
             'month': day.month,
             'year': day.year,
+        }
+
+
+class MouseBearComedy(GenericNavigableComic):
+    """Class to retrieve Mouse Bear Comedy comics."""
+    name = 'mousebear'
+    long_name = 'Mouse Bear Comedy'
+    url = 'http://www.mousebearcomedy.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find("span", class_="post-date").string
+        day = string_to_date(date_str, '%B %d, %Y')
+        imgs = soup.find("div", id="comic").find_all("img")
+        assert all(i['alt'] == i['title'] == title for i in imgs)
+        return {
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'author': author,
         }
 
 
