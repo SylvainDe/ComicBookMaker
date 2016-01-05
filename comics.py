@@ -2193,6 +2193,51 @@ class CommitStripEn(GenericCommitStrip):
         return {'href': 'http://www.commitstrip.com/en/2012/02/22/interview/'}
 
 
+class GenericBoumerie(GenericNavigableComic):
+    """Generic class to retrieve Boumeries comics in different languages."""
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_link_rel_next
+    date_format = NotImplemented
+    lang = NotImplemented
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        short_url = soup.find('link', rel='shortlink')['href']
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, cls.date_format, cls.lang)
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['alt'] == i['title'] for i in imgs)
+        return {
+            'short_url': short_url,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'author': author,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
+class BoumerieEn(GenericBoumerie):
+    """Class to retrieve Boumeries comics in English."""
+    name = 'boumeries_en'
+    long_name = 'Boumeries (En)'
+    url = 'http://comics.boumerie.com'
+    date_format = "%B %d, %Y"
+    lang = 'en_GB.UTF-8'
+
+
+class BoumerieFr(GenericBoumerie):
+    """Class to retrieve Boumeries comics in French."""
+    name = 'boumeries_fr'
+    long_name = 'Boumeries (Fr)'
+    url = 'http://bd.boumerie.com'
+    date_format = "%A, %d %B %Y"
+    lang = "fr_FR.utf8"
+
+
 class UnearthedComics(GenericNavigableComic):
     """Class to retrieve Unearthed comics."""
     # Also on http://tapastic.com/series/UnearthedComics

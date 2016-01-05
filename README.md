@@ -58,6 +58,8 @@ Comics supported
  * [Every Day Blues](http://everydayblues.net)
  * [Boulet Corp](http://www.bouletcorp.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
+ * [Boumeries (En)](http://comics.boumerie.com)
+ * [Boumeries (Fr)](http://bd.boumerie.com)
  * [Break Of Day](http://www.gocomics.com/break-of-day)
  * [Brevity](http://www.gocomics.com/brevity)
  * [BuniComics](http://www.bunicomic.com)
