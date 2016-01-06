@@ -102,6 +102,7 @@ Comics supported
  * [Mercworks](http://mercworks.net)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
+ * [Mouse Bear Comedy](http://www.mousebearcomedy.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [Octopuns](http://www.octopuns.net)
