@@ -122,6 +122,7 @@ Comics supported
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Ted Rall](http://rall.com/comic)
+ * [Ted Rall (from GoComics)](http://www.gocomics.com/tedrall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Gone Into Rapture](http://www.goneintorapture.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)

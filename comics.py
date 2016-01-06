@@ -2701,6 +2701,14 @@ class CalvinAndHobbesGoComic(GenericGoComic):
     url = 'http://www.gocomics.com/calvinandhobbes'
 
 
+class RallGoComic(GenericGoComic):
+    """Class to retrieve Ted Rall comics."""
+    # Also on : http://rall.com/comic
+    name = 'rall-goc'
+    long_name = "Ted Rall (from GoComics)"
+    url = "http://www.gocomics.com/tedrall"
+
+
 class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
