@@ -95,6 +95,8 @@ Comics supported
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
+ * [Just Say Eh](http://www.justsayeh.com)
+ * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)

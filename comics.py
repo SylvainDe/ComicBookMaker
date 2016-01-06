@@ -1423,6 +1423,28 @@ class WarehouseComic(GenericNavigableComic):
         }
 
 
+class JustSayEh(GenericNavigableComic):
+    """Class to retrieve Just Say Eh comics."""
+    # Also on http//tapastic.com/series/Just-Say-Eh
+    name = 'justsayeh'
+    long_name = 'Just Say Eh'
+    url = 'http://www.justsayeh.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        imgs = soup.find("div", id="comic").find_all("img")
+        assert all(i['alt'] == i['title'] for i in imgs)
+        alt = imgs[0]['alt']
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'alt': alt,
+        }
+
+
 class MouseBearComedy(GenericNavigableComic):
     """Class to retrieve Mouse Bear Comedy comics."""
     name = 'mousebear'
@@ -2778,6 +2800,14 @@ class EverythingsStupidTapastic(TapasticComic):
     name = 'stupid-tapa'
     long_name = "Everything's Stupid (from Tapastic)"
     url = 'http://tapastic.com/series/EverythingsStupid'
+
+
+class JustSayEhTapastic(TapasticComic):
+    """Class to retrieve Just Say Eh comics."""
+    # Also on http://www.justsayeh.com
+    name = 'justsayeh-tapa'
+    long_name = 'Just Say Eh (from Tapastic)'
+    url = 'http://tapastic.com/series/Just-Say-Eh'
 
 
 def get_subclasses(klass):
