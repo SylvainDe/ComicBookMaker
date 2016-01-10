@@ -75,6 +75,7 @@ Comics supported
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
  * [Cyanide and Happiness](http://explosm.net)
+ * [Deadly Panel](http://www.deadlypanel.com)
  * [Depressed Alien](http://depressedalien.com)
  * [According To Devin](http://accordingtodevin.tumblr.com)
  * [Dilbert](http://dilbert.com)

@@ -683,6 +683,23 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
+class DeadlyPanel(GenericNavigableComic):
+    """Class to retrieve Deadly Panel comics."""
+    name = 'deadly'
+    long_name = 'Deadly Panel'
+    url = 'http://www.deadlypanel.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['alt'] == i['title'] for i in imgs)
+        return {
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class TheGentlemanArmchair(GenericNavigableComic):
     """Class to retrieve The Gentleman Armchair comics."""
     name = 'gentlemanarmchair'
