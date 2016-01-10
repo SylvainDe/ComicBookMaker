@@ -90,6 +90,7 @@ Comics supported
  * [Fowl Language Comics](http://tapastic.com/series/Fowl-Language-Comics)
  * [Garfield](http://garfield.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
+ * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
  * [A Ham A Day](http://www.ahammaday.com)
  * [Happle Tea](http://www.happletea.com)

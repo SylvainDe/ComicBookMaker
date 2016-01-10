@@ -2061,6 +2061,34 @@ class ThorsThundershack(GenericNavigableComic):
         }
 
 
+class GerbilWithAJetpack(GenericNavigableComic):
+    """Class to retrieve GerbilWithAJetpack comics."""
+    name = 'gerbil'
+    long_name = 'Gerbil With A Jetpack'
+    url = 'http://gerbilwithajetpack.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find("span", class_="post-date").string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find("div", id="comic").find_all("img")
+        alt = imgs[0]['alt']
+        assert all(i['alt'] == i['title'] == alt for i in imgs)
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'alt': alt,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
+        }
+
+
 class EveryDayBlues(GenericNavigableComic):
     """Class to retrieve EveryDayBlues Comics."""
     name = "blues"
