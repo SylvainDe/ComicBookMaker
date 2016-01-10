@@ -124,6 +124,7 @@ Comics supported
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
+ * [Quarktees](http://www.quarktees.com/blogs/news)
  * [Ted Rall](http://rall.com/comic)
  * [Ted Rall (from GoComics)](http://www.gocomics.com/tedrall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)

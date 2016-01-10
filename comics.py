@@ -1277,6 +1277,37 @@ class Octopuns(GenericNavigableComic):
         }
 
 
+class Quarktees(GenericNavigableComic):
+    """Class to retrieve the Quarktees comics."""
+    name = 'quarktees'
+    long_name = 'Quarktees'
+    url = 'http://www.quarktees.com/blogs/news'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.quarktees.com/blogs/news/12486621-coming-soon'}
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        return last_soup.find('a', id='article-next' if next_ else 'article-prev')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        article = soup.find('div', class_='single-article')
+        _ = article.find('p', class_='posted-by')
+        imgs = article.find_all('img')
+        return {
+            'title': title,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+        }
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        """Get url correponding to a link."""
+        return urljoin_wrapper(cls.url, link['href'])
+
+
 class OverCompensating(GenericNavigableComic):
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
