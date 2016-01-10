@@ -52,6 +52,7 @@ Comics supported
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
  * [Aurel](http://aurel.blog.lemonde.fr)
  * [Space Avalanche](http://www.spaceavalanche.com)
+ * [bagieu](http://www.penelope-jolicoeur.com)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Biter Comics](http://www.bitercomics.com)

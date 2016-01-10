@@ -480,6 +480,31 @@ class ItsTheTie(GenericNavigableComic):
         }
 
 
+class PenelopeBagieu(GenericNavigableComic):
+    """Class to retrieve comics from Penelope Bagieu's blog."""
+    name = long_name = 'bagieu'
+    url = 'http://www.penelope-jolicoeur.com'
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'}
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        date_str = soup.find('h2', class_='date-header').string
+        day = string_to_date(date_str, "%A %d %B %Y", "fr_FR.utf8")
+        imgs = soup.find('div', class_='entry-body').find_all('img')
+        title = soup.find('h3', class_='entry-header').string
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class OneOneOneOneComic(GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
     name = '1111'
