@@ -1295,7 +1295,6 @@ class Quarktees(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('meta', property='og:title')['content']
         article = soup.find('div', class_='single-article')
-        _ = article.find('p', class_='posted-by')
         imgs = article.find_all('img')
         return {
             'title': title,
