@@ -225,6 +225,12 @@ def get_a_navi_comicnavnext_navinext(cls, last_soup, next_):
 
 
 @classmethod
+def get_a_comicnavbase_comicnavnext(cls, last_soup, next_):
+    """Implementation of get_navi_link."""
+    return last_soup.find('a', class_='comic-nav-base comic-nav-next' if next_ else 'comic-nav-base comic-nav-previous')
+
+
+@classmethod
 def get_a_navi_navifirst(cls):
     """Implementation of get_first_comic_link."""
     return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
@@ -2282,6 +2288,29 @@ class EndlessOrigami(GenericNavigableComic):
             'day': day.day,
             'month': day.month,
             'year': day.year
+        }
+
+
+class PlanC(GenericNavigableComic):
+    """Class to retrieve Plan C comics."""
+    name = 'planc'
+    long_name = 'Plan C'
+    url = 'http://www.plancomic.com'
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_a_comicnavbase_comicnavnext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        date_str = soup.find("span", class_="post-date").string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', id='comic').find_all('img')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
         }
 
 

@@ -122,6 +122,7 @@ Comics supported
  * [Penmen](http://penmen.com)
  * [PhD Comics](http://phdcomics.com)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
+ * [Plan C](http://www.plancomic.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Quarktees](http://www.quarktees.com/blogs/news)
