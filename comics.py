@@ -1253,34 +1253,15 @@ class PhDComics(GenericListableComic):
         }
 
 
-class Octopuns(GenericNavigableComic):
+class Octopuns(GenericComic):
     """Class to retrieve Octopuns comics."""
     name = 'octopuns'
     long_name = 'Octopuns'
     url = 'http://www.octopuns.net'
 
     @classmethod
-    def get_first_comic_link(cls):
-        return get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        link = last_soup.find('img', src=re.compile('.*/Next.png' if next_ else '.*/Back.png')).parent
-        return None if link.get('href') is None else link
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        title = soup.find('h3', class_='post-title entry-title').string
-        date_str = soup.find('h2', class_='date-header').string
-        day = string_to_date(date_str, "%A, %B %d, %Y")
-        imgs = soup.find_all('link', rel='image_src')
-        return {
-            'img': [i['href'] for i in imgs],
-            'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
-        }
+    def get_next_comic(cls, last_comic):
+        return []  # Does not exist anymore
 
 
 class Quarktees(GenericNavigableComic):
