@@ -111,4 +111,4 @@ def make_book_from_comic_list(comics, title, file_name):
                 book.write(HTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
         book.write(HTML_FOOTER)
 
-    subprocess.call([KINDLEGEN_PATH, html_book])
+    subprocess.call([KINDLEGEN_PATH, '-verbose', '-dont_append_source', html_book])
