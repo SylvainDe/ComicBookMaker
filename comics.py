@@ -1592,34 +1592,11 @@ class PicturesInBoxes(GenericNavigableComic):
         }
 
 
-class Penmen(GenericNavigableComic):
+class Penmen(GenericEmptyComic):
     """Class to retrieve Penmen comics."""
     name = 'penmen'
     long_name = 'Penmen'
     url = 'http://penmen.com'
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        return {'href': 'http://penmen.com/comic/penmen-comic-strip-the-sprinkler/'}
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        url2 = soup.find('link', rel='shortlink')['href']
-        title = soup.find("h1", class_="entry-title").string
-        img = soup.find('meta', property='og:image')['content']
-        author = soup.find("span", class_="author vcard").find("a").string
-        date_str = soup.find("time", class_="entry-date published").string
-        day = string_to_date(date_str, '%Y/%m/%d')
-        return {
-            'url2': url2,
-            'title': title,
-            'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
-            'img': [img],
-        }
 
 
 class TheDoghouseDiaries(GenericNavigableComic):
