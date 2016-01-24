@@ -141,6 +141,7 @@ Comics supported
  * [Everything's Stupid (from Tapastic)](http://tapastic.com/series/EverythingsStupid)
  * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Thor's Thundershack](http://www.thorsthundershack.com)
+ * [Thor's Thundershack (from Tapastic)](http://tapastic.com/series/Thors-Thundershac)
  * [Three Word Phrase](http://threewordphrase.com)
  * [It's the tie](http://itsthetie.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)

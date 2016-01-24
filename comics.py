@@ -2013,6 +2013,7 @@ class LonnieMillsap(GenericNavigableComic):
 
 class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
+    # Also on http://tapastic.com/series/Thors-Thundershac
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
@@ -2897,6 +2898,14 @@ class JustSayEhTapastic(TapasticComic):
     name = 'justsayeh-tapa'
     long_name = 'Just Say Eh (from Tapastic)'
     url = 'http://tapastic.com/series/Just-Say-Eh'
+
+
+class ThorsThundershackTapastic(TapasticComic):
+    """Class to retrieve Thor's Thundershack comics."""
+    # Also on http://www.thorsthundershack.com
+    name = 'thor-tapa'
+    long_name = 'Thor\'s Thundershack (from Tapastic)'
+    url = 'http://tapastic.com/series/Thors-Thundershac'
 
 
 def get_subclasses(klass):
