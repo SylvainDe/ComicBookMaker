@@ -248,6 +248,14 @@ def get_a_comicnavbase_comicnavfirst(cls):
     return get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
 
 
+class GenericEmptyComic(GenericComic):
+    """Generic class for comics where nothing is to be done."""
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        return []
+
+
 class ExtraFabulousComics(GenericNavigableComic):
     """Class to retrieve Extra Fabulous Comics."""
     name = 'efc'
@@ -1253,15 +1261,12 @@ class PhDComics(GenericListableComic):
         }
 
 
-class Octopuns(GenericComic):
+class Octopuns(GenericEmptyComic):  # Does not exist anymore
     """Class to retrieve Octopuns comics."""
+    # Also on http://octopuns.tumblr.com/
     name = 'octopuns'
     long_name = 'Octopuns'
     url = 'http://www.octopuns.net'
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # Does not exist anymore
 
 
 class Quarktees(GenericNavigableComic):
@@ -1387,15 +1392,11 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
         }
 
 
-class SomethingOfThatIlk(GenericComic):
+class SomethingOfThatIlk(GenericEmptyComic):  # Does not exist anymore
     """Class to retrieve the Something Of That Ilk comics."""
     name = 'somethingofthatilk'
     long_name = 'Something Of That Ilk'
     url = 'http://www.somethingofthatilk.com'
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # Does not exist anymore
 
 
 class InfiniteMonkeyBusiness(GenericNavigableComic):
@@ -1685,28 +1686,20 @@ class InvisibleBread(GenericListableComic):
         }
 
 
-class DiscoBleach(GenericComic):
+class DiscoBleach(GenericEmptyComic):  # Does not work anymore
     """Class to retrieve Disco Bleach Comics."""
     name = 'discobleach'
     long_name = 'Disco Bleach'
     url = 'http://discobleach.com'
 
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # FIXME: Does not work anymore
 
-
-class TubeyToons(GenericComic):
+class TubeyToons(GenericEmptyComic):  # Does not work anymore
     """Class to retrieve TubeyToons comics."""
     # Also on http://tapastic.com/series/Tubey-Toons
     # Also on http://tubeytoons.tumblr.com/
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        return []  # FIXME: Does not work anymore
 
 
 class CompletelySeriousComics(GenericNavigableComic):
