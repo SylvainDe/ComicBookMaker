@@ -1413,10 +1413,10 @@ class InfiniteMonkeyBusiness(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         title = soup.find('meta', property='og:title')['content']
-        imgs = soup.find_all('meta', property='og:image')
+        imgs = soup.find('div', id='comic').find_all('img')
         return {
             'title': title,
-            'img': [i['content'] for i in imgs],
+            'img': [i['src'] for i in imgs],
         }
 
 
