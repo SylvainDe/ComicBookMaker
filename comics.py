@@ -2799,6 +2799,10 @@ class TapasticComic(GenericListableComic):
         date_str = archive_element['publishDate'].split()[0]
         year, month, day = [int(e) for e in date_str.split('-')]
         imgs = soup.find_all('img', class_='art-image')
+        if not imgs:
+            print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_element))
+            return None
+        assert len(imgs) > 0
         return {
             'day': day,
             'year': year,
