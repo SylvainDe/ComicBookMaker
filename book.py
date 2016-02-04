@@ -37,7 +37,7 @@ HTML_COMIC_INFO = """
 HTML_COMIC_ADDITIONAL_INFO = """
             %s<br>"""
 HTML_COMIC_IMG = """
-            <img src='%s'><br>"""
+            <img src='%s' style='width:100%%'><br>"""
 HTML_FOOTER = """
     </body>
 </html>"""
