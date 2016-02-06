@@ -1384,7 +1384,7 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('meta', attrs={'name': 'twitter:label1'})['content']
         desc = soup.find('meta', property='og:description')['content']
-        imgs = soup.find('img', itemprop="image")
+        imgs = soup.find_all('img', itemprop="image")
         return {
             'title': title,
             'description': desc,
