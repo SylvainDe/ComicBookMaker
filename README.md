@@ -64,6 +64,7 @@ Comics supported
  * [Break Of Day](http://www.gocomics.com/break-of-day)
  * [Brevity](http://www.gocomics.com/brevity)
  * [BuniComics](http://www.bunicomic.com)
+ * [Electric Bunny Comic](http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell)
  * [ButterSafe](http://buttersafe.com)
  * [Calvin and Hobbes](http://marcel-oehler.marcellosendos.ch/comics/ch/)
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)

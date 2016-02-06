@@ -2499,6 +2499,35 @@ class EverythingsStupid(GenericNavigableComic):
         }
 
 
+class ElectricBunnyComic(GenericNavigableComic):
+    """Class to retrieve Electric Bunny Comics."""
+    name = 'bunny'
+    long_name = 'Electric Bunny Comic'
+    url = 'http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell'
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('img', alt='First').parent
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        img = last_soup.find('img', alt='Next' if next_ else 'Prev')
+        return img.parent if img else None
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class MakeItStoopid(GenericNavigableComic):
     """Class to retrieve Make It Stoopid Comics."""
     name = 'stoopid'
