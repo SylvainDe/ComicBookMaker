@@ -69,7 +69,7 @@ class GenericComic(object):
     def save_db(cls, data):
         """Save the list of comics in the JSON file."""
         with open(cls.get_json_file_path(), 'w+') as file:
-            json.dump(data, file, indent=4)
+            json.dump(data, file, indent=4, sort_keys=True)
 
     @classmethod
     def get_file_in_output_dir(cls, url, prefix=None):
