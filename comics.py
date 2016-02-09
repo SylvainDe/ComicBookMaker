@@ -376,6 +376,17 @@ class Aurel(GenericLeMondeBlog):
         return "http://aurel.blog.lemonde.fr/2014/09/29/le-senat-repasse-a-droite/"
 
 
+class LesCulottees(GenericLeMondeBlog):
+    """Class to retrieve Les Culottees comics."""
+    name = 'culottees'
+    long_name = 'Les Culottees'
+    url = "http://lesculottees.blog.lemonde.fr"
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://lesculottees.blog.lemonde.fr/2016/01/11/clementine-delait-femme-a-barbe/"
+
+
 class Rall(GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
     # Also on : http://www.gocomics.com/tedrall
@@ -496,7 +507,8 @@ class ItsTheTie(GenericNavigableComic):
 
 class PenelopeBagieu(GenericNavigableComic):
     """Class to retrieve comics from Penelope Bagieu's blog."""
-    name = long_name = 'bagieu'
+    name = 'bagieu'
+    long_name = 'Ma vie est tout a fait fascinante (Bagieu)'
     url = 'http://www.penelope-jolicoeur.com'
     get_navi_link = get_link_rel_next
 
