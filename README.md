@@ -111,6 +111,7 @@ Comics supported
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Mercworks](http://mercworks.net)
+ * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Mouse Bear Comedy](http://www.mousebearcomedy.com)

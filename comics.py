@@ -850,6 +850,7 @@ class PerryBibleFellowship(GenericListableComic):
 
 class Mercworks(GenericNavigableComic):
     """Class to retrieve Mercworks comics."""
+    # Also on http://mercworks.tumblr.com
     name = 'mercworks'
     long_name = 'Mercworks'
     url = 'http://mercworks.net'
@@ -2844,6 +2845,14 @@ class PondScumComics(GenericTumblrV1):
     name = 'pond'
     long_name = 'Pond Scum'
     url = 'http://pondscumcomic.tumblr.com'
+
+
+class MercworksTumblr(GenericTumblrV1):
+    """Class to retrieve Mercworks comics."""
+    # Also on http://mercworks.net
+    name = 'mercworks-tumblr'
+    long_name = 'Mercworks (from Tumblr)'
+    url = 'http://mercworks.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
