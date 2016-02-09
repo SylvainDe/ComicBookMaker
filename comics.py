@@ -1263,7 +1263,7 @@ class PhDComics(GenericListableComic):
 
 class Octopuns(GenericNavigableComic):
     """Class to retrieve Octopuns comics."""
-    # Also on http://octopuns.tumblr.com/
+    # Also on http://octopuns.tumblr.com
     name = 'octopuns'
     long_name = 'Octopuns'
     url = 'http://www.octopuns.net'
@@ -1585,7 +1585,7 @@ class SafelyEndangered(GenericNavigableComic):
 
 class PicturesInBoxes(GenericNavigableComic):
     """Class to retrieve Pictures In Boxes comics."""
-    # Also on http://picturesinboxescomic.tumblr.com/
+    # Also on http://picturesinboxescomic.tumblr.com
     name = 'picturesinboxes'
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
@@ -1695,7 +1695,7 @@ class DiscoBleach(GenericEmptyComic):  # Does not work anymore
 class TubeyToons(GenericEmptyComic):  # Does not work anymore
     """Class to retrieve TubeyToons comics."""
     # Also on http://tapastic.com/series/Tubey-Toons
-    # Also on http://tubeytoons.tumblr.com/
+    # Also on http://tubeytoons.tumblr.com
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
@@ -1732,6 +1732,7 @@ class CompletelySeriousComics(GenericNavigableComic):
 
 class PoorlyDrawnLines(GenericListableComic):
     """Class to retrieve Poorly Drawn Lines comics."""
+    # Also on http://pdlcomics.tumblr.com
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
     url = 'http://poorlydrawnlines.com'
@@ -2636,6 +2637,200 @@ class AccordingToDevin(GenericTumblr):
     @classmethod
     def get_first_comic_url(cls):
         return "http://accordingtodevin.tumblr.com/post/40112722337"
+
+
+class GenericTumblrV1(GenericComic):
+    """Generic class to retrieve comics from Tumblr using the V1 API."""
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        for p in cls.get_posts(last_comic):
+            comic = cls.get_comic_info(p)
+            if comic is not None:
+                yield comic
+
+    @classmethod
+    def get_url_from_post(cls, post):
+        return post['url']
+
+    @classmethod
+    def get_api_url(cls):
+        return urljoin_wrapper(cls.url, '/api/read/')
+
+    @classmethod
+    def get_comic_info(cls, post):
+        """Get information about a particular comics."""
+        # print(post)
+        type_ = post['type']
+        if type_ != 'photo':
+            # print("Type is %s" % type_)
+            return None
+        tumblr_id = int(post['id'])
+        api_url = cls.get_api_url() + '?id=%d' % (tumblr_id)
+        day = datetime.datetime.fromtimestamp(int(post['unix-timestamp'])).date()
+        caption = post.find('photo-caption')
+        title = caption.string if caption else ""
+        tags = ' '.join(t.string for t in post.find_all('tag'))
+        # Photos may appear in 'photo' tags and/or straight in the post
+        photo_tags = post.find_all('photo')
+        if not photo_tags:
+            photo_tags = [post]
+        # Images are in multiple resolutions - taking the first one
+        imgs = [photo.find('photo-url') for photo in photo_tags]
+        return {
+            'url': cls.get_url_from_post(post),
+            'url2': post['url-with-slug'],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'title': title,
+            'tags': tags,
+            'img': [i.string for i in imgs],
+            'tumblr-id': tumblr_id,
+            'api_url': api_url,  # for debug purposes
+        }
+
+    @classmethod
+    def get_posts(cls, last_comic, nb_post_per_call=10):
+        """Get posts using API. nb_post_per_call is max 50.
+
+        Posts are retrieved from newer to older as per the tumblr v1 api
+        but are returned in chronological order."""
+        waiting_for_url = last_comic['url'] if last_comic else None
+        posts_acc = []
+        api_url = cls.get_api_url()
+        posts = get_soup_at_url(api_url).find('posts')
+        start, total = int(posts['start']), int(posts['total'])
+        for starting_num in range(0, total, nb_post_per_call):
+            api_url2 = api_url + '?start=%d&num=%d' % (starting_num, nb_post_per_call)
+            # print(api_url2)
+            posts2 = get_soup_at_url(api_url2).find('posts')
+            start2, total2 = int(posts2['start']), int(posts2['total'])
+            assert starting_num == start2, "%d != %d" % (starting_num, start2)
+            # This may happen and should be handled in the future
+            assert total == total2, "%d != %d" % (total, total2)
+            for p in posts2.find_all('post'):
+                if waiting_for_url and waiting_for_url == cls.get_url_from_post(p):
+                    return reversed(posts_acc)
+                posts_acc.append(p)
+        if waiting_for_url is None:
+            return reversed(posts_acc)
+        print("Did not find %s : there might be a problem" % waiting_for_url)
+
+
+class IrwinCardozo2(GenericTumblrV1):
+    """Class to retrieve Irwin Cardozo Comics."""
+    # Original version is temporarily kept for testing purposes
+    name = 'irwinc2'
+    long_name = 'Irwin Cardozo'
+    url = 'http://irwincardozocomics.tumblr.com'
+
+
+class AccordingToDevin2(GenericTumblrV1):
+    """Class to retrieve According To Devin comics."""
+    # Original version is temporarily kept for testing purposes
+    name = 'devin2'
+    long_name = 'According To Devin'
+    url = 'http://accordingtodevin.tumblr.com'
+
+
+class ItsTheTieTumblr(GenericTumblrV1):
+    """Class to retrieve It's the tie comics."""
+    # Also on http://itsthetie.com
+    name = 'tie-tumblr'
+    long_name = "It's the tie (from Tumblr)"
+    url = "http://itsthetie.tumblr.com"
+
+
+class OctopunsTumblr(GenericTumblrV1):
+    """Class to retrieve Octopuns comics."""
+    # Also on http://www.octopuns.net
+    name = 'octopuns-tumblr'
+    long_name = 'Octopuns (from Tumblr)'
+    url = 'http://octopuns.tumblr.com'
+
+
+class PicturesInBoxesTumblr(GenericTumblrV1):
+    """Class to retrieve Pictures In Boxes comics."""
+    # Also on http://www.picturesinboxes.com
+    name = 'picturesinboxes-tumblr'
+    long_name = 'Pictures in Boxes (from Tumblr)'
+    url = 'http://picturesinboxescomic.tumblr.com'
+
+
+class TubeyToonsTumblr(GenericTumblrV1):
+    """Class to retrieve TubeyToons comics."""
+    # Also on http://tapastic.com/series/Tubey-Toons
+    # Also on http://tubeytoons.com
+    name = 'tubeytoons-tumblr'
+    long_name = 'Tubey Toons (from Tumblr)'
+    url = 'http://tubeytoons.tumblr.com'
+
+
+class UnearthedComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Unearthed comics."""
+    # Also on http://tapastic.com/series/UnearthedComics
+    # Also on http://unearthedcomics.com
+    name = 'unearthed-tumblr'
+    long_name = 'Unearthed Comics (from Tumblr)'
+    url = 'http://unearthedcomics.tumblr.com'
+
+
+class PieComic(GenericTumblrV1):
+    """Class to retrieve Pie Comic comics."""
+    name = 'pie'
+    long_name = 'Pie Comic'
+    url = "http://piecomic.tumblr.com"
+
+
+class MrEthanDiamond(GenericTumblrV1):
+    """Class to retrieve Mr Ethan Diamond comics."""
+    name = 'diamond'
+    long_name = 'Mr Ethan Diamond'
+    url = 'http://mrethandiamond.tumblr.com'
+
+
+class Flocci(GenericTumblrV1):
+    """Class to retrieve floccinaucinihilipilification comics."""
+    name = 'flocci'
+    long_name = 'floccinaucinihilipilification'
+    url = "http://floccinaucinihilipilificationa.tumblr.com"
+
+
+class UpAndOut(GenericTumblrV1):
+    """Class to retrieve Up & Out comics."""
+    name = 'upandout'
+    long_name = 'Up And Out'
+    url = 'http://jeremykaye.tumblr.com'
+
+
+class Pundemonium(GenericTumblrV1):
+    """Class to retrieve Pundemonium comics."""
+    name = 'pundemonium'
+    long_name = 'Pundemonium'
+    url = 'http://monstika.tumblr.com'
+
+
+class PoorlyDrawnLinesTumblr(GenericTumblrV1):
+    """Class to retrieve Poorly Drawn Lines comics."""
+    # Also on http://poorlydrawnlines.com
+    name = 'poorlydrawn-tumblr'
+    long_name = 'Poorly Drawn Lines (from Tumblr)'
+    url = 'http://pdlcomics.tumblr.com'
+
+
+class PearShapedComics(GenericTumblrV1):
+    """Class to retrieve Pear Shaped Comics."""
+    name = 'pearshaped'
+    long_name = 'Pear-Shaped Comics'
+    url = 'http://pearshapedcomics.com'
+
+
+class PondScumComics(GenericTumblrV1):
+    """Class to retrieve Pond Scum Comics."""
+    name = 'pond'
+    long_name = 'Pond Scum'
+    url = 'http://pondscumcomic.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
