@@ -2701,6 +2701,7 @@ class GenericTumblrV1(GenericComic):
         api_url = cls.get_api_url()
         posts = get_soup_at_url(api_url).find('posts')
         start, total = int(posts['start']), int(posts['total'])
+        assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
             api_url2 = api_url + '?start=%d&num=%d' % (starting_num, nb_post_per_call)
             # print(api_url2)
