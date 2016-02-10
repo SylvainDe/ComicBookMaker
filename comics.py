@@ -2596,62 +2596,6 @@ class MakeItStoopid(GenericNavigableComic):
         }
 
 
-class GenericTumblr(GenericNavigableComic):
-    """Generic class to retrieve comics from Tumblr."""
-
-    @classmethod
-    def get_first_comic_url(cls):
-        """Get first comic url."""
-        raise NotImplementedError
-
-    @classmethod
-    def get_first_comic_link(cls):
-        return {'href': cls.get_first_comic_url()}
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        # prev is next / next is prev
-        return last_soup.find('div', class_='nextprev').find('a', class_='prev' if next_ else 'next')
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        desc = soup.find('meta', property='og:description')
-        title = desc['content'] if desc else ""
-        imgs = soup.find_all('meta', property='og:image')
-        date_li = soup.find('li', class_='date') or soup.find('li', class_='date-reblogged')
-        date_str = date_li.find('a')['title']
-        day = string_to_date(date_str, "%a. %B %d, %Y @ %I:%M %p")
-        return {
-            'title': title,
-            'img': [i['content'] for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
-        }
-
-
-class IrwinCardozo(GenericTumblr):
-    """Class to retrieve Irwin Cardozo Comics."""
-    name = 'irwinc'
-    long_name = 'Irwin Cardozo'
-    url = 'http://irwincardozocomics.tumblr.com'
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://irwincardozocomics.tumblr.com/post/72201129995/only-human-irwinc"
-
-
-class AccordingToDevin(GenericTumblr):
-    """Class to retrieve According To Devin comics."""
-    name = 'devin'
-    long_name = 'According To Devin'
-    url = 'http://accordingtodevin.tumblr.com'
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://accordingtodevin.tumblr.com/post/40112722337"
-
-
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
 
@@ -2732,18 +2676,16 @@ class GenericTumblrV1(GenericComic):
         print("Did not find %s : there might be a problem" % waiting_for_url)
 
 
-class IrwinCardozo2(GenericTumblrV1):
+class IrwinCardozo(GenericTumblrV1):
     """Class to retrieve Irwin Cardozo Comics."""
-    # Original version is temporarily kept for testing purposes
-    name = 'irwinc2'
+    name = 'irwinc'
     long_name = 'Irwin Cardozo'
     url = 'http://irwincardozocomics.tumblr.com'
 
 
-class AccordingToDevin2(GenericTumblrV1):
+class AccordingToDevin(GenericTumblrV1):
     """Class to retrieve According To Devin comics."""
-    # Original version is temporarily kept for testing purposes
-    name = 'devin2'
+    name = 'devin'
     long_name = 'According To Devin'
     url = 'http://accordingtodevin.tumblr.com'
 
