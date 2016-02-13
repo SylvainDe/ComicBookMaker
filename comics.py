@@ -2801,6 +2801,14 @@ class MercworksTumblr(GenericTumblrV1):
     url = 'http://mercworks.tumblr.com'
 
 
+class OwlTurdTumblr(GenericTumblrV1):
+    """Class to retrieve Owl Turd comics."""
+    # Also on http://tapastic.com/series/Owl-Turd-Comix
+    name = 'owlturd-tumblr'
+    long_name = 'Owl Turd (from Tumblr)'
+    url = 'http://owlturd.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3124,6 +3132,14 @@ class ThorsThundershackTapastic(TapasticComic):
     name = 'thor-tapa'
     long_name = 'Thor\'s Thundershack (from Tapastic)'
     url = 'http://tapastic.com/series/Thors-Thundershac'
+
+
+class OwlTurdTapastic(TapasticComic):
+    """Class to retrieve Owl Turd comics."""
+    # Also on http://owlturd.com
+    name = 'owlturd-tapa'
+    long_name = 'Owl Turd (from Tapastic)'
+    url = 'http://tapastic.com/series/Owl-Turd-Comix'
 
 
 def get_subclasses(klass):

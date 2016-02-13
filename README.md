@@ -121,6 +121,8 @@ Comics supported
  * [Oglaf [NSFW]](http://oglaf.com)
  * [Endless Origami](http://endlessorigami.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
+ * [Owl Turd (from Tapastic)](http://tapastic.com/series/Owl-Turd-Comix)
+ * [Owl Turd (from Tumblr)](http://owlturd.com)
  * [Pain Train Comics](http://paintraincomic.com)
  * [Perry Bible Fellowship](http://pbfcomics.com)
  * [Peanuts](http://www.gocomics.com/peanuts)
