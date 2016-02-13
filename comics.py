@@ -495,13 +495,17 @@ class ItsTheTie(GenericNavigableComic):
         title = soup.find('h1', class_='comic-title').find('a').string
         date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
         day = string_to_date(date_str, "%B %d, %Y")
+        # To improve : bonus panels are not always in meta og:image.
         imgs = soup.find_all('meta', property='og:image')
+        tag_meta = soup.find('meta', property='article:tag')
+        tags = tag_meta['content'] if tag_meta else ""
         return {
             'title': title,
             'month': day.month,
             'year': day.year,
             'day': day.day,
             'img': [i['content'] for i in imgs],
+            'tags': tags,
         }
 
 
