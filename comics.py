@@ -2678,6 +2678,7 @@ class GenericTumblrV1(GenericComic):
         if waiting_for_url is None:
             return reversed(posts_acc)
         print("Did not find %s : there might be a problem" % waiting_for_url)
+        return []
 
 
 class IrwinCardozo(GenericTumblrV1):
