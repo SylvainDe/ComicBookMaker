@@ -1247,17 +1247,25 @@ class AbstruseGoose(GenericComic):
                 }
 
 
-class PhDComics(GenericListableComic):
+class PhDComics(GenericNavigableComic):
     """Class to retrieve PHD Comics."""
     name = 'phd'
     long_name = 'PhD Comics'
-    url = 'http://phdcomics.com'
-    comic_url_num_re = re.compile('^http://www.phdcomics.com/comics/archive.php\\?comicid=([0-9]*)$')
+    url = 'http://phdcomics.com/comics/archive.php'
 
     @classmethod
-    def get_archive_elements(cls):
-        archive_url = '%s/comics/archive_list.php' % cls.url
-        return get_soup_at_url(archive_url).find_all('a', href=cls.comic_url_num_re)
+    def get_url_from_link(cls, link):
+        """Get url correponding to a link."""
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('img', src='images/first_button.gif').parent
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        img = last_soup.find('img', src='images/next_button.gif' if next_ else 'images/prev_button.gif')
+        return None if img is None else img.parent
 
     @classmethod
     def get_url_from_archive_element(cls, link):
@@ -1265,16 +1273,19 @@ class PhDComics(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        url = cls.get_url_from_archive_element(link)
-        num = int(cls.comic_url_num_re.match(url).groups()[0])
-        month, day, year = [int(s) for s in link.string.split('/')]
+        date_str = soup.find('font', face='Arial,Helvetica,Geneva,Swiss,SunSans-Regular', color='white').string.strip()
+        try:
+            day = string_to_date(date_str, '%m/%d/%Y')
+        except ValueError:
+            print("Invalid date %s" % date_str)
+            day = date.today()
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         return {
-            'num': num,
-            'year': year,
-            'month': month,
-            'day': day if day else 1,
+            'year': day.year,
+            'month': day.month,
+            'day': day.day,
             'img': [soup.find('img', id='comic')['src']],
-            'title': link.parent.parent.next_sibling.string
+            'title': title,
         }
 
 

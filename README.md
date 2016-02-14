@@ -129,7 +129,7 @@ Comics supported
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
  * [Pear-Shaped Comics](http://pearshapedcomics.com)
  * [Penmen](http://penmen.com)
- * [PhD Comics](http://phdcomics.com)
+ * [PhD Comics](http://phdcomics.com/comics/archive.php)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Pictures in Boxes (from Tumblr)](http://picturesinboxescomic.tumblr.com)
  * [Pie Comic](http://piecomic.tumblr.com)
