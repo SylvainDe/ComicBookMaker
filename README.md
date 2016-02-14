@@ -168,6 +168,7 @@ Comics supported
  * [Unearthed Comics (from Tapastic)](http://tapastic.com/series/UnearthedComics)
  * [Unearthed Comics (from Tumblr)](http://unearthedcomics.tumblr.com)
  * [Up And Out](http://jeremykaye.tumblr.com)
+ * [Vector Belly](http://vectorbelly.tumblr.com)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg -l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Warehouse Comic](http://warehousecomic.com)

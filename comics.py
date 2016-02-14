@@ -2821,6 +2821,14 @@ class OwlTurdTumblr(GenericTumblrV1):
     url = 'http://owlturd.com'
 
 
+class VectorBelly(GenericTumblrV1):
+    """Class to retrieve Vector Belly comics."""
+    # Also on http://vectorbelly.com
+    name = 'vector'
+    long_name = 'Vector Belly'
+    url = 'http://vectorbelly.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
