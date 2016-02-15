@@ -144,6 +144,8 @@ Comics supported
  * [Ted Rall (from GoComics)](http://www.gocomics.com/tedrall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [Gone Into Rapture](http://www.goneintorapture.com)
+ * [Gone Into Rapture (from Tapastic)](http://tapastic.com/series/Goneintorapture)
+ * [Gone Into Rapture (from Tumblr)](http://goneintorapture.tumblr.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)

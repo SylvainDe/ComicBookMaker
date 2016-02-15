@@ -2009,6 +2009,8 @@ class AnythingComic(GenericComic):
 
 class GoneIntoRapture(GenericNavigableComic):
     """Class to retrieve Gone Into Rapture comics."""
+    # Also on http://goneintorapture.tumblr.com
+    # Also on http://tapastic.com/series/Goneintorapture
     name = 'rapture'
     long_name = 'Gone Into Rapture'
     url = 'http://www.goneintorapture.com'
@@ -2829,6 +2831,15 @@ class VectorBelly(GenericTumblrV1):
     url = 'http://vectorbelly.tumblr.com'
 
 
+class GoneIntoRaptureTumblr(GenericTumblrV1):
+    """Class to retrieve Gone Into Rapture comics."""
+    # Also on http://www.goneintorapture.com
+    # Also on http://tapastic.com/series/Goneintorapture
+    name = 'rapture-tumblr'
+    long_name = 'Gone Into Rapture (from Tumblr)'
+    url = 'http://goneintorapture.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3160,6 +3171,15 @@ class OwlTurdTapastic(TapasticComic):
     name = 'owlturd-tapa'
     long_name = 'Owl Turd (from Tapastic)'
     url = 'http://tapastic.com/series/Owl-Turd-Comix'
+
+
+class GoneIntoRaptureTapastic(TapasticComic):
+    """Class to retrieve Gone Into Rapture comics."""
+    # Also on http://goneintorapture.tumblr.com
+    # Also on http://www.goneintorapture.com
+    name = 'rapture-tapa'
+    long_name = 'Gone Into Rapture (from Tapastic)'
+    url = 'http://tapastic.com/series/Goneintorapture'
 
 
 def get_subclasses(klass):
