@@ -2840,6 +2840,29 @@ class GoneIntoRaptureTumblr(GenericTumblrV1):
     url = 'http://goneintorapture.tumblr.com'
 
 
+class TheOatmealTumblr(GenericTumblrV1):
+    """Class to retrieve The Oatmeal comics."""
+    # Also on http://theoatmeal.com
+    name = 'oatmeal-tumblr'
+    long_name = 'The Oatmeal (from Tumblr)'
+    url = 'http://oatmeal.tumblr.com'
+
+
+class HeckIfIKnowComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Heck If I Know Comics."""
+    # Also on http://tapastic.com/series/Regular
+    name = 'heck-tumblr'
+    long_name = 'Heck if I Know comics (from Tumblr)'
+    url = 'http://heckifiknowcomics.com'
+
+
+class MyJetPack(GenericTumblrV1):
+    """Class to retrieve My Jet Pack comics."""
+    name = 'jetpack'
+    long_name = 'My Jet Pack'
+    url = 'http://myjetpack.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3180,6 +3203,14 @@ class GoneIntoRaptureTapastic(TapasticComic):
     name = 'rapture-tapa'
     long_name = 'Gone Into Rapture (from Tapastic)'
     url = 'http://tapastic.com/series/Goneintorapture'
+
+
+class HeckIfIKnowComicsTapa(TapasticComic):
+    """Class to retrieve Heck If I Know Comics."""
+    # Also on http://heckifiknowcomics.com
+    name = 'heck-tapa'
+    long_name = 'Heck if I Know comics (from Tapastic)'
+    url = 'http://tapastic.com/series/Regular'
 
 
 def get_subclasses(klass):
