@@ -2581,6 +2581,32 @@ class ElectricBunnyComic(GenericNavigableComic):
         }
 
 
+class SheldonComics(GenericNavigableComic):
+    """Class to retrieve Sheldon comics."""
+    name = 'sheldon'
+    long_name = 'Sheldon Comics'
+    url = 'http://www.sheldoncomics.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find("a", id="nav-first")
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        return last_soup.find("a", id="nav-next" if next_ else "nav-prev")
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find("div", id="comic-foot").find_all("img")
+        assert all(i['alt'] == i['title'] for i in imgs)
+        assert len(imgs) == 1
+        title = imgs[0]['title']
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class MakeItStoopid(GenericNavigableComic):
     """Class to retrieve Make It Stoopid Comics."""
     name = 'stoopid'
