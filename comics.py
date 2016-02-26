@@ -498,7 +498,7 @@ class ItsTheTie(GenericNavigableComic):
         # Bonus images may or may not be in meta og:image.
         imgs = soup.find_all('meta', property='og:image')
         imgs_src = [i['content'] for i in imgs]
-        bonus = soup.find_all('img', attrs = {'data-oversrc' : True})
+        bonus = soup.find_all('img', attrs={'data-oversrc': True})
         bonus_src = [b['data-oversrc'] for b in bonus]
         all_imgs_src = imgs_src + [s for s in bonus_src if s not in imgs_src]
         all_imgs_src = [s for s in all_imgs_src if not s.endswith("/2016/01/bonus-panel.png")]
