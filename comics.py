@@ -1587,6 +1587,26 @@ class MouseBearComedy(GenericNavigableComic):
         }
 
 
+class BigFootJustice(GenericNavigableComic):
+    """Class to retrieve Big Foot Justice comics."""
+    # Also on http://tapastic.com/series/bigfoot-justice
+    name = 'bigfoot'
+    long_name = 'Big Foot Justice'
+    url = 'http://bigfootjustice.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find('div', id='comic').find_all('img')
+        assert all(i['title'] == i['alt'] for i in imgs)
+        title = ' '.join(i['title'] for i in imgs)
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+        }
+
+
 class SafelyEndangered(GenericNavigableComic):
     """Class to retrieve Safely Endangered comics."""
     name = 'endangered'
@@ -3260,6 +3280,14 @@ class CheerUpEmoKidTapa(TapasticComic):
     name = 'cuek-tapa'
     long_name = 'Cheer Up Emo Kid (from Tapastic)'
     url = 'http://tapastic.com/series/CUEK'
+
+
+class BigFootJusticeTapa(TapasticComic):
+    """Class to retrieve Big Foot Justice comics."""
+    # Also on http://bigfootjustice.com
+    name = 'bigfoot-tapa'
+    long_name = 'Big Foot Justice (from Tapastic)'
+    url = 'http://tapastic.com/series/bigfoot-justice'
 
 
 def get_subclasses(klass):

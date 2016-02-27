@@ -55,6 +55,8 @@ Comics supported
  * [Ma vie est tout a fait fascinante (Bagieu)](http://www.penelope-jolicoeur.com)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
+ * [Big Foot Justice](http://bigfootjustice.com)
+ * [Big Foot Justice (from Tapastic)](http://tapastic.com/series/bigfoot-justice)
  * [Biter Comics](http://www.bitercomics.com)
  * [Every Day Blues](http://everydayblues.net)
  * [Boulet Corp](http://www.bouletcorp.com)
