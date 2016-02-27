@@ -2894,6 +2894,15 @@ class MyJetPack(GenericTumblrV1):
     url = 'http://myjetpack.tumblr.com'
 
 
+class CheerUpEmoKidTumblr(GenericTumblrV1):
+    """Class to retrieve CheerUpEmoKid comics."""
+    # Also on http://www.cheerupemokid.com
+    # Also on http://tapastic.com/series/CUEK
+    name = 'cuek-tumblr'
+    long_name = 'Cheer Up Emo Kid (from Tumblr)'
+    url = 'http://enzocomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3242,6 +3251,15 @@ class HeckIfIKnowComicsTapa(TapasticComic):
     name = 'heck-tapa'
     long_name = 'Heck if I Know comics (from Tapastic)'
     url = 'http://tapastic.com/series/Regular'
+
+
+class CheerUpEmoKidTapa(TapasticComic):
+    """Class to retrieve CheerUpEmoKid comics."""
+    # Also on http://www.cheerupemokid.com
+    # Also on http://enzocomics.tumblr.com
+    name = 'cuek-tapa'
+    long_name = 'Cheer Up Emo Kid (from Tapastic)'
+    url = 'http://tapastic.com/series/CUEK'
 
 
 def get_subclasses(klass):

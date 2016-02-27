@@ -75,6 +75,8 @@ Comics supported
  * [Commit Strip (Fr)](http://www.commitstrip.com/fr)
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
+ * [Cheer Up Emo Kid (from Tapastic)](http://tapastic.com/series/CUEK)
+ * [Cheer Up Emo Kid (from Tumblr)](http://enzocomics.tumblr.com)
  * [Les Culottees](http://lesculottees.blog.lemonde.fr)
  * [Cyanide and Happiness](http://explosm.net)
  * [Deadly Panel](http://www.deadlypanel.com)
