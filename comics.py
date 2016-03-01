@@ -450,6 +450,7 @@ class SpaceAvalanche(GenericNavigableComic):
 
 class ZenPencils(GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
+    # Also on http://zenpencils.tumblr.com
     name = 'zenpencils'
     long_name = 'Zen Pencils'
     url = 'http://zenpencils.com'
@@ -687,6 +688,7 @@ class VictimsOfCircumsolar(GenericNavigableComic):
 
 class ThreeWordPhrase(GenericNavigableComic):
     """Class to retrieve Three Word Phrase comics."""
+    # Also on http://www.threewordphrase.tumblr.com
     name = 'threeword'
     long_name = 'Three Word Phrase'
     url = 'http://threewordphrase.com'
@@ -1609,6 +1611,7 @@ class BigFootJustice(GenericNavigableComic):
 
 class SafelyEndangered(GenericNavigableComic):
     """Class to retrieve Safely Endangered comics."""
+    # Also on http://tumblr.safelyendangered.com
     name = 'endangered'
     long_name = 'Safely Endangered'
     url = 'http://www.safelyendangered.com'
@@ -2482,6 +2485,35 @@ class UnearthedComics(GenericNavigableComic):
         }
 
 
+class Optipess(GenericNavigableComic):
+    """Class to retrieve Optipess comics."""
+    name = 'optipess'
+    long_name = 'Optipess'
+    url = 'http://www.optipess.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        comic = soup.find('div', id='comic')
+        imgs = comic.find_all('img') if comic else []
+        alt = imgs[0]['title'] if imgs else ""
+        assert all(i['alt'] == i['title'] == alt for i in imgs)
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        return {
+            'title': title,
+            'alt': alt,
+            'author': author,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class PainTrainComic(GenericNavigableComic):
     """Class to retrieve Pain Train Comics."""
     name = 'paintrain'
@@ -2921,6 +2953,38 @@ class CheerUpEmoKidTumblr(GenericTumblrV1):
     name = 'cuek-tumblr'
     long_name = 'Cheer Up Emo Kid (from Tumblr)'
     url = 'http://enzocomics.tumblr.com'
+
+
+class ForLackOfABetterComic(GenericTumblrV1):
+    """Class to retrieve For Lack Of A Better Comics."""
+    # Also on http://forlackofabettercomic.com
+    name = 'lack'
+    long_name = 'For Lack Of A Better Comic'
+    url = 'http://forlackofabettercomic.tumblr.com'
+
+
+class ZenPencilsTumblr(GenericTumblrV1):
+    """Class to retrieve ZenPencils comics."""
+    # Also on http://zenpencils.com
+    name = 'zenpencils-tumblr'
+    long_name = 'Zen Pencils (from Tumblr)'
+    url = 'http://zenpencils.tumblr.com'
+
+
+class ThreeWordPhraseTumblr(GenericTumblrV1):
+    """Class to retrieve Three Word Phrase comics."""
+    # Also on http://threewordphrase.com
+    name = 'threeword-tumblr'
+    long_name = 'Three Word Phrase (from Tumblr)'
+    url = 'http://www.threewordphrase.tumblr.com'
+
+
+class SafelyEndangeredTumblr(GenericTumblrV1):
+    """Class to retrieve Safely Endangered comics."""
+    # Also on http://www.safelyendangered.com
+    name = 'endangered-tumblr'
+    long_name = 'Safely Endangered (from Tumblr)'
+    url = 'http://tumblr.safelyendangered.com'
 
 
 class HorovitzComics(GenericListableComic):
