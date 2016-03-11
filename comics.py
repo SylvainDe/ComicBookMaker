@@ -943,7 +943,7 @@ class GenericBouletCorp(GenericNavigableComic):
         texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
         title = soup.find('title').string
         return {
-            'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
+            'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs if i.get('src') is not None],
             'title': title,
             'texts': texts,
             'year': year,
