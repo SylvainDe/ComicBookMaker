@@ -2856,9 +2856,10 @@ class Flocci(GenericTumblrV1):
 
 class UpAndOut(GenericTumblrV1):
     """Class to retrieve Up & Out comics."""
+    # Also on http://tapastic.com/series/UP-and-OUT
     name = 'upandout'
-    long_name = 'Up And Out'
-    url = 'http://jeremykaye.tumblr.com'
+    long_name = 'Up And Out (from Tumblr)'
+    url = 'http://upandoutcomic.tumblr.com'
 
 
 class Pundemonium(GenericTumblrV1):
@@ -3352,6 +3353,14 @@ class BigFootJusticeTapa(TapasticComic):
     name = 'bigfoot-tapa'
     long_name = 'Big Foot Justice (from Tapastic)'
     url = 'http://tapastic.com/series/bigfoot-justice'
+
+
+class UpAndOutTapa(TapasticComic):
+    """Class to retrieve Up & Out comics."""
+    # Also on http://upandoutcomic.tumblr.com
+    name = 'upandout-tapa'
+    long_name = 'Up And Out (from Tapastic)'
+    url = 'http://tapastic.com/series/UP-and-OUT'
 
 
 def get_subclasses(klass):
