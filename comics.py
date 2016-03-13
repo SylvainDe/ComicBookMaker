@@ -994,6 +994,7 @@ class AmazingSuperPowers(GenericNavigableComic):
 
 class ToonHole(GenericListableComic):
     """Class to retrieve Toon Holes comics."""
+    # Also on http://tapastic.com/series/TOONHOLE
     name = 'toonhole'
     long_name = 'Toon Hole'
     url = 'http://www.toonhole.com'
@@ -3361,6 +3362,14 @@ class UpAndOutTapa(TapasticComic):
     name = 'upandout-tapa'
     long_name = 'Up And Out (from Tapastic)'
     url = 'http://tapastic.com/series/UP-and-OUT'
+
+
+class ToonHoleTapa(TapasticComic):
+    """Class to retrieve Toon Holes comics."""
+    # Also on http://www.toonhole.com
+    name = 'toonhole-tapa'
+    long_name = 'Toon Hole (from Tapastic)'
+    url = 'http://tapastic.com/series/TOONHOLE'
 
 
 def get_subclasses(klass):

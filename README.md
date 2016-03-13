@@ -176,6 +176,7 @@ Comics supported
  * [It's the tie (from Tumblr)](http://itsthetie.tumblr.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
+ * [Toon Hole (from Tapastic)](http://tapastic.com/series/TOONHOLE)
  * [Tubey Toons](http://tubeytoons.com)
  * [Tubey Toons (from Tapastic)](http://tapastic.com/series/Tubey-Toons)
  * [Tubey Toons (from Tumblr)](http://tubeytoons.tumblr.com)
