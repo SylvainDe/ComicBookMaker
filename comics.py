@@ -420,6 +420,44 @@ class Rall(GenericNavigableComic):
         }
 
 
+class Dilem(GenericNavigableComic):
+    """Class to retrieve Ali Dilem comics."""
+    name = 'dilem'
+    long_name = 'Ali Dilem'
+    url = 'http://information.tv5monde.com/dilem'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': "http://information.tv5monde.com/dilem/2004-06-26"}
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        # prev is next / next is prev
+        li = last_soup.find('li', class_='prev' if next_ else 'next')
+        return li.find('a') if li else None
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        short_url = soup.find('link', rel='shortlink')['href']
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        imgs = soup.find_all('meta', property='og:image')
+        date_str = soup.find('span', property='dc:date')['content']
+        date_str = date_str[:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        return {
+            'short_url': short_url,
+            'title': title,
+            'img': [i['content'] for i in imgs],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+        }
+
+
 class SpaceAvalanche(GenericNavigableComic):
     """Class to retrieve Space Avalanche comics."""
     name = 'avalanche'
