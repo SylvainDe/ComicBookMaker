@@ -3257,6 +3257,7 @@ class TapasticComic(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
+        return []
         pref, suff = 'episodeList : ', ','
         # Information is stored in the javascript part
         # I don't know the clean way to get it so this is the ugly way.
