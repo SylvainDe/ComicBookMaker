@@ -3236,17 +3236,17 @@ class TapasticComic(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, archive_element):
-        date_str = archive_element['publishDate'].split()[0]
-        year, month, day = [int(e) for e in date_str.split('-')]
+        timestamp = int(archive_element['publishDate']) / 1000.0
+        day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
         if not imgs:
             print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_element))
             return None
         assert len(imgs) > 0
         return {
-            'day': day,
-            'year': year,
-            'month': month,
+            'day': day.day,
+            'year': day.year,
+            'month': day.month,
             'img': [i['src'] for i in imgs],
             'title': archive_element['title'],
         }
@@ -3257,7 +3257,6 @@ class TapasticComic(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        return []
         pref, suff = 'episodeList : ', ','
         # Information is stored in the javascript part
         # I don't know the clean way to get it so this is the ugly way.
