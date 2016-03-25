@@ -1893,7 +1893,8 @@ class ChuckleADuck(GenericNavigableComic):
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
         author = soup.find('span', class_='post-author').string
-        imgs = soup.find('div', id='comic').find_all('img')
+        div = soup.find('div', id='comic')
+        imgs = div.find_all('img') if div else []
         title = imgs[0]['title'] if imgs else ""
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
