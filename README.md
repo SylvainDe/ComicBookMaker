@@ -99,6 +99,7 @@ Comics supported
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)
  * [Fowl Language Comics](http://tapastic.com/series/Fowl-Language-Comics)
  * [Garfield](http://garfield.com)
+ * [Geek And Poke](http://geek-and-poke.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)

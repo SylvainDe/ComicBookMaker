@@ -2736,6 +2736,49 @@ class MakeItStoopid(GenericNavigableComic):
         }
 
 
+class GeekAndPoke(GenericNavigableComic):
+    """Class to retrieve Geek And Poke comics."""
+    name = 'geek'
+    long_name = 'Geek And Poke'
+    url = 'http://geek-and-poke.com'
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://geek-and-poke.com/geekandpoke/2006/8/27/a-new-place-for-a-not-so-old-blog.html'}
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        return last_soup.find('a', class_='prev-item' if next_ else 'next-item')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('time', class_='published')['datetime']
+        day = string_to_date(date_str, "%Y-%m-%d")
+        author = soup.find('a', rel='author').string
+        div_content = (soup.find('div', class_="body entry-content") or
+                       soup.find('div', class_="special-content"))
+        imgs = div_content.find_all('img')
+        imgs = [i for i in imgs if i.get('src') is not None]
+        assert all('title' not in i or i['alt'] == i['title'] for i in imgs)
+        alt = imgs[0].get('alt', "") if imgs else []
+        return {
+            'title': title,
+            'alt': alt,
+            'description': desc,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+        }
+
+
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
 
