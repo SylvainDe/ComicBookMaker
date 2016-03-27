@@ -46,6 +46,7 @@ Comics supported
  * [1111 Comics](http://www.1111comics.me)
  * [Abstruse Goose](http://abstrusegoose.com)
  * [Tales of Absurdity](http://talesofabsurdity.com)
+ * [Angry At Nothing (from Tapastic)](http://tapastic.com/series/Comics-yeah-definitely-comics-)
  * [Anything Comic](http://www.anythingcomic.com)
  * [Anything Comic (from Tapastic)](http://tapastic.com/series/anything)
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)

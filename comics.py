@@ -3454,6 +3454,14 @@ class ToonHoleTapa(TapasticComic):
     url = 'http://tapastic.com/series/TOONHOLE'
 
 
+class AngryAtNothingTapa(TapasticComic):
+    """Class to retrieve Angry at Nothing comics."""
+    # Also on http://www.angryatnothing.net
+    name = 'angry-tapa'
+    long_name = 'Angry At Nothing (from Tapastic)'
+    url = 'http://tapastic.com/series/Comics-yeah-definitely-comics-'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
