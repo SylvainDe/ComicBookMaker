@@ -602,6 +602,30 @@ class OneOneOneOneComic(GenericNavigableComic):
         }
 
 
+class AngryAtNothing(GenericNavigableComic):
+    """Class to retrieve Angry at Nothing comics."""
+    # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
+    name = 'angry'
+    long_name = 'Angry At Nothing'
+    url = 'http://www.angryatnothing.net'
+    get_first_comic_link = get_div_navfirst_a
+    get_navi_link = get_a_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h1', class_='comic-title').find('a').string
+        date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class NeDroid(GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
