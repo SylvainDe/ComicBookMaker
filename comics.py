@@ -2724,7 +2724,8 @@ class CubeDrone(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         url2 = soup.find('meta', attrs={'name': 'twitter:url'})['content']
-        date_str = soup.find('h2', class_='comic_title').find('small').string
+        # date_str = soup.find('h2', class_='comic_title').find('small').string
+        # day = string_to_date(date_str, "%B %d, %Y, %I:%M %p")
         imgs = soup.find_all('img', class_='comic img-responsive')
         title2 = imgs[0]['title']
         alt = imgs[0]['alt']
