@@ -2100,34 +2100,6 @@ class AnythingComic(GenericComic):
                     }
 
 
-class GoneIntoRapture(GenericNavigableComic):
-    """Class to retrieve Gone Into Rapture comics."""
-    # Also on http://goneintorapture.tumblr.com
-    # Also on http://tapastic.com/series/Goneintorapture
-    name = 'rapture'
-    long_name = 'Gone Into Rapture'
-    url = 'http://www.goneintorapture.com'
-    get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        title = soup.find('meta', property='og:title')['content']
-        imgs = soup.find('div', id='comic').find_all('img')
-        assert all(i['alt'] == i['title'] == title for i in imgs)
-        date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
-        desc = soup.find('meta', property='og:description')['content']
-        return {
-            'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
-            'title': title,
-            'description': desc,
-        }
-
-
 class LonnieMillsap(GenericNavigableComic):
     """Class to retrieve Lonnie Millsap's comics."""
     name = 'millsap'
@@ -3023,13 +2995,13 @@ class VectorBelly(GenericTumblrV1):
     url = 'http://vectorbelly.tumblr.com'
 
 
-class GoneIntoRaptureTumblr(GenericTumblrV1):
+class GoneIntoRapture(GenericTumblrV1):
     """Class to retrieve Gone Into Rapture comics."""
-    # Also on http://www.goneintorapture.com
+    # Also on http://goneintorapture.tumblr.com
     # Also on http://tapastic.com/series/Goneintorapture
-    name = 'rapture-tumblr'
-    long_name = 'Gone Into Rapture (from Tumblr)'
-    url = 'http://goneintorapture.tumblr.com'
+    name = 'rapture'
+    long_name = 'Gone Into Rapture'
+    url = 'http://www.goneintorapture.com'
 
 
 class TheOatmealTumblr(GenericTumblrV1):
