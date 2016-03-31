@@ -113,7 +113,7 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False):
         be able to reuse code at some point
     detect_rel is a hacky flag to detect next/first comics automatically
     Returns a BeautifulSoup object."""
-    soup = BeautifulSoup(get_content(url))
+    soup = BeautifulSoup(get_content(url), "html.parser")
     if detect_meta:
         for meta_val in ['generator', 'ComicPress', 'Comic-Easel']:
             meta = soup.find('meta', attrs={'name': meta_val})
