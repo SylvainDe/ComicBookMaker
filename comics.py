@@ -3088,6 +3088,14 @@ class ThreeWordPhraseTumblr(GenericTumblrV1):
     url = 'http://www.threewordphrase.tumblr.com'
 
 
+class TimeTrabbleTumblr(GenericTumblrV1):
+    """Class to retrieve Time Trabble comics."""
+    # Also on http://timetrabble.com
+    name = 'timetrabble-tumblr'
+    long_name = 'Time Trabble (from Tumblr)'
+    url = 'http://timetrabble.tumblr.com'
+
+
 class SafelyEndangeredTumblr(GenericTumblrV1):
     """Class to retrieve Safely Endangered comics."""
     # Also on http://www.safelyendangered.com
