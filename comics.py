@@ -3513,6 +3513,7 @@ class AngryAtNothingTapa(TapasticComic):
 
 class HappyMondayTapa(TapasticComic):
     """Class to retrieve Happy Monday comics."""
+    # Also on http://happymondaycomics.com
     name = 'happymonday-tapa'
     long_name = 'Happy Monday (from Tapastic)'
     url = 'https://tapastic.com/series/HappyMondayComics'
