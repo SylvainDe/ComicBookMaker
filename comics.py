@@ -1628,6 +1628,7 @@ class JustSayEh(GenericNavigableComic):
 
 class MouseBearComedy(GenericNavigableComic):
     """Class to retrieve Mouse Bear Comedy comics."""
+    # Also on http://mousebearcomedy.tumblr.com
     name = 'mousebear'
     long_name = 'Mouse Bear Comedy'
     url = 'http://www.mousebearcomedy.com'
@@ -3093,6 +3094,14 @@ class SafelyEndangeredTumblr(GenericTumblrV1):
     name = 'endangered-tumblr'
     long_name = 'Safely Endangered (from Tumblr)'
     url = 'http://tumblr.safelyendangered.com'
+
+
+class MouseBearComedyTumblr(GenericTumblrV1):
+    """Class to retrieve Mouse Bear Comedy comics."""
+    # Also on http://www.mousebearcomedy.com
+    name = 'mousebear-tumblr'
+    long_name = 'Mouse Bear Comedy (from Tumblr)'
+    url = 'http://mousebearcomedy.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):

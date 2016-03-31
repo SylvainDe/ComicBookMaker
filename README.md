@@ -127,6 +127,7 @@ Comics supported
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Mouse Bear Comedy](http://www.mousebearcomedy.com)
+ * [Mouse Bear Comedy (from Tumblr)](http://mousebearcomedy.tumblr.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [The Oatmeal (from Tumblr)](http://oatmeal.tumblr.com)
