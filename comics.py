@@ -3486,6 +3486,13 @@ class AngryAtNothingTapa(TapasticComic):
     url = 'http://tapastic.com/series/Comics-yeah-definitely-comics-'
 
 
+class HappyMondayTapa(TapasticComic):
+    """Class to retrieve Happy Monday comics."""
+    name = 'happymonday-tapa'
+    long_name = 'Happy Monday (from Tapastic)'
+    url = 'https://tapastic.com/series/HappyMondayComics'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()

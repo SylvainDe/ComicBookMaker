@@ -107,6 +107,7 @@ Comics supported
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
  * [A Ham A Day](http://www.ahammaday.com)
  * [Happle Tea](http://www.happletea.com)
+ * [Happy Monday (from Tapastic)](https://tapastic.com/series/HappyMondayComics)
  * [Heck if I Know comics (from Tapastic)](http://tapastic.com/series/Regular)
  * [Heck if I Know comics (from Tumblr)](http://heckifiknowcomics.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
