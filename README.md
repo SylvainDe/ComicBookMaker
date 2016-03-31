@@ -79,6 +79,7 @@ Comics supported
  * [Commit Strip (Fr)](http://www.commitstrip.com/fr)
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
+ * [Cube Drone](http://cube-drone.com/comics)
  * [Cheer Up Emo Kid (from Tapastic)](http://tapastic.com/series/CUEK)
  * [Cheer Up Emo Kid (from Tumblr)](http://enzocomics.tumblr.com)
  * [Les Culottees](http://lesculottees.blog.lemonde.fr)

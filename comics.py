@@ -2701,6 +2701,42 @@ class SheldonComics(GenericNavigableComic):
         }
 
 
+class CubeDrone(GenericNavigableComic):
+    """Class to retrieve Cube Drone comics."""
+    name = 'cubedrone'
+    long_name = 'Cube Drone'
+    url = 'http://cube-drone.com/comics'
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return get_soup_at_url(cls.url).find('span', class_='glyphicon glyphicon-backward').parent
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        class_ = 'glyphicon glyphicon-chevron-' + ('right' if next_ else 'left')
+        return last_soup.find('span', class_=class_).parent
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        url2 = soup.find('meta', attrs={'name': 'twitter:url'})['content']
+        date_str = soup.find('h2', class_='comic_title').find('small').string
+        imgs = soup.find_all('img', class_='comic img-responsive')
+        title2 = imgs[0]['title']
+        alt = imgs[0]['alt']
+        return {
+                'url2': url2,
+                'title': title,
+                'title2': title2,
+                'alt': alt,
+                'img': [i['src'] for i in imgs],
+        }
+
+
 class MakeItStoopid(GenericNavigableComic):
     """Class to retrieve Make It Stoopid Comics."""
     name = 'stoopid'
