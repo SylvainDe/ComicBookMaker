@@ -2730,11 +2730,11 @@ class CubeDrone(GenericNavigableComic):
         title2 = imgs[0]['title']
         alt = imgs[0]['alt']
         return {
-                'url2': url2,
-                'title': title,
-                'title2': title2,
-                'alt': alt,
-                'img': [i['src'] for i in imgs],
+            'url2': url2,
+            'title': title,
+            'title2': title2,
+            'alt': alt,
+            'img': [i['src'] for i in imgs],
         }
 
 
