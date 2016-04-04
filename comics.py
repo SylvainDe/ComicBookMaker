@@ -990,6 +990,7 @@ class BerkeleyMews(GenericListableComic):
 
 class GenericBouletCorp(GenericNavigableComic):
     """Generic class to retrieve BouletCorp comics in different languages."""
+    # Also on http://bouletcorp.tumblr.com
     get_navi_link = get_link_rel_next
 
     @classmethod
@@ -3119,6 +3120,14 @@ class MouseBearComedyTumblr(GenericTumblrV1):
     name = 'mousebear-tumblr'
     long_name = 'Mouse Bear Comedy (from Tumblr)'
     url = 'http://mousebearcomedy.tumblr.com'
+
+
+class BouletCorpTumblr(GenericTumblrV1):
+    """Class to retrieve BouletCorp comics."""
+    # Also on http://www.bouletcorp.com
+    name = 'boulet-tumblr'
+    long_name = 'Boulet Corp (from Tumblr)'
+    url = 'http://bouletcorp.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):

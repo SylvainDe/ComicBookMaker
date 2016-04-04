@@ -62,6 +62,7 @@ Comics supported
  * [Biter Comics](http://www.bitercomics.com)
  * [Every Day Blues](http://everydayblues.net)
  * [Boulet Corp](http://www.bouletcorp.com)
+ * [Boulet Corp (from Tumblr)](http://bouletcorp.tumblr.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
  * [Boumeries (En)](http://comics.boumerie.com)
  * [Boumeries (Fr)](http://bd.boumerie.com)
