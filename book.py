@@ -13,6 +13,7 @@ from comic_abstract import get_date_for_comic, get_info_before_comic, get_info_a
 
 # http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
 KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
+# <?xml version="1.0" encoding="UTF-8" ?>
 HTML_HEADER = """
 <html>
     <head>
@@ -42,6 +43,38 @@ HTML_FOOTER = """
     </body>
 </html>"""
 
+XHTML_HEADER = """
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>%s</title>
+  <meta name='cover' content='%s'/>
+</head>
+
+<body>
+  Generated with '%s' at %s
+"""
+
+XHTML_TOC_ITEM = """
+        <a href='#%d'>%s</a><br/>"""
+
+XHTML_START = """
+    <h1>Comics</h1>"""
+
+XHTML_COMIC_INFO = """
+        <a name='%d'/><h2>%s</h2>
+            %s %s<br/>"""
+
+XHTML_COMIC_ADDITIONAL_INFO = """
+            %s<br/>"""
+
+XHTML_FOOTER = """
+</body>
+
+</html>"""
 
 def collect_comics(comic_classes):
     return chain.from_iterable(c.load_db() for c in comic_classes)
@@ -49,14 +82,18 @@ def collect_comics(comic_classes):
 
 def filter_comics(comics):
     return [c for c in comics if 'new' in c]
+    return comics
+    import datetime
+    limit = datetime.date(2015, 11, 26)
+    return [c for c in comics if get_date_for_comic(c) >= limit]
 
 
 def sort_comics(comics):
-    return sorted(comics, key=get_date_for_comic)
+    return sorted(comics, key=get_date_for_comic, reverse=True)
 
 
 def truncate_comics(comics):
-    return comics[-2000:]
+    return comics[:2500]
 
 
 def make_book(comic_classes):
@@ -76,6 +113,43 @@ def make_book(comic_classes):
 
 def convert_unicode_to_html(text):
     return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
+
+
+def make_book_from_comic_list2(comics, title, file_name):
+    cover = 'empty.jpg'
+    output_dir = 'generated_books'
+    os.makedirs(output_dir, exist_ok=True)
+    html_book = os.path.join(output_dir, file_name)
+
+    with open(html_book, 'w+') as book:
+        book.write(XHTML_HEADER % (
+            title,
+            cover,
+            ' '.join(sys.argv),
+            datetime.datetime.now().strftime('%c')
+        ))
+
+        for i, com in enumerate(comics):
+            book.write(XHTML_TOC_ITEM % (i, com['url']))
+
+        book.write(XHTML_START)
+
+        for i, com in enumerate(comics):
+            book.write(XHTML_COMIC_INFO % (
+                i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+
+            for info in get_info_before_comic(com):
+                book.write(XHTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
+            for path in com['local_img']:
+                if path is not None:
+                    assert os.path.isfile(path)
+                    # subprocess.call(['cp', path, output_dir])
+                    # book.write(
+                    #     HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
+            for info in get_info_after_comic(com):
+                book.write(XHTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
+        book.write(XHTML_FOOTER)
+
 
 
 def make_book_from_comic_list(comics, title, file_name):
