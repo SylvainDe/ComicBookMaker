@@ -129,7 +129,7 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False):
                 print(meta)
     if detect_rel:
         for tag in ['a', 'link']:
-            next_ = soup.find(tag, rel='next')
-            if next_ is not None:
-                print(next_)
+            link = soup.find(tag, rel='prev')
+            if link is not None:
+                print(link)
     return soup
