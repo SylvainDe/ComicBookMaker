@@ -101,9 +101,9 @@ class GenericComic(object):
             assert curr_date <= today
             curr_num = comic.get('num', 0)
             assert isinstance(curr_num, int)
-            assert prev_date is None or prev_date <= curr_date or \
-                prev_num < curr_num, \
-                "Comics are not in order (%s)" % url
+            # assert prev_date is None or prev_date <= curr_date or \
+            #     prev_num < curr_num, \
+            #     "Comics are not in order (%s)" % url
             prev_date, prev_num = curr_date, curr_num
             img = comic.get('img')
             local_img = comic.get('local_img')
