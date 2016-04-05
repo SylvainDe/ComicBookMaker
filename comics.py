@@ -2254,6 +2254,9 @@ class BiterComics(GenericNavigableComic):
 
 class TheAwkwardYeti(GenericNavigableComic):
     """Class to retrieve The Awkward Yeti comics."""
+    # Also on http://www.gocomics.com/the-awkward-yeti
+    # Also on http://larstheyeti.tumblr.com
+    # Also on https://tapastic.com/series/TheAwkwardYeti
     name = 'yeti'
     long_name = 'The Awkward Yeti'
     url = 'http://theawkwardyeti.com'
@@ -3130,6 +3133,16 @@ class BouletCorpTumblr(GenericTumblrV1):
     url = 'http://bouletcorp.tumblr.com'
 
 
+class TheAwkwardYetiTumblr(GenericTumblrV1):
+    """Class to retrieve The Awkward Yeti comics."""
+    # Also on http://www.gocomics.com/the-awkward-yeti
+    # Also on http://theawkwardyeti.com
+    # Also on https://tapastic.com/series/TheAwkwardYeti
+    name = 'yeti-tumblr'
+    long_name = 'The Awkward Yeti (from Tumblr)'
+    url = 'http://larstheyeti.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3334,6 +3347,16 @@ class RallGoComic(GenericGoComic):
     url = "http://www.gocomics.com/tedrall"
 
 
+class TheAwkwardYetiGoComic(GenericGoComic):
+    """Class to retrieve The Awkward Yeti comics."""
+    # Also on http://larstheyeti.tumblr.com
+    # Also on http://theawkwardyeti.com
+    # Also on https://tapastic.com/series/TheAwkwardYeti
+    name = 'yeti-goc'
+    long_name = 'The Awkward Yeti (from GoComics)'
+    url = 'http://www.gocomics.com/the-awkward-yeti'
+
+
 class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
@@ -3527,6 +3550,16 @@ class HappyMondayTapa(TapasticComic):
     name = 'happymonday-tapa'
     long_name = 'Happy Monday (from Tapastic)'
     url = 'https://tapastic.com/series/HappyMondayComics'
+
+
+class TheAwkwardYetiTapa(TapasticComic):
+    """Class to retrieve The Awkward Yeti comics."""
+    # Also on http://www.gocomics.com/the-awkward-yeti
+    # Also on http://theawkwardyeti.com
+    # Also on http://larstheyeti.tumblr.com
+    name = 'yeti-tapa'
+    long_name = 'The Awkward Yeti (from Tapastic)'
+    url = 'https://tapastic.com/series/TheAwkwardYeti'
 
 
 def get_subclasses(klass):
