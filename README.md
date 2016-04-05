@@ -195,6 +195,8 @@ Comics supported
  * [Unearthed Comics (from Tumblr)](http://unearthedcomics.tumblr.com)
  * [Up And Out (from Tumblr)](http://upandoutcomic.tumblr.com)
  * [Up And Out (from Tapastic)](http://tapastic.com/series/UP-and-OUT)
+ * [As Per Usual (from Tapastic)](https://tapastic.com/series/AsPerUsual)
+ * [As Per Usual (from Tumblr)](http://as-per-usual.tumblr.com)
  * [Vector Belly](http://vectorbelly.tumblr.com)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg -l'actu en patates](http://vidberg.blog.lemonde.fr)

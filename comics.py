@@ -3158,6 +3158,14 @@ class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     url = 'http://downtheupwardspiral.tumblr.com'
 
 
+class AsPerUsualTumblr(GenericTumblrV1):
+    """Class to retrieve As Per Usual comics."""
+    # Also on https://tapastic.com/series/AsPerUsual
+    name = 'usual-tumblr'
+    long_name = 'As Per Usual (from Tumblr)'
+    url = 'http://as-per-usual.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3575,6 +3583,14 @@ class TheAwkwardYetiTapa(TapasticComic):
     name = 'yeti-tapa'
     long_name = 'The Awkward Yeti (from Tapastic)'
     url = 'https://tapastic.com/series/TheAwkwardYeti'
+
+
+class AsPerUsualTapa(TapasticComic):
+    """Class to retrieve As Per Usual comics."""
+    # Also on http://as-per-usual.tumblr.com
+    name = 'usual-tapa'
+    long_name = 'As Per Usual (from Tapastic)'
+    url = 'https://tapastic.com/series/AsPerUsual'
 
 
 def get_subclasses(klass):
