@@ -3143,6 +3143,21 @@ class TheAwkwardYetiTumblr(GenericTumblrV1):
     url = 'http://larstheyeti.tumblr.com'
 
 
+class NellucNhoj(GenericTumblrV1):
+    """Class to retrieve NellucNhoj comics."""
+    name = 'nhoj'
+    long_name = 'Nelluc Nhoj'
+    url = 'http://nellucnhoj.com'
+
+
+class DownTheUpwardSpiralTumblr(GenericTumblrV1):
+    """Class to retrieve Down The Upward Spiral comics."""
+    # Also on http://www.downtheupwardspiral.com
+    name = 'spiral-tumblr'
+    long_name = 'Down the Upward Spiral (from Tumblr)'
+    url = 'http://downtheupwardspiral.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
