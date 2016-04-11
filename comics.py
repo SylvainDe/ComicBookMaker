@@ -581,6 +581,8 @@ class PenelopeBagieu(GenericNavigableComic):
 
 class OneOneOneOneComic(GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
+    # Also on http://comics1111.tumblr.com
+    # Also on https://tapastic.com/series/1111-Comics
     name = '1111'
     long_name = '1111 Comics'
     url = 'http://www.1111comics.me'
@@ -3166,6 +3168,15 @@ class AsPerUsualTumblr(GenericTumblrV1):
     url = 'http://as-per-usual.tumblr.com'
 
 
+class OneOneOneOneComicTumblr(GenericTumblrV1):
+    """Class to retrieve 1111 Comics."""
+    # Also on http://www.1111comics.me
+    # Also on https://tapastic.com/series/1111-Comics
+    name = '1111-tumblr'
+    long_name = '1111 Comics (from Tumblr)'
+    url = 'http://comics1111.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3591,6 +3602,15 @@ class AsPerUsualTapa(TapasticComic):
     name = 'usual-tapa'
     long_name = 'As Per Usual (from Tapastic)'
     url = 'https://tapastic.com/series/AsPerUsual'
+
+
+class OneOneOneOneComicTapa(TapasticComic):
+    """Class to retrieve 1111 Comics."""
+    # Also on http://www.1111comics.me
+    # Also on http://comics1111.tumblr.com
+    name = '1111-tapa'
+    long_name = '1111 Comics (from Tapastic)'
+    url = 'https://tapastic.com/series/1111-Comics'
 
 
 def get_subclasses(klass):
