@@ -955,6 +955,8 @@ class Mercworks(GenericNavigableComic):
 
 class BerkeleyMews(GenericListableComic):
     """Class to retrieve Berkeley Mews comics."""
+    # Also on http://mews.tumblr.com
+    # Also on http://www.gocomics.com/berkeley-mews
     name = 'berkeley'
     long_name = 'Berkeley Mews'
     url = 'http://www.berkeleymews.com'
@@ -3177,6 +3179,15 @@ class OneOneOneOneComicTumblr(GenericTumblrV1):
     url = 'http://comics1111.tumblr.com'
 
 
+class BerkeleyMewsTumblr(GenericTumblrV1):
+    """Class to retrieve Berkeley Mews comics."""
+    # Also on http://www.gocomics.com/berkeley-mews
+    # Also on http://www.berkeleymews.com
+    name = 'berkeley-tumblr'
+    long_name = 'Berkeley Mews (from Tumblr)'
+    url = 'http://mews.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3389,6 +3400,15 @@ class TheAwkwardYetiGoComic(GenericGoComic):
     name = 'yeti-goc'
     long_name = 'The Awkward Yeti (from GoComics)'
     url = 'http://www.gocomics.com/the-awkward-yeti'
+
+
+class BerkeleyMewsGoComics(GenericGoComic):
+    """Class to retrieve Berkeley Mews comics."""
+    # Also on http://mews.tumblr.com
+    # Also on http://www.berkeleymews.com
+    name = 'berkeley-goc'
+    long_name = 'Berkeley Mews (from GoComics)'
+    url = 'http://www.gocomics.com/berkeley-mews'
 
 
 class TapasticComic(GenericListableComic):
