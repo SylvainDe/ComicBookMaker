@@ -389,7 +389,7 @@ class LesCulottees(GenericLeMondeBlog):
 
 class Rall(GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
-    # Also on : http://www.gocomics.com/tedrall
+    # Also on http://www.gocomics.com/tedrall
     name = 'rall'
     long_name = "Ted Rall"
     url = "http://rall.com/comic"
@@ -489,6 +489,7 @@ class SpaceAvalanche(GenericNavigableComic):
 class ZenPencils(GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.tumblr.com
+    # Also on http://www.gocomics.com/zen-pencils
     name = 'zenpencils'
     long_name = 'Zen Pencils'
     url = 'http://zenpencils.com'
@@ -523,6 +524,7 @@ class ZenPencils(GenericNavigableComic):
 class ItsTheTie(GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
+    # Also on https://tapastic.com/series/itsthetie
     name = 'tie'
     long_name = "It's the tie"
     url = "http://itsthetie.com"
@@ -665,6 +667,7 @@ class NeDroid(GenericNavigableComic):
 
 class Garfield(GenericComic):
     """Class to retrieve Garfield comics."""
+    # Also on http://www.gocomics.com/garfield
     name = 'garfield'
     long_name = 'Garfield'
     url = 'http://garfield.com'
@@ -687,6 +690,7 @@ class Garfield(GenericComic):
 
 class Dilbert(GenericNavigableComic):
     """Class to retrieve Dilbert comics."""
+    # Also on http://www.gocomics.com/dilbert-classics
     name = 'dilbert'
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
@@ -855,6 +859,7 @@ class MyExtraLife(GenericNavigableComic):
 
 class SaturdayMorningBreakfastCereal(GenericNavigableComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
+    # Also on http://www.gocomics.com/saturday-morning-breakfast-cereal
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
     url = 'http://www.smbc-comics.com'
@@ -1168,6 +1173,7 @@ class CyanideAndHappiness(GenericNavigableComic):
 
 class MrLovenstein(GenericComic):
     """Class to retrieve Mr Lovenstein comics."""
+    # Also on https://tapastic.com/series/MrLovenstein
     name = 'mrlovenstein'
     long_name = 'Mr. Lovenstein'
     url = 'http://www.mrlovenstein.com'
@@ -1776,6 +1782,7 @@ class TheDoghouseDiaries(GenericNavigableComic):
 
 class InvisibleBread(GenericListableComic):
     """Class to retrieve Invisible Bread comics."""
+    # Also on http://www.gocomics.com/invisible-bread
     name = 'invisiblebread'
     long_name = 'Invisible Bread'
     url = 'http://invisiblebread.com'
@@ -1968,6 +1975,7 @@ class DepressedAlien(GenericNavigableComic):
 class ThingsInSquares(GenericListableComic):
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages
+    # Also on https://tapastic.com/series/Things-in-Squares
     name = 'squares'
     long_name = 'Things in squares'
     url = 'http://www.thingsinsquares.com'
@@ -2919,6 +2927,7 @@ class AccordingToDevin(GenericTumblrV1):
 class ItsTheTieTumblr(GenericTumblrV1):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.com
+    # Also on https://tapastic.com/series/itsthetie
     name = 'tie-tumblr'
     long_name = "It's the tie (from Tumblr)"
     url = "http://itsthetie.tumblr.com"
@@ -3092,6 +3101,7 @@ class ForLackOfABetterComic(GenericTumblrV1):
 class ZenPencilsTumblr(GenericTumblrV1):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.com
+    # Also on http://www.gocomics.com/zen-pencils
     name = 'zenpencils-tumblr'
     long_name = 'Zen Pencils (from Tumblr)'
     url = 'http://zenpencils.tumblr.com'
@@ -3346,7 +3356,7 @@ class SunnyStreet(GenericGoComic):
 
 class OffTheMark(GenericGoComic):
     """Class to retrieve Off The Mark comics."""
-    # From gocomics, not offthemark.com
+    # Also on https://www.offthemark.com
     name = 'offthemark'
     long_name = 'Off The Mark'
     url = 'http://www.gocomics.com/offthemark'
@@ -3354,7 +3364,7 @@ class OffTheMark(GenericGoComic):
 
 class WuMo(GenericGoComic):
     """Class to retrieve WuMo comics."""
-    # From gocomics, not wumo.com
+    # Also on http://wumo.com
     name = 'wumo'
     long_name = 'WuMo'
     url = 'http://www.gocomics.com/wumo'
@@ -3362,7 +3372,8 @@ class WuMo(GenericGoComic):
 
 class LunarBaboon(GenericGoComic):
     """Class to retrieve Lunar Baboon comics."""
-    # From gocomics, not lunarbaboon.com
+    # Also on http://www.lunarbaboon.com
+    # Also on https://tapastic.com/series/Lunarbaboon
     name = 'lunarbaboon'
     long_name = 'Lunar Baboon'
     url = 'http://www.gocomics.com/lunarbaboon'
@@ -3370,7 +3381,8 @@ class LunarBaboon(GenericGoComic):
 
 class SandersenGocomic(GenericGoComic):
     """Class to retrieve Sarah Andersen comics."""
-    # From gocomics, not tapastic or http://sarahcandersen.com/
+    # Also on http://sarahcandersen.com
+    # Also on http://tapastic.com/series/Doodle-Time
     name = 'sandersen-goc'
     long_name = 'Sarah Andersen (from GoComics)'
     url = 'http://www.gocomics.com/sarahs-scribbles'
@@ -3386,7 +3398,7 @@ class CalvinAndHobbesGoComic(GenericGoComic):
 
 class RallGoComic(GenericGoComic):
     """Class to retrieve Ted Rall comics."""
-    # Also on : http://rall.com/comic
+    # Also on http://rall.com/comic
     name = 'rall-goc'
     long_name = "Ted Rall (from GoComics)"
     url = "http://www.gocomics.com/tedrall"
@@ -3453,7 +3465,7 @@ class VegetablesForDessert(TapasticComic):
 
 class FowlLanguageComics(TapasticComic):
     """Class to retrieve Fowl Language comics."""
-    # From tapastic, not http://www.fowllanguagecomics.com
+    # Also on http://www.fowllanguagecomics.com
     name = 'fowllanguage'
     long_name = 'Fowl Language Comics'
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
@@ -3475,7 +3487,8 @@ class ZnoflatsComics(TapasticComic):
 
 class SandersenTapastic(TapasticComic):
     """Class to retrieve Sarah Andersen comics."""
-    # From tapastic, not gocomics or http://sarahcandersen.com/
+    # Also on http://sarahcandersen.com
+    # Also on http://www.gocomics.com/sarahs-scribbles
     name = 'sandersen-tapa'
     long_name = 'Sarah Andersen (from Tapastic)'
     url = 'http://tapastic.com/series/Doodle-Time'
@@ -3483,8 +3496,8 @@ class SandersenTapastic(TapasticComic):
 
 class TubeyToonsTapastic(TapasticComic):
     """Class to retrieve TubeyToons comics."""
-    # From tapastic, not http://tubeytoons.com
-    # Also on http://tubeytoons.tumblr.com/
+    # Also on http://tubeytoons.com
+    # Also on http://tubeytoons.tumblr.com
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
