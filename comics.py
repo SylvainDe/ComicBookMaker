@@ -2694,6 +2694,7 @@ class ElectricBunnyComic(GenericNavigableComic):
 
 class SheldonComics(GenericNavigableComic):
     """Class to retrieve Sheldon comics."""
+    # Also on http://www.gocomics.com/sheldon
     name = 'sheldon'
     long_name = 'Sheldon Comics'
     url = 'http://www.sheldoncomics.com'
@@ -3422,6 +3423,14 @@ class BerkeleyMewsGoComics(GenericGoComic):
     name = 'berkeley-goc'
     long_name = 'Berkeley Mews (from GoComics)'
     url = 'http://www.gocomics.com/berkeley-mews'
+
+
+class SheldonGoComics(GenericGoComic):
+    """Class to retrieve Sheldon comics."""
+    # Also on http://www.sheldoncomics.com
+    name = 'sheldon-goc'
+    long_name = 'Sheldon Comics (from GoComics)'
+    url = 'http://www.gocomics.com/sheldon'
 
 
 class TapasticComic(GenericListableComic):

@@ -174,6 +174,7 @@ Comics supported
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)
  * [Sheldon Comics](http://www.sheldoncomics.com)
+ * [Sheldon Comics (from GoComics)](http://www.gocomics.com/sheldon)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [Down the Upward Spiral (from Tumblr)](http://downtheupwardspiral.tumblr.com)
