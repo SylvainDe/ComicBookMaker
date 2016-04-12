@@ -788,8 +788,9 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
-class DeadlyPanel(GenericNavigableComic):
+class DeadlyPanel(GenericEmptyComic):  # Was GenericNavigableComic but does not work anymore...
     """Class to retrieve Deadly Panel comics."""
+    # Also on https://tapastic.com/series/deadlypanel
     name = 'deadly'
     long_name = 'Deadly Panel'
     url = 'http://www.deadlypanel.com'
@@ -3644,6 +3645,14 @@ class OneOneOneOneComicTapa(TapasticComic):
     name = '1111-tapa'
     long_name = '1111 Comics (from Tapastic)'
     url = 'https://tapastic.com/series/1111-Comics'
+
+
+class DeadlyPanelTapa(TapasticComic):
+    """Class to retrieve Deadly Panel comics."""
+    # Also on http://www.deadlypanel.com
+    name = 'deadly-tapa'
+    long_name = 'Deadly Panel (from Tapastic)'
+    url = 'https://tapastic.com/series/deadlypanel'
 
 
 def get_subclasses(klass):
