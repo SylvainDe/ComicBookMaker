@@ -90,6 +90,7 @@ Comics supported
  * [Les Culottees](http://lesculottees.blog.lemonde.fr)
  * [Cyanide and Happiness](http://explosm.net)
  * [Deadly Panel](http://www.deadlypanel.com)
+ * [Deadly Panel (from Tapastic)](https://tapastic.com/series/deadlypanel)
  * [Depressed Alien](http://depressedalien.com)
  * [According To Devin](http://accordingtodevin.tumblr.com)
  * [Mr Ethan Diamond](http://mrethandiamond.tumblr.com)
