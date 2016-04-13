@@ -1685,6 +1685,37 @@ class BigFootJustice(GenericNavigableComic):
         }
 
 
+class RespawnComic(GenericNavigableComic):
+    """Class to retrieve Respawn Comic."""
+    # Also on http://respawncomic.tumblr.com
+    name = 'respawn'
+    long_name = 'Respawn Comic'
+    url = 'http://respawncomic.com '
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        post = soup.find('div', class_='post-content')
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find('a', rel='author').string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find("div", id="comic").find_all("img")
+        assert all(i['alt'] == i['title'] == title for i in imgs)
+        bonus_div = post.find('div', class_='sow-image-container')
+        bonus_imgs = bonus_div.find_all("img") if bonus_div else []
+        all_imgs = imgs + bonus_imgs
+        return {
+            'title': title,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in all_imgs],
+        }
+
+
 class SafelyEndangered(GenericNavigableComic):
     """Class to retrieve Safely Endangered comics."""
     # Also on http://tumblr.safelyendangered.com
@@ -3198,6 +3229,14 @@ class BerkeleyMewsTumblr(GenericTumblrV1):
     name = 'berkeley-tumblr'
     long_name = 'Berkeley Mews (from Tumblr)'
     url = 'http://mews.tumblr.com'
+
+
+class RespawnComicTumblr(GenericTumblrV1):
+    """Class to retrieve Respawn Comic."""
+    # Also on http://respawncomic.com
+    name = 'respawn-tumblr'
+    long_name = 'Respawn Comic (from Tumblr)'
+    url = 'http://respawncomic.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
