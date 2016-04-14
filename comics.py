@@ -3722,6 +3722,14 @@ class OneOneOneOneComicTapa(TapasticComic):
     url = 'https://tapastic.com/series/1111-Comics'
 
 
+class TumbleDryTapa(TapasticComic):
+    """Class to retrieve Tumble Dry comics."""
+    # Also on http://tumbledrycomics.com
+    name = 'tumbledry-tapa'
+    long_name = 'Tumblr Dry (from Tapastic)'
+    url = 'https://tapastic.com/series/TumbleDryComics'
+
+
 class DeadlyPanelTapa(TapasticComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on http://www.deadlypanel.com
