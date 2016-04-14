@@ -3255,6 +3255,17 @@ class RespawnComicTumblr(GenericTumblrV1):
     url = 'http://respawncomic.tumblr.com'
 
 
+class ChrisHallbeckTumblr(GenericTumblrV1):
+    """Class to retrieve Chris Hallbeck comics."""
+    # Also on https://tapastic.com/ChrisHallbeck
+    # Also on http://maximumble.com
+    # Also on http://minimumble.com
+    # Also on http://thebookofbiff.com
+    name = 'hallbeck-tumblr'
+    long_name = 'Chris Hallback (from Tumblr)'
+    url = 'http://chrishallbeck.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3717,6 +3728,33 @@ class DeadlyPanelTapa(TapasticComic):
     name = 'deadly-tapa'
     long_name = 'Deadly Panel (from Tapastic)'
     url = 'https://tapastic.com/series/deadlypanel'
+
+
+class ChrisHallbeckMaxiTapa(TapasticComic):
+    """Class to retrieve Chris Hallbeck comics."""
+    # Also on http://chrishallbeck.tumblr.com
+    # Also on http://maximumble.com
+    name = 'hallbeckmaxi-tapa'
+    long_name = 'Chris Hallback - Maximumble (from Tapastic)'
+    url = 'https://tapastic.com/series/Maximumble'
+
+
+class ChrisHallbeckMiniTapa(TapasticComic):
+    """Class to retrieve Chris Hallbeck comics."""
+    # Also on http://chrishallbeck.tumblr.com
+    # Also on http://minimumble.com
+    name = 'hallbeckmini-tapa'
+    long_name = 'Chris Hallback - Minimumble (from Tapastic)'
+    url = 'https://tapastic.com/series/Minimumble'
+
+
+class ChrisHallbeckBiffTapa(TapasticComic):
+    """Class to retrieve Chris Hallbeck comics."""
+    # Also on http://chrishallbeck.tumblr.com
+    # Also on http://thebookofbiff.com
+    name = 'hallbeckbiff-tapa'
+    long_name = 'Chris Hallback - The Book of Biff (from Tapastic)'
+    url = 'https://tapastic.com/series/Biff'
 
 
 def get_subclasses(klass):
