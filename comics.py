@@ -3222,6 +3222,14 @@ class OneOneOneOneComicTumblr(GenericTumblrV1):
     url = 'http://comics1111.tumblr.com'
 
 
+class JhallComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Jhall Comics."""
+    # Also on http://jhallcomics.com
+    name = 'jhall-tumblr'
+    long_name = 'Jhall Comics (from Tumblr)'
+    url = 'http://jhallcomics.tumblr.com'
+
+
 class BerkeleyMewsTumblr(GenericTumblrV1):
     """Class to retrieve Berkeley Mews comics."""
     # Also on http://www.gocomics.com/berkeley-mews

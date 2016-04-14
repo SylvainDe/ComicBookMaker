@@ -123,6 +123,7 @@ Comics supported
  * [Invisible Bread](http://invisiblebread.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
  * [My Jet Pack](http://myjetpack.tumblr.com)
+ * [Jhall Comics (from Tumblr)](http://jhallcomics.tumblr.com)
  * [Just Say Eh](http://www.justsayeh.com)
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
