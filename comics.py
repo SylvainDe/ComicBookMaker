@@ -861,6 +861,7 @@ class MyExtraLife(GenericNavigableComic):
 class SaturdayMorningBreakfastCereal(GenericNavigableComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     # Also on http://www.gocomics.com/saturday-morning-breakfast-cereal
+    # Also on http://smbc-comics.tumblr.com
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
     url = 'http://www.smbc-comics.com'
@@ -3403,6 +3404,7 @@ class MikeLuckovich(GenericGoComic):
 
 class JimBenton(GenericGoComic):
     """Class to retrieve Jim Benton comics."""
+    # Also on http://jimbenton.tumblr.com
     name = 'benton'
     long_name = 'Jim Benton'
     url = 'http://www.gocomics.com/jim-benton-cartoons'
@@ -3542,6 +3544,7 @@ class VegetablesForDessert(TapasticComic):
 class FowlLanguageComics(TapasticComic):
     """Class to retrieve Fowl Language comics."""
     # Also on http://www.fowllanguagecomics.com
+    # Also on http://fowllanguagecomics.tumblr.com
     name = 'fowllanguage'
     long_name = 'Fowl Language Comics'
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
