@@ -3799,5 +3799,7 @@ def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     return ret
 
 
-COMIC_NAMES = {c.name: c for c in get_subclasses(
-    GenericComic) if c.name is not None}
+COMICS = get_subclasses(GenericComic)
+VALID_COMICS = [c for c in COMICS if c.name is not None]
+COMIC_NAMES = {c.name: c for c in VALID_COMICS}
+assert len(VALID_COMICS) == len(COMIC_NAMES)
