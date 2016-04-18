@@ -3267,6 +3267,13 @@ class ChrisHallbeckTumblr(GenericTumblrV1):
     url = 'http://chrishallbeck.tumblr.com'
 
 
+class ComicNuggets(GenericTumblrV1):
+    """Class to retrieve Comic Nuggets."""
+    name = 'nuggets'
+    long_name = 'Comic Nuggets'
+    url = 'http://comicnuggets.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
