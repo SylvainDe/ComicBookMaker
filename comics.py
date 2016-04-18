@@ -3775,6 +3775,14 @@ class ChrisHallbeckBiffTapa(TapasticComic):
     url = 'https://tapastic.com/series/Biff'
 
 
+class RandoWisTapa(TapasticComic):
+    """Class to retrieve RandoWis comics."""
+    # Also on https://randowis.com
+    name = 'randowis-tapa'
+    long_name = 'RandoWis (from Tapastic)'
+    url = 'https://tapastic.com/series/RandoWis'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
