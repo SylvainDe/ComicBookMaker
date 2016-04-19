@@ -165,6 +165,8 @@ Comics supported
  * [Pictures in Boxes](http://www.picturesinboxes.com)
  * [Pictures in Boxes (from Tumblr)](http://picturesinboxescomic.tumblr.com)
  * [Pie Comic](http://piecomic.tumblr.com)
+ * [The Pigeon Gazette (from Tapastic)](https://tapastic.com/series/The-Pigeon-Gazette)
+ * [The Pigeon Gazette (from Tumblr)](http://thepigeongazette.tumblr.com)
  * [Plan C](http://www.plancomic.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Pond Scum](http://pondscumcomic.tumblr.com)

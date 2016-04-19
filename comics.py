@@ -3274,6 +3274,13 @@ class ComicNuggets(GenericTumblrV1):
     url = 'http://comicnuggets.com'
 
 
+class PigeonGazetteTumblr(GenericTumblrV1):
+    # Also on https://tapastic.com/series/The-Pigeon-Gazette
+    name = 'pigeon-tumblr'
+    long_name = 'The Pigeon Gazette (from Tumblr)'
+    url = 'http://thepigeongazette.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3781,6 +3788,13 @@ class RandoWisTapa(TapasticComic):
     name = 'randowis-tapa'
     long_name = 'RandoWis (from Tapastic)'
     url = 'https://tapastic.com/series/RandoWis'
+
+
+class PigeonGazetteTapa(TapasticComic):
+    # Also on http://thepigeongazette.tumblr.com
+    name = 'pigeon-tapa'
+    long_name = 'The Pigeon Gazette (from Tapastic)'
+    url = 'https://tapastic.com/series/The-Pigeon-Gazette'
 
 
 def get_subclasses(klass):
