@@ -77,6 +77,7 @@ Comics supported
  * [ButterSafe](http://buttersafe.com)
  * [Calvin and Hobbes](http://marcel-oehler.marcellosendos.ch/comics/ch/)
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)
+ * [Cancer Owl (from Tumblr)](http://cancerowl.tumblr.com)
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)

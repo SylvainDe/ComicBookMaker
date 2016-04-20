@@ -3281,6 +3281,14 @@ class PigeonGazetteTumblr(GenericTumblrV1):
     url = 'http://thepigeongazette.tumblr.com'
 
 
+class CancerOwl(GenericTumblrV1):
+    """Class to retrieve Cancer Owl comics."""
+    # Also on http://cancerowl.com
+    name = 'cancerowl-tumblr'
+    long_name = 'Cancer Owl (from Tumblr)'
+    url = 'http://cancerowl.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
