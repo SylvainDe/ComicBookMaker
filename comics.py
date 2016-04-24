@@ -3289,6 +3289,16 @@ class CancerOwl(GenericTumblrV1):
     url = 'http://cancerowl.tumblr.com'
 
 
+class FowlLanguageTumblr(GenericTumblrV1):
+    """Class to retrieve Fowl Language comics."""
+    # Also on http://www.fowllanguagecomics.com
+    # Also on http://tapastic.com/series/Fowl-Language-Comics
+    # Also on http://www.gocomics.com/fowl-language
+    name = 'fowllanguage-tumblr'
+    long_name = 'Fowl Language Comics (from Tumblr)'
+    url = 'http://fowllanguagecomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3523,6 +3533,16 @@ class SheldonGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/sheldon'
 
 
+class FowlLanguageGoComics(GenericGoComic):
+    """Class to retrieve Fowl Language comics."""
+    # Also on http://www.fowllanguagecomics.com
+    # Also on http://tapastic.com/series/Fowl-Language-Comics
+    # Also on http://fowllanguagecomics.tumblr.com
+    name = 'fowllanguage-goc'
+    long_name = 'Fowl Language Comics (from GoComics)'
+    url = 'http://www.gocomics.com/fowl-language'
+
+
 class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
@@ -3558,17 +3578,19 @@ class TapasticComic(GenericListableComic):
 
 class VegetablesForDessert(TapasticComic):
     """Class to retrieve Vegetables For Dessert comics."""
+    # Also on http://vegetablesfordessert.tumblr.com
     name = 'vegetables'
     long_name = 'Vegetables For Dessert'
     url = 'http://tapastic.com/series/vegetablesfordessert'
 
 
-class FowlLanguageComics(TapasticComic):
+class FowlLanguageTapa(TapasticComic):
     """Class to retrieve Fowl Language comics."""
     # Also on http://www.fowllanguagecomics.com
     # Also on http://fowllanguagecomics.tumblr.com
-    name = 'fowllanguage'
-    long_name = 'Fowl Language Comics'
+    # Also on http://www.gocomics.com/fowl-language
+    name = 'fowllanguage-tapa'
+    long_name = 'Fowl Language Comics (from Tapastic)'
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
 
 
