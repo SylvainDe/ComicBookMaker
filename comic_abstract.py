@@ -247,11 +247,11 @@ class GenericComic(object):
         print()
 
     @classmethod
-    def readme(cls):
+    def readme(cls, f):
         """Print information to generate README."""
-        print(' * [%s](%s)' % (cls.long_name, cls.url))
+        f.write(' * [%s](%s)\n' % (cls.long_name, cls.url))
 
     @classmethod
-    def gitignore(cls):
+    def gitignore(cls, f):
         """Print information to generate gitignore."""
-        print(cls.name)
+        f.write(cls.name + "\n")

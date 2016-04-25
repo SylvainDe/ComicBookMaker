@@ -7,6 +7,18 @@ import argparse
 from comics import COMIC_NAMES
 
 
+def get_file_content_until_tag(path, tag):
+    """Get content from a filepath up to a given tag.
+    If tag is not is the file, an exception is thrown."""
+    content = []
+    with open(path) as f:
+        for l in f:
+            content.append(l)
+            if tag == l.strip():
+                return content
+    raise ValueError('Could not find "%s" in file "%s"' % (tag, path))
+
+
 def main():
     """Main function"""
     comic_names = sorted(COMIC_NAMES.keys())
@@ -45,11 +57,19 @@ def main():
             for com in comic_classes:
                 com.info()
         elif action == 'gitignore':
-            for com in comic_classes:
-                com.gitignore()
+            path = '.gitignore'
+            content = get_file_content_until_tag(path, '# Generated folders')
+            with open(path, 'w') as f:
+                f.write(''.join(content))
+                for com in comic_classes:
+                    com.gitignore(f)
         elif action == 'readme':
-            for com in comic_classes:
-                com.readme()
+            path = 'README.md'
+            content = get_file_content_until_tag(path, '----------------')
+            with open(path, 'w') as f:
+                f.write(''.join(content))
+                for com in comic_classes:
+                    com.readme(f)
         elif action == 'check':
             for com in comic_classes:
                 com.check_everything_is_ok()
