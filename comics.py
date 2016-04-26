@@ -3299,6 +3299,15 @@ class FowlLanguageTumblr(GenericTumblrV1):
     url = 'http://fowllanguagecomics.tumblr.com'
 
 
+class TheOdd1sOutTumblr(GenericTumblrV1):
+    """Class to retrieve The Odd 1s Out comics."""
+    # Also on http://theodd1sout.com
+    # Also on https://tapastic.com/series/Theodd1sout
+    name = 'theodd-tumblr'
+    long_name = 'The Odd 1s Out (from Tumblr)'
+    url = 'http://theodd1sout.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3825,6 +3834,15 @@ class PigeonGazetteTapa(TapasticComic):
     name = 'pigeon-tapa'
     long_name = 'The Pigeon Gazette (from Tapastic)'
     url = 'https://tapastic.com/series/The-Pigeon-Gazette'
+
+
+class TheOdd1sOutTapa(TapasticComic):
+    """Class to retrieve The Odd 1s Out comics."""
+    # Also on http://theodd1sout.com
+    # Also on http://theodd1sout.tumblr.com
+    name = 'theodd-tapa'
+    long_name = 'The Odd 1s Out (from Tapastic)'
+    url = 'https://tapastic.com/series/Theodd1sout'
 
 
 def get_subclasses(klass):
