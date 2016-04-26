@@ -323,7 +323,7 @@ class ZepWorld(GenericLeMondeBlog):
 class Vidberg(GenericLeMondeBlog):
     """Class to retrieve Vidberg comics."""
     name = 'vidberg'
-    long_name = "Vidberg -l'actu en patates"
+    long_name = "Vidberg - l'actu en patates"
     url = "http://vidberg.blog.lemonde.fr"
 
     @classmethod
