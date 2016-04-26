@@ -19,6 +19,14 @@ def get_file_content_until_tag(path, tag):
     raise ValueError('Could not find "%s" in file "%s"' % (tag, path))
 
 
+def add_new_lines_after_tag(path, new_lines, tag):
+    """Add lines to file from a given tag.
+    All content until tag is kept, all content after is lost."""
+    content = get_file_content_until_tag(path, tag)
+    with open(path, 'w') as f:
+        f.write(''.join(content + new_lines))
+
+
 def main():
     """Main function"""
     comic_names = sorted(COMIC_NAMES.keys())
@@ -58,18 +66,12 @@ def main():
                 com.info()
         elif action == 'gitignore':
             path = '.gitignore'
-            content = get_file_content_until_tag(path, '# Generated folders')
-            with open(path, 'w') as f:
-                f.write(''.join(content))
-                for com in comic_classes:
-                    com.gitignore(f)
+            new_content = [com.gitignore() for com in comic_classes]
+            add_new_lines_after_tag(path, new_content, '# Generated folders')
         elif action == 'readme':
             path = 'README.md'
-            content = get_file_content_until_tag(path, '----------------')
-            with open(path, 'w') as f:
-                f.write(''.join(content))
-                for com in comic_classes:
-                    com.readme(f)
+            new_content = [com.readme() for com in comic_classes]
+            add_new_lines_after_tag(path, new_content, '----------------')
         elif action == 'check':
             for com in comic_classes:
                 com.check_everything_is_ok()
