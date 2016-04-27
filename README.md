@@ -111,7 +111,7 @@ Comics supported
  * [Fowl Language Comics (from GoComics)](http://www.gocomics.com/fowl-language)
  * [Fowl Language Comics (from Tapastic)](http://tapastic.com/series/Fowl-Language-Comics)
  * [Fowl Language Comics (from Tumblr)](http://fowllanguagecomics.tumblr.com)
- * [Garfield](http://garfield.com)
+ * [Garfield](https://garfield.com)
  * [Geek And Poke](http://geek-and-poke.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)

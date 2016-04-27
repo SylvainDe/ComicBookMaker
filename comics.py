@@ -665,27 +665,33 @@ class NeDroid(GenericNavigableComic):
         }
 
 
-class Garfield(GenericComic):
+class Garfield(GenericNavigableComic):
     """Class to retrieve Garfield comics."""
     # Also on http://www.gocomics.com/garfield
     name = 'garfield'
     long_name = 'Garfield'
-    url = 'http://garfield.com'
+    url = 'https://garfield.com'
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        first_day = get_date_for_comic(last_comic) + timedelta(days=1) \
-            if last_comic else date(1978, 6, 19)
-        for i in range((date.today() - first_day).days + 1):
-            day = first_day + timedelta(days=i)
-            day_str = day.isoformat()
-            yield {
-                'url': urljoin_wrapper(cls.url, 'comic/%s' % day_str),
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
-                'img': [urljoin_wrapper(cls.url, 'uploads/strips/%s.jpg' % day_str)],
-            }
+    def get_first_comic_link(cls):
+        return {'href': 'https://garfield.com/comic/1978/06/19'}
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        return last_soup.find('a', class_='comic-arrow-right' if next_ else 'comic-arrow-left')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        url = cls.get_url_from_link(link)
+        date_re = re.compile('^%s/comic/([0-9]*)/([0-9]*)/([0-9]*)' % cls.url)
+        year, month, day = [int(s) for s in date_re.match(url).groups()]
+        imgs = soup.find('div', class_='comic-display').find_all('img', class_='img-responsive')
+        return {
+            'month': month,
+            'year': year,
+            'day': day,
+            'img': [i['src'] for i in imgs],
+        }
 
 
 class Dilbert(GenericNavigableComic):
