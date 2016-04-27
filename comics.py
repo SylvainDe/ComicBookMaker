@@ -3574,6 +3574,14 @@ class FowlLanguageGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/fowl-language'
 
 
+class GarfieldGoComics(GenericGoComic):
+    """Class to retrieve Garfield comics."""
+    # Also on http://garfield.com
+    name = 'garfield-goc'
+    long_name = 'Garfield (from GoComics)'
+    url = 'http://www.gocomics.com/garfield'
+
+
 class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
