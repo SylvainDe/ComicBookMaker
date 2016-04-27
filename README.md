@@ -136,6 +136,7 @@ Comics supported
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
+ * [Lol Nein (from Tumblr)](http://lolneincom.tumblr.com)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Mercworks](http://mercworks.net)

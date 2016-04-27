@@ -3316,6 +3316,14 @@ class TheUnderfoldTumblr(GenericTumblrV1):
     url = 'http://theunderfold.tumblr.com'
 
 
+class LolNeinTumblr(GenericTumblrV1):
+    """Class to retrieve Lol Nein comics."""
+    # Also on http://lolnein.com
+    name = 'lolnein-tumblr'
+    long_name = 'Lol Nein (from Tumblr)'
+    url = 'http://lolneincom.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
