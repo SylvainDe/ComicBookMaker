@@ -3281,6 +3281,7 @@ class ComicNuggets(GenericTumblrV1):
 
 
 class PigeonGazetteTumblr(GenericTumblrV1):
+    """Class to retrieve The Pigeon Gazette comics."""
     # Also on https://tapastic.com/series/The-Pigeon-Gazette
     name = 'pigeon-tumblr'
     long_name = 'The Pigeon Gazette (from Tumblr)'
@@ -3860,6 +3861,7 @@ class RandoWisTapa(TapasticComic):
 
 
 class PigeonGazetteTapa(TapasticComic):
+    """Class to retrieve The Pigeon Gazette comics."""
     # Also on http://thepigeongazette.tumblr.com
     name = 'pigeon-tapa'
     long_name = 'The Pigeon Gazette (from Tapastic)'
