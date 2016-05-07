@@ -106,6 +106,7 @@ Comics supported
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)
  * [My Extra Life](http://www.myextralife.com)
  * [Fat Awesome](http://fatawesome.com/comics)
+ * [Fat Awesome (from Tumblr)](http://fatawesomecomics.tumblr.com)
  * [floccinaucinihilipilification](http://floccinaucinihilipilificationa.tumblr.com)
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)
  * [Fowl Language Comics (from GoComics)](http://www.gocomics.com/fowl-language)
