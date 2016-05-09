@@ -3340,6 +3340,14 @@ class FatAwesomeComicsTumblr(GenericTumblrV1):
     url = 'http://fatawesomecomics.tumblr.com'
 
 
+class TheWorldIsFlatTumblr(GenericTumblrV1):
+    """Class to retrieve The World Is Flat Comics."""
+    # Also on https://tapastic.com/series/The-World-is-Flat
+    name = 'flatworld-tumblr'
+    long_name = 'The World Is Flat (from Tumblr)'
+    url = 'http://theworldisflatcomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3884,6 +3892,14 @@ class TheOdd1sOutTapa(TapasticComic):
     name = 'theodd-tapa'
     long_name = 'The Odd 1s Out (from Tapastic)'
     url = 'https://tapastic.com/series/Theodd1sout'
+
+
+class TheWorldIsFlatTapa(TapasticComic):
+    """Class to retrieve The World Is Flat Comics."""
+    # Also on http://theworldisflatcomics.tumblr.com
+    name = 'flatworld-tapa'
+    long_name = 'The World Is Flat (from Tapastic)'
+    url = 'https://tapastic.com/series/The-World-is-Flat'
 
 
 def get_subclasses(klass):
