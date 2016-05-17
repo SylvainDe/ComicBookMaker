@@ -3348,6 +3348,14 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     url = 'http://theworldisflatcomics.tumblr.com'
 
 
+class LeleozTumblr(GenericTumblrV1):
+    """Class to retrieve Leleoz comics."""
+    # Also on https://tapastic.com/series/Leleoz
+    name = 'leleoz-tumblr'
+    long_name = 'Leleoz (from Tumblr)'
+    url = 'http://leleozcomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -3794,9 +3802,17 @@ class AngryAtNothingTapa(TapasticComic):
 class HappyMondayTapa(TapasticComic):
     """Class to retrieve Happy Monday comics."""
     # Also on http://happymondaycomics.com
-    name = 'happymonday-tapa'
+    # name = 'happymonday-tapa'
     long_name = 'Happy Monday (from Tapastic)'
     url = 'https://tapastic.com/series/HappyMondayComics'
+
+
+class LeleozTapa(TapasticComic):
+    """Class to retrieve Leleoz comics."""
+    # Also on http://leleozcomics.tumblr.com
+    name = 'leleoz-tapa'
+    long_name = 'Leleoz (from Tapastic)'
+    url = 'https://tapastic.com/series/Leleoz'
 
 
 class TheAwkwardYetiTapa(TapasticComic):

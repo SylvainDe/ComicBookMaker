@@ -139,6 +139,8 @@ Comics supported
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
  * [LastPlaceComics](http://lastplacecomics.com)
+ * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
+ * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
  * [Lol Nein (from Tumblr)](http://lolneincom.tumblr.com)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
