@@ -10,6 +10,7 @@ from urlfunctions import get_soup_at_url, urljoin_wrapper,\
     convert_iri_to_plain_ascii_uri, load_json_at_url, urlopen_wrapper
 import json
 import locale
+import urllib
 
 DEFAULT_LOCAL = 'en_GB.UTF-8'
 
@@ -2929,6 +2930,16 @@ class GenericTumblrV1(GenericComic):
         but are returned in chronological order."""
         waiting_for_url = last_comic['url'] if last_comic else None
         posts_acc = []
+        if last_comic is not None:
+            # Sometimes, tumblr posts are deleted. We previous post is deleted, we
+            # might end up spending a lot of time looking for something that
+            # doesn't exist. Failing early and clearly might be a better option.
+            last_api_url = last_comic['api_url']
+            try:
+                get_soup_at_url(last_api_url)
+            except urllib.error.HTTPError:
+                print("Did not find previous post %s : it might have been deleted" % last_api_url)
+                return reversed(posts_acc)
         api_url = cls.get_api_url()
         posts = get_soup_at_url(api_url).find('posts')
         start, total = int(posts['start']), int(posts['total'])
