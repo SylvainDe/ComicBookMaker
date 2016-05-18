@@ -3799,14 +3799,6 @@ class AngryAtNothingTapa(TapasticComic):
     url = 'http://tapastic.com/series/Comics-yeah-definitely-comics-'
 
 
-class HappyMondayTapa(TapasticComic):
-    """Class to retrieve Happy Monday comics."""
-    # Also on http://happymondaycomics.com
-    # name = 'happymonday-tapa'
-    long_name = 'Happy Monday (from Tapastic)'
-    url = 'https://tapastic.com/series/HappyMondayComics'
-
-
 class LeleozTapa(TapasticComic):
     """Class to retrieve Leleoz comics."""
     # Also on http://leleozcomics.tumblr.com
