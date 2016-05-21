@@ -3956,3 +3956,5 @@ COMICS = get_subclasses(GenericComic)
 VALID_COMICS = [c for c in COMICS if c.name is not None]
 COMIC_NAMES = {c.name: c for c in VALID_COMICS}
 assert len(VALID_COMICS) == len(COMIC_NAMES)
+CLASS_NAMES = {c.__name__ for c in VALID_COMICS}
+assert len(VALID_COMICS) == len(CLASS_NAMES)
