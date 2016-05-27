@@ -250,7 +250,11 @@ def get_a_comicnavbase_comicnavfirst(cls):
 
 
 class GenericEmptyComic(GenericComic):
-    """Generic class for comics where nothing is to be done."""
+    """Generic class for comics where nothing is to be done.
+
+    It can be useful to deactivate temporarily comics that do not work
+    properly by replacing `def MyComic(GenericWhateverComic)` with
+    `def MyComic(GenericEmptyComic, GenericWhateverComic)`."""
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -795,7 +799,7 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
-class DeadlyPanel(GenericEmptyComic):  # Was GenericNavigableComic but does not work anymore...
+class DeadlyPanel(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on https://tapastic.com/series/deadlypanel
     name = 'deadly'
@@ -2976,7 +2980,7 @@ class AccordingToDevin(GenericTumblrV1):
     url = 'http://accordingtodevin.tumblr.com'
 
 
-class ItsTheTieTumblr(GenericTumblrV1):
+class ItsTheTieTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.com
     # Also on https://tapastic.com/series/itsthetie
@@ -3266,7 +3270,7 @@ class JoanCornellaTumblr(GenericTumblrV1):
     url = 'http://cornellajoan.tumblr.com'
 
 
-class RespawnComicTumblr(GenericTumblrV1):
+class RespawnComicTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Respawn Comic."""
     # Also on http://respawncomic.com
     name = 'respawn-tumblr'
@@ -3952,7 +3956,7 @@ def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     return ret
 
 
-COMICS = get_subclasses(GenericComic)
+COMICS = set(get_subclasses(GenericComic))
 VALID_COMICS = [c for c in COMICS if c.name is not None]
 COMIC_NAMES = {c.name: c for c in VALID_COMICS}
 assert len(VALID_COMICS) == len(COMIC_NAMES)
