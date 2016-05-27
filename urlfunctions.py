@@ -8,6 +8,14 @@ import json
 import shutil
 import gzip
 from bs4 import BeautifulSoup
+import inspect
+
+LOG_LEVEL = None
+
+def log(string, level=3):
+    """Dirty logging function."""
+    if LOG_LEVEL is not None and level > LOG_LEVEL:
+        print(inspect.stack()[1][3] + " " + string)
 
 
 def convert_iri_to_plain_ascii_uri(uri):
@@ -26,6 +34,7 @@ def urlopen_wrapper(url):
 
     url is a string
     Returns a byte object."""
+    log('(url : %s)' % url)
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
     try:
         response = urllib.request.urlopen(
@@ -52,16 +61,21 @@ def get_content(url):
 
     url is a string
     Returns a string"""
+    log('(url : %s)' % url)
     return urlopen_wrapper(url).read()
 
 
 def extensions_are_equivalent(ext1, ext2):
+    """Return whether file extensions can be considered as equivalent."""
     synonyms = [{'jpg', 'jpeg'}]
     ext1, ext2 = ext1.lower(), ext2.lower()
     return ext1 == ext2 or any((ext1 in s and ext2 in s) for s in synonyms)
 
 
 def add_extension_to_filename_if_needed(ext, filename):
+    """Given an extension and a filename, add the extension to the filename
+    if the filename does not already have this extension (or an extension
+    considered to be equivalent."""
     filename_ext = filename.split('.')[-1]
     if extensions_are_equivalent(ext, filename_ext):
         return filename
@@ -78,6 +92,7 @@ def get_file_at_url(url, path):
     url is a string
     path is a string corresponding to the file location
     Returns the path if the file is retrieved properly, None otherwise."""
+    log('(url : %s, path : %s)' % (url, path))
     try:
         with urlopen_wrapper(url) as response:
             content_type = response.info().get('Content-Type', '').split('/')
