@@ -12,6 +12,7 @@ import inspect
 
 LOG_LEVEL = None
 
+
 def log(string, level=3):
     """Dirty logging function."""
     if LOG_LEVEL is not None and level > LOG_LEVEL:
