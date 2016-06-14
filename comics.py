@@ -513,7 +513,8 @@ class ZenPencils(GenericNavigableComic):
         date_str = post.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
         assert imgs
-        assert all(i['alt'] == i['title'] == "" for i in imgs)
+        assert all(i['alt'] == i['title'] for i in imgs)
+        assert all(i['alt'] in (title, "") for i in imgs)
         desc = soup.find('meta', property='og:description')['content']
         return {
             'title': title,
