@@ -101,6 +101,8 @@ Comics supported
  * [Dinosaur Comics](http://www.qwantz.com)
  * [Disco Bleach](http://discobleach.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
+ * [Dorris Mc](http://dorrismccomics.com)
+ * [Dorris Mc (from GoComics)](http://www.gocomics.com/dorris-mccomics)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Safely Endangered](http://www.safelyendangered.com)
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)

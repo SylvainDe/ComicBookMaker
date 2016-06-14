@@ -3375,6 +3375,14 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     url = 'http://theworldisflatcomics.tumblr.com'
 
 
+class DorrisMc(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Dorris Mc Comics"""
+    # Also on http://www.gocomics.com/dorris-mccomics
+    name = 'dorrismc'
+    long_name = 'Dorris Mc'
+    url = 'http://dorrismccomics.com'
+
+
 class LeleozTumblr(GenericTumblrV1):
     """Class to retrieve Leleoz comics."""
     # Also on https://tapastic.com/series/Leleoz
@@ -3640,6 +3648,14 @@ class GarfieldGoComics(GenericGoComic):
     name = 'garfield-goc'
     long_name = 'Garfield (from GoComics)'
     url = 'http://www.gocomics.com/garfield'
+
+
+class DorrisMcGoComics(GenericGoComic):
+    """Class to retrieve Dorris Mc Comics"""
+    # Also on http://dorrismccomics.com
+    name = 'dorrismc-goc'
+    long_name = 'Dorris Mc (from GoComics)'
+    url = 'http://www.gocomics.com/dorris-mccomics'
 
 
 class TapasticComic(GenericListableComic):
