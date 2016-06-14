@@ -392,6 +392,17 @@ class LesCulottees(GenericLeMondeBlog):
         return "http://lesculottees.blog.lemonde.fr/2016/01/11/clementine-delait-femme-a-barbe/"
 
 
+class UneAnneeAuLycee(GenericLeMondeBlog):
+    """Class to retrieve Une Annee Au Lycee comics."""
+    name = 'lycee'
+    long_name = 'Une Annee au Lycee'
+    url = 'http://uneanneeaulycee.blog.lemonde.fr'
+
+    @classmethod
+    def get_first_comic_url(cls):
+        return "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
+
+
 class Rall(GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
     # Also on http://www.gocomics.com/tedrall

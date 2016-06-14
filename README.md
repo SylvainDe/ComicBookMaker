@@ -144,6 +144,7 @@ Comics supported
  * [Lol Nein (from Tumblr)](http://lolneincom.tumblr.com)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
+ * [Une Annee au Lycee](http://uneanneeaulycee.blog.lemonde.fr)
  * [Mercworks](http://mercworks.net)
  * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
