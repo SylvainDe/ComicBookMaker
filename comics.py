@@ -1709,7 +1709,7 @@ class BigFootJustice(GenericNavigableComic):
         }
 
 
-class RespawnComic(GenericNavigableComic):
+class RespawnComic(GenericEmptyComic, GenericNavigableComic):  # format has changed
     """Class to retrieve Respawn Comic."""
     # Also on http://respawncomic.tumblr.com
     name = 'respawn'
