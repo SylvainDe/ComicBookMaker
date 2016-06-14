@@ -2028,7 +2028,7 @@ class DepressedAlien(GenericNavigableComic):
         }
 
 
-class ThingsInSquares(GenericListableComic):
+class ThingsInSquares(GenericEmptyComic, GenericListableComic):  # format has changed
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages
     # Also on https://tapastic.com/series/Things-in-Squares
