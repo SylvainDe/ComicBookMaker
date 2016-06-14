@@ -3391,6 +3391,13 @@ class LeleozTumblr(GenericTumblrV1):
     url = 'http://leleozcomics.tumblr.com'
 
 
+class AComik(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve A Comik"""
+    name = 'comik'
+    long_name = 'A Comik'
+    url = 'http://acomik.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
