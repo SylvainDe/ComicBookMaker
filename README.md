@@ -154,6 +154,7 @@ Comics supported
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [NeDroid](http://nedroid.com)
  * [Nelluc Nhoj](http://nellucnhoj.com)
+ * [Nick Anderson](http://www.gocomics.com/nickanderson)
  * [Comic Nuggets](http://comicnuggets.com)
  * [The Oatmeal (from Tumblr)](http://oatmeal.tumblr.com)
  * [Octopuns](http://www.octopuns.net)

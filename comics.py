@@ -3627,6 +3627,13 @@ class FowlLanguageGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/fowl-language'
 
 
+class NickAnderson(GenericGoComic):
+    """Class to retrieve Nick Anderson comics."""
+    name = 'nickanderson'
+    long_name = 'Nick Anderson'
+    url = 'http://www.gocomics.com/nickanderson'
+
+
 class GarfieldGoComics(GenericGoComic):
     """Class to retrieve Garfield comics."""
     # Also on http://garfield.com
