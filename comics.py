@@ -3071,7 +3071,7 @@ class Pundemonium(GenericTumblrV1):
     url = 'http://monstika.tumblr.com'
 
 
-class PoorlyDrawnLinesTumblr(GenericTumblrV1):
+class PoorlyDrawnLinesTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Poorly Drawn Lines comics."""
     # Also on http://poorlydrawnlines.com
     name = 'poorlydrawn-tumblr'
@@ -3290,7 +3290,7 @@ class RespawnComicTumblr(GenericEmptyComic, GenericTumblrV1):
     url = 'http://respawncomic.tumblr.com'
 
 
-class ChrisHallbeckTumblr(GenericTumblrV1):
+class ChrisHallbeckTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://tapastic.com/ChrisHallbeck
     # Also on http://maximumble.com
@@ -3324,7 +3324,7 @@ class CancerOwl(GenericTumblrV1):
     url = 'http://cancerowl.tumblr.com'
 
 
-class FowlLanguageTumblr(GenericTumblrV1):
+class FowlLanguageTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Fowl Language comics."""
     # Also on http://www.fowllanguagecomics.com
     # Also on http://tapastic.com/series/Fowl-Language-Comics
