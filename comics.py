@@ -2101,7 +2101,7 @@ class HappleTea(GenericNavigableComic):
 
 class FatAwesomeComics(GenericNavigableComic):
     """Class to retrieve Fat Awesome Comics."""
-    # Also on http://fatawesomecomics.tumblr.com
+    # Also on http://fatawesomecomedy.tumblr.com
     name = 'fatawesome'
     long_name = 'Fat Awesome'
     url = 'http://fatawesome.com/comics'
@@ -3364,7 +3364,7 @@ class FatAwesomeComicsTumblr(GenericTumblrV1):
     # Also on http://fatawesome.com/comics
     name = 'fatawesome-tumblr'
     long_name = 'Fat Awesome (from Tumblr)'
-    url = 'http://fatawesomecomics.tumblr.com'
+    url = 'http://fatawesomecomedy.tumblr.com'
 
 
 class TheWorldIsFlatTumblr(GenericTumblrV1):

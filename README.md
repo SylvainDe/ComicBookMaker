@@ -109,7 +109,7 @@ Comics supported
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)
  * [My Extra Life](http://www.myextralife.com)
  * [Fat Awesome](http://fatawesome.com/comics)
- * [Fat Awesome (from Tumblr)](http://fatawesomecomics.tumblr.com)
+ * [Fat Awesome (from Tumblr)](http://fatawesomecomedy.tumblr.com)
  * [The World Is Flat (from Tapastic)](https://tapastic.com/series/The-World-is-Flat)
  * [The World Is Flat (from Tumblr)](http://theworldisflatcomics.tumblr.com)
  * [floccinaucinihilipilification](http://floccinaucinihilipilificationa.tumblr.com)
