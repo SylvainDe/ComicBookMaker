@@ -2991,7 +2991,12 @@ class GenericTumblrV1(GenericComic):
             try:
                 get_soup_at_url(last_api_url)
             except urllib.error.HTTPError:
-                print("Did not find previous post %s : it might have been deleted" % last_api_url)
+                try:
+                    get_soup_at_url(cls.url)
+                except urllib.error.HTTPError:
+                    print("Did not find previous post nor main url %s" % cls.url)
+                else:
+                    print("Did not find previous post %s : it might have been deleted" % last_api_url)
                 return reversed(posts_acc)
         api_url = cls.get_api_url()
         posts = get_soup_at_url(api_url).find('posts')
