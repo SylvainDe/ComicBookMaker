@@ -194,6 +194,7 @@ Comics supported
  * [Ted Rall (from GoComics)](http://www.gocomics.com/tedrall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [RandoWis (from Tapastic)](https://tapastic.com/series/RandoWis)
+ * [Classic Randy](http://classicrandy.tumblr.com)
  * [Gone Into Rapture](http://www.goneintorapture.com)
  * [Gone Into Rapture (from Tapastic)](http://tapastic.com/series/Goneintorapture)
  * [Respawn Comic](http://respawncomic.com )
