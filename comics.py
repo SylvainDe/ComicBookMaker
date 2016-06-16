@@ -2655,6 +2655,43 @@ class PainTrainComic(GenericNavigableComic):
         }
 
 
+class MoonBeard(GenericNavigableComic):
+    """Class to retrieve MoonBeard comics."""
+    # Also on http://blog.squiresjam.es/moonbeard
+    # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
+    name = 'moonbeard'
+    long_name = 'Moon Beard'
+    url = 'http://moonbeard.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        short_url = soup.find('link', rel='shortlink')['href']
+        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        num = int(short_url_re.match(short_url).groups()[0])
+        imgs = soup.find('div', id='comic').find_all('img')
+        alt = imgs[0]['title']
+        assert all(i['alt'] == i['title'] == alt for i in imgs)
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
+        author = soup.find('span', class_='post-author').string
+        return {
+            'short_url': short_url,
+            'num': num,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'title': title,
+            'tags': tags,
+            'alt': alt,
+            'author': author,
+        }
+
+
 class AHamADay(GenericNavigableComic):
     """Class to retrieve class A Ham A Day comics."""
     name = 'ham'
@@ -3389,6 +3426,15 @@ class LeleozTumblr(GenericTumblrV1):
     name = 'leleoz-tumblr'
     long_name = 'Leleoz (from Tumblr)'
     url = 'http://leleozcomics.tumblr.com'
+
+
+class MoonBeardTumblr(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve MoonBeard comics."""
+    # Also on http://moonbeard.com
+    # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
+    name = 'moonbeard-tumblr'
+    long_name = 'Moon Beard (from Tumblr)'
+    url = 'http://blog.squiresjam.es/moonbeard'
 
 
 class AComik(GenericEmptyComic, GenericTumblrV1):

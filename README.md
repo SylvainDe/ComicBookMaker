@@ -152,6 +152,8 @@ Comics supported
  * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
+ * [Moon Beard](http://moonbeard.com)
+ * [Moon Beard (from Tumblr)](http://blog.squiresjam.es/moonbeard)
  * [Mouse Bear Comedy](http://www.mousebearcomedy.com)
  * [Mouse Bear Comedy (from Tumblr)](http://mousebearcomedy.tumblr.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
