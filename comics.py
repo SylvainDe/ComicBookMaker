@@ -3098,7 +3098,7 @@ class Flocci(GenericTumblrV1):
     url = "http://floccinaucinihilipilificationa.tumblr.com"
 
 
-class UpAndOut(GenericTumblrV1):
+class UpAndOut(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Up & Out comics."""
     # Also on http://tapastic.com/series/UP-and-OUT
     name = 'upandout'
