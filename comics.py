@@ -2199,6 +2199,33 @@ class LonnieMillsap(GenericNavigableComic):
         }
 
 
+class LinsEditions(GenericNavigableComic):
+    """Class to retrieve L.I.N.S. Editions comics."""
+    # Also on http://linscomics.tumblr.com
+    name = 'lins'
+    long_name = 'L.I.N.S. Editions'
+    url = 'https://linsedition.com'
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'https://linsedition.com/2011/09/07/l-i-n-s/'}
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
     # Also on http://tapastic.com/series/Thors-Thundershac
@@ -3454,6 +3481,14 @@ class ClassicRandy(GenericEmptyComic, GenericTumblrV1):
     name = 'randy'
     long_name = 'Classic Randy'
     url = 'http://classicrandy.tumblr.com'
+
+
+class LinsEditionsTumblr(GenericTumblrV1):
+    """Class to retrieve L.I.N.S. Editions comics."""
+    # Also on https://linsedition.com
+    name = 'lins-tumblr'
+    long_name = 'L.I.N.S. Editions (from Tumblr)'
+    url = 'http://linscomics.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):

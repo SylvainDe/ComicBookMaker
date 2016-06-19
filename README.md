@@ -143,6 +143,8 @@ Comics supported
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
  * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
+ * [L.I.N.S. Editions](https://linsedition.com)
+ * [L.I.N.S. Editions (from Tumblr)](http://linscomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
  * [Lol Nein (from Tumblr)](http://lolneincom.tumblr.com)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
