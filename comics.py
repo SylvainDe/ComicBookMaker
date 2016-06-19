@@ -2034,7 +2034,7 @@ class DepressedAlien(GenericNavigableComic):
         }
 
 
-class ThingsInSquares(GenericEmptyComic, GenericListableComic):  # format has changed
+class ThingsInSquares(GenericListableComic):
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages
     # Also on https://tapastic.com/series/Things-in-Squares
@@ -2073,7 +2073,7 @@ class ThingsInSquares(GenericEmptyComic, GenericListableComic):  # format has ch
 
     @classmethod
     def get_archive_elements(cls):
-        archive_url = urljoin_wrapper(cls.url, 'archive')
+        archive_url = urljoin_wrapper(cls.url, 'archive-2')
         return reversed(get_soup_at_url(archive_url).find('tbody').find_all('tr'))
 
 
