@@ -1725,7 +1725,6 @@ class RespawnComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        post = soup.find('div', class_='post-content')
         title = soup.find('meta', property='og:title')['content']
         author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
         date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
