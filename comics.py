@@ -3095,7 +3095,7 @@ class TubeyToonsTumblr(GenericTumblrV1):
     url = 'http://tubeytoons.tumblr.com'
 
 
-class UnearthedComicsTumblr(GenericTumblrV1):
+class UnearthedComicsTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Unearthed comics."""
     # Also on http://tapastic.com/series/UnearthedComics
     # Also on http://unearthedcomics.com
