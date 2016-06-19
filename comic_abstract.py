@@ -49,7 +49,6 @@ class GenericComic(object):
         # we do not need to retrieve the function name manually
         logging.debug(inspect.stack()[1][3] + " " + cls.name + " " + string)
 
-
     @classmethod
     def get_output_dir(cls):
         """Returns the name of the output directory (for comics and JSON file).
