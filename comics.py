@@ -1732,9 +1732,9 @@ class RespawnComic(GenericNavigableComic):
         day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         skip_imgs = {
-                'http://respawncomic.com/wp-content/uploads/2016/03/site/HAROLD2.png',
-                'http://respawncomic.com/wp-content/uploads/2016/03/site/DEVA.png'
-                }
+            'http://respawncomic.com/wp-content/uploads/2016/03/site/HAROLD2.png',
+            'http://respawncomic.com/wp-content/uploads/2016/03/site/DEVA.png'
+        }
         return {
             'title': title,
             'author': author,
