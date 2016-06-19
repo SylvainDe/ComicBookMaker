@@ -4,6 +4,7 @@
 
 import book
 import argparse
+import logging
 from comics import COMIC_NAMES
 
 
@@ -29,6 +30,7 @@ def add_new_lines_after_tag(path, new_lines, tag):
 
 def main():
     """Main function"""
+    logger = logging.getLogger()
     comic_names = sorted(COMIC_NAMES.keys())
     parser = argparse.ArgumentParser(
         description='Downloads webcomics and generates ebooks for offline reading')
@@ -49,12 +51,20 @@ def main():
         action='append',
         help=('actions required'),
         default=[])
+    parser.add_argument(
+        '--loglevel', '-l',
+        type=int,
+        action='store',
+        help=('log level (as per the Python logging module)'),
+        default=logging.CRITICAL)
     args = parser.parse_args()
+    logger.setLevel(args.loglevel)
     if not args.comic:
         args.comic = comic_names
     if not args.action:
         args.action = ['update']
     comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
+    logging.debug('Starting')
     for action in args.action:
         if action == 'book':
             book.make_book(comic_classes)

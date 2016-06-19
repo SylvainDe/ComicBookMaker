@@ -7,6 +7,8 @@ import time
 import os
 from datetime import date
 from urlfunctions import get_filename_from_url, get_file_at_url
+import inspect
+import logging
 
 
 def get_date_for_comic(comic):
@@ -41,6 +43,14 @@ class GenericComic(object):
     url = None
 
     @classmethod
+    def log(cls, string):
+        """Dirty logging function."""
+        # TODO: https://docs.python.org/2/library/logging.html#logrecord-attributes
+        # we do not need to retrieve the function name manually
+        logging.debug(inspect.stack()[1][3] + " " + cls.name + " " + string)
+
+
+    @classmethod
     def get_output_dir(cls):
         """Returns the name of the output directory (for comics and JSON file).
         To be overridden if needed."""
@@ -49,7 +59,9 @@ class GenericComic(object):
     @classmethod
     def create_output_dir(cls):
         """Create output directory for the comic on the file system."""
+        cls.log("start")
         os.makedirs(cls.get_output_dir(), exist_ok=True)
+        cls.log("done")
 
     @classmethod
     def get_json_file_path(cls):
@@ -59,6 +71,7 @@ class GenericComic(object):
     @classmethod
     def load_db(cls):
         """Load the JSON file to return a list of comics."""
+        cls.log("start")
         try:
             with open(cls.get_json_file_path()) as file:
                 return json.load(file)
@@ -68,12 +81,15 @@ class GenericComic(object):
     @classmethod
     def save_db(cls, data):
         """Save the list of comics in the JSON file."""
+        cls.log("start")
         with open(cls.get_json_file_path(), 'w+') as file:
             json.dump(data, file, indent=4, sort_keys=True)
+        cls.log("done")
 
     @classmethod
     def get_file_in_output_dir(cls, url, prefix=None):
         """Download file from URL and save it in output folder."""
+        cls.log("start (url:%s)" % url)
         filename = os.path.join(
             cls.get_output_dir(),
             ('' if prefix is None else prefix) +
@@ -83,6 +99,7 @@ class GenericComic(object):
     @classmethod
     def check_everything_is_ok(cls):
         """Perform tests on the database to check that everything is ok."""
+        cls.log("start")
         print(cls.name, ': about to check')
         comics = cls.load_db()
         imgs_paths = {}
@@ -131,6 +148,7 @@ class GenericComic(object):
                 file_path = os.path.join(output_dir, file_)
                 if file_path not in imgs_paths and file_path != json:
                     print("Unused image", file_path)
+        cls.log("done")
 
     @classmethod
     def get_next_comic(cls, _):
@@ -170,13 +188,17 @@ class GenericComic(object):
             - exception handling (properly retrieved data are always saved)
             - file download
             - data management (adds current date if no date is provided)."""
+        cls.log("start")
         print(cls.name, ': about to update')
         cls.create_output_dir()
         comics = cls.load_db()
         new_comics = []
         start = time.time()
         try:
-            for comic in cls.get_next_comic(comics[-1] if comics else None):
+            last_comic = comics[-1] if comics else None
+            cls.log("last comic is %s" % ('None' if last_comic is None else last_comic['url']))
+            for comic in cls.get_next_comic(last_comic):
+                cls.log("got %s" % str(comic))
                 if 'day' in comic:
                     assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
                 else:
@@ -200,11 +222,13 @@ class GenericComic(object):
                       "comics in", end - start, "seconds")
             else:
                 print(cls.name, ": nothing new")
+        cls.log("done")
 
     @classmethod
     def try_to_get_missing_resources(cls):
         """Download images that might not have been downloaded properly in
         the first place."""
+        cls.log("start")
         print(cls.name, ': about to try to get missing resources')
         cls.create_output_dir()
         comics = cls.load_db()
@@ -225,16 +249,20 @@ class GenericComic(object):
         if change:
             cls.save_db(comics)
             print(cls.name, ": some missing resources have been downloaded")
+        cls.log("done")
 
     @classmethod
     def reset_new(cls):
         """Remove the 'new' flag on comics in the DB."""
+        cls.log("start")
         cls.create_output_dir()
         cls.save_db([{key: val for key, val in c.items() if key != 'new'} for c in cls.load_db()])
+        cls.log("done")
 
     @classmethod
     def info(cls):
         """Print information about the comics."""
+        cls.log("start")
         print("%s (%s) : " % (cls.long_name, cls.url))
         cls.create_output_dir()
         comics = cls.load_db()
@@ -245,6 +273,7 @@ class GenericComic(object):
             date_min, date_max = min(dates), max(dates)
             print("from %s to %s (%d days)" % (date_min, date_max, (date_max - date_min).days))
         print()
+        cls.log("done")
 
     @classmethod
     def readme(cls):

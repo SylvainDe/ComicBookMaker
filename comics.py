@@ -100,6 +100,7 @@ class GenericNavigableComic(GenericComic):
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
                 break
+            cls.log("about to get %s (%s)" % (url, str(next_comic)))
             soup = get_soup_at_url(url)
             comic = cls.get_comic_info(soup, next_comic)
             if comic is not None:
@@ -189,6 +190,7 @@ class GenericListableComic(GenericComic):
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
+                cls.log("about to get %s (%s)" % (url, str(archive_elt)))
                 soup = get_soup_at_url(url)
                 comic = cls.get_comic_info(soup, archive_elt)
                 if comic is not None:

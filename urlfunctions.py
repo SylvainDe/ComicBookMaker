@@ -9,14 +9,14 @@ import shutil
 import gzip
 from bs4 import BeautifulSoup
 import inspect
+import logging
 
-LOG_LEVEL = None
 
-
-def log(string, level=3):
+def log(string):
     """Dirty logging function."""
-    if LOG_LEVEL is not None and level > LOG_LEVEL:
-        print(inspect.stack()[1][3] + " " + string)
+    # TODO: https://docs.python.org/2/library/logging.html#logrecord-attributes
+    # we do not need to retrieve the function name manually
+    logging.debug(inspect.stack()[1][3] + " " + string)
 
 
 def convert_iri_to_plain_ascii_uri(uri):
