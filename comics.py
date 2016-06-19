@@ -2380,6 +2380,25 @@ class TheAwkwardYeti(GenericNavigableComic):
         }
 
 
+class PleasantThoughts(GenericNavigableComic):
+    """Class to retrieve Pleasant Thoughts comics."""
+    name = 'pleasant'
+    long_name = 'Pleasant Thoughts'
+    url = 'http://pleasant-thoughts.com'
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        post = soup.find('div', class_='post-content')
+        title = post.find('h2', class_='post-title').string
+        imgs = post.find("div", class_="entry").find_all("img")
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class LastPlaceComics(GenericNavigableComic):
     """Class to retrieve Last Place Comics."""
     name = 'lastplace'
