@@ -897,14 +897,8 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         return get_soup_at_url(cls.url).find('a', rel='start')
 
     @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
-
-    @classmethod
     def get_comic_info(cls, soup, link):
-        comic_link_re = re.compile('^/index.php\\?id=([0-9]*)$')
-        num = int(comic_link_re.match(link['href']).groups()[0])
-        image1 = soup.find('div', id='comicbody').find('img')
+        image1 = soup.find('img', id='cc-comic')
         image_url1 = image1['src']
         aftercomic = soup.find('div', id='aftercomic')
         image_url2 = aftercomic.find('img')['src'] if aftercomic else ''
@@ -912,7 +906,6 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         date_str = soup.find('div', class_='cc-publishtime').contents[0]
         day = string_to_date(date_str, "%B %d, %Y")
         return {
-            'num': num,
             'title': image1['title'],
             'img': [urljoin_wrapper(cls.url, i) for i in imgs],
             'day': day.day,
