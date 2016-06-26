@@ -3673,6 +3673,7 @@ class TheArgyleSweater(GenericGoComic):
 
 class SunnyStreet(GenericGoComic):
     """Class to retrieve Sunny Street comics."""
+    # Also on http://www.sunnystreetcomics.com
     name = 'sunny'
     long_name = 'Sunny Street'
     url = 'http://www.gocomics.com/sunny-street'
