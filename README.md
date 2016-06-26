@@ -215,6 +215,7 @@ Comics supported
  * [Everything's Stupid](http://everythingsstupid.net)
  * [Everything's Stupid (from Tapastic)](http://tapastic.com/series/EverythingsStupid)
  * [Sunny Street](http://www.gocomics.com/sunny-street)
+ * [The Ism](http://www.theism-comics.com)
  * [The Odd 1s Out (from Tapastic)](https://tapastic.com/series/Theodd1sout)
  * [The Odd 1s Out (from Tumblr)](http://theodd1sout.tumblr.com)
  * [Thor's Thundershack](http://www.thorsthundershack.com)

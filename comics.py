@@ -2772,13 +2772,8 @@ class AHamADay(GenericNavigableComic):
         }
 
 
-class EverythingsStupid(GenericNavigableComic):
-    """Class to retrieve Everything's stupid Comics."""
-    # Also on http://tapastic.com/series/EverythingsStupid
-    # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
-    name = 'stupid'
-    long_name = "Everything's Stupid"
-    url = 'http://everythingsstupid.net'
+class GenericWordPressInkblot(GenericNavigableComic):
+    """Generic class to retrieve comics using WordPress with Inkblot."""
     get_navi_link = get_link_rel_next
 
     @classmethod
@@ -2798,6 +2793,24 @@ class EverythingsStupid(GenericNavigableComic):
             'year': day.year,
             'img': [i['src'] for i in imgs],
         }
+
+
+class EverythingsStupid(GenericWordPressInkblot):
+    """Class to retrieve Everything's stupid Comics."""
+    # Also on http://tapastic.com/series/EverythingsStupid
+    # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
+    # Also on http://everythingsstupidcomics.tumblr.com
+    name = 'stupid'
+    long_name = "Everything's Stupid"
+    url = 'http://everythingsstupid.net'
+
+
+class TheIsmComics(GenericWordPressInkblot):
+    """Class to retrieve The Ism Comics."""
+    # Also on https://tapastic.com/series/TheIsm (?)
+    name = 'theism'
+    long_name = "The Ism"
+    url = 'http://www.theism-comics.com'
 
 
 class ElectricBunnyComic(GenericNavigableComic):
