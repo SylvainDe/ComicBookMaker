@@ -3529,6 +3529,13 @@ class LinsEditionsTumblr(GenericTumblrV1):
     url = 'http://linscomics.tumblr.com'
 
 
+class HitAndMissComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Hit and Miss Comics."""
+    name = 'hitandmiss'
+    long_name = 'Hit and Miss Comics'
+    url = 'http://hitandmisscomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

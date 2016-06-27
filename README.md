@@ -132,6 +132,7 @@ Comics supported
  * [Happle Tea](http://www.happletea.com)
  * [Heck if I Know comics (from Tapastic)](http://tapastic.com/series/Regular)
  * [Heck if I Know comics (from Tumblr)](http://heckifiknowcomics.com)
+ * [Hit and Miss Comics](http://hitandmisscomics.tumblr.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
