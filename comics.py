@@ -3513,6 +3513,14 @@ class ClassicRandy(GenericEmptyComic, GenericTumblrV1):
     url = 'http://classicrandy.tumblr.com'
 
 
+class DagssonTumblr(GenericTumblrV1):
+    """Class to retrieve Dagsson comics."""
+    # Also on http://www.dagsson.com
+    name = 'dagsson-tumblr'
+    long_name = 'Dagsson Hugleikur (from Tumblr)'
+    url = 'http://hugleikurdagsson.tumblr.com'
+
+
 class LinsEditionsTumblr(GenericTumblrV1):
     """Class to retrieve L.I.N.S. Editions comics."""
     # Also on https://linsedition.com

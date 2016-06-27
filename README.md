@@ -92,6 +92,7 @@ Comics supported
  * [Cheer Up Emo Kid (from Tumblr)](http://enzocomics.tumblr.com)
  * [Les Culottees](http://lesculottees.blog.lemonde.fr)
  * [Cyanide and Happiness](http://explosm.net)
+ * [Dagsson Hugleikur (from Tumblr)](http://hugleikurdagsson.tumblr.com)
  * [Deadly Panel](http://www.deadlypanel.com)
  * [Deadly Panel (from Tapastic)](https://tapastic.com/series/deadlypanel)
  * [Depressed Alien](http://depressedalien.com)
