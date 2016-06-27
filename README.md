@@ -247,6 +247,7 @@ Comics supported
  * [Vidberg - l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Wondermark](http://wondermark.com)
+ * [Wooden Plank Studios](http://woodenplankstudios.com)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
  * [WuMo](http://www.gocomics.com/wumo)
  * [xkcd](http://xkcd.com)

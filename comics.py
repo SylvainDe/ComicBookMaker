@@ -2813,6 +2813,13 @@ class TheIsmComics(GenericWordPressInkblot):
     url = 'http://www.theism-comics.com'
 
 
+class WoodenPlankStudios(GenericWordPressInkblot):
+    """Class to retrieve Wooden Plank Studios comics."""
+    name = 'woodenplank'
+    long_name = 'Wooden Plank Studios'
+    url = 'http://woodenplankstudios.com'
+
+
 class ElectricBunnyComic(GenericNavigableComic):
     """Class to retrieve Electric Bunny Comics."""
     name = 'bunny'
