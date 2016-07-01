@@ -2392,6 +2392,37 @@ class PleasantThoughts(GenericNavigableComic):
         }
 
 
+class MisterAndMe(GenericNavigableComic):
+    """Class to retrieve Mister & Me Comics."""
+    # Also on http://www.gocomics.com/mister-and-me
+    # Also on https://tapastic.com/series/Mister-and-Me
+    name = 'mister'
+    long_name = 'Mister & Me'
+    url = 'http://www.mister-and-me.com'
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find("span", class_="post-date").string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find("div", id="comic").find_all("img")
+        assert all(i['alt'] == i['title'] for i in imgs)
+        assert len(imgs) <= 1
+        alt = imgs[0]['alt'] if imgs else ""
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'alt': alt,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year
+        }
+
+
 class LastPlaceComics(GenericNavigableComic):
     """Class to retrieve Last Place Comics."""
     name = 'lastplace'
@@ -3811,6 +3842,15 @@ class DorrisMcGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/dorris-mccomics'
 
 
+class MisterAndMeGoComics(GenericGoComic):
+    """Class to retrieve Mister & Me Comics."""
+    # Also on http://www.mister-and-me.com
+    # Also on https://tapastic.com/series/Mister-and-Me
+    name = 'mister-goc'
+    long_name = 'Mister & Me (from GoComics)'
+    url = 'http://www.gocomics.com/mister-and-me'
+
+
 class TapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
@@ -4111,6 +4151,15 @@ class TheWorldIsFlatTapa(TapasticComic):
     name = 'flatworld-tapa'
     long_name = 'The World Is Flat (from Tapastic)'
     url = 'https://tapastic.com/series/The-World-is-Flat'
+
+
+class MisterAndMeTapa(TapasticComic):
+    """Class to retrieve Mister & Me Comics."""
+    # Also on http://www.mister-and-me.com
+    # Also on http://www.gocomics.com/mister-and-me
+    name = 'mister-tapa'
+    long_name = 'Mister & Me (from Tapastic)'
+    url = 'https://tapastic.com/series/Mister-and-Me'
 
 
 def get_subclasses(klass):
