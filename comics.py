@@ -3569,11 +3569,25 @@ class LinsEditionsTumblr(GenericTumblrV1):
     url = 'http://linscomics.tumblr.com'
 
 
+class OrigamiHotDish(GenericTumblrV1):
+    """Class to retrieve Origami Hot Dish comics."""
+    name = 'origamihotdish'
+    long_name = 'Origami Hot Dish'
+    url = 'http://origamihotdish.com'
+
+
 class HitAndMissComicsTumblr(GenericTumblrV1):
     """Class to retrieve Hit and Miss Comics."""
     name = 'hitandmiss'
     long_name = 'Hit and Miss Comics'
     url = 'http://hitandmisscomics.tumblr.com'
+
+
+class HMBlanc(GenericTumblrV1):
+    """Class to retrieve HM Blanc comics."""
+    name = 'hmblanc'
+    long_name = 'HM Blanc'
+    url = 'http://hmblanc.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
