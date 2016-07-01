@@ -96,6 +96,7 @@ class GenericNavigableComic(GenericComic):
             cls.get_next_link(get_soup_at_url(url)) \
             if url else \
             cls.get_first_comic_link()
+        cls.log("next/first comic will be %s (url is %s)" % (str(next_comic), url))
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
@@ -108,6 +109,7 @@ class GenericNavigableComic(GenericComic):
                 comic['url'] = url
                 yield comic
             next_comic = cls.get_next_link(soup)
+            cls.log("next comic will be %s" % str(next_comic))
 
     @classmethod
     def check_navigation(cls, url):

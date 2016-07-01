@@ -45,7 +45,7 @@ def urlopen_wrapper(url):
         if response.info().get('Content-Encoding') == 'gzip':
             return gzip.GzipFile(fileobj=response)
         return response
-    except (urllib.error.HTTPError, urllib.error.URLError):
+    except (urllib.error.HTTPError, urllib.error.URLError, ConnectionError):
         print(url)
         raise
 
