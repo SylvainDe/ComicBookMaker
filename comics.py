@@ -3131,7 +3131,7 @@ class AccordingToDevin(GenericTumblrV1):
     url = 'http://accordingtodevin.tumblr.com'
 
 
-class ItsTheTieTumblr(GenericEmptyComic, GenericTumblrV1):
+class ItsTheTieTumblr(GenericTumblrV1):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.com
     # Also on https://tapastic.com/series/itsthetie
@@ -3165,7 +3165,7 @@ class TubeyToonsTumblr(GenericTumblrV1):
     url = 'http://tubeytoons.tumblr.com'
 
 
-class UnearthedComicsTumblr(GenericEmptyComic, GenericTumblrV1):
+class UnearthedComicsTumblr(GenericTumblrV1):
     """Class to retrieve Unearthed comics."""
     # Also on http://tapastic.com/series/UnearthedComics
     # Also on http://unearthedcomics.com
@@ -3195,7 +3195,7 @@ class Flocci(GenericTumblrV1):
     url = "http://floccinaucinihilipilificationa.tumblr.com"
 
 
-class UpAndOut(GenericEmptyComic, GenericTumblrV1):
+class UpAndOut(GenericTumblrV1):
     """Class to retrieve Up & Out comics."""
     # Also on http://tapastic.com/series/UP-and-OUT
     name = 'upandout'
@@ -3210,7 +3210,7 @@ class Pundemonium(GenericTumblrV1):
     url = 'http://monstika.tumblr.com'
 
 
-class PoorlyDrawnLinesTumblr(GenericEmptyComic, GenericTumblrV1):
+class PoorlyDrawnLinesTumblr(GenericTumblrV1):
     """Class to retrieve Poorly Drawn Lines comics."""
     # Also on http://poorlydrawnlines.com
     name = 'poorlydrawn-tumblr'
@@ -3421,7 +3421,7 @@ class JoanCornellaTumblr(GenericTumblrV1):
     url = 'http://cornellajoan.tumblr.com'
 
 
-class RespawnComicTumblr(GenericEmptyComic, GenericTumblrV1):
+class RespawnComicTumblr(GenericTumblrV1):
     """Class to retrieve Respawn Comic."""
     # Also on http://respawncomic.com
     name = 'respawn-tumblr'
@@ -3429,7 +3429,7 @@ class RespawnComicTumblr(GenericEmptyComic, GenericTumblrV1):
     url = 'http://respawncomic.tumblr.com'
 
 
-class ChrisHallbeckTumblr(GenericEmptyComic, GenericTumblrV1):
+class ChrisHallbeckTumblr(GenericTumblrV1):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://tapastic.com/ChrisHallbeck
     # Also on http://maximumble.com
@@ -3463,7 +3463,7 @@ class CancerOwl(GenericTumblrV1):
     url = 'http://cancerowl.tumblr.com'
 
 
-class FowlLanguageTumblr(GenericEmptyComic, GenericTumblrV1):
+class FowlLanguageTumblr(GenericTumblrV1):
     """Class to retrieve Fowl Language comics."""
     # Also on http://www.fowllanguagecomics.com
     # Also on http://tapastic.com/series/Fowl-Language-Comics
@@ -3514,7 +3514,7 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     url = 'http://theworldisflatcomics.tumblr.com'
 
 
-class DorrisMc(GenericEmptyComic, GenericTumblrV1):
+class DorrisMc(GenericTumblrV1):
     """Class to retrieve Dorris Mc Comics"""
     # Also on http://www.gocomics.com/dorris-mccomics
     name = 'dorrismc'
@@ -3530,7 +3530,7 @@ class LeleozTumblr(GenericTumblrV1):
     url = 'http://leleozcomics.tumblr.com'
 
 
-class MoonBeardTumblr(GenericEmptyComic, GenericTumblrV1):
+class MoonBeardTumblr(GenericTumblrV1):
     """Class to retrieve MoonBeard comics."""
     # Also on http://moonbeard.com
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
@@ -3539,14 +3539,14 @@ class MoonBeardTumblr(GenericEmptyComic, GenericTumblrV1):
     url = 'http://blog.squiresjam.es/moonbeard'
 
 
-class AComik(GenericEmptyComic, GenericTumblrV1):
+class AComik(GenericTumblrV1):
     """Class to retrieve A Comik"""
     name = 'comik'
     long_name = 'A Comik'
     url = 'http://acomik.com'
 
 
-class ClassicRandy(GenericEmptyComic, GenericTumblrV1):
+class ClassicRandy(GenericTumblrV1):
     """Class to retrieve Classic Randy comics."""
     name = 'randy'
     long_name = 'Classic Randy'
