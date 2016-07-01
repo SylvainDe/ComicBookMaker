@@ -3523,7 +3523,7 @@ class DorrisMc(GenericTumblrV1):
     url = 'http://dorrismccomics.com'
 
 
-class LeleozTumblr(GenericTumblrV1):
+class LeleozTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Leleoz comics."""
     # Also on https://tapastic.com/series/Leleoz
     name = 'leleoz-tumblr'
