@@ -2457,11 +2457,12 @@ class LastPlaceComics(GenericNavigableComic):
 class TalesOfAbsurdity(GenericNavigableComic):
     """Class to retrieve Tales Of Absurdity comics."""
     # Also on http://tapastic.com/series/Tales-Of-Absurdity
+    # Also on http://talesofabsurdity.tumblr.com
     name = 'absurdity'
     long_name = 'Tales of Absurdity'
     url = 'http://talesofabsurdity.com'
     get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
+    get_navi_link = get_a_navi_comicnavnext_navinext
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3590,6 +3591,15 @@ class HMBlanc(GenericTumblrV1):
     url = 'http://hmblanc.tumblr.com'
 
 
+class TalesOfAbsurdityTumblr(GenericTumblrV1):
+    """Class to retrieve Tales Of Absurdity comics."""
+    # Also on http://talesofabsurdity.com
+    # Also on http://tapastic.com/series/Tales-Of-Absurdity
+    name = 'absurdity-tumblr'
+    long_name = 'Tales of Absurdity (from Tumblr)'
+    url = 'http://talesofabsurdity.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -4176,6 +4186,15 @@ class MisterAndMeTapa(TapasticComic):
     name = 'mister-tapa'
     long_name = 'Mister & Me (from Tapastic)'
     url = 'https://tapastic.com/series/Mister-and-Me'
+
+
+class TalesOfAbsurdityTapa(TapasticComic):
+    """Class to retrieve Tales Of Absurdity comics."""
+    # Also on http://talesofabsurdity.com
+    # Also on http://talesofabsurdity.tumblr.com
+    name = 'absurdity-tapa'
+    long_name = 'Tales of Absurdity (from Tapastic)'
+    url = 'http://tapastic.com/series/Tales-Of-Absurdity'
 
 
 def get_subclasses(klass):
