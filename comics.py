@@ -2856,6 +2856,7 @@ class WoodenPlankStudios(GenericWordPressInkblot):
 
 class ElectricBunnyComic(GenericNavigableComic):
     """Class to retrieve Electric Bunny Comics."""
+    # Also on http://electricbunnycomics.tumblr.com
     name = 'bunny'
     long_name = 'Electric Bunny Comic'
     url = 'http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell'
@@ -2870,7 +2871,7 @@ class ElectricBunnyComic(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
-        img = last_soup.find('img', alt='Next' if next_ else 'Prev')
+        img = last_soup.find('img', alt='Next' if next_ else 'Back')
         return img.parent if img else None
 
     @classmethod
@@ -3598,6 +3599,14 @@ class TalesOfAbsurdityTumblr(GenericTumblrV1):
     name = 'absurdity-tumblr'
     long_name = 'Tales of Absurdity (from Tumblr)'
     url = 'http://talesofabsurdity.tumblr.com'
+
+
+class ElectricBunnyComicTumblr(GenericTumblrV1):
+    """Class to retrieve Electric Bunny Comics."""
+    # Also on http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell
+    name = 'bunny-tumblr'
+    long_name = 'Electric Bunny Comic (from Tumblr)'
+    url = 'http://electricbunnycomics.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
