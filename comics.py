@@ -2242,6 +2242,9 @@ class LinsEditions(GenericNavigableComic):
 class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
     # Also on http://tapastic.com/series/Thors-Thundershac
+    # TODO: When reaching the last comic available, the URL
+    # is a generic URL instead of one with an id. This stops
+    # the navigation. It would be a nice touch to detect this.
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
@@ -2900,6 +2903,9 @@ class ElectricBunnyComic(GenericNavigableComic):
 class SheldonComics(GenericNavigableComic):
     """Class to retrieve Sheldon comics."""
     # Also on http://www.gocomics.com/sheldon
+    # TODO: When reaching the last comic available, the URL
+    # is a generic URL instead of one with an id. This stops
+    # the navigation. It would be a nice touch to detect this.
     name = 'sheldon'
     long_name = 'Sheldon Comics'
     url = 'http://www.sheldoncomics.com'
