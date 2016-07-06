@@ -114,10 +114,19 @@ class GenericNavigableComic(GenericComic):
     @classmethod
     def check_navigation(cls, url):
         """Check that navigation functions seem to be working - for dev purposes."""
-        soup = get_soup_at_url(url)
-        prevlink, nextlink = cls.get_prev_link(soup), cls.get_next_link(soup)
+        ok = True
+        firstlink = cls.get_first_comic_link()
+        if firstlink is None:
+            print("From %s : no first link" % cls.url)
+            ok = False
+        if url:
+            soup = get_soup_at_url(url)
+            prevlink, nextlink = cls.get_prev_link(soup), cls.get_next_link(soup)
+        else:
+            prevlink, nextlink = None, None
         if prevlink is None and nextlink is None:
             print("From %s : no previous nor next" % url)
+            ok = False
         else:
             if prevlink:
                 prevurl = cls.get_url_from_link(prevlink)
@@ -125,6 +134,7 @@ class GenericNavigableComic(GenericComic):
                 prevnext = cls.get_url_from_link(cls.get_next_link(prevsoup))
                 if prevnext != url:
                     print("From %s, going backward then forward leads to %s" % (url, prevnext))
+                    ok = False
             if nextlink:
                 nexturl = cls.get_url_from_link(nextlink)
                 if nexturl != url:
@@ -132,6 +142,8 @@ class GenericNavigableComic(GenericComic):
                     nextprev = cls.get_url_from_link(cls.get_prev_link(nextsoup))
                     if nextprev != url:
                         print("From %s, going forward then backward leads to %s" % (url, nextprev))
+                        ok = False
+        return ok
 
     # This method is not defined by default and is not part of this class'API.
     # It is only used:
