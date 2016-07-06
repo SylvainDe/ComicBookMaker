@@ -10,6 +10,7 @@ import gzip
 from bs4 import BeautifulSoup
 import inspect
 import logging
+import time
 
 
 def log(string):
@@ -121,15 +122,18 @@ def load_json_at_url(url):
     return json.loads(get_content(url).decode())
 
 
-def get_soup_at_url(url, detect_meta=False, detect_rel=False):
+def get_soup_at_url(url, detect_meta=False, detect_rel=False, save_in_file=False):
     """Get content at url as BeautifulSoup.
 
     url is a string
     detect_meta is a hacky flag used to detect comics using similar plugin to
         be able to reuse code at some point
     detect_rel is a hacky flag to detect next/first comics automatically
+    save_in_file is a hacky flag to save content in temp file for bebugging
+        purposes
     Returns a BeautifulSoup object."""
-    soup = BeautifulSoup(get_content(url), "html.parser")
+    content = get_content(url)
+    soup = BeautifulSoup(content, "html.parser")
     if detect_meta:
         for meta_val in ['generator', 'ComicPress', 'Comic-Easel']:
             meta = soup.find('meta', attrs={'name': meta_val})
@@ -140,4 +144,11 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False):
             next_ = soup.find(tag, rel='next')
             if next_ is not None:
                 print(next_)
+    if save_in_file:
+        time_ms = time.time() * 1000
+        prefix = 'get_soup_at_url_' + str(time_ms) + '_'
+        with open(prefix + 'raw', 'wb') as f:
+            f.write(content)
+        with open(prefix + 'content', 'wb') as f:
+            f.write(soup.encode('utf-8'))
     return soup
