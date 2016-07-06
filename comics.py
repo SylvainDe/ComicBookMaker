@@ -1411,6 +1411,7 @@ class Octopuns(GenericNavigableComic):
     long_name = 'Octopuns'
     url = 'http://www.octopuns.net'
 
+    @classmethod
     def get_first_comic_link(cls):
         return get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
 
