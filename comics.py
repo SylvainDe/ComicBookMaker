@@ -2533,8 +2533,8 @@ class PlanC(GenericNavigableComic):
     name = 'planc'
     long_name = 'Plan C'
     url = 'http://www.plancomic.com'
-    get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_navi_link = get_a_comicnavbase_comicnavnext
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2799,7 +2799,7 @@ class AHamADay(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         # prev is next / next is prev
-        return last_soup.find('a', class_='prev-item' if next_ else 'next-item')
+        return last_soup.find('li', class_='previous' if next_ else 'next').find('a')
 
     @classmethod
     def get_url_from_link(cls, link):
