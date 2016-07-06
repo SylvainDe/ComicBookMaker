@@ -2807,9 +2807,9 @@ class AHamADay(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
-        date_str = soup.find('time', itemprop='datePublished')["datetime"]
+        date_str = soup.find('time', class_='published')['datetime']
         day = string_to_date(date_str, "%Y-%m-%d")
-        author = soup.find('a', rel='author').string
+        author = soup.find('span', class_='blog-author').find('a').string
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', itemprop='image')
         return {
