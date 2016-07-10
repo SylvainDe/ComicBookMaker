@@ -2246,17 +2246,20 @@ class LinsEditions(GenericNavigableComic):
 class ThorsThundershack(GenericNavigableComic):
     """Class to retrieve Thor's Thundershack comics."""
     # Also on http://tapastic.com/series/Thors-Thundershac
-    # TODO: When reaching the last comic available, the URL
-    # is a generic URL instead of one with an id. This stops
-    # the navigation. It would be a nice touch to detect this.
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
-    get_navi_link = get_a_rel_next
 
     @classmethod
     def get_first_comic_link(cls):
         return get_soup_at_url(cls.url).find('a', class_='first navlink')
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        for link in last_soup.find_all('a', rel='next' if next_ else 'prev'):
+            if link['href'] != '/comic':
+                return link
+        return None
 
     @classmethod
     def get_url_from_link(cls, link):
