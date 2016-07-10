@@ -213,6 +213,7 @@ Comics supported
  * [Gone Into Rapture (from Tapastic)](http://tapastic.com/series/Goneintorapture)
  * [Respawn Comic](http://respawncomic.com )
  * [Respawn Comic (from Tumblr)](http://respawncomic.tumblr.com)
+ * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)

@@ -3627,6 +3627,14 @@ class TalesOfAbsurdityTumblr(GenericTumblrV1):
     url = 'http://talesofabsurdity.tumblr.com'
 
 
+class RobbieAndBobby(GenericTumblrV1):
+    """Class to retrieve Robbie And Bobby comics."""
+    # Also on http://robbieandbobby.com
+    name = 'robbie-tumblr'
+    long_name = 'Robbie And Bobby (from Tumblr)'
+    url = 'http://robbieandbobby.tumblr.com'
+
+
 class ElectricBunnyComicTumblr(GenericTumblrV1):
     """Class to retrieve Electric Bunny Comics."""
     # Also on http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell
