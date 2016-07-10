@@ -3635,6 +3635,13 @@ class ElectricBunnyComicTumblr(GenericTumblrV1):
     url = 'http://electricbunnycomics.tumblr.com'
 
 
+class Hoomph(GenericTumblrV1):
+    """Class to retrieve Hoomph comics."""
+    name = 'hoomph'
+    long_name = 'Hoomph'
+    url = 'http://hoom.ph'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

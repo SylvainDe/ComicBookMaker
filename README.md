@@ -137,6 +137,7 @@ Comics supported
  * [Heck if I Know comics (from Tumblr)](http://heckifiknowcomics.com)
  * [Hit and Miss Comics](http://hitandmisscomics.tumblr.com)
  * [HM Blanc](http://hmblanc.tumblr.com)
+ * [Hoomph](http://hoom.ph)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
