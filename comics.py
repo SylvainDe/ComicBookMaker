@@ -2910,9 +2910,6 @@ class ElectricBunnyComic(GenericNavigableComic):
 class SheldonComics(GenericNavigableComic):
     """Class to retrieve Sheldon comics."""
     # Also on http://www.gocomics.com/sheldon
-    # TODO: When reaching the last comic available, the URL
-    # is a generic URL instead of one with an id. This stops
-    # the navigation. It would be a nice touch to detect this.
     name = 'sheldon'
     long_name = 'Sheldon Comics'
     url = 'http://www.sheldoncomics.com'
@@ -2923,7 +2920,10 @@ class SheldonComics(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
-        return last_soup.find("a", id="nav-next" if next_ else "nav-prev")
+        for link in last_soup.find_all("a", id="nav-next" if next_ else "nav-prev"):
+            if link['href'] != 'http://www.sheldoncomics.com':
+                return link
+        return None
 
     @classmethod
     def get_comic_info(cls, soup, link):
