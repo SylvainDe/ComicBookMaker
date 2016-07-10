@@ -100,6 +100,7 @@ class GenericNavigableComic(GenericComic):
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
+                cls.log("got same url %s" % url)
                 break
             cls.log("about to get %s (%s)" % (url, str(next_comic)))
             soup = get_soup_at_url(url)
@@ -114,16 +115,17 @@ class GenericNavigableComic(GenericComic):
     @classmethod
     def check_navigation(cls, url):
         """Check that navigation functions seem to be working - for dev purposes."""
+        cls.log("about to check navigation from %s" % url)
         ok = True
         firstlink = cls.get_first_comic_link()
         if firstlink is None:
             print("From %s : no first link" % cls.url)
             ok = False
-        if url:
+        if url is None:
+            prevlink, nextlink = None, None
+        else:
             soup = get_soup_at_url(url)
             prevlink, nextlink = cls.get_prev_link(soup), cls.get_next_link(soup)
-        else:
-            prevlink, nextlink = None, None
         if prevlink is None and nextlink is None:
             print("From %s : no previous nor next" % url)
             ok = False
@@ -143,6 +145,7 @@ class GenericNavigableComic(GenericComic):
                     if nextprev != url:
                         print("From %s, going forward then backward leads to %s" % (url, nextprev))
                         ok = False
+        cls.log("checked navigation from %s -> returned %d" % (url, ok))
         return ok
 
     # This method is not defined by default and is not part of this class'API.
@@ -201,6 +204,7 @@ class GenericListableComic(GenericComic):
         waiting_for_url = last_comic['url'] if last_comic else None
         for archive_elt in cls.get_archive_elements():
             url = cls.get_url_from_archive_element(archive_elt)
+            cls.log("considering %s" % url)
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
