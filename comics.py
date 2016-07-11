@@ -3936,7 +3936,7 @@ class MisterAndMeGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/mister-and-me'
 
 
-class TapasticComic(GenericListableComic):
+class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
     @classmethod
@@ -3969,7 +3969,7 @@ class TapasticComic(GenericListableComic):
         return json.loads(string)
 
 
-class VegetablesForDessert(TapasticComic):
+class VegetablesForDessert(GenericTapasticComic):
     """Class to retrieve Vegetables For Dessert comics."""
     # Also on http://vegetablesfordessert.tumblr.com
     name = 'vegetables'
@@ -3977,7 +3977,7 @@ class VegetablesForDessert(TapasticComic):
     url = 'http://tapastic.com/series/vegetablesfordessert'
 
 
-class FowlLanguageTapa(TapasticComic):
+class FowlLanguageTapa(GenericTapasticComic):
     """Class to retrieve Fowl Language comics."""
     # Also on http://www.fowllanguagecomics.com
     # Also on http://fowllanguagecomics.tumblr.com
@@ -3987,21 +3987,21 @@ class FowlLanguageTapa(TapasticComic):
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
 
 
-class OscillatingProfundities(TapasticComic):
+class OscillatingProfundities(GenericTapasticComic):
     """Class to retrieve Oscillating Profundities comics."""
     name = 'oscillating'
     long_name = 'Oscillating Profundities'
     url = 'http://tapastic.com/series/oscillatingprofundities'
 
 
-class ZnoflatsComics(TapasticComic):
+class ZnoflatsComics(GenericTapasticComic):
     """Class to retrieve Znoflats comics."""
     name = 'znoflats'
     long_name = 'Znoflats Comics'
     url = 'http://tapastic.com/series/Znoflats-Comics'
 
 
-class SandersenTapastic(TapasticComic):
+class SandersenTapastic(GenericTapasticComic):
     """Class to retrieve Sarah Andersen comics."""
     # Also on http://sarahcandersen.com
     # Also on http://www.gocomics.com/sarahs-scribbles
@@ -4010,7 +4010,7 @@ class SandersenTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Doodle-Time'
 
 
-class TubeyToonsTapastic(TapasticComic):
+class TubeyToonsTapastic(GenericTapasticComic):
     """Class to retrieve TubeyToons comics."""
     # Also on http://tubeytoons.com
     # Also on http://tubeytoons.tumblr.com
@@ -4019,7 +4019,7 @@ class TubeyToonsTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Tubey-Toons'
 
 
-class AnythingComicTapastic(TapasticComic):
+class AnythingComicTapastic(GenericTapasticComic):
     """Class to retrieve Anything Comics."""
     # Also on http://www.anythingcomic.com
     name = 'anythingcomic-tapa'
@@ -4027,7 +4027,7 @@ class AnythingComicTapastic(TapasticComic):
     url = 'http://tapastic.com/series/anything'
 
 
-class UnearthedComicsTapastic(TapasticComic):
+class UnearthedComicsTapastic(GenericTapasticComic):
     """Class to retrieve Unearthed comics."""
     # Also on http://unearthedcomics.com
     # Also on http://unearthedcomics.tumblr.com
@@ -4036,7 +4036,7 @@ class UnearthedComicsTapastic(TapasticComic):
     url = 'http://tapastic.com/series/UnearthedComics'
 
 
-class EverythingsStupidTapastic(TapasticComic):
+class EverythingsStupidTapastic(GenericTapasticComic):
     """Class to retrieve Everything's stupid Comics."""
     # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
     # Also on http://everythingsstupid.net
@@ -4045,7 +4045,7 @@ class EverythingsStupidTapastic(TapasticComic):
     url = 'http://tapastic.com/series/EverythingsStupid'
 
 
-class JustSayEhTapastic(TapasticComic):
+class JustSayEhTapastic(GenericTapasticComic):
     """Class to retrieve Just Say Eh comics."""
     # Also on http://www.justsayeh.com
     name = 'justsayeh-tapa'
@@ -4053,7 +4053,7 @@ class JustSayEhTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Just-Say-Eh'
 
 
-class ThorsThundershackTapastic(TapasticComic):
+class ThorsThundershackTapastic(GenericTapasticComic):
     """Class to retrieve Thor's Thundershack comics."""
     # Also on http://www.thorsthundershack.com
     name = 'thor-tapa'
@@ -4061,7 +4061,7 @@ class ThorsThundershackTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Thors-Thundershac'
 
 
-class OwlTurdTapastic(TapasticComic):
+class OwlTurdTapastic(GenericTapasticComic):
     """Class to retrieve Owl Turd comics."""
     # Also on http://owlturd.com
     name = 'owlturd-tapa'
@@ -4069,7 +4069,7 @@ class OwlTurdTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Owl-Turd-Comix'
 
 
-class GoneIntoRaptureTapastic(TapasticComic):
+class GoneIntoRaptureTapastic(GenericTapasticComic):
     """Class to retrieve Gone Into Rapture comics."""
     # Also on http://goneintorapture.tumblr.com
     # Also on http://www.goneintorapture.com
@@ -4078,7 +4078,7 @@ class GoneIntoRaptureTapastic(TapasticComic):
     url = 'http://tapastic.com/series/Goneintorapture'
 
 
-class HeckIfIKnowComicsTapa(TapasticComic):
+class HeckIfIKnowComicsTapa(GenericTapasticComic):
     """Class to retrieve Heck If I Know Comics."""
     # Also on http://heckifiknowcomics.com
     name = 'heck-tapa'
@@ -4086,7 +4086,7 @@ class HeckIfIKnowComicsTapa(TapasticComic):
     url = 'http://tapastic.com/series/Regular'
 
 
-class CheerUpEmoKidTapa(TapasticComic):
+class CheerUpEmoKidTapa(GenericTapasticComic):
     """Class to retrieve CheerUpEmoKid comics."""
     # Also on http://www.cheerupemokid.com
     # Also on http://enzocomics.tumblr.com
@@ -4095,7 +4095,7 @@ class CheerUpEmoKidTapa(TapasticComic):
     url = 'http://tapastic.com/series/CUEK'
 
 
-class BigFootJusticeTapa(TapasticComic):
+class BigFootJusticeTapa(GenericTapasticComic):
     """Class to retrieve Big Foot Justice comics."""
     # Also on http://bigfootjustice.com
     name = 'bigfoot-tapa'
@@ -4103,7 +4103,7 @@ class BigFootJusticeTapa(TapasticComic):
     url = 'http://tapastic.com/series/bigfoot-justice'
 
 
-class UpAndOutTapa(TapasticComic):
+class UpAndOutTapa(GenericTapasticComic):
     """Class to retrieve Up & Out comics."""
     # Also on http://upandoutcomic.tumblr.com
     name = 'upandout-tapa'
@@ -4111,7 +4111,7 @@ class UpAndOutTapa(TapasticComic):
     url = 'http://tapastic.com/series/UP-and-OUT'
 
 
-class ToonHoleTapa(TapasticComic):
+class ToonHoleTapa(GenericTapasticComic):
     """Class to retrieve Toon Holes comics."""
     # Also on http://www.toonhole.com
     name = 'toonhole-tapa'
@@ -4119,7 +4119,7 @@ class ToonHoleTapa(TapasticComic):
     url = 'http://tapastic.com/series/TOONHOLE'
 
 
-class AngryAtNothingTapa(TapasticComic):
+class AngryAtNothingTapa(GenericTapasticComic):
     """Class to retrieve Angry at Nothing comics."""
     # Also on http://www.angryatnothing.net
     name = 'angry-tapa'
@@ -4127,7 +4127,7 @@ class AngryAtNothingTapa(TapasticComic):
     url = 'http://tapastic.com/series/Comics-yeah-definitely-comics-'
 
 
-class LeleozTapa(TapasticComic):
+class LeleozTapa(GenericTapasticComic):
     """Class to retrieve Leleoz comics."""
     # Also on http://leleozcomics.tumblr.com
     name = 'leleoz-tapa'
@@ -4135,7 +4135,7 @@ class LeleozTapa(TapasticComic):
     url = 'https://tapastic.com/series/Leleoz'
 
 
-class TheAwkwardYetiTapa(TapasticComic):
+class TheAwkwardYetiTapa(GenericTapasticComic):
     """Class to retrieve The Awkward Yeti comics."""
     # Also on http://www.gocomics.com/the-awkward-yeti
     # Also on http://theawkwardyeti.com
@@ -4145,7 +4145,7 @@ class TheAwkwardYetiTapa(TapasticComic):
     url = 'https://tapastic.com/series/TheAwkwardYeti'
 
 
-class AsPerUsualTapa(TapasticComic):
+class AsPerUsualTapa(GenericTapasticComic):
     """Class to retrieve As Per Usual comics."""
     # Also on http://as-per-usual.tumblr.com
     name = 'usual-tapa'
@@ -4153,7 +4153,7 @@ class AsPerUsualTapa(TapasticComic):
     url = 'https://tapastic.com/series/AsPerUsual'
 
 
-class OneOneOneOneComicTapa(TapasticComic):
+class OneOneOneOneComicTapa(GenericTapasticComic):
     """Class to retrieve 1111 Comics."""
     # Also on http://www.1111comics.me
     # Also on http://comics1111.tumblr.com
@@ -4162,7 +4162,7 @@ class OneOneOneOneComicTapa(TapasticComic):
     url = 'https://tapastic.com/series/1111-Comics'
 
 
-class TumbleDryTapa(TapasticComic):
+class TumbleDryTapa(GenericTapasticComic):
     """Class to retrieve Tumble Dry comics."""
     # Also on http://tumbledrycomics.com
     name = 'tumbledry-tapa'
@@ -4170,7 +4170,7 @@ class TumbleDryTapa(TapasticComic):
     url = 'https://tapastic.com/series/TumbleDryComics'
 
 
-class DeadlyPanelTapa(TapasticComic):
+class DeadlyPanelTapa(GenericTapasticComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on http://www.deadlypanel.com
     name = 'deadly-tapa'
@@ -4178,7 +4178,7 @@ class DeadlyPanelTapa(TapasticComic):
     url = 'https://tapastic.com/series/deadlypanel'
 
 
-class ChrisHallbeckMaxiTapa(TapasticComic):
+class ChrisHallbeckMaxiTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on http://chrishallbeck.tumblr.com
     # Also on http://maximumble.com
@@ -4187,7 +4187,7 @@ class ChrisHallbeckMaxiTapa(TapasticComic):
     url = 'https://tapastic.com/series/Maximumble'
 
 
-class ChrisHallbeckMiniTapa(TapasticComic):
+class ChrisHallbeckMiniTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on http://chrishallbeck.tumblr.com
     # Also on http://minimumble.com
@@ -4196,7 +4196,7 @@ class ChrisHallbeckMiniTapa(TapasticComic):
     url = 'https://tapastic.com/series/Minimumble'
 
 
-class ChrisHallbeckBiffTapa(TapasticComic):
+class ChrisHallbeckBiffTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on http://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
@@ -4205,7 +4205,7 @@ class ChrisHallbeckBiffTapa(TapasticComic):
     url = 'https://tapastic.com/series/Biff'
 
 
-class RandoWisTapa(TapasticComic):
+class RandoWisTapa(GenericTapasticComic):
     """Class to retrieve RandoWis comics."""
     # Also on https://randowis.com
     name = 'randowis-tapa'
@@ -4213,7 +4213,7 @@ class RandoWisTapa(TapasticComic):
     url = 'https://tapastic.com/series/RandoWis'
 
 
-class PigeonGazetteTapa(TapasticComic):
+class PigeonGazetteTapa(GenericTapasticComic):
     """Class to retrieve The Pigeon Gazette comics."""
     # Also on http://thepigeongazette.tumblr.com
     name = 'pigeon-tapa'
@@ -4221,7 +4221,7 @@ class PigeonGazetteTapa(TapasticComic):
     url = 'https://tapastic.com/series/The-Pigeon-Gazette'
 
 
-class TheOdd1sOutTapa(TapasticComic):
+class TheOdd1sOutTapa(GenericTapasticComic):
     """Class to retrieve The Odd 1s Out comics."""
     # Also on http://theodd1sout.com
     # Also on http://theodd1sout.tumblr.com
@@ -4230,7 +4230,7 @@ class TheOdd1sOutTapa(TapasticComic):
     url = 'https://tapastic.com/series/Theodd1sout'
 
 
-class TheWorldIsFlatTapa(TapasticComic):
+class TheWorldIsFlatTapa(GenericTapasticComic):
     """Class to retrieve The World Is Flat Comics."""
     # Also on http://theworldisflatcomics.tumblr.com
     name = 'flatworld-tapa'
@@ -4238,7 +4238,7 @@ class TheWorldIsFlatTapa(TapasticComic):
     url = 'https://tapastic.com/series/The-World-is-Flat'
 
 
-class MisterAndMeTapa(TapasticComic):
+class MisterAndMeTapa(GenericTapasticComic):
     """Class to retrieve Mister & Me Comics."""
     # Also on http://www.mister-and-me.com
     # Also on http://www.gocomics.com/mister-and-me
@@ -4247,7 +4247,7 @@ class MisterAndMeTapa(TapasticComic):
     url = 'https://tapastic.com/series/Mister-and-Me'
 
 
-class TalesOfAbsurdityTapa(TapasticComic):
+class TalesOfAbsurdityTapa(GenericTapasticComic):
     """Class to retrieve Tales Of Absurdity comics."""
     # Also on http://talesofabsurdity.com
     # Also on http://talesofabsurdity.tumblr.com
@@ -4256,7 +4256,7 @@ class TalesOfAbsurdityTapa(TapasticComic):
     url = 'http://tapastic.com/series/Tales-Of-Absurdity'
 
 
-class BFGFSTapa(TapasticComic):
+class BFGFSTapa(GenericTapasticComic):
     """Class to retrieve BFGFS comics."""
     # Also on http://bfgfs.com
     # Also on http://bfgfs.tumblr.com
