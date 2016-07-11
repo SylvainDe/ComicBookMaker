@@ -108,6 +108,8 @@ Comics supported
  * [Dinosaur Comics](http://www.qwantz.com)
  * [Disco Bleach](http://discobleach.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
+ * [Doodle For Food](http://doodleforfood.com)
+ * [Doodle For Food (from Tapastic)](https://tapastic.com/series/Doodle-for-Food)
  * [Dorris Mc](http://dorrismccomics.com)
  * [Dorris Mc (from GoComics)](http://www.gocomics.com/dorris-mccomics)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
