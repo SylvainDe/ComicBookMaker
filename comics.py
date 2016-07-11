@@ -4288,10 +4288,10 @@ def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     Wrapper around datetime.datetime.strptime."""
     # format described in https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
     prev_locale = locale.setlocale(locale.LC_ALL)
-    if locale != prev_locale:
+    if local != prev_locale:
         locale.setlocale(locale.LC_ALL, local)
     ret = datetime.datetime.strptime(string, date_format).date()
-    if locale != prev_locale:
+    if local != prev_locale:
         locale.setlocale(locale.LC_ALL, prev_locale)
     return ret
 
