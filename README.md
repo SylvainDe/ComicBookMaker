@@ -63,6 +63,8 @@ Comics supported
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Berkeley Mews (from GoComics)](http://www.gocomics.com/berkeley-mews)
  * [Berkeley Mews (from Tumblr)](http://mews.tumblr.com)
+ * [BFGFS (from Tapastic)](https://tapastic.com/series/BFGFS)
+ * [BFGFS (from Tumblr)](http://bfgfs.tumblr.com)
  * [Big Foot Justice](http://bigfootjustice.com)
  * [Big Foot Justice (from Tapastic)](http://tapastic.com/series/bigfoot-justice)
  * [Biter Comics](http://www.bitercomics.com)

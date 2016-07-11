@@ -3650,6 +3650,15 @@ class Hoomph(GenericTumblrV1):
     url = 'http://hoom.ph'
 
 
+class BFGFSTumblr(GenericTumblrV1):
+    """Class to retrieve BFGFS comics."""
+    # Also on https://tapastic.com/series/BFGFS
+    # Also on http://bfgfs.com
+    name = 'bfgfs-tumblr'
+    long_name = 'BFGFS (from Tumblr)'
+    url = 'http://bfgfs.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -4245,6 +4254,15 @@ class TalesOfAbsurdityTapa(TapasticComic):
     name = 'absurdity-tapa'
     long_name = 'Tales of Absurdity (from Tapastic)'
     url = 'http://tapastic.com/series/Tales-Of-Absurdity'
+
+
+class BFGFSTapa(TapasticComic):
+    """Class to retrieve BFGFS comics."""
+    # Also on http://bfgfs.com
+    # Also on http://bfgfs.tumblr.com
+    name = 'bfgfs-tapa'
+    long_name = 'BFGFS (from Tapastic)'
+    url = 'https://tapastic.com/series/BFGFS'
 
 
 def get_subclasses(klass):
