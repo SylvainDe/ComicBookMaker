@@ -2829,6 +2829,49 @@ class AHamADay(GenericNavigableComic):
         }
 
 
+class LittleLifeLines(GenericNavigableComic):
+    """Class to retrieve Little Life Lines comics."""
+    name = 'life'
+    long_name = 'Little Life Lines'
+    url = 'http://www.littlelifelines.com'
+
+    @classmethod
+    def get_first_comic_link(cls):
+        return {'href': 'http://www.littlelifelines.com/comics/well-done'}
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        # prev is next / next is prev
+        li = last_soup.find('li', class_='prev' if next_ else 'next')
+        return li.find('a') if li else None
+
+    @classmethod
+    def get_url_from_link(cls, link):
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('time', class_='published')['datetime']
+        day = string_to_date(date_str, "%Y-%m-%d")
+        author = soup.find('a', rel='author').string
+        div_content = soup.find('div', class_="body entry-content")
+        imgs = div_content.find_all('img')
+        imgs = [i for i in imgs if i.get('src') is not None]
+        alt = imgs[0]['alt']
+        return {
+            'title': title,
+            'alt': alt,
+            'description': desc,
+            'author': author,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class GenericWordPressInkblot(GenericNavigableComic):
     """Generic class to retrieve comics using WordPress with Inkblot."""
     get_navi_link = get_link_rel_next

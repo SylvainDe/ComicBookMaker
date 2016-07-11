@@ -154,6 +154,7 @@ Comics supported
  * [LastPlaceComics](http://lastplacecomics.com)
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
  * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
+ * [Little Life Lines](http://www.littlelifelines.com)
  * [L.I.N.S. Editions](https://linsedition.com)
  * [L.I.N.S. Editions (from Tumblr)](http://linscomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
