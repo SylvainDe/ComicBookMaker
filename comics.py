@@ -88,10 +88,10 @@ class GenericNavigableComic(GenericComic):
         """Get information about a particular comics."""
         raise NotImplementedError
 
-     @classmethod
-     def get_url_from_link(cls, link):
-         """Get url corresponding to a link."""
-         return cls.get_href(link)
+    @classmethod
+    def get_url_from_link(cls, link):
+        """Get url corresponding to a link."""
+        return cls.get_href(link)
 
     @classmethod
     def get_next_link(cls, last_soup):
