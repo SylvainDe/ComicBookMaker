@@ -67,7 +67,6 @@ class GenericNavigableComic(GenericComic):
         - get_comic_info
         - get_url_from_link
     """
-    get_url_from_link = get_href  # Default implementation
 
     @classmethod
     def get_first_comic_link(cls):
@@ -88,6 +87,11 @@ class GenericNavigableComic(GenericComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         raise NotImplementedError
+
+     @classmethod
+     def get_url_from_link(cls, link):
+         """Get url corresponding to a link."""
+         return cls.get_href(link)
 
     @classmethod
     def get_next_link(cls, last_soup):
@@ -201,7 +205,7 @@ class GenericListableComic(GenericComic):
 
     @classmethod
     def get_url_from_archive_element(cls, archive_elt):
-        """Get url correponding to an archive element."""
+        """Get url corresponding to an archive element."""
         raise NotImplementedError
 
     @classmethod
@@ -301,10 +305,12 @@ class ExtraFabulousComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', title='FIRST')
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         img_src_re = re.compile('^%s/wp-content/uploads/' % cls.url)
         imgs = soup.find_all('img', src=img_src_re)
         title = soup.find('h2', class_='post-title').string
@@ -326,10 +332,12 @@ class GenericLeMondeBlog(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': cls.get_first_comic_url()}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url2 = soup.find('link', rel='shortlink')['href']
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find("span", class_="entry-date").string
@@ -444,11 +452,13 @@ class Rall(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         # Not the first but I didn't find an efficient way to retrieve it
         return {'href': "http://rall.com/2014/01/30/los-angeles-times-cartoon-well-miss-those-california-flowers"}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         author = soup.find("span", class_="author vcard").find("a").string
         date_str = soup.find("span", class_="entry-date").string
@@ -476,6 +486,7 @@ class Dilem(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': "http://information.tv5monde.com/dilem/2004-06-26"}
 
     @classmethod
@@ -486,6 +497,7 @@ class Dilem(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         short_url = soup.find('link', rel='shortlink')['href']
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         imgs = soup.find_all('meta', property='og:image')
@@ -511,10 +523,12 @@ class SpaceAvalanche(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': "http://www.spaceavalanche.com/2009/02/02/irish-sea/", 'title': "Irish Sea"}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
         title = link['title']
         url = cls.get_url_from_link(link)
@@ -541,10 +555,12 @@ class ZenPencils(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         post = soup.find('div', class_='post-content')
         author = post.find("span", class_="post-author").find("a").string
@@ -578,6 +594,7 @@ class ItsTheTie(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h1', class_='comic-title').find('a').string
         date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -609,10 +626,12 @@ class PenelopeBagieu(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         date_str = soup.find('h2', class_='date-header').string
         day = string_to_date(date_str, "%A %d %B %Y", "fr_FR.utf8")
         imgs = soup.find('div', class_='entry-body').find_all('img')
@@ -638,6 +657,7 @@ class OneOneOneOneComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h1', class_='comic-title').find('a').string
         date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -662,6 +682,7 @@ class AngryAtNothing(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h1', class_='comic-title').find('a').string
         date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -686,6 +707,7 @@ class NeDroid(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
         comic_url_re = re.compile('//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
         short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
@@ -716,6 +738,7 @@ class Garfield(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'https://garfield.com/comic/1978/06/19'}
 
     @classmethod
@@ -724,6 +747,7 @@ class Garfield(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
         date_re = re.compile('^%s/comic/([0-9]*)/([0-9]*)/([0-9]*)' % cls.url)
         year, month, day = [int(s) for s in date_re.match(url).groups()]
@@ -746,6 +770,7 @@ class Dilbert(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://dilbert.com/strip/1989-04-16'}
 
     @classmethod
@@ -755,6 +780,7 @@ class Dilbert(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', property='og:image')
         desc = soup.find('meta', property='og:description')['content']
@@ -783,10 +809,12 @@ class VictimsOfCircumsolar(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.victimsofcircumsolar.com/comic/modern-addiction'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         # Date is on the archive page
         title = soup.find_all('meta', property='og:title')[-1]['content']
         desc = soup.find_all('meta', property='og:description')[-1]['content']
@@ -809,6 +837,7 @@ class ThreeWordPhrase(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('img', src='/firstlink.gif').parent
 
     @classmethod
@@ -818,6 +847,7 @@ class ThreeWordPhrase(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('title')
         imgs = [img for img in soup.find_all('img')
                 if not img['src'].endswith(
@@ -841,6 +871,7 @@ class DeadlyPanel(GenericEmptyComic, GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
@@ -858,6 +889,7 @@ class TheGentlemanArmchair(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
@@ -882,10 +914,12 @@ class MyExtraLife(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', class_='comic_nav_link first_comic_link')
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find("h1", class_="comic_title").string
         date_str = soup.find("span", class_="comic_date").string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -911,10 +945,12 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', rel='start')
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         image1 = soup.find('img', id='cc-comic')
         image_url1 = image1['src']
         aftercomic = soup.find('div', id='aftercomic')
@@ -945,6 +981,7 @@ class PerryBibleFellowship(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(link)
         comic_img_re = re.compile('^/archive_b/PBF.*')
         name = link.string
@@ -973,6 +1010,7 @@ class Mercworks(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         metadesc = soup.find('meta', property='og:description')
         desc = metadesc['content'] if metadesc else ""
@@ -1009,6 +1047,7 @@ class BerkeleyMews(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
         url = cls.get_url_from_archive_element(link)
         num = int(cls.comic_num_re.match(url).groups()[0])
@@ -1035,10 +1074,12 @@ class GenericBouletCorp(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('div', id='centered_nav').find_all('a')[0]
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
         date_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
         year, month, day = [int(s) for s in date_re.match(url).groups()]
@@ -1079,6 +1120,7 @@ class AmazingSuperPowers(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -1105,6 +1147,7 @@ class ToonHole(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = link.string
         date_str = remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip())
         day = string_to_date(date_str, "%B %d, %Y")
@@ -1134,6 +1177,7 @@ class Channelate(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, '%Y/%m/%d')
@@ -1168,6 +1212,7 @@ class CyanideAndHappiness(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', title='Oldest comic')
 
     @classmethod
@@ -1177,6 +1222,7 @@ class CyanideAndHappiness(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url2 = soup.find('meta', property='og:url')['content']
         num = int(url2.split('/')[-2])
         date_str = soup.find('h3').find('a').string
@@ -1241,6 +1287,7 @@ class DinosaurComics(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(link)
         num = int(cls.comic_link_re.match(url).groups()[0])
         date_str = link.string
@@ -1274,6 +1321,7 @@ class ButterSafe(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(link)
         title = link.string
         year, month, day = [int(s) for s in cls.comic_link_re.match(url).groups()]
@@ -1356,6 +1404,7 @@ class PhDComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('img', src='images/first_button.gif').parent
 
     @classmethod
@@ -1365,6 +1414,7 @@ class PhDComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         date_str = soup.find('font', face='Arial,Helvetica,Geneva,Swiss,SunSans-Regular', color='white').string.strip()
         try:
             day = string_to_date(date_str, '%m/%d/%Y')
@@ -1390,6 +1440,7 @@ class Octopuns(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
 
     @classmethod
@@ -1399,6 +1450,7 @@ class Octopuns(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h3', class_='post-title entry-title').string
         date_str = soup.find('h2', class_='date-header').string
         day = string_to_date(date_str, "%A, %B %d, %Y")
@@ -1421,6 +1473,7 @@ class Quarktees(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.quarktees.com/blogs/news/12486621-coming-soon'}
 
     @classmethod
@@ -1429,6 +1482,7 @@ class Quarktees(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         article = soup.find('div', class_='single-article')
         imgs = article.find_all('img')
@@ -1447,6 +1501,7 @@ class OverCompensating(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', href=re.compile('comic=1$'))
 
     @classmethod
@@ -1455,6 +1510,7 @@ class OverCompensating(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         img_src_re = re.compile('^/oc/comics/.*')
         comic_num_re = re.compile('.*comic=([0-9]*)$')
         comic_url = cls.get_url_from_link(link)
@@ -1476,6 +1532,7 @@ class Oglaf(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find("div", id="st").parent
 
     @classmethod
@@ -1485,6 +1542,7 @@ class Oglaf(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('title').string
         title_imgs = soup.find('div', id='tt').find_all('img')
         assert len(title_imgs) == 1
@@ -1507,6 +1565,7 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://satwcomic.com/sweden-denmark-and-norway'}
 
     @classmethod
@@ -1515,6 +1574,7 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'twitter:label1'})['content']
         desc = soup.find('meta', property='og:description')['content']
         imgs = soup.find_all('img', itemprop="image")
@@ -1541,10 +1601,12 @@ class InfiniteMonkeyBusiness(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://infinitemonkeybusiness.net/comic/pillory/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find('div', id='comic').find_all('img')
         return {
@@ -1567,6 +1629,7 @@ class Wondermark(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         date_str = soup.find('div', class_='postdate').find('em').string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
         div = soup.find('div', id='comic')
@@ -1601,6 +1664,7 @@ class WarehouseComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -1625,6 +1689,7 @@ class JustSayEh(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
@@ -1647,6 +1712,7 @@ class MouseBearComedy(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -1674,6 +1740,7 @@ class BigFootJustice(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['title'] == i['alt'] for i in imgs)
         title = ' '.join(i['title'] for i in imgs)
@@ -1693,10 +1760,12 @@ class RespawnComic(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://respawncomic.com/comic/c0001/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
         date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
@@ -1727,10 +1796,12 @@ class SafelyEndangered(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.safelyendangered.com/comic/ignored/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(date_str, '%B %d, %Y')
@@ -1757,10 +1828,12 @@ class PicturesInBoxes(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.picturesinboxes.com/2013/10/26/tetris/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
@@ -1793,6 +1866,7 @@ class TheDoghouseDiaries(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', id='firstlink')
 
     @classmethod
@@ -1801,6 +1875,7 @@ class TheDoghouseDiaries(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         comic_img_re = re.compile('^dhdcomics/.*')
         img = soup.find('img', src=comic_img_re)
         comic_url = cls.get_url_from_link(link)
@@ -1831,6 +1906,7 @@ class InvisibleBread(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, td):
+        """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(td)
         title = td.find('a').string
         month_and_day = td.previous_sibling.string
@@ -1876,6 +1952,7 @@ class CompletelySeriousComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find('span', class_='post-author').contents[1].string
         date_str = soup.find('span', class_='post-date').string
@@ -1905,6 +1982,7 @@ class PoorlyDrawnLines(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', class_='post').find_all('img')
         assert len(imgs) <= 1
         return {
@@ -1927,6 +2005,7 @@ class LoadingComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', title="First")
 
     @classmethod
@@ -1935,6 +2014,7 @@ class LoadingComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h1').string
         date_str = soup.find('span', class_='date').string.strip()
         day = string_to_date(date_str, "%B %d, %Y")
@@ -1958,6 +2038,7 @@ class ChuckleADuck(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         date_str = soup.find('span', class_='post-date').string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
         author = soup.find('span', class_='post-author').string
@@ -1984,6 +2065,7 @@ class DepressedAlien(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('img', attrs={'name': 'beginArrow'}).parent
 
     @classmethod
@@ -1992,6 +2074,7 @@ class DepressedAlien(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         imgs = soup.find_all('meta', property='og:image')
         return {
@@ -2010,6 +2093,7 @@ class ThingsInSquares(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, tr):
+        """Get information about a particular comics."""
         _, td2, td3 = tr.find_all('td')
         a = td2.find('a')
         date_str = td3.string
@@ -2053,6 +2137,7 @@ class HappleTea(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         post = soup.find('div', class_='post-content')
         title = post.find('h2', class_='post-title').string
@@ -2081,10 +2166,12 @@ class FatAwesomeComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://fatawesome.com/shortbus/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         description = soup.find('meta', attrs={'name': 'description'})['content']
         tags_prop = soup.find('meta', property='article:tag')
@@ -2151,10 +2238,12 @@ class LonnieMillsap(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.lonniemillsap.com/?p=42'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         post = soup.find('div', class_='post-content')
         author = post.find("span", class_="post-author").find("a").string
@@ -2181,10 +2270,12 @@ class LinsEditions(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'https://linsedition.com/2011/09/07/l-i-n-s/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', property='og:image')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
@@ -2208,6 +2299,7 @@ class ThorsThundershack(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', class_='first navlink')
 
     @classmethod
@@ -2219,6 +2311,7 @@ class ThorsThundershack(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'description'})["content"]
         description = soup.find('div', itemprop='articleBody').text
         author = soup.find('span', itemprop='author copyrightHolder').string
@@ -2249,6 +2342,7 @@ class GerbilWithAJetpack(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2277,6 +2371,7 @@ class EveryDayBlues(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find("h2", class_="post-title").string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2304,6 +2399,7 @@ class BiterComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find("h1", class_="entry-title").string
         author = soup.find("span", class_="author vcard").find("a").string
         date_str = soup.find("span", class_="entry-date").string
@@ -2336,6 +2432,7 @@ class TheAwkwardYeti(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find("span", class_="post-date").string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -2360,6 +2457,7 @@ class PleasantThoughts(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         post = soup.find('div', class_='post-content')
         title = post.find('h2', class_='post-title').string
         imgs = post.find("div", class_="entry").find_all("img")
@@ -2381,6 +2479,7 @@ class MisterAndMe(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2410,6 +2509,7 @@ class LastPlaceComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2441,6 +2541,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2469,6 +2570,7 @@ class EndlessOrigami(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
@@ -2497,6 +2599,7 @@ class PlanC(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find("span", class_="post-date").string
         day = string_to_date(date_str, "%B %d, %Y")
@@ -2520,6 +2623,7 @@ class BuniComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) == 1
@@ -2535,6 +2639,7 @@ class GenericCommitStrip(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         desc = soup.find('meta', property='og:description')['content']
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find('div', class_='entry-content').find_all('img')
@@ -2555,6 +2660,7 @@ class CommitStripFr(GenericCommitStrip):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.commitstrip.com/fr/2012/02/22/interview/'}
 
 
@@ -2566,6 +2672,7 @@ class CommitStripEn(GenericCommitStrip):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.commitstrip.com/en/2012/02/22/interview/'}
 
 
@@ -2578,6 +2685,7 @@ class GenericBoumerie(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
         author = soup.find("span", class_="post-author").find("a").string
@@ -2625,10 +2733,12 @@ class UnearthedComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://unearthedcomics.com/comics/world-with-turn-signals/'}
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         short_url = soup.find('link', rel='shortlink')['href']
         title_elt = soup.find('h1') or soup.find('h2')
         title = title_elt.string if title_elt else ""
@@ -2658,6 +2768,7 @@ class Optipess(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         comic = soup.find('div', id='comic')
@@ -2687,6 +2798,7 @@ class PainTrainComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
@@ -2720,6 +2832,7 @@ class MoonBeard(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
@@ -2754,6 +2867,7 @@ class AHamADay(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.ahammaday.com/today/3/6/french'}
 
     @classmethod
@@ -2763,6 +2877,7 @@ class AHamADay(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         date_str = soup.find('time', class_='published')['datetime']
         day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('span', class_='blog-author').find('a').string
@@ -2787,6 +2902,7 @@ class LittleLifeLines(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://www.littlelifelines.com/comics/well-done'}
 
     @classmethod
@@ -2797,6 +2913,7 @@ class LittleLifeLines(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         desc = soup.find('meta', property='og:description')['content']
         date_str = soup.find('time', class_='published')['datetime']
@@ -2824,10 +2941,12 @@ class GenericWordPressInkblot(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', class_='webcomic-link webcomic1-link first-webcomic-link first-webcomic1-link')
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find('div', class_='webcomic-image').find_all('img')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
@@ -2876,6 +2995,7 @@ class ElectricBunnyComic(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('img', alt='First').parent
 
     @classmethod
@@ -2885,6 +3005,7 @@ class ElectricBunnyComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', property='og:image')
         return {
@@ -2902,6 +3023,7 @@ class SheldonComics(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find("a", id="nav-first")
 
     @classmethod
@@ -2913,6 +3035,7 @@ class SheldonComics(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         imgs = soup.find("div", id="comic-foot").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) == 1
@@ -2932,6 +3055,7 @@ class CubeDrone(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('span', class_='glyphicon glyphicon-backward').parent
 
     @classmethod
@@ -2941,6 +3065,7 @@ class CubeDrone(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         url2 = soup.find('meta', attrs={'name': 'twitter:url'})['content']
         # date_str = soup.find('h2', class_='comic_title').find('small').string
@@ -2973,6 +3098,7 @@ class MakeItStoopid(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return cls.get_nav(get_soup_at_url(cls.url))[0]
 
     @classmethod
@@ -2981,6 +3107,7 @@ class MakeItStoopid(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = link['title']
         imgs = soup.find_all('img', id='comicimg')
         return {
@@ -2998,6 +3125,7 @@ class GeekAndPoke(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return {'href': 'http://geek-and-poke.com/geekandpoke/2006/8/27/a-new-place-for-a-not-so-old-blog.html'}
 
     @classmethod
@@ -3006,6 +3134,7 @@ class GeekAndPoke(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         desc = soup.find('meta', property='og:description')['content']
         date_str = soup.find('time', class_='published')['datetime']
@@ -3656,6 +3785,7 @@ class HorovitzComics(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         href = link['href']
         num = int(cls.link_re.match(href).groups()[0])
         title = link.string
@@ -3698,6 +3828,7 @@ class GenericGoComic(GenericNavigableComic):
 
     @classmethod
     def get_first_comic_link(cls):
+        """Get link to first comics."""
         return get_soup_at_url(cls.url).find('a', class_='beginning')
 
     @classmethod
@@ -3711,6 +3842,7 @@ class GenericGoComic(GenericNavigableComic):
 
     @classmethod
     def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
         year, month, day = [int(s)
                             for s in cls.url_date_re.match(url).groups()]
@@ -3926,6 +4058,7 @@ class GenericTapasticComic(GenericListableComic):
 
     @classmethod
     def get_comic_info(cls, soup, archive_elt):
+        """Get information about a particular comics."""
         timestamp = int(archive_elt['publishDate']) / 1000.0
         day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
