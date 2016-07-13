@@ -5,6 +5,14 @@ Script to fetch webcomics, archive them and use them to create ebooks.
 
 [![Build Status](https://travis-ci.org/SylvainDe/ComicBookMaker.svg?branch=master)](https://travis-ci.org/SylvainDe/ComicBookMaker)
 
+[![Quantified Code](https://www.quantifiedcode.com/api/v1/project/f7965ba082d64dd5b87181bea6275a80/badge.svg)](https://www.quantifiedcode.com/app/project/f7965ba082d64dd5b87181bea6275a80)
+
+[![Code Climate](https://codeclimate.com/github/SylvainDe/ComicBookMaker/badges/gpa.svg)](https://codeclimate.com/github/SylvainDe/ComicBookMaker) / [![Issue Count](https://codeclimate.com/github/SylvainDe/ComicBookMaker/badges/issue_count.svg)](https://codeclimate.com/github/SylvainDe/ComicBookMaker)
+
+[![Codacy](https://api.codacy.com/project/badge/Grade/6348e7509d804670824a20eb6f6ec169)](https://www.codacy.com/app/sylvain-desodt-github/ComicBookMaker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SylvainDe/ComicBookMaker&amp;utm_campaign=Badge_Grade)
+
+[![Scrutinizer](https://scrutinizer-ci.com/g/SylvainDe/ComicBookMaker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SylvainDe/ComicBookMaker/?branch=master)
+
 
 Longer explanation
 ------------------
