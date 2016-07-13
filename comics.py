@@ -90,8 +90,8 @@ class GenericNavigableComic(GenericComic):
 
     @classmethod
     def get_url_from_link(cls, link):
-        """Get url corresponding to a link."""
-        return cls.get_href(link)
+        """Get url corresponding to a link. Default implementation is similar to get_href."""
+        return link['href']
 
     @classmethod
     def get_next_link(cls, last_soup):
@@ -1281,7 +1281,7 @@ class DinosaurComics(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        archive_url = '%s/archive.php' % cls.url
+        archive_url = urljoin_wrapper(cls.url, 'archive.php')
         # first link is random -> skip it
         return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re)[1:])
 
@@ -1316,7 +1316,7 @@ class ButterSafe(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        archive_url = '%s/archive/' % cls.url
+        archive_url = urljoin_wrapper(cls.url, 'archive/')
         return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re))
 
     @classmethod
@@ -1371,28 +1371,29 @@ class CalvinAndHobbes(GenericComic):
                         last_date = comic_date
 
 
-class AbstruseGoose(GenericComic):
+class AbstruseGoose(GenericListableComic):
     """Class to retrieve AbstruseGoose Comics."""
     name = 'abstruse'
     long_name = 'Abstruse Goose'
     url = 'http://abstrusegoose.com'
+    get_url_from_archive_element = get_href
+    comic_url_re = re.compile('^%s/([0-9]*)$' % url)
+    comic_img_re = re.compile('^%s/strips/.*' % url)
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        archive_url = '%s/archive' % cls.url
-        last_num = last_comic['num'] if last_comic else 0
-        comic_url_re = re.compile('^%s/([0-9]*)$' % cls.url)
-        comic_img_re = re.compile('^%s/strips/.*' % cls.url)
-        for link in get_soup_at_url(archive_url).find_all('a', href=comic_url_re):
-            comic_url = link['href']
-            num = int(comic_url_re.match(comic_url).groups()[0])
-            if num > last_num:
-                yield {
-                    'url': comic_url,
-                    'num': num,
-                    'title': link.string,
-                    'img': [get_soup_at_url(comic_url).find('img', src=comic_img_re)['src']]
-                }
+    def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, 'archive')
+        return get_soup_at_url(archive_url).find_all('a', href=cls.comic_url_re)
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_elt):
+        comic_url = cls.get_url_from_archive_element(archive_elt)
+        num = int(cls.comic_url_re.match(comic_url).groups()[0])
+        return {
+            'num': num,
+            'title': archive_elt.string,
+            'img': [soup.find('img', src=cls.comic_img_re)['src']]
+        }
 
 
 class PhDComics(GenericNavigableComic):
@@ -1897,7 +1898,7 @@ class InvisibleBread(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        archive_url = urljoin_wrapper(cls.url, '/archives/')
+        archive_url = urljoin_wrapper(cls.url, 'archives/')
         return reversed(get_soup_at_url(archive_url).find_all('td', class_='archive-title'))
 
     @classmethod
@@ -2198,19 +2199,24 @@ class AnythingComic(GenericComic):
     name = 'anythingcomic'
     long_name = 'Anything Comic'
     url = 'http://www.anythingcomic.com'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, 'archive/')
+        return get_soup_at_url(archive_url).find('table', id='chapter_table').find_all('tr')
 
     @classmethod
     def get_next_comic(cls, last_comic):
         last_num = last_comic['num'] if last_comic else 0
-        archive_url = urljoin_wrapper(cls.url, 'archive')
-        for i, tr in enumerate(get_soup_at_url(archive_url).find('table', id='chapter_table').find_all('tr')):
+        for i, tr in enumerate(cls.get_archive_elements()):
             if i > 1:
                 td_num, td_comic, td_date, td_com = tr.find_all('td')
                 num = int(td_num.string)
                 assert num + 1 == i
                 if num > last_num:
                     link = td_comic.find('a')
-                    comic_url = urljoin_wrapper(cls.url, link['href'])
+                    comic_url = cls.get_url_from_link(link)
                     title = link.string
                     soup = get_soup_at_url(comic_url)
                     imgs = soup.find_all('img', id='comic_image')
@@ -3804,8 +3810,8 @@ class HorovitzComics(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        archive = 'http://www.horovitzcomics.com/comics/archive/'
-        return reversed(get_soup_at_url(archive).find_all('a', href=cls.link_re))
+        archive_url = 'http://www.horovitzcomics.com/comics/archive/'
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.link_re))
 
 
 class HorovitzNew(HorovitzComics):
