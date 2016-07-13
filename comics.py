@@ -42,6 +42,21 @@ class Xkcd(GenericComic):
                 yield comic
 
 
+# Helper functions corresponding to get_url_from_link/get_url_from_archive_element
+
+
+@classmethod
+def get_href(cls, link):
+    """Implementation of get_url_from_link/get_url_from_archive_element."""
+    return link['href']
+
+
+@classmethod
+def join_cls_url_to_href(cls, link):
+    """Implementation of get_url_from_link/get_url_from_archive_element."""
+    return urljoin_wrapper(cls.url, link['href'])
+
+
 class GenericNavigableComic(GenericComic):
     """Generic class for "navigable" comics : with first/next arrows.
 
@@ -52,6 +67,7 @@ class GenericNavigableComic(GenericComic):
         - get_comic_info
         - get_url_from_link
     """
+    get_url_from_link = get_href  # Default implementation
 
     @classmethod
     def get_first_comic_link(cls):
@@ -72,11 +88,6 @@ class GenericNavigableComic(GenericComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         raise NotImplementedError
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        """Get url correponding to a link."""
-        return link['href']
 
     @classmethod
     def get_next_link(cls, last_soup):
@@ -194,7 +205,7 @@ class GenericListableComic(GenericComic):
         raise NotImplementedError
 
     @classmethod
-    def get_comic_info(cls, soup, archive_element):
+    def get_comic_info(cls, soup, archive_elt):
         """Get information about a particular comics."""
         raise NotImplementedError
 
@@ -461,14 +472,11 @@ class Dilem(GenericNavigableComic):
     name = 'dilem'
     long_name = 'Ali Dilem'
     url = 'http://information.tv5monde.com/dilem'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
         return {'href': "http://information.tv5monde.com/dilem/2004-06-26"}
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -674,16 +682,13 @@ class NeDroid(GenericNavigableComic):
     url = 'http://nedroid.com'
     get_first_comic_link = get_div_navfirst_a
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_comic_info(cls, soup, link):
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
         comic_url_re = re.compile('//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
-        short_url = urljoin_wrapper(cls.url, soup.find('link', rel='shortlink')['href'])
+        short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
         num = int(short_url_re.match(short_url).groups()[0])
         imgs = soup.find('div', id='comic').find_all('img')
         year, month, day = [int(s) for s in comic_url_re.match(imgs[0]['src']).groups()]
@@ -737,6 +742,7 @@ class Dilbert(GenericNavigableComic):
     name = 'dilbert'
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -766,10 +772,6 @@ class Dilbert(GenericNavigableComic):
             'month': day.month,
             'year': day.year
         }
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
 
 class VictimsOfCircumsolar(GenericNavigableComic):
@@ -803,6 +805,7 @@ class ThreeWordPhrase(GenericNavigableComic):
     name = 'threeword'
     long_name = 'Three Word Phrase'
     url = 'http://threewordphrase.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -812,10 +815,6 @@ class ThreeWordPhrase(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         link = last_soup.find('img', src='/nextlink.gif' if next_ else '/prevlink.gif').parent
         return None if link.get('href') is None else link
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -937,15 +936,12 @@ class PerryBibleFellowship(GenericListableComic):
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
     url = 'http://pbfcomics.com'
+    get_url_from_archive_element = join_cls_url_to_href
 
     @classmethod
     def get_archive_elements(cls):
         comic_link_re = re.compile('^/[0-9]*/$')
         return reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re))
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1003,16 +999,13 @@ class BerkeleyMews(GenericListableComic):
     name = 'berkeley'
     long_name = 'Berkeley Mews'
     url = 'http://www.berkeleymews.com'
+    get_url_from_archive_element = get_href
     comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % url)
 
     @classmethod
     def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, "?page_id=2")
         return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_num_re))
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1108,6 +1101,7 @@ class ToonHole(GenericListableComic):
     name = 'toonhole'
     long_name = 'Toon Hole'
     url = 'http://www.toonhole.com'
+    get_url_from_archive_element = get_href
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1123,10 +1117,6 @@ class ToonHole(GenericListableComic):
             'day': day.day,
             'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
         }
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
 
     @classmethod
     def get_archive_elements(cls):
@@ -1174,6 +1164,7 @@ class CyanideAndHappiness(GenericNavigableComic):
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
     url = 'http://explosm.net'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1183,10 +1174,6 @@ class CyanideAndHappiness(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         link = last_soup.find('a', class_='next-comic' if next_ else 'previous-comic ')
         return None if link.get('href') is None else link
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1243,6 +1230,7 @@ class DinosaurComics(GenericListableComic):
     name = 'dinosaur'
     long_name = 'Dinosaur Comics'
     url = 'http://www.qwantz.com'
+    get_url_from_archive_element = get_href
     comic_link_re = re.compile('^%s/index.php\\?comic=([0-9]*)$' % url)
 
     @classmethod
@@ -1250,10 +1238,6 @@ class DinosaurComics(GenericListableComic):
         archive_url = '%s/archive.php' % cls.url
         # first link is random -> skip it
         return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re)[1:])
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1280,16 +1264,13 @@ class ButterSafe(GenericListableComic):
     name = 'butter'
     long_name = 'ButterSafe'
     url = 'http://buttersafe.com'
+    get_url_from_archive_element = get_href
     comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % url)
 
     @classmethod
     def get_archive_elements(cls):
         archive_url = '%s/archive/' % cls.url
         return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re))
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1371,11 +1352,7 @@ class PhDComics(GenericNavigableComic):
     name = 'phd'
     long_name = 'PhD Comics'
     url = 'http://phdcomics.com/comics/archive.php'
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        """Get url correponding to a link."""
-        return urljoin_wrapper(cls.url, link['href'])
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1385,10 +1362,6 @@ class PhDComics(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         img = last_soup.find('img', src='images/next_button.gif' if next_ else 'images/prev_button.gif')
         return None if img is None else img.parent
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1444,6 +1417,7 @@ class Quarktees(GenericNavigableComic):
     name = 'quarktees'
     long_name = 'Quarktees'
     url = 'http://www.quarktees.com/blogs/news'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1463,17 +1437,13 @@ class Quarktees(GenericNavigableComic):
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
-    @classmethod
-    def get_url_from_link(cls, link):
-        """Get url correponding to a link."""
-        return urljoin_wrapper(cls.url, link['href'])
-
 
 class OverCompensating(GenericNavigableComic):
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
     url = 'http://www.overcompensating.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1482,10 +1452,6 @@ class OverCompensating(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         return last_soup.find('a', title='next comic' if next_ else 'go back already')
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1506,6 +1472,7 @@ class Oglaf(GenericNavigableComic):
     name = 'oglaf'
     long_name = 'Oglaf [NSFW]'
     url = 'http://oglaf.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -1515,10 +1482,6 @@ class Oglaf(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         div = last_soup.find("div", id="nx" if next_ else "pvs")
         return div.parent if div else None
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1595,10 +1558,7 @@ class Wondermark(GenericListableComic):
     name = 'wondermark'
     long_name = 'Wondermark'
     url = 'http://wondermark.com'
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
+    get_url_from_archive_element = get_href
 
     @classmethod
     def get_archive_elements(cls):
@@ -1941,6 +1901,7 @@ class PoorlyDrawnLines(GenericListableComic):
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
     url = 'http://poorlydrawnlines.com'
+    get_url_from_archive_element = get_href
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1952,13 +1913,10 @@ class PoorlyDrawnLines(GenericListableComic):
         }
 
     @classmethod
-    def get_url_from_archive_element(cls, link):
-        return link['href']
-
-    @classmethod
     def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, 'archive')
         url_re = re.compile('^%s/comic/.' % cls.url)
-        return reversed(get_soup_at_url(urljoin_wrapper(cls.url, 'archive')).find_all('a', href=url_re))
+        return reversed(get_soup_at_url(archive_url).find_all('a', href=url_re))
 
 
 class LoadingComics(GenericNavigableComic):
@@ -2022,6 +1980,7 @@ class DepressedAlien(GenericNavigableComic):
     name = 'depressedalien'
     long_name = 'Depressed Alien'
     url = 'http://depressedalien.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2030,10 +1989,6 @@ class DepressedAlien(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         return last_soup.find('img', attrs={'name': 'rightArrow' if next_ else 'leftArrow'}).parent
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2249,6 +2204,7 @@ class ThorsThundershack(GenericNavigableComic):
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2260,10 +2216,6 @@ class ThorsThundershack(GenericNavigableComic):
             if link['href'] != '/comic':
                 return link
         return None
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2798,6 +2750,7 @@ class AHamADay(GenericNavigableComic):
     name = 'ham'
     long_name = 'A Ham A Day'
     url = 'http://www.ahammaday.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2807,10 +2760,6 @@ class AHamADay(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         # prev is next / next is prev
         return last_soup.find('li', class_='previous' if next_ else 'next').find('a')
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2834,6 +2783,7 @@ class LittleLifeLines(GenericNavigableComic):
     name = 'life'
     long_name = 'Little Life Lines'
     url = 'http://www.littlelifelines.com'
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2844,10 +2794,6 @@ class LittleLifeLines(GenericNavigableComic):
         # prev is next / next is prev
         li = last_soup.find('li', class_='prev' if next_ else 'next')
         return li.find('a') if li else None
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2926,10 +2872,7 @@ class ElectricBunnyComic(GenericNavigableComic):
     name = 'bunny'
     long_name = 'Electric Bunny Comic'
     url = 'http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell'
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -2985,10 +2928,7 @@ class CubeDrone(GenericNavigableComic):
     name = 'cubedrone'
     long_name = 'Cube Drone'
     url = 'http://cube-drone.com/comics'
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -3054,10 +2994,7 @@ class GeekAndPoke(GenericNavigableComic):
     name = 'geek'
     long_name = 'Geek And Poke'
     url = 'http://geek-and-poke.com'
-
-    @classmethod
-    def get_url_from_link(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
@@ -3715,6 +3652,7 @@ class HorovitzComics(GenericListableComic):
     url = 'http://www.horovitzcomics.com'
     img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
     link_re = NotImplemented
+    get_url_from_archive_element = join_cls_url_to_href
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3733,10 +3671,6 @@ class HorovitzComics(GenericListableComic):
             'img': [i['src'] for i in imgs],
             'num': num,
         }
-
-    @classmethod
-    def get_url_from_archive_element(cls, link):
-        return urljoin_wrapper(cls.url, link['href'])
 
     @classmethod
     def get_archive_elements(cls):
@@ -3991,12 +3925,12 @@ class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
     @classmethod
-    def get_comic_info(cls, soup, archive_element):
-        timestamp = int(archive_element['publishDate']) / 1000.0
+    def get_comic_info(cls, soup, archive_elt):
+        timestamp = int(archive_elt['publishDate']) / 1000.0
         day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
         if not imgs:
-            print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_element))
+            print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
             return None
         assert len(imgs) > 0
         return {
@@ -4004,12 +3938,12 @@ class GenericTapasticComic(GenericListableComic):
             'year': day.year,
             'month': day.month,
             'img': [i['src'] for i in imgs],
-            'title': archive_element['title'],
+            'title': archive_elt['title'],
         }
 
     @classmethod
-    def get_url_from_archive_element(cls, archive_element):
-        return 'http://tapastic.com/episode/' + str(archive_element['id'])
+    def get_url_from_archive_element(cls, archive_elt):
+        return 'http://tapastic.com/episode/' + str(archive_elt['id'])
 
     @classmethod
     def get_archive_elements(cls):
