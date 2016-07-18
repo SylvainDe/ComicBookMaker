@@ -4397,6 +4397,14 @@ class DoodleForFoodTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/Doodle-for-Food'
 
 
+class MrLovensteinTapa(GenericTapasticComic):
+    """Class to retrieve Mr Lovenstein comics."""
+    # Also on  https://tapastic.com/series/MrLovenstein
+    name = 'mrlovenstein-tapa'
+    long_name = 'Mr. Lovenstein (from Tapastic)'
+    url = 'https://tapastic.com/series/MrLovenstein'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
