@@ -2193,46 +2193,46 @@ class FatAwesomeComics(GenericNavigableComic):
         }
 
 
-class AnythingComic(GenericComic):
+class AnythingComic(GenericListableComic):
     """Class to retrieve Anything Comics."""
     # Also on http://tapastic.com/series/anything
     name = 'anythingcomic'
     long_name = 'Anything Comic'
     url = 'http://www.anythingcomic.com'
-    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive/')
-        return get_soup_at_url(archive_url).find('table', id='chapter_table').find_all('tr')
+        # The first 2 <tr>'s do not correspond to comics
+        return get_soup_at_url(archive_url).find('table', id='chapter_table').find_all('tr')[2:]
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        last_num = last_comic['num'] if last_comic else 0
-        for i, tr in enumerate(cls.get_archive_elements()):
-            if i > 1:
-                td_num, td_comic, td_date, td_com = tr.find_all('td')
-                num = int(td_num.string)
-                assert num + 1 == i
-                if num > last_num:
-                    link = td_comic.find('a')
-                    comic_url = cls.get_url_from_link(link)
-                    title = link.string
-                    soup = get_soup_at_url(comic_url)
-                    imgs = soup.find_all('img', id='comic_image')
-                    day = string_to_date(td_date.string, '%d %b %Y %I:%M %p')
-                    assert len(imgs) == 1
-                    assert all(i.get('alt') == i.get('title') for i in imgs)
-                    yield {
-                        'url': comic_url,
-                        'num': num,
-                        'title': title,
-                        'alt': imgs[0].get('alt', ''),
-                        'img': [i['src'] for i in imgs],
-                        'month': day.month,
-                        'year': day.year,
-                        'day': day.day,
-                    }
+    def get_url_from_archive_element(cls, tr):
+        """Get url corresponding to an archive element."""
+        td_num, td_comic, td_date, _ = tr.find_all('td')
+        link = td_comic.find('a')
+        return urljoin_wrapper(cls.url, link['href'])
+
+    @classmethod
+    def get_comic_info(cls, soup, tr):
+        """Get information about a particular comics."""
+        td_num, td_comic, td_date, _ = tr.find_all('td')
+        num = int(td_num.string)
+        link = td_comic.find('a')
+        title = link.string
+        imgs = soup.find_all('img', id='comic_image')
+        day = string_to_date(td_date.string, '%d %b %Y %I:%M %p')
+        assert len(imgs) == 1
+        assert all(i.get('alt') == i.get('title') for i in imgs)
+        return {
+            'num': num,
+            'title': title,
+            'alt': imgs[0].get('alt', ''),
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
 class LonnieMillsap(GenericNavigableComic):
