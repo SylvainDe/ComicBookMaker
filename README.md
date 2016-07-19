@@ -13,6 +13,7 @@ Script to fetch webcomics, archive them and use them to create ebooks.
 
 [![Scrutinizer](https://scrutinizer-ci.com/g/SylvainDe/ComicBookMaker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SylvainDe/ComicBookMaker/?branch=master)
 
+[![Landscape.io](https://landscape.io/github/SylvainDe/ComicBookMaker/master/landscape.svg?style=flat)](https://landscape.io/github/SylvainDe/ComicBookMaker/master)
 
 Longer explanation
 ------------------
