@@ -3778,10 +3778,17 @@ class BFGFSTumblr(GenericTumblrV1):
 
 class DoodleForFood(GenericTumblrV1):
     """Class to retrieve Doodle For Food comics."""
-    # Also on  http://doodleforfood.com
+    # Also on http://doodleforfood.com
     name = 'doodle'
     long_name = 'Doodle For Food'
     url = 'http://doodleforfood.com'
+
+
+class DougWasTaken(GenericTumblrV1):
+    """Class to retrieve Doug Was Taken comics."""
+    name = 'doog'
+    long_name = 'Doug Was Taken'
+    url = 'http://dougwastaken.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
