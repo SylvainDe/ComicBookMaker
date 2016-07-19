@@ -1263,11 +1263,13 @@ class MrLovenstein(GenericComic):
             soup = get_soup_at_url(url)
             imgs = list(
                 reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
+            description = soup.find('meta', attrs={'name': 'description'})['content']
             yield {
                 'url': url,
                 'num': num,
                 'texts': '  '.join(t for t in (i.get('title') for i in imgs) if t),
                 'img': [urljoin_wrapper(url, i['src']) for i in imgs],
+                'description': description,
             }
 
 
