@@ -318,6 +318,7 @@ class GenericEmptyComic(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        cls.log("comic is considered as empty - returning no comic")
         return []
 
 
