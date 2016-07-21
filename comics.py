@@ -309,6 +309,34 @@ def get_a_comicnavbase_comicnavfirst(cls):
     return get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
 
 
+@classmethod
+def simulate_first_link(cls):
+    """Implementation of get_first_comic_link creating a link-like object from
+    an URL provided by the class."""
+    return {'href': cls.first_url}
+
+
+@classmethod
+def navigate_to_first_comic(cls):
+    """Implementation of get_first_comic_link navigating from a user provided
+    URL to the first comic.
+
+    Sometimes, the first comic cannot be reached directly so to start
+    from the first comic one has to go to the previous comic until
+    there is no previous comics. Once this URL is reached, it
+    is better to hardcode it but for development purposes, it
+    is convenient to have an automatic way to find it.
+    """
+    url = input("Get starting URL: ")
+    print(url)
+    comic = cls.get_prev_link(get_soup_at_url(url))
+    while comic:
+        url = cls.get_url_from_link(comic)
+        print(url)
+        comic = cls.get_prev_link(get_soup_at_url(url))
+    return {'href': url}
+
+
 class GenericEmptyComic(GenericComic):
     """Generic class for comics where nothing is to be done.
 
@@ -350,16 +378,8 @@ class ExtraFabulousComics(GenericNavigableComic):
 class GenericLeMondeBlog(GenericNavigableComic):
     """Generic class to retrieve comics from Le Monde blogs."""
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_url(cls):
-        """Get first comic url."""
-        raise NotImplementedError
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': cls.get_first_comic_url()}
+    get_first_comic_link = simulate_first_link
+    first_url = NotImplemented
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -384,10 +404,7 @@ class ZepWorld(GenericLeMondeBlog):
     name = "zep"
     long_name = "Zep World"
     url = "http://zepworld.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"
+    first_url = "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"
 
 
 class Vidberg(GenericLeMondeBlog):
@@ -395,11 +412,8 @@ class Vidberg(GenericLeMondeBlog):
     name = 'vidberg'
     long_name = "Vidberg - l'actu en patates"
     url = "http://vidberg.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        # Not the first but I didn't find an efficient way to retrieve it
-        return "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"
+    # Not the first but I didn't find an efficient way to retrieve it
+    first_url = "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"
 
 
 class Plantu(GenericLeMondeBlog):
@@ -407,10 +421,7 @@ class Plantu(GenericLeMondeBlog):
     name = 'plantu'
     long_name = "Plantu"
     url = "http://plantu.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://plantu.blog.lemonde.fr/2014/10/28/stress-test-a-bruxelles/"
+    first_url = "http://plantu.blog.lemonde.fr/2014/10/28/stress-test-a-bruxelles/"
 
 
 class XavierGorce(GenericLeMondeBlog):
@@ -418,10 +429,7 @@ class XavierGorce(GenericLeMondeBlog):
     name = 'gorce'
     long_name = "Xavier Gorce"
     url = "http://xaviergorce.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://xaviergorce.blog.lemonde.fr/2015/01/09/distinction/"
+    first_url = "http://xaviergorce.blog.lemonde.fr/2015/01/09/distinction/"
 
 
 class CartooningForPeace(GenericLeMondeBlog):
@@ -429,10 +437,7 @@ class CartooningForPeace(GenericLeMondeBlog):
     name = 'forpeace'
     long_name = "Cartooning For Peace"
     url = "http://cartooningforpeace.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://cartooningforpeace.blog.lemonde.fr/2014/12/15/bado/"
+    first_url = "http://cartooningforpeace.blog.lemonde.fr/2014/12/15/bado/"
 
 
 class Aurel(GenericLeMondeBlog):
@@ -440,10 +445,7 @@ class Aurel(GenericLeMondeBlog):
     name = 'aurel'
     long_name = "Aurel"
     url = "http://aurel.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://aurel.blog.lemonde.fr/2014/09/29/le-senat-repasse-a-droite/"
+    first_url = "http://aurel.blog.lemonde.fr/2014/09/29/le-senat-repasse-a-droite/"
 
 
 class LesCulottees(GenericLeMondeBlog):
@@ -451,10 +453,7 @@ class LesCulottees(GenericLeMondeBlog):
     name = 'culottees'
     long_name = 'Les Culottees'
     url = "http://lesculottees.blog.lemonde.fr"
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://lesculottees.blog.lemonde.fr/2016/01/11/clementine-delait-femme-a-barbe/"
+    first_url = "http://lesculottees.blog.lemonde.fr/2016/01/11/clementine-delait-femme-a-barbe/"
 
 
 class UneAnneeAuLycee(GenericLeMondeBlog):
@@ -462,10 +461,7 @@ class UneAnneeAuLycee(GenericLeMondeBlog):
     name = 'lycee'
     long_name = 'Une Annee au Lycee'
     url = 'http://uneanneeaulycee.blog.lemonde.fr'
-
-    @classmethod
-    def get_first_comic_url(cls):
-        return "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
+    first_url = "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
 
 
 class Rall(GenericNavigableComic):
@@ -475,12 +471,9 @@ class Rall(GenericNavigableComic):
     long_name = "Ted Rall"
     url = "http://rall.com/comic"
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        # Not the first but I didn't find an efficient way to retrieve it
-        return {'href': "http://rall.com/2014/01/30/los-angeles-times-cartoon-well-miss-those-california-flowers"}
+    get_first_comic_link = simulate_first_link
+    # Not the first but I didn't find an efficient way to retrieve it
+    first_url = "http://rall.com/2014/01/30/los-angeles-times-cartoon-well-miss-those-california-flowers"
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -509,11 +502,8 @@ class Dilem(GenericNavigableComic):
     long_name = 'Ali Dilem'
     url = 'http://information.tv5monde.com/dilem'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': "http://information.tv5monde.com/dilem/2004-06-26"}
+    get_first_comic_link = simulate_first_link
+    first_url = "http://information.tv5monde.com/dilem/2004-06-26"
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -578,11 +568,8 @@ class ZenPencils(GenericNavigableComic):
     long_name = 'Zen Pencils'
     url = 'http://zenpencils.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"}
+    get_first_comic_link = simulate_first_link
+    first_url = "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -649,11 +636,8 @@ class PenelopeBagieu(GenericNavigableComic):
     long_name = 'Ma vie est tout a fait fascinante (Bagieu)'
     url = 'http://www.penelope-jolicoeur.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -761,11 +745,8 @@ class Garfield(GenericNavigableComic):
     name = 'garfield'
     long_name = 'Garfield'
     url = 'https://garfield.com'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'https://garfield.com/comic/1978/06/19'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'https://garfield.com/comic/1978/06/19'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -793,11 +774,8 @@ class Dilbert(GenericNavigableComic):
     long_name = 'Dilbert'
     url = 'http://dilbert.com'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://dilbert.com/strip/1989-04-16'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://dilbert.com/strip/1989-04-16'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -832,11 +810,8 @@ class VictimsOfCircumsolar(GenericNavigableComic):
     long_name = 'Victims Of Circumsolar'
     url = 'http://www.victimsofcircumsolar.com'
     get_navi_link = get_a_navi_comicnavnext_navinext
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.victimsofcircumsolar.com/comic/modern-addiction'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.victimsofcircumsolar.com/comic/modern-addiction'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1499,11 +1474,8 @@ class Quarktees(GenericNavigableComic):
     long_name = 'Quarktees'
     url = 'http://www.quarktees.com/blogs/news'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.quarktees.com/blogs/news/12486621-coming-soon'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.quarktees.com/blogs/news/12486621-coming-soon'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -1591,11 +1563,8 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
     name = 'satw'
     long_name = 'Scandinavia And The World'
     url = 'http://satwcomic.com'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://satwcomic.com/sweden-denmark-and-norway'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://satwcomic.com/sweden-denmark-and-norway'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -1627,11 +1596,8 @@ class InfiniteMonkeyBusiness(GenericNavigableComic):
     long_name = 'Infinite Monkey Business'
     url = 'http://infinitemonkeybusiness.net'
     get_navi_link = get_a_navi_comicnavnext_navinext
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://infinitemonkeybusiness.net/comic/pillory/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://infinitemonkeybusiness.net/comic/pillory/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1786,11 +1752,8 @@ class RespawnComic(GenericNavigableComic):
     long_name = 'Respawn Comic'
     url = 'http://respawncomic.com '
     get_navi_link = get_a_navi_comicnavnext_navinext
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://respawncomic.com/comic/c0001/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://respawncomic.com/comic/c0001/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1822,11 +1785,8 @@ class SafelyEndangered(GenericNavigableComic):
     long_name = 'Safely Endangered'
     url = 'http://www.safelyendangered.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.safelyendangered.com/comic/ignored/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.safelyendangered.com/comic/ignored/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1854,11 +1814,8 @@ class PicturesInBoxes(GenericNavigableComic):
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
     get_navi_link = get_a_navi_navinext
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.picturesinboxes.com/2013/10/26/tetris/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.picturesinboxes.com/2013/10/26/tetris/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2192,11 +2149,8 @@ class FatAwesomeComics(GenericNavigableComic):
     long_name = 'Fat Awesome'
     url = 'http://fatawesome.com/comics'
     get_navi_link = get_a_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://fatawesome.com/shortbus/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://fatawesome.com/shortbus/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2269,11 +2223,8 @@ class LonnieMillsap(GenericNavigableComic):
     long_name = 'Lonnie Millsap'
     url = 'http://www.lonniemillsap.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.lonniemillsap.com/?p=42'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.lonniemillsap.com/?p=42'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2301,11 +2252,8 @@ class LinsEditions(GenericNavigableComic):
     long_name = 'L.I.N.S. Editions'
     url = 'https://linsedition.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'https://linsedition.com/2011/09/07/l-i-n-s/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'https://linsedition.com/2011/09/07/l-i-n-s/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2670,6 +2618,8 @@ class BuniComic(GenericNavigableComic):
 class GenericCommitStrip(GenericNavigableComic):
     """Generic class to retrieve Commit Strips in different languages."""
     get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = NotImplemented
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2691,11 +2641,7 @@ class CommitStripFr(GenericCommitStrip):
     name = 'commit_fr'
     long_name = 'Commit Strip (Fr)'
     url = 'http://www.commitstrip.com/fr'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.commitstrip.com/fr/2012/02/22/interview/'}
+    first_url = 'http://www.commitstrip.com/fr/2012/02/22/interview/'
 
 
 class CommitStripEn(GenericCommitStrip):
@@ -2703,11 +2649,7 @@ class CommitStripEn(GenericCommitStrip):
     name = 'commit_en'
     long_name = 'Commit Strip (En)'
     url = 'http://www.commitstrip.com/en'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.commitstrip.com/en/2012/02/22/interview/'}
+    first_url = 'http://www.commitstrip.com/en/2012/02/22/interview/'
 
 
 class GenericBoumerie(GenericNavigableComic):
@@ -2764,11 +2706,8 @@ class UnearthedComics(GenericNavigableComic):
     long_name = 'Unearthed Comics'
     url = 'http://unearthedcomics.com'
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://unearthedcomics.com/comics/world-with-turn-signals/'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://unearthedcomics.com/comics/world-with-turn-signals/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2898,11 +2837,8 @@ class AHamADay(GenericNavigableComic):
     long_name = 'A Ham A Day'
     url = 'http://www.ahammaday.com'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.ahammaday.com/today/3/6/french'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.ahammaday.com/today/3/6/french'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -2933,11 +2869,8 @@ class LittleLifeLines(GenericNavigableComic):
     long_name = 'Little Life Lines'
     url = 'http://www.littlelifelines.com'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://www.littlelifelines.com/comics/well-done'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.littlelifelines.com/comics/well-done'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -3156,11 +3089,8 @@ class GeekAndPoke(GenericNavigableComic):
     long_name = 'Geek And Poke'
     url = 'http://geek-and-poke.com'
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return {'href': 'http://geek-and-poke.com/geekandpoke/2006/8/27/a-new-place-for-a-not-so-old-blog.html'}
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://geek-and-poke.com/geekandpoke/2006/8/27/a-new-place-for-a-not-so-old-blog.html'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
