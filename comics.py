@@ -128,14 +128,29 @@ class GenericNavigableComic(GenericComic):
             cls.log("next comic will be %s" % str(next_comic))
 
     @classmethod
-    def check_navigation(cls, url):
-        """Check that navigation functions seem to be working - for dev purposes."""
-        cls.log("about to check navigation from %s" % url)
+    def check_first_link(cls):
+        """Check that navigation to first comic seems to be working - for dev purposes."""
+        cls.log("about to check first link")
         ok = True
         firstlink = cls.get_first_comic_link()
         if firstlink is None:
             print("From %s : no first link" % cls.url)
             ok = False
+        else:
+            firsturl = cls.get_url_from_link(firstlink)
+            try:
+                get_soup_at_url(firsturl)
+            except urllib.error.HTTPError:
+                print("From %s : invalid first url" % cls.url)
+                ok = False
+        cls.log("checked first link -> returned %d" % ok)
+        return ok
+
+    @classmethod
+    def check_prev_next_links(cls, url):
+        """Check that navigation to prev/next from a given URL seems to be working - for dev purposes."""
+        cls.log("about to check prev/next from %s" % url)
+        ok = True
         if url is None:
             prevlink, nextlink = None, None
         else:
@@ -160,6 +175,16 @@ class GenericNavigableComic(GenericComic):
                     if nextprev != url:
                         print("From %s, going forward then backward leads to %s" % (url, nextprev))
                         ok = False
+        cls.log("checked prev/next from %s -> returned %d" % (url, ok))
+        return ok
+
+    @classmethod
+    def check_navigation(cls, url):
+        """Check that navigation functions seem to be working - for dev purposes."""
+        cls.log("about to check navigation from %s" % url)
+        first = cls.check_first_link()
+        prevnext = cls.check_prev_next_links(url)
+        ok = first and prevnext
         cls.log("checked navigation from %s -> returned %d" % (url, ok))
         return ok
 
