@@ -3747,6 +3747,13 @@ class DougWasTaken(GenericTumblrV1):
     url = 'http://dougwastaken.tumblr.com'
 
 
+class MandatoryRollerCoaster(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Mandatory Roller Coaster comics."""
+    name = 'rollercoaster'
+    long_name = 'Mandatory Roller Coaster'
+    url = 'http://mandatoryrollercoaster.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
