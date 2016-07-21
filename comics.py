@@ -3740,6 +3740,15 @@ class DoodleForFood(GenericTumblrV1):
     url = 'http://doodleforfood.com'
 
 
+class CassandraCalinTumblr(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve C. Cassandra comics."""
+    # Also on http://cassandracalin.com
+    # Also on https://tapastic.com/series/C-Cassandra-comics
+    name = 'cassandra-tumblr'
+    long_name = 'Cassandra Calin (from Tumblr)'
+    url = 'http://c-cassandra.tumblr.com'
+
+
 class DougWasTaken(GenericTumblrV1):
     """Class to retrieve Doug Was Taken comics."""
     name = 'doog'
@@ -4375,6 +4384,15 @@ class MrLovensteinTapa(GenericTapasticComic):
     name = 'mrlovenstein-tapa'
     long_name = 'Mr. Lovenstein (from Tapastic)'
     url = 'https://tapastic.com/series/MrLovenstein'
+
+
+class CassandraCalinTapa(GenericTapasticComic):
+    """Class to retrieve C. Cassandra comics."""
+    # Also on http://cassandracalin.com
+    # Also on http://c-cassandra.tumblr.com
+    name = 'cassandra-tapa'
+    long_name = 'Cassandra Calin (from Tapastic)'
+    url = 'https://tapastic.com/series/C-Cassandra-comics'
 
 
 def get_subclasses(klass):
