@@ -3798,6 +3798,13 @@ class MandatoryRollerCoaster(GenericEmptyComic, GenericTumblrV1):
     url = 'http://mandatoryrollercoaster.com'
 
 
+class CEstPasEnRegardantSesPompes(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve C'Est Pas En Regardant Ses Pompes (...)  comics."""
+    name = 'cperspqccltt'
+    long_name = 'C Est Pas En Regardant Ses Pompes (...)'
+    url = 'http://cperspqccltt.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

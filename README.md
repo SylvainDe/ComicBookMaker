@@ -103,6 +103,7 @@ Comics supported
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
  * [Joan Cornella (from Tumblr)](http://cornellajoan.tumblr.com)
+ * [C Est Pas En Regardant Ses Pompes (...)](http://cperspqccltt.tumblr.com)
  * [Cube Drone](http://cube-drone.com/comics)
  * [Cheer Up Emo Kid (from Tapastic)](http://tapastic.com/series/CUEK)
  * [Cheer Up Emo Kid (from Tumblr)](http://enzocomics.tumblr.com)
