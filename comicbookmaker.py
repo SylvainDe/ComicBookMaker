@@ -17,7 +17,7 @@ def get_file_content_until_tag(path, tag):
             content.append(l)
             if tag == l.strip():
                 return content
-    raise ValueError('Could not find "%s" in file "%s"' % (tag, path))
+    raise ValueError('Could not find "{0!s}" in file "{1!s}"'.format(tag, path))
 
 
 def add_new_lines_after_tag(path, new_lines, tag):
@@ -92,7 +92,7 @@ def main():
             for com in comic_classes:
                 com.reset_new()
         else:
-            print("Unknown action : %s" % action)
+            print("Unknown action : {0!s}".format(action))
 
 if __name__ == "__main__":
     main()
