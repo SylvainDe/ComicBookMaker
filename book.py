@@ -44,19 +44,32 @@ HTML_FOOTER = """
 
 
 def collect_comics(comic_classes):
+    """Retrieve all comics for the list of comic classes provided."""
     return chain.from_iterable(c.load_db() for c in comic_classes)
 
 
 def filter_comics(comics):
+    """Filter comics based on (hardcoded) criterias.
+
+    On the long run, I'd like the criteria to be provided via command-line
+    arguments."""
     return [c for c in comics if 'new' in c]
 
 
 def sort_comics(comics):
-    return sorted(comics, key=get_date_for_comic)
+    """Sort comics based on (hardcoded) criterias.
+
+    On the long run, I'd like the criteria to be provided via command-line
+    arguments."""
+    return sorted(comics, key=get_date_for_comic, reverse=True)
 
 
 def truncate_comics(comics):
-    return comics[-2000:]
+    """Truncate the list of comics based on (hardcoded) criterias.
+
+    On the long run, I'd like the criteria to be provided via command-line
+    arguments."""
+    return comics[:3000]
 
 
 def make_book(comic_classes):
@@ -75,10 +88,12 @@ def make_book(comic_classes):
 
 
 def convert_unicode_to_html(text):
+    """Convert unicode text to HTML by escaping it."""
     return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
 
 
 def make_book_from_comic_list(comics, title, file_name):
+    """Create book from a list of comics."""
     cover = 'empty.jpg'
     output_dir = 'generated_books'
     os.makedirs(output_dir, exist_ok=True)

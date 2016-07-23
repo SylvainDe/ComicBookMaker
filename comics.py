@@ -23,6 +23,7 @@ class Xkcd(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         first_num = last_comic['num'] if last_comic else 0
         last_num = load_json_at_url(
             urljoin_wrapper(cls.url, 'info.0.json'))['num']
@@ -59,6 +60,13 @@ def join_cls_url_to_href(cls, link):
 
 class GenericNavigableComic(GenericComic):
     """Generic class for "navigable" comics : with first/next arrows.
+
+    This class applies to comic where previous and next comics can be
+    accessed from a given comic. Once given a starting point (either
+    the first comic or the last comic retrieved), it will handle the
+    navigation, the retrieval of the soup object and the setting of
+    the 'url' attribute on retrieved comics. This limits a lot the
+    amount of boilerplate code in the different implementation classes.
 
     The method `get_next_comic` methods is implemented in terms of new
     more specialized methods to be implemented/overridden:
@@ -346,6 +354,7 @@ class GenericEmptyComic(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        """Implementation of get_next_comic returning no comics."""
         cls.log("comic is considered as empty - returning no comic")
         return []
 
@@ -507,6 +516,7 @@ class Dilem(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         # prev is next / next is prev
         li = last_soup.find('li', class_='prev' if next_ else 'next')
         return li.find('a') if li else None
@@ -750,6 +760,7 @@ class Garfield(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', class_='comic-arrow-right' if next_ else 'comic-arrow-left')
 
     @classmethod
@@ -779,6 +790,7 @@ class Dilbert(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         link = last_soup.find('div', class_='nav-comic nav-right' if next_ else 'nav-comic nav-left')
         return link.find('a') if link else None
 
@@ -843,6 +855,7 @@ class ThreeWordPhrase(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         link = last_soup.find('img', src='/nextlink.gif' if next_ else '/prevlink.gif').parent
         return None if link.get('href') is None else link
 
@@ -1218,6 +1231,7 @@ class CyanideAndHappiness(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         link = last_soup.find('a', class_='next-comic' if next_ else 'previous-comic ')
         return None if link.get('href') is None else link
 
@@ -1252,6 +1266,7 @@ class MrLovenstein(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         # TODO: more info from http://www.mrlovenstein.com/archive
         comic_num_re = re.compile('^/comic/([0-9]*)$')
         nums = [int(comic_num_re.match(link['href']).groups()[0])
@@ -1349,6 +1364,7 @@ class CalvinAndHobbes(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         last_date = get_date_for_comic(
             last_comic) if last_comic else date(1985, 11, 1)
         link_re = re.compile('^([0-9]*)/([0-9]*)/')
@@ -1413,6 +1429,7 @@ class PhDComics(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         img = last_soup.find('img', src='images/next_button.gif' if next_ else 'images/prev_button.gif')
         return None if img is None else img.parent
 
@@ -1449,6 +1466,7 @@ class Octopuns(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         link = last_soup.find('img', src=re.compile('.*/Next.png' if next_ else '.*/Back.png')).parent
         return None if link.get('href') is None else link
 
@@ -1479,6 +1497,7 @@ class Quarktees(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', id='article-next' if next_ else 'article-prev')
 
     @classmethod
@@ -1507,6 +1526,7 @@ class OverCompensating(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', title='next comic' if next_ else 'go back already')
 
     @classmethod
@@ -1538,6 +1558,7 @@ class Oglaf(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         div = last_soup.find("div", id="nx" if next_ else "pvs")
         return div.parent if div else None
 
@@ -1568,6 +1589,7 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', accesskey='n' if next_ else 'p')
 
     @classmethod
@@ -1857,6 +1879,7 @@ class TheDoghouseDiaries(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', id='nextlink' if next_ else 'previouslink')
 
     @classmethod
@@ -1996,6 +2019,7 @@ class LoadingComics(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', title='Next' if next_ else 'Previous')
 
     @classmethod
@@ -2056,6 +2080,7 @@ class DepressedAlien(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('img', attrs={'name': 'rightArrow' if next_ else 'leftArrow'}).parent
 
     @classmethod
@@ -2286,6 +2311,7 @@ class ThorsThundershack(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         for link in last_soup.find_all('a', rel='next' if next_ else 'prev'):
             if link['href'] != '/comic':
                 return link
@@ -2842,6 +2868,7 @@ class AHamADay(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         # prev is next / next is prev
         return last_soup.find('li', class_='previous' if next_ else 'next').find('a')
 
@@ -2874,6 +2901,7 @@ class LittleLifeLines(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         # prev is next / next is prev
         li = last_soup.find('li', class_='prev' if next_ else 'next')
         return li.find('a') if li else None
@@ -2967,6 +2995,7 @@ class ElectricBunnyComic(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         img = last_soup.find('img', alt='Next' if next_ else 'Back')
         return img.parent if img else None
 
@@ -2995,6 +3024,7 @@ class SheldonComics(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         for link in last_soup.find_all("a", id="nav-next" if next_ else "nav-prev"):
             if link['href'] != 'http://www.sheldoncomics.com':
                 return link
@@ -3027,6 +3057,7 @@ class CubeDrone(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         class_ = 'glyphicon glyphicon-chevron-' + ('right' if next_ else 'left')
         return last_soup.find('span', class_=class_).parent
 
@@ -3057,6 +3088,7 @@ class MakeItStoopid(GenericNavigableComic):
 
     @classmethod
     def get_nav(cls, soup):
+        """Get the navigation elements from soup object."""
         cnav = soup.find_all(class_='cnav')
         nav1, nav2 = cnav[:5], cnav[5:]
         assert nav1 == nav2
@@ -3070,6 +3102,7 @@ class MakeItStoopid(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return cls.get_nav(last_soup)[3 if next_ else 1]
 
     @classmethod
@@ -3094,6 +3127,7 @@ class GeekAndPoke(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', class_='prev-item' if next_ else 'next-item')
 
     @classmethod
@@ -3127,6 +3161,7 @@ class GenericTumblrV1(GenericComic):
 
     @classmethod
     def get_next_comic(cls, last_comic):
+        """Generic implementation of get_next_comic for Tumblr comics."""
         for p in cls.get_posts(last_comic):
             comic = cls.get_comic_info(p)
             if comic is not None:
@@ -3820,6 +3855,7 @@ class GenericGoComic(GenericNavigableComic):
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
         return last_soup.find('a', class_='next' if next_ else 'prev', href=cls.url_date_re)
 
     @classmethod
