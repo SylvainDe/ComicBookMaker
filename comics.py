@@ -196,30 +196,6 @@ class GenericNavigableComic(GenericComic):
         cls.log("checked navigation from %s -> returned %d" % (url, ok))
         return ok
 
-    # This method is not defined by default and is not part of this class'API.
-    # It is only used:
-    # - during development
-    # - in subclasses implementing it correctly
-    if False:
-        @classmethod
-        def get_first_comic_url(cls):
-            """Get first comic url
-
-            Sometimes, the first comic cannot be reached directly so to start
-            from the first comic one has to go to the previous comic until
-            there is no previous comics. Once this URL is reached, it
-            is better to hardcode it but for development purposes, it
-            is convenient to have an automatic way to find it.
-            """
-            url = input("Get starting URL: ")
-            print(url)
-            comic = cls.get_prev_link(get_soup_at_url(url))
-            while comic:
-                url = cls.get_url_from_link(comic)
-                print(url)
-                comic = cls.get_prev_link(get_soup_at_url(url))
-            return url
-
 
 class GenericListableComic(GenericComic):
     """Generic class for "listable" comics : with a list of comics (aka 'archive')
