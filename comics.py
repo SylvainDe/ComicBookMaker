@@ -4059,6 +4059,13 @@ class MisterAndMeGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/mister-and-me'
 
 
+class NonSequitur(GenericGoComic):
+    """Class to retrieve Non Sequitur (Wiley Miller) comics."""
+    name = 'nonsequitur'
+    long_name = 'Non Sequitur'
+    url = 'http://www.gocomics.com/nonsequitur'
+
+
 class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 

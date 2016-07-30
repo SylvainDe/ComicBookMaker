@@ -191,6 +191,7 @@ Comics supported
  * [NeDroid](http://nedroid.com)
  * [Nelluc Nhoj](http://nellucnhoj.com)
  * [Nick Anderson](http://www.gocomics.com/nickanderson)
+ * [Non Sequitur](http://www.gocomics.com/nonsequitur)
  * [Comic Nuggets](http://comicnuggets.com)
  * [The Oatmeal (from Tumblr)](http://oatmeal.tumblr.com)
  * [Octopuns](http://www.octopuns.net)
