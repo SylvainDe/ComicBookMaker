@@ -3626,7 +3626,7 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     url = 'http://theworldisflatcomics.tumblr.com'
 
 
-class DorrisMc(GenericTumblrV1):
+class DorrisMc(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Dorris Mc Comics"""
     # Also on http://www.gocomics.com/dorris-mccomics
     name = 'dorrismc'
