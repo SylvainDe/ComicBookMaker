@@ -80,8 +80,7 @@ def make_book(comic_classes):
     if comics:
         make_book_from_comic_list(
             comics,
-            '%s from %s to %s' %
-            (' - '.join(sorted({c['comic'] for c in comics})),
+            '{0!s} from {1!s} to {2!s}'.format(' - '.join(sorted({c['comic'] for c in comics})),
              min(get_date_for_comic(c) for c in comics).strftime('%x'),
              max(get_date_for_comic(c) for c in comics).strftime('%x')),
             'book.html')

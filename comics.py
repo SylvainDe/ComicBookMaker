@@ -30,10 +30,10 @@ class Xkcd(GenericComic):
 
         for num in range(first_num + 1, last_num + 1):
             if num != 404:
-                json_url = urljoin_wrapper(cls.url, '%d/info.0.json' % num)
+                json_url = urljoin_wrapper(cls.url, '{0:d}/info.0.json'.format(num))
                 comic = load_json_at_url(json_url)
                 comic['img'] = [comic['img']]
-                comic['prefix'] = '%d-' % num
+                comic['prefix'] = '{0:d}-'.format(num)
                 comic['json_url'] = json_url
                 comic['url'] = urljoin_wrapper(cls.url, str(num))
                 comic['day'] = int(comic['day'])
@@ -119,13 +119,13 @@ class GenericNavigableComic(GenericComic):
             cls.get_next_link(get_soup_at_url(url)) \
             if url else \
             cls.get_first_comic_link()
-        cls.log("next/first comic will be %s (url is %s)" % (str(next_comic), url))
+        cls.log("next/first comic will be {0!s} (url is {1!s})".format(str(next_comic), url))
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
-                cls.log("got same url %s" % url)
+                cls.log("got same url {0!s}".format(url))
                 break
-            cls.log("about to get %s (%s)" % (url, str(next_comic)))
+            cls.log("about to get {0!s} ({1!s})".format(url, str(next_comic)))
             soup = get_soup_at_url(url)
             comic = cls.get_comic_info(soup, next_comic)
             if comic is not None:
@@ -133,7 +133,7 @@ class GenericNavigableComic(GenericComic):
                 comic['url'] = url
                 yield comic
             next_comic = cls.get_next_link(soup)
-            cls.log("next comic will be %s" % str(next_comic))
+            cls.log("next comic will be {0!s}".format(str(next_comic)))
 
     @classmethod
     def check_first_link(cls):
@@ -142,22 +142,22 @@ class GenericNavigableComic(GenericComic):
         ok = True
         firstlink = cls.get_first_comic_link()
         if firstlink is None:
-            print("From %s : no first link" % cls.url)
+            print("From {0!s} : no first link".format(cls.url))
             ok = False
         else:
             firsturl = cls.get_url_from_link(firstlink)
             try:
                 get_soup_at_url(firsturl)
             except urllib.error.HTTPError:
-                print("From %s : invalid first url" % cls.url)
+                print("From {0!s} : invalid first url".format(cls.url))
                 ok = False
-        cls.log("checked first link -> returned %d" % ok)
+        cls.log("checked first link -> returned {0:d}".format(ok))
         return ok
 
     @classmethod
     def check_prev_next_links(cls, url):
         """Check that navigation to prev/next from a given URL seems to be working - for dev purposes."""
-        cls.log("about to check prev/next from %s" % url)
+        cls.log("about to check prev/next from {0!s}".format(url))
         ok = True
         if url is None:
             prevlink, nextlink = None, None
@@ -165,7 +165,7 @@ class GenericNavigableComic(GenericComic):
             soup = get_soup_at_url(url)
             prevlink, nextlink = cls.get_prev_link(soup), cls.get_next_link(soup)
         if prevlink is None and nextlink is None:
-            print("From %s : no previous nor next" % url)
+            print("From {0!s} : no previous nor next".format(url))
             ok = False
         else:
             if prevlink:
@@ -173,7 +173,7 @@ class GenericNavigableComic(GenericComic):
                 prevsoup = get_soup_at_url(prevurl)
                 prevnext = cls.get_url_from_link(cls.get_next_link(prevsoup))
                 if prevnext != url:
-                    print("From %s, going backward then forward leads to %s" % (url, prevnext))
+                    print("From {0!s}, going backward then forward leads to {1!s}".format(url, prevnext))
                     ok = False
             if nextlink:
                 nexturl = cls.get_url_from_link(nextlink)
@@ -181,19 +181,19 @@ class GenericNavigableComic(GenericComic):
                     nextsoup = get_soup_at_url(nexturl)
                     nextprev = cls.get_url_from_link(cls.get_prev_link(nextsoup))
                     if nextprev != url:
-                        print("From %s, going forward then backward leads to %s" % (url, nextprev))
+                        print("From {0!s}, going forward then backward leads to {1!s}".format(url, nextprev))
                         ok = False
-        cls.log("checked prev/next from %s -> returned %d" % (url, ok))
+        cls.log("checked prev/next from {0!s} -> returned {1:d}".format(url, ok))
         return ok
 
     @classmethod
     def check_navigation(cls, url):
         """Check that navigation functions seem to be working - for dev purposes."""
-        cls.log("about to check navigation from %s" % url)
+        cls.log("about to check navigation from {0!s}".format(url))
         first = cls.check_first_link()
         prevnext = cls.check_prev_next_links(url)
         ok = first and prevnext
-        cls.log("checked navigation from %s -> returned %d" % (url, ok))
+        cls.log("checked navigation from {0!s} -> returned {1:d}".format(url, ok))
         return ok
 
 
@@ -228,11 +228,11 @@ class GenericListableComic(GenericComic):
         waiting_for_url = last_comic['url'] if last_comic else None
         for archive_elt in cls.get_archive_elements():
             url = cls.get_url_from_archive_element(archive_elt)
-            cls.log("considering %s" % url)
+            cls.log("considering {0!s}".format(url))
             if waiting_for_url and waiting_for_url == url:
                 waiting_for_url = None
             elif waiting_for_url is None:
-                cls.log("about to get %s (%s)" % (url, str(archive_elt)))
+                cls.log("about to get {0!s} ({1!s})".format(url, str(archive_elt)))
                 soup = get_soup_at_url(url)
                 comic = cls.get_comic_info(soup, archive_elt)
                 if comic is not None:
@@ -240,7 +240,7 @@ class GenericListableComic(GenericComic):
                     comic['url'] = url
                     yield comic
         if waiting_for_url is not None:
-            print("Did not find %s : there might be a problem" % waiting_for_url)
+            print("Did not find {0!s} : there might be a problem".format(waiting_for_url))
 
 # Helper functions corresponding to get_first_comic_link/get_navi_link
 
@@ -350,7 +350,7 @@ class ExtraFabulousComics(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        img_src_re = re.compile('^%s/wp-content/uploads/' % cls.url)
+        img_src_re = re.compile('^{0!s}/wp-content/uploads/'.format(cls.url))
         imgs = soup.find_all('img', src=img_src_re)
         title = soup.find('h2', class_='post-title').string
         return {
@@ -704,7 +704,7 @@ class NeDroid(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        short_url_re = re.compile('^{0!s}/\\?p=([0-9]*)'.format(cls.url))
         comic_url_re = re.compile('//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
         short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
         num = int(short_url_re.match(short_url).groups()[0])
@@ -743,7 +743,7 @@ class Garfield(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
-        date_re = re.compile('^%s/comic/([0-9]*)/([0-9]*)/([0-9]*)' % cls.url)
+        date_re = re.compile('^{0!s}/comic/([0-9]*)/([0-9]*)/([0-9]*)'.format(cls.url))
         year, month, day = [int(s) for s in date_re.match(url).groups()]
         imgs = soup.find('div', class_='comic-display').find_all('img', class_='img-responsive')
         return {
@@ -977,7 +977,7 @@ class PerryBibleFellowship(GenericListableComic):
         name = link.string
         num = int(link['name'])
         href = link['href']
-        assert href == '/%d/' % num
+        assert href == '/{0:d}/'.format(num)
         imgs = soup.find_all('img', src=comic_img_re)
         assert len(imgs) == 1
         assert imgs[0]['alt'] == name
@@ -985,7 +985,7 @@ class PerryBibleFellowship(GenericListableComic):
             'num': num,
             'name': name,
             'img': [urljoin_wrapper(url, i['src']) for i in imgs],
-            'prefix': '%d-' % num,
+            'prefix': '{0:d}-'.format(num),
         }
 
 
@@ -1028,7 +1028,7 @@ class BerkeleyMews(GenericListableComic):
     long_name = 'Berkeley Mews'
     url = 'http://www.berkeleymews.com'
     get_url_from_archive_element = get_href
-    comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % url)
+    comic_num_re = re.compile('{0!s}/\\?p=([0-9]*)$'.format(url))
 
     @classmethod
     def get_archive_elements(cls):
@@ -1071,7 +1071,7 @@ class GenericBouletCorp(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
-        date_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
+        date_re = re.compile('^{0!s}/([0-9]*)/([0-9]*)/([0-9]*)/'.format(cls.url))
         year, month, day = [int(s) for s in date_re.match(url).groups()]
         imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
         texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
@@ -1228,7 +1228,7 @@ class CyanideAndHappiness(GenericNavigableComic):
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'prefix': '%d-' % num,
+            'prefix': '{0:d}-'.format(num),
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
         }
 
@@ -1251,7 +1251,7 @@ class MrLovenstein(GenericComic):
         if last_comic:
             first = last_comic['num'] + 1
         for num in range(first, last + 1):
-            url = urljoin_wrapper(cls.url, '/comic/%d' % num)
+            url = urljoin_wrapper(cls.url, '/comic/{0:d}'.format(num))
             soup = get_soup_at_url(url)
             imgs = list(
                 reversed(soup.find_all('img', src=re.compile('^/images/comics/'))))
@@ -1271,7 +1271,7 @@ class DinosaurComics(GenericListableComic):
     long_name = 'Dinosaur Comics'
     url = 'http://www.qwantz.com'
     get_url_from_archive_element = get_href
-    comic_link_re = re.compile('^%s/index.php\\?comic=([0-9]*)$' % url)
+    comic_link_re = re.compile('^{0!s}/index.php\\?comic=([0-9]*)$'.format(url))
 
     @classmethod
     def get_archive_elements(cls):
@@ -1287,7 +1287,7 @@ class DinosaurComics(GenericListableComic):
         date_str = link.string
         text = link.next_sibling.string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
-        comic_img_re = re.compile('^%s/comics/' % cls.url)
+        comic_img_re = re.compile('^{0!s}/comics/'.format(cls.url))
         img = soup.find('img', src=comic_img_re)
         return {
             'month': day.month,
@@ -1306,7 +1306,7 @@ class ButterSafe(GenericListableComic):
     long_name = 'ButterSafe'
     url = 'http://buttersafe.com'
     get_url_from_archive_element = get_href
-    comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % url)
+    comic_link_re = re.compile('^{0!s}/([0-9]*)/([0-9]*)/([0-9]*)/.*'.format(url))
 
     @classmethod
     def get_archive_elements(cls):
@@ -1349,7 +1349,7 @@ class CalvinAndHobbes(GenericComic):
             url = link['href']
             year, month = link_re.match(url).groups()
             if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
-                img_re = re.compile('^%s%s([0-9]*)' % (year, month))
+                img_re = re.compile('^{0!s}{1!s}([0-9]*)'.format(year, month))
                 month_url = urljoin_wrapper(cls.url, url)
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
                     img_src = img['src']
@@ -1361,7 +1361,7 @@ class CalvinAndHobbes(GenericComic):
                             'year': int(year),
                             'month': int(month),
                             'day': int(day),
-                            'img': ['%s%s/%s/%s' % (cls.url, year, month, img_src)],
+                            'img': ['{0!s}{1!s}/{2!s}/{3!s}'.format(cls.url, year, month, img_src)],
                         }
                         last_date = comic_date
 
@@ -1372,8 +1372,8 @@ class AbstruseGoose(GenericListableComic):
     long_name = 'Abstruse Goose'
     url = 'http://abstrusegoose.com'
     get_url_from_archive_element = get_href
-    comic_url_re = re.compile('^%s/([0-9]*)$' % url)
-    comic_img_re = re.compile('^%s/strips/.*' % url)
+    comic_url_re = re.compile('^{0!s}/([0-9]*)$'.format(url))
+    comic_img_re = re.compile('^{0!s}/strips/.*'.format(url))
 
     @classmethod
     def get_archive_elements(cls):
@@ -1416,7 +1416,7 @@ class PhDComics(GenericNavigableComic):
         try:
             day = string_to_date(date_str, '%m/%d/%Y')
         except ValueError:
-            print("Invalid date %s" % date_str)
+            print("Invalid date {0!s}".format(date_str))
             day = date.today()
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         return {
@@ -1895,7 +1895,7 @@ class InvisibleBread(GenericListableComic):
         url = cls.get_url_from_archive_element(td)
         title = td.find('a').string
         month_and_day = td.previous_sibling.string
-        link_re = re.compile('^%s/([0-9]+)/' % cls.url)
+        link_re = re.compile('^{0!s}/([0-9]+)/'.format(cls.url))
         year = link_re.match(url).groups()[0]
         date_str = month_and_day + ' ' + year
         day = string_to_date(date_str, '%b %d %Y')
@@ -1978,7 +1978,7 @@ class PoorlyDrawnLines(GenericListableComic):
     @classmethod
     def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive')
-        url_re = re.compile('^%s/comic/.' % cls.url)
+        url_re = re.compile('^{0!s}/comic/.'.format(cls.url))
         return reversed(get_soup_at_url(archive_url).find_all('a', href=url_re))
 
 
@@ -2776,7 +2776,7 @@ class PainTrainComic(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
-        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        short_url_re = re.compile('^{0!s}/\\?p=([0-9]*)'.format(cls.url))
         num = int(short_url_re.match(short_url).groups()[0])
         imgs = soup.find('div', id='comic').find_all('img')
         alt = imgs[0]['title']
@@ -2810,7 +2810,7 @@ class MoonBeard(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
-        short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
+        short_url_re = re.compile('^{0!s}/\\?p=([0-9]*)'.format(cls.url))
         num = int(short_url_re.match(short_url).groups()[0])
         imgs = soup.find('div', id='comic').find_all('img')
         alt = imgs[0]['title']
@@ -3160,7 +3160,7 @@ class GenericTumblrV1(GenericComic):
             # print("Type is %s" % type_)
             return None
         tumblr_id = int(post['id'])
-        api_url = cls.get_api_url() + '?id=%d' % (tumblr_id)
+        api_url = cls.get_api_url() + '?id={0:d}'.format((tumblr_id))
         day = datetime.datetime.fromtimestamp(int(post['unix-timestamp'])).date()
         caption = post.find('photo-caption')
         title = caption.string if caption else ""
@@ -3203,29 +3203,29 @@ class GenericTumblrV1(GenericComic):
                 try:
                     get_soup_at_url(cls.url)
                 except urllib.error.HTTPError:
-                    print("Did not find previous post nor main url %s" % cls.url)
+                    print("Did not find previous post nor main url {0!s}".format(cls.url))
                 else:
-                    print("Did not find previous post %s : it might have been deleted" % last_api_url)
+                    print("Did not find previous post {0!s} : it might have been deleted".format(last_api_url))
                 return reversed(posts_acc)
         api_url = cls.get_api_url()
         posts = get_soup_at_url(api_url).find('posts')
         start, total = int(posts['start']), int(posts['total'])
         assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
-            api_url2 = api_url + '?start=%d&num=%d' % (starting_num, nb_post_per_call)
+            api_url2 = api_url + '?start={0:d}&num={1:d}'.format(starting_num, nb_post_per_call)
             # print(api_url2)
             posts2 = get_soup_at_url(api_url2).find('posts')
             start2, total2 = int(posts2['start']), int(posts2['total'])
-            assert starting_num == start2, "%d != %d" % (starting_num, start2)
+            assert starting_num == start2, "{0:d} != {1:d}".format(starting_num, start2)
             # This may happen and should be handled in the future
-            assert total == total2, "%d != %d" % (total, total2)
+            assert total == total2, "{0:d} != {1:d}".format(total, total2)
             for p in posts2.find_all('post'):
                 if waiting_for_url and waiting_for_url == cls.get_url_from_post(p):
                     return reversed(posts_acc)
                 posts_acc.append(p)
         if waiting_for_url is None:
             return reversed(posts_acc)
-        print("Did not find %s : there might be a problem" % waiting_for_url)
+        print("Did not find {0!s} : there might be a problem".format(waiting_for_url))
         return []
 
 
@@ -4076,7 +4076,7 @@ class GenericTapasticComic(GenericListableComic):
         day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
         if not imgs:
-            print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
+            print("Comic {0!s} is being uploaded, retry later".format(cls.get_url_from_archive_element(archive_elt)))
             return None
         assert len(imgs) > 0
         return {

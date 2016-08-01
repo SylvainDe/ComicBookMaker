@@ -36,7 +36,7 @@ def urlopen_wrapper(url):
 
     url is a string
     Returns a byte object."""
-    log('(url : %s)' % url)
+    log('(url : {0!s})'.format(url))
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
     try:
         response = urllib.request.urlopen(
@@ -63,7 +63,7 @@ def get_content(url):
 
     url is a string
     Returns a string"""
-    log('(url : %s)' % url)
+    log('(url : {0!s})'.format(url))
     return urlopen_wrapper(url).read()
 
 
@@ -94,7 +94,7 @@ def get_file_at_url(url, path):
     url is a string
     path is a string corresponding to the file location
     Returns the path if the file is retrieved properly, None otherwise."""
-    log('(url : %s, path : %s)' % (url, path))
+    log('(url : {0!s}, path : {1!s})'.format(url, path))
     try:
         with urlopen_wrapper(url) as response:
             content_type = response.info().get('Content-Type', '').split('/')
