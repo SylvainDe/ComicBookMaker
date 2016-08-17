@@ -4049,6 +4049,20 @@ class DorrisMcGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/dorris-mccomics'
 
 
+class FoxTrot(GenericGoComic):
+    """Class to retrieve FoxTrot comics."""
+    name = 'foxtrot'
+    long_name = 'FoxTrot'
+    url = 'http://www.gocomics.com/foxtrot'
+
+
+class FoxTrotClassics(GenericGoComic):
+    """Class to retrieve FoxTrot Classics comics."""
+    name = 'foxtrot-classics'
+    long_name = 'FoxTrot Classics'
+    url = 'http://www.gocomics.com/foxtrotclassics'
+
+
 class MisterAndMeGoComics(GenericGoComic):
     """Class to retrieve Mister & Me Comics."""
     # Also on http://www.mister-and-me.com

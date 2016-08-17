@@ -138,6 +138,8 @@ Comics supported
  * [Fowl Language Comics (from GoComics)](http://www.gocomics.com/fowl-language)
  * [Fowl Language Comics (from Tapastic)](http://tapastic.com/series/Fowl-Language-Comics)
  * [Fowl Language Comics (from Tumblr)](http://fowllanguagecomics.tumblr.com)
+ * [FoxTrot](http://www.gocomics.com/foxtrot)
+ * [FoxTrot Classics](http://www.gocomics.com/foxtrotclassics)
  * [Garfield](https://garfield.com)
  * [Garfield (from GoComics)](http://www.gocomics.com/garfield)
  * [Geek And Poke](http://geek-and-poke.com)
