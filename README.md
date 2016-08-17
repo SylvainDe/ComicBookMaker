@@ -278,6 +278,7 @@ Comics supported
  * [Vector Belly](http://vectorbelly.tumblr.com)
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg - l'actu en patates](http://vidberg.blog.lemonde.fr)
+ * [Waffles And Pancakes](https://tapastic.com/series/Waffles-and-Pancakes)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Wondermark](http://wondermark.com)
  * [Wooden Plank Studios](http://woodenplankstudios.com)

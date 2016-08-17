@@ -4434,6 +4434,14 @@ class CassandraCalinTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/C-Cassandra-comics'
 
 
+class WafflesAndPancakes(GenericTapasticComic):
+    """Class to retrieve Waffles And Pancakes comics."""
+    # Also on http://wandpcomic.com
+    name = 'waffles'
+    long_name = 'Waffles And Pancakes'
+    url = 'https://tapastic.com/series/Waffles-and-Pancakes'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
