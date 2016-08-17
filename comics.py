@@ -1174,7 +1174,6 @@ class Channelate(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         post = soup.find('div', id='comic')
         imgs = post.find_all('img') if post else []
-        assert all(i['alt'] == i['title'] for i in imgs)
         extra_url = None
         extra_div = soup.find('div', id='extrapanelbutton')
         if extra_div:
