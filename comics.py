@@ -340,22 +340,23 @@ class ExtraFabulousComics(GenericNavigableComic):
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
     url = 'http://extrafabulouscomics.com'
+    get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', title='FIRST')
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         img_src_re = re.compile('^%s/wp-content/uploads/' % cls.url)
         imgs = soup.find_all('img', src=img_src_re)
-        title = soup.find('h2', class_='post-title').string
+        title = soup.find('meta', property='og:title')['content']
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
             'prefix': title + '-'
         }
 
