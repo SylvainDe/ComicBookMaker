@@ -3322,7 +3322,7 @@ class Pundemonium(GenericTumblrV1):
     url = 'http://monstika.tumblr.com'
 
 
-class PoorlyDrawnLinesTumblr(GenericTumblrV1):
+class PoorlyDrawnLinesTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Poorly Drawn Lines comics."""
     # Also on http://poorlydrawnlines.com
     name = 'poorlydrawn-tumblr'
@@ -3352,7 +3352,7 @@ class MercworksTumblr(GenericTumblrV1):
     url = 'http://mercworks.tumblr.com'
 
 
-class OwlTurdTumblr(GenericTumblrV1):
+class OwlTurdTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Owl Turd comics."""
     # Also on http://tapastic.com/series/Owl-Turd-Comix
     name = 'owlturd-tumblr'
@@ -3409,7 +3409,7 @@ class CheerUpEmoKidTumblr(GenericTumblrV1):
     url = 'http://enzocomics.tumblr.com'
 
 
-class ForLackOfABetterComic(GenericTumblrV1):
+class ForLackOfABetterComic(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve For Lack Of A Better Comics."""
     # Also on http://forlackofabettercomic.com
     name = 'lack'
@@ -3466,7 +3466,7 @@ class BouletCorpTumblr(GenericTumblrV1):
     url = 'http://bouletcorp.tumblr.com'
 
 
-class TheAwkwardYetiTumblr(GenericTumblrV1):
+class TheAwkwardYetiTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve The Awkward Yeti comics."""
     # Also on http://www.gocomics.com/the-awkward-yeti
     # Also on http://theawkwardyeti.com
