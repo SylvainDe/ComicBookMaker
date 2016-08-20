@@ -3781,6 +3781,43 @@ class CEstPasEnRegardantSesPompes(GenericEmptyComic, GenericTumblrV1):
     url = 'http://cperspqccltt.tumblr.com'
 
 
+class TheGrohlTroll(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve The Grohl Troll comics."""
+    name = 'grohltroll'
+    long_name = 'The Grohl Troll'
+    url = 'http://thegrohltroll.com'
+
+
+class WebcomicName(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Webcomic Name comics."""
+    name = 'webcomicname'
+    long_name = 'Webcomic Name'
+    url = 'http://webcomicname.com'
+
+
+class BooksOfAdam(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Books of Adam comics."""
+    # Also on http://www.booksofadam.com
+    name = 'booksofadam'
+    long_name = 'Books of Adam'
+    url = 'http://booksofadam.tumblr.com'
+
+
+class HarkAVagrant(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Hark A Vagrant comics."""
+    # Also on http://www.harkavagrant.com
+    name = 'hark-tumblr'
+    long_name = 'Hark A Vagrant (from Tumblr)'
+    url = 'http://beatonna.tumblr.com'
+
+
+class JakeLikesOnions(GenericTumblrV1):
+    """Class to retrieve Jake Likes Onions comics."""
+    name = 'jake'
+    long_name = 'Jake Likes Onions'
+    url = 'http://jakelikesonions.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
