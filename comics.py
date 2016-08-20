@@ -2486,7 +2486,7 @@ class MisterAndMe(GenericNavigableComic):
 class LastPlaceComics(GenericNavigableComic):
     """Class to retrieve Last Place Comics."""
     name = 'lastplace'
-    long_name = 'LastPlaceComics'
+    long_name = 'Last Place Comics'
     url = "http://lastplacecomics.com"
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
     get_navi_link = get_link_rel_next

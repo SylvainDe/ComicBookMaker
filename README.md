@@ -166,7 +166,7 @@ Comics supported
  * [Just Say Eh](http://www.justsayeh.com)
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
- * [LastPlaceComics](http://lastplacecomics.com)
+ * [Last Place Comics](http://lastplacecomics.com)
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
  * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
  * [Little Life Lines](http://www.littlelifelines.com)
