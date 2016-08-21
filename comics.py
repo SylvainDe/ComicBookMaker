@@ -3811,6 +3811,16 @@ class HarkAVagrant(GenericEmptyComic, GenericTumblrV1):
     url = 'http://beatonna.tumblr.com'
 
 
+class OurSuperAdventureTumblr(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Our Super Adventure comics."""
+    # Also on https://tapastic.com/series/Our-Super-Adventure
+    # Also on http://www.oursuperadventure.com
+    # http://sarahgraley.com
+    name = 'superadventure-tumblr'
+    long_name = 'Our Super Adventure (from Tumblr)'
+    url = 'http://sarahssketchbook.tumblr.com'
+
+
 class JakeLikesOnions(GenericTumblrV1):
     """Class to retrieve Jake Likes Onions comics."""
     name = 'jake'
@@ -4485,6 +4495,16 @@ class WafflesAndPancakes(GenericTapasticComic):
     name = 'waffles'
     long_name = 'Waffles And Pancakes'
     url = 'https://tapastic.com/series/Waffles-and-Pancakes'
+
+
+class OurSuperAdventureTapastic(GenericTapasticComic):
+    """Class to retrieve Our Super Adventure comics."""
+    # Also on http://www.oursuperadventure.com
+    # http://sarahssketchbook.tumblr.com
+    # http://sarahgraley.com
+    name = 'superadventure-tapastic'
+    long_name = 'Our Super Adventure (from Tapastic)'
+    url = 'https://tapastic.com/series/Our-Super-Adventure'
 
 
 def get_subclasses(klass):
