@@ -163,6 +163,7 @@ Comics supported
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Invisible Bread](http://invisiblebread.com)
+ * [In Your Face Cake (from Tumblr)](http://in-your-face-cake.tumblr.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
  * [Jake Likes Onions](http://jakelikesonions.com)
  * [My Jet Pack](http://myjetpack.tumblr.com)
