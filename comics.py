@@ -3835,6 +3835,13 @@ class InYourFaceCake(GenericEmptyComic, GenericTumblrV1):
     url = 'http://in-your-face-cake.tumblr.com'
 
 
+class BananaTwinky(GenericTumblrV1):
+    """Class to retrieve Banana Twinky comics."""
+    name = 'banana'
+    long_name = 'Banana Twinky'
+    url = 'http://bananatwinky.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
