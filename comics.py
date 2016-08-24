@@ -562,9 +562,10 @@ class ZenPencils(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
+        # imgs2 = soup.find_all('meta', property='og:image')
         post = soup.find('div', class_='post-content')
         author = post.find("span", class_="post-author").find("a").string
-        title = post.find('h2', class_='post-title').string
+        title = soup.find('meta', property='og:title')['content']
         date_str = post.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
         assert imgs
@@ -578,7 +579,7 @@ class ZenPencils(GenericNavigableComic):
             'day': day.day,
             'month': day.month,
             'year': day.year,
-            'img': [i['src'] for i in imgs],
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
 
