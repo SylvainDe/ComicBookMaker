@@ -1750,7 +1750,7 @@ class RespawnComic(GenericNavigableComic):
     name = 'respawn'
     long_name = 'Respawn Comic'
     url = 'http://respawncomic.com '
-    get_navi_link = get_a_navi_comicnavnext_navinext
+    get_navi_link = get_a_rel_next
     get_first_comic_link = simulate_first_link
     first_url = 'http://respawncomic.com/comic/c0001/'
 
