@@ -3543,7 +3543,7 @@ class RespawnComicTumblr(GenericTumblrV1):
     url = 'http://respawncomic.tumblr.com'
 
 
-class ChrisHallbeckTumblr(GenericTumblrV1):
+class ChrisHallbeckTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://tapastic.com/ChrisHallbeck
     # Also on http://maximumble.com
