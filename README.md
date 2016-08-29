@@ -245,6 +245,7 @@ Comics supported
  * [Respawn Comic](http://respawncomic.com )
  * [Respawn Comic (from Tumblr)](http://respawncomic.tumblr.com)
  * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
+ * [Robospunk](http://robospunk.com)
  * [Mandatory Roller Coaster](http://mandatoryrollercoaster.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
