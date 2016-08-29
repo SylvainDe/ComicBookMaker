@@ -1166,6 +1166,7 @@ class Channelate(GenericNavigableComic):
     url = 'http://www.channelate.com'
     get_first_comic_link = get_div_navfirst_a
     get_navi_link = get_link_rel_next
+    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1190,7 +1191,7 @@ class Channelate(GenericNavigableComic):
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'img': [i['src'] for i in imgs],
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
 
