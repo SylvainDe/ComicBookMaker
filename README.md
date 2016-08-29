@@ -196,6 +196,7 @@ Comics supported
  * [Mouse Bear Comedy (from Tumblr)](http://mousebearcomedy.tumblr.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [Mr. Lovenstein (from Tapastic)](https://tapastic.com/series/MrLovenstein)
+ * [NamelessPCs (from Tapastic)](https://tapastic.com/series/NamelessPC)
  * [NeDroid](http://nedroid.com)
  * [Nelluc Nhoj](http://nellucnhoj.com)
  * [Nick Anderson](http://www.gocomics.com/nickanderson)

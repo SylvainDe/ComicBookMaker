@@ -4516,6 +4516,14 @@ class OurSuperAdventureTapastic(GenericTapasticComic):
     url = 'https://tapastic.com/series/Our-Super-Adventure'
 
 
+class NamelessPCs(GenericTapasticComic):
+    """Class to retrieve Nameless PCs comics."""
+    # Also on http://namelesspcs.com
+    name = 'namelesspcs-tapa'
+    long_name = 'NamelessPCs (from Tapastic)'
+    url = 'https://tapastic.com/series/NamelessPC'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
