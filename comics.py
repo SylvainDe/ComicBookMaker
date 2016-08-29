@@ -3844,6 +3844,15 @@ class BananaTwinky(GenericTumblrV1):
     url = 'http://bananatwinky.tumblr.com'
 
 
+class YesterdaysPopcornTumblr(GenericTumblrV1):
+    """Class to retrieve Yesterday's Popcorn comics."""
+    # Also on http://www.yesterdayspopcorn.com
+    # Also on https://tapastic.com/series/Yesterdays-Popcorn
+    name = 'popcorn-tumblr'
+    long_name = 'Yesterday\'s Popcorn (from Tumblr)'
+    url = 'http://yesterdayspopcorn.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -4504,6 +4513,15 @@ class WafflesAndPancakes(GenericTapasticComic):
     name = 'waffles'
     long_name = 'Waffles And Pancakes'
     url = 'https://tapastic.com/series/Waffles-and-Pancakes'
+
+
+class YesterdaysPopcornTapastic(GenericTapasticComic):
+    """Class to retrieve Yesterday's Popcorn comics."""
+    # Also on http://www.yesterdayspopcorn.com
+    # Also on http://yesterdayspopcorn.tumblr.com
+    name = 'popcorn-tapa'
+    long_name = 'Yesterday\'s Popcorn (from Tapastic)'
+    url = 'https://tapastic.com/series/Yesterdays-Popcorn'
 
 
 class OurSuperAdventureTapastic(GenericTapasticComic):

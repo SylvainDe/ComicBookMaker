@@ -231,6 +231,8 @@ Comics supported
  * [Pond Scum](http://pondscumcomic.tumblr.com)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Poorly Drawn Lines (from Tumblr)](http://pdlcomics.tumblr.com)
+ * [Yesterday's Popcorn (from Tapastic)](https://tapastic.com/series/Yesterdays-Popcorn)
+ * [Yesterday's Popcorn (from Tumblr)](http://yesterdayspopcorn.tumblr.com)
  * [Pundemonium](http://monstika.tumblr.com)
  * [Quarktees](http://www.quarktees.com/blogs/news)
  * [Ted Rall](http://rall.com/comic)
