@@ -3094,6 +3094,32 @@ class MakeItStoopid(GenericNavigableComic):
         }
 
 
+class TuMourrasMoinsBete(GenericNavigableComic):
+    """Class to retrieve Tu Mourras Moins Bete comics."""
+    name = 'mourrasmoinsbete'
+    long_name = 'Tu Mourras Moins Bete'
+    url = 'http://tumourrasmoinsbete.blogspot.fr'
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://tumourrasmoinsbete.blogspot.fr/2008/06/essai.html'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', id='Blog1_blog-pager-newer-link' if next_ else 'Blog1_blog-pager-older-link')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find('div', itemprop='description articleBody').find_all('img')
+        author = soup.find('span', itemprop='author').string
+        return {
+            'img': [i['src'] for i in imgs],
+            'author': author,
+            'title': title,
+        }
+
+
 class GeekAndPoke(GenericNavigableComic):
     """Class to retrieve Geek And Poke comics."""
     name = 'geek'
