@@ -147,6 +147,7 @@ Comics supported
  * [Geek And Poke](http://geek-and-poke.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)
+ * [Glory Owl](http://gloryowlcomix.blogspot.fr)
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
  * [The Grohl Troll](http://thegrohltroll.com)
  * [Chris Hallback (from Tumblr)](http://chrishallbeck.tumblr.com)

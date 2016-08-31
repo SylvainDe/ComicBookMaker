@@ -3134,6 +3134,32 @@ class GeekAndPoke(GenericNavigableComic):
         }
 
 
+class GloryOwlComix(GenericNavigableComic):
+    """Class to retrieve Glory Owl comics."""
+    name = 'gloryowl'
+    long_name = 'Glory Owl'
+    url = 'http://gloryowlcomix.blogspot.fr'
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://gloryowlcomix.blogspot.fr/2013/02/1_7.html'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', id='Blog1_blog-pager-newer-link' if next_ else 'Blog1_blog-pager-older-link')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find_all('link', rel='image_src')
+        author = soup.find('a', rel='author').string
+        return {
+            'img': [i['href'] for i in imgs],
+            'author': author,
+            'title': title,
+        }
+
+
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
 
