@@ -3231,6 +3231,15 @@ class GenericTumblrV1(GenericComic):
         return []
 
 
+class SaturdayMorningBreakfastCerealTumblr(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Saturday Morning Breakfast Cereal comics."""
+    # Also on http://www.gocomics.com/saturday-morning-breakfast-cereal
+    # Also on http://www.smbc-comics.com
+    name = 'smbc-tumblr'
+    long_name = 'Saturday Morning Breakfast Cereal (from Tumblr)'
+    url = 'http://smbc-comics.tumblr.com'
+
+
 class IrwinCardozo(GenericTumblrV1):
     """Class to retrieve Irwin Cardozo Comics."""
     name = 'irwinc'
@@ -4051,6 +4060,15 @@ class SandersenGocomic(GenericGoComic):
     name = 'sandersen-goc'
     long_name = 'Sarah Andersen (from GoComics)'
     url = 'http://www.gocomics.com/sarahs-scribbles'
+
+
+class SaturdayMorningBreakfastCerealGoComic(GenericGoComic):
+    """Class to retrieve Saturday Morning Breakfast Cereal comics."""
+    # Also on http://smbc-comics.tumblr.com
+    # Also on http://www.smbc-comics.com
+    name = 'smbc-goc'
+    long_name = 'Saturday Morning Breakfast Cereal (from GoComics)'
+    url = 'http://www.gocomics.com/saturday-morning-breakfast-cereal'
 
 
 class CalvinAndHobbesGoComic(GenericGoComic):
