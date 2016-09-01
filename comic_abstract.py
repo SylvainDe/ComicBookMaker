@@ -41,6 +41,7 @@ class GenericComic(object):
     name = None
     long_name = None
     url = None
+    _categories = ('ALL', )
 
     @classmethod
     def log(cls, string):
@@ -283,3 +284,14 @@ class GenericComic(object):
     def gitignore(cls):
         """Return information to generate gitignore."""
         return '%s\n' % (cls.name)
+
+    @classmethod
+    def get_categories(cls):
+        """Return categories to be able to group comics.
+
+        Categories are such that all classes have their ancestrors'
+        categories and their own (provided as an iterable in the
+        `_categories` class member)."""
+        return sorted(set(cat
+                          for klass in cls.__mro__
+                          for cat in getattr(klass, '_categories', [])))

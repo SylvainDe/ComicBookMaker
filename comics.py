@@ -75,6 +75,7 @@ class GenericNavigableComic(GenericComic):
         - get_comic_info
         - get_url_from_link
     """
+    _categories = ('NAVIGABLE', )
 
     @classmethod
     def get_first_comic_link(cls):
@@ -206,6 +207,7 @@ class GenericListableComic(GenericComic):
         - get_url_from_archive_element
         - get_comic_info
     """
+    _categories = ('LISTABLE', )
 
     @classmethod
     def get_archive_elements(cls):
@@ -327,6 +329,7 @@ class GenericEmptyComic(GenericComic):
     It can be useful to deactivate temporarily comics that do not work
     properly by replacing `def MyComic(GenericWhateverComic)` with
     `def MyComic(GenericEmptyComic, GenericWhateverComic)`."""
+    _categories = ('EMPTY', )
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -363,6 +366,7 @@ class ExtraFabulousComics(GenericNavigableComic):
 
 class GenericLeMondeBlog(GenericNavigableComic):
     """Generic class to retrieve comics from Le Monde blogs."""
+    _categories = ('LEMONDE', 'FRANCAIS')
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = NotImplemented
@@ -456,6 +460,7 @@ class Rall(GenericNavigableComic):
     name = 'rall'
     long_name = "Ted Rall"
     url = "http://rall.com/comic"
+    _categories = ('RALL', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     # Not the first but I didn't find an efficient way to retrieve it
@@ -487,6 +492,7 @@ class Dilem(GenericNavigableComic):
     name = 'dilem'
     long_name = 'Ali Dilem'
     url = 'http://information.tv5monde.com/dilem'
+    _categories = ('FRANCAIS', )
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
     first_url = "http://information.tv5monde.com/dilem/2004-06-26"
@@ -554,6 +560,7 @@ class ZenPencils(GenericNavigableComic):
     name = 'zenpencils'
     long_name = 'Zen Pencils'
     url = 'http://zenpencils.com'
+    _categories = ('ZENPENCILS', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"
@@ -590,6 +597,7 @@ class ItsTheTie(GenericNavigableComic):
     name = 'tie'
     long_name = "It's the tie"
     url = "http://itsthetie.com"
+    _categories = ('TIE', )
     get_first_comic_link = get_div_navfirst_a
     get_navi_link = get_a_rel_next
 
@@ -623,6 +631,7 @@ class PenelopeBagieu(GenericNavigableComic):
     name = 'bagieu'
     long_name = 'Ma vie est tout a fait fascinante (Bagieu)'
     url = 'http://www.penelope-jolicoeur.com'
+    _categories = ('FRANCAIS', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'
@@ -650,6 +659,7 @@ class OneOneOneOneComic(GenericNavigableComic):
     name = '1111'
     long_name = '1111 Comics'
     url = 'http://www.1111comics.me'
+    _categories = ('ONEONEONEONE', )
     get_first_comic_link = get_div_navfirst_a
     get_navi_link = get_link_rel_next
 
@@ -733,6 +743,7 @@ class Garfield(GenericNavigableComic):
     name = 'garfield'
     long_name = 'Garfield'
     url = 'https://garfield.com'
+    _categories = ('GARFIELD', )
     get_first_comic_link = simulate_first_link
     first_url = 'https://garfield.com/comic/1978/06/19'
 
@@ -933,6 +944,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
     name = 'smbc'
     long_name = 'Saturday Morning Breakfast Cereal'
     url = 'http://www.smbc-comics.com'
+    _categories = ('SMBC', )
     get_navi_link = get_a_rel_next
 
     @classmethod
@@ -1029,6 +1041,7 @@ class BerkeleyMews(GenericListableComic):
     name = 'berkeley'
     long_name = 'Berkeley Mews'
     url = 'http://www.berkeleymews.com'
+    _categories = ('BERKELEY', )
     get_url_from_archive_element = get_href
     comic_num_re = re.compile('%s/\\?p=([0-9]*)$' % url)
 
@@ -1062,6 +1075,7 @@ class BerkeleyMews(GenericListableComic):
 class GenericBouletCorp(GenericNavigableComic):
     """Generic class to retrieve BouletCorp comics in different languages."""
     # Also on http://bouletcorp.tumblr.com
+    _categories = ('BOULET', )
     get_navi_link = get_link_rel_next
 
     @classmethod
@@ -1093,6 +1107,7 @@ class BouletCorp(GenericBouletCorp):
     name = 'boulet'
     long_name = 'Boulet Corp'
     url = 'http://www.bouletcorp.com'
+    _categories = ('FRANCAIS', )
 
 
 class BouletCorpEn(GenericBouletCorp):
@@ -1200,6 +1215,7 @@ class CyanideAndHappiness(GenericNavigableComic):
     name = 'cyanide'
     long_name = 'Cyanide and Happiness'
     url = 'http://explosm.net'
+    _categories = ('NSFW', )
     get_url_from_link = join_cls_url_to_href
 
     @classmethod
@@ -1527,6 +1543,7 @@ class Oglaf(GenericNavigableComic):
     name = 'oglaf'
     long_name = 'Oglaf [NSFW]'
     url = 'http://oglaf.com'
+    _categories = ('NSFW', )
     get_url_from_link = join_cls_url_to_href
 
     @classmethod
@@ -1751,6 +1768,7 @@ class RespawnComic(GenericNavigableComic):
     name = 'respawn'
     long_name = 'Respawn Comic'
     url = 'http://respawncomic.com '
+    _categories = ('RESPAWN', )
     get_navi_link = get_a_rel_next
     get_first_comic_link = simulate_first_link
     first_url = 'http://respawncomic.com/comic/c0001/'
@@ -1927,6 +1945,7 @@ class TubeyToons(GenericEmptyComic):  # Does not work anymore
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
+    _categories = ('TUNEYTOONS', )
 
 
 class CompletelySeriousComics(GenericNavigableComic):
@@ -1965,6 +1984,7 @@ class PoorlyDrawnLines(GenericListableComic):
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
     url = 'http://poorlydrawnlines.com'
+    _categories = ('POORLYDRAWN', )
     get_url_from_archive_element = get_href
 
     @classmethod
@@ -2254,6 +2274,7 @@ class LinsEditions(GenericNavigableComic):
     name = 'lins'
     long_name = 'L.I.N.S. Editions'
     url = 'https://linsedition.com'
+    _categories = ('LINS', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = 'https://linsedition.com/2011/09/07/l-i-n-s/'
@@ -2280,6 +2301,7 @@ class ThorsThundershack(GenericNavigableComic):
     name = 'thor'
     long_name = 'Thor\'s Thundershack'
     url = 'http://www.thorsthundershack.com'
+    _categories = ('THOR', )
     get_url_from_link = join_cls_url_to_href
 
     @classmethod
@@ -2413,6 +2435,7 @@ class TheAwkwardYeti(GenericNavigableComic):
     name = 'yeti'
     long_name = 'The Awkward Yeti'
     url = 'http://theawkwardyeti.com'
+    _categories = ('YETI', )
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
 
@@ -2522,6 +2545,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
     name = 'absurdity'
     long_name = 'Tales of Absurdity'
     url = 'http://talesofabsurdity.com'
+    _categories = ('ABSURDITY', )
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_a_navi_comicnavnext_navinext
 
@@ -2645,6 +2669,7 @@ class CommitStripFr(GenericCommitStrip):
     name = 'commit_fr'
     long_name = 'Commit Strip (Fr)'
     url = 'http://www.commitstrip.com/fr'
+    _categories = ('FRANCAIS', )
     first_url = 'http://www.commitstrip.com/fr/2012/02/22/interview/'
 
 
@@ -2698,6 +2723,7 @@ class BoumerieFr(GenericBoumerie):
     name = 'boumeries_fr'
     long_name = 'Boumeries (Fr)'
     url = 'http://bd.boumerie.com'
+    _categories = ('FRANCAIS', )
     date_format = "%A, %d %B %Y"
     lang = "fr_FR.utf8"
 
@@ -2709,6 +2735,7 @@ class UnearthedComics(GenericNavigableComic):
     name = 'unearthed'
     long_name = 'Unearthed Comics'
     url = 'http://unearthedcomics.com'
+    _categories = ('UNEARTHED', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = 'http://unearthedcomics.com/comics/world-with-turn-signals/'
@@ -3099,6 +3126,7 @@ class TuMourrasMoinsBete(GenericNavigableComic):
     name = 'mourrasmoinsbete'
     long_name = 'Tu Mourras Moins Bete'
     url = 'http://tumourrasmoinsbete.blogspot.fr'
+    _categories = ('FRANCAIS', )
     get_first_comic_link = simulate_first_link
     first_url = 'http://tumourrasmoinsbete.blogspot.fr/2008/06/essai.html'
 
@@ -3165,6 +3193,7 @@ class GloryOwlComix(GenericNavigableComic):
     name = 'gloryowl'
     long_name = 'Glory Owl'
     url = 'http://gloryowlcomix.blogspot.fr'
+    _categories = ('NSFW', 'FRANCAIS')
     get_first_comic_link = simulate_first_link
     first_url = 'http://gloryowlcomix.blogspot.fr/2013/02/1_7.html'
 
@@ -3188,6 +3217,7 @@ class GloryOwlComix(GenericNavigableComic):
 
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
+    _categories = ('TUMBLR', )
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -3290,6 +3320,7 @@ class SaturdayMorningBreakfastCerealTumblr(GenericEmptyComic, GenericTumblrV1):
     name = 'smbc-tumblr'
     long_name = 'Saturday Morning Breakfast Cereal (from Tumblr)'
     url = 'http://smbc-comics.tumblr.com'
+    _categories = ('SMBC', )
 
 
 class IrwinCardozo(GenericTumblrV1):
@@ -3313,6 +3344,7 @@ class ItsTheTieTumblr(GenericTumblrV1):
     name = 'tie-tumblr'
     long_name = "It's the tie (from Tumblr)"
     url = "http://itsthetie.tumblr.com"
+    _categories = ('TIE', )
 
 
 class OctopunsTumblr(GenericTumblrV1):
@@ -3338,6 +3370,7 @@ class TubeyToonsTumblr(GenericTumblrV1):
     name = 'tubeytoons-tumblr'
     long_name = 'Tubey Toons (from Tumblr)'
     url = 'http://tubeytoons.tumblr.com'
+    _categories = ('TUNEYTOONS', )
 
 
 class UnearthedComicsTumblr(GenericTumblrV1):
@@ -3347,6 +3380,7 @@ class UnearthedComicsTumblr(GenericTumblrV1):
     name = 'unearthed-tumblr'
     long_name = 'Unearthed Comics (from Tumblr)'
     url = 'http://unearthedcomics.tumblr.com'
+    _categories = ('UNEARTHED', )
 
 
 class PieComic(GenericTumblrV1):
@@ -3391,6 +3425,7 @@ class PoorlyDrawnLinesTumblr(GenericEmptyComic, GenericTumblrV1):
     name = 'poorlydrawn-tumblr'
     long_name = 'Poorly Drawn Lines (from Tumblr)'
     url = 'http://pdlcomics.tumblr.com'
+    _categories = ('POORLYDRAWN', )
 
 
 class PearShapedComics(GenericTumblrV1):
@@ -3421,6 +3456,7 @@ class OwlTurdTumblr(GenericEmptyComic, GenericTumblrV1):
     name = 'owlturd-tumblr'
     long_name = 'Owl Turd (from Tumblr)'
     url = 'http://owlturd.com'
+    _categories = ('OWLTURD', )
 
 
 class VectorBelly(GenericTumblrV1):
@@ -3487,6 +3523,7 @@ class ZenPencilsTumblr(GenericTumblrV1):
     name = 'zenpencils-tumblr'
     long_name = 'Zen Pencils (from Tumblr)'
     url = 'http://zenpencils.tumblr.com'
+    _categories = ('ZENPENCILS', )
 
 
 class ThreeWordPhraseTumblr(GenericTumblrV1):
@@ -3527,6 +3564,7 @@ class BouletCorpTumblr(GenericTumblrV1):
     name = 'boulet-tumblr'
     long_name = 'Boulet Corp (from Tumblr)'
     url = 'http://bouletcorp.tumblr.com'
+    _categories = ('BOULET', )
 
 
 class TheAwkwardYetiTumblr(GenericEmptyComic, GenericTumblrV1):
@@ -3537,6 +3575,7 @@ class TheAwkwardYetiTumblr(GenericEmptyComic, GenericTumblrV1):
     name = 'yeti-tumblr'
     long_name = 'The Awkward Yeti (from Tumblr)'
     url = 'http://larstheyeti.tumblr.com'
+    _categories = ('YETI', )
 
 
 class NellucNhoj(GenericTumblrV1):
@@ -3569,6 +3608,7 @@ class OneOneOneOneComicTumblr(GenericTumblrV1):
     name = '1111-tumblr'
     long_name = '1111 Comics (from Tumblr)'
     url = 'http://comics1111.tumblr.com'
+    _categories = ('ONEONEONEONE', )
 
 
 class JhallComicsTumblr(GenericTumblrV1):
@@ -3586,6 +3626,7 @@ class BerkeleyMewsTumblr(GenericTumblrV1):
     name = 'berkeley-tumblr'
     long_name = 'Berkeley Mews (from Tumblr)'
     url = 'http://mews.tumblr.com'
+    _categories = ('BERKELEY', )
 
 
 class JoanCornellaTumblr(GenericTumblrV1):
@@ -3613,6 +3654,7 @@ class ChrisHallbeckTumblr(GenericEmptyComic, GenericTumblrV1):
     name = 'hallbeck-tumblr'
     long_name = 'Chris Hallback (from Tumblr)'
     url = 'http://chrishallbeck.tumblr.com'
+    _categories = ('HALLBACK', )
 
 
 class ComicNuggets(GenericTumblrV1):
@@ -3646,6 +3688,7 @@ class FowlLanguageTumblr(GenericTumblrV1):
     name = 'fowllanguage-tumblr'
     long_name = 'Fowl Language Comics (from Tumblr)'
     url = 'http://fowllanguagecomics.tumblr.com'
+    _categories = ('FOWLLANGUAGE', )
 
 
 class TheOdd1sOutTumblr(GenericTumblrV1):
@@ -3742,6 +3785,7 @@ class LinsEditionsTumblr(GenericTumblrV1):
     name = 'lins-tumblr'
     long_name = 'L.I.N.S. Editions (from Tumblr)'
     url = 'http://linscomics.tumblr.com'
+    _categories = ('LINS', )
 
 
 class OrigamiHotDish(GenericTumblrV1):
@@ -3772,6 +3816,7 @@ class TalesOfAbsurdityTumblr(GenericTumblrV1):
     name = 'absurdity-tumblr'
     long_name = 'Tales of Absurdity (from Tumblr)'
     url = 'http://talesofabsurdity.tumblr.com'
+    _categories = ('ABSURDITY', )
 
 
 class RobbieAndBobby(GenericTumblrV1):
@@ -3931,6 +3976,7 @@ class TwistedDoodles(GenericEmptyComic, GenericTumblrV1):
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
+    _categories = ('HOROVITZ', )
     img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
     link_re = NotImplemented
     get_url_from_archive_element = join_cls_url_to_href
@@ -3976,6 +4022,7 @@ class HorovitzClassic(HorovitzComics):
 
 class GenericGoComic(GenericNavigableComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
+    _categories = ('GOCOMIC', )
     url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
     @classmethod
@@ -4128,6 +4175,7 @@ class SaturdayMorningBreakfastCerealGoComic(GenericGoComic):
     name = 'smbc-goc'
     long_name = 'Saturday Morning Breakfast Cereal (from GoComics)'
     url = 'http://www.gocomics.com/saturday-morning-breakfast-cereal'
+    _categories = ('SMBC', )
 
 
 class CalvinAndHobbesGoComic(GenericGoComic):
@@ -4144,6 +4192,7 @@ class RallGoComic(GenericGoComic):
     name = 'rall-goc'
     long_name = "Ted Rall (from GoComics)"
     url = "http://www.gocomics.com/tedrall"
+    _categories = ('RALL', )
 
 
 class TheAwkwardYetiGoComic(GenericGoComic):
@@ -4154,6 +4203,7 @@ class TheAwkwardYetiGoComic(GenericGoComic):
     name = 'yeti-goc'
     long_name = 'The Awkward Yeti (from GoComics)'
     url = 'http://www.gocomics.com/the-awkward-yeti'
+    _categories = ('YETI', )
 
 
 class BerkeleyMewsGoComics(GenericGoComic):
@@ -4163,6 +4213,7 @@ class BerkeleyMewsGoComics(GenericGoComic):
     name = 'berkeley-goc'
     long_name = 'Berkeley Mews (from GoComics)'
     url = 'http://www.gocomics.com/berkeley-mews'
+    _categories = ('BERKELEY', )
 
 
 class SheldonGoComics(GenericGoComic):
@@ -4181,6 +4232,7 @@ class FowlLanguageGoComics(GenericGoComic):
     name = 'fowllanguage-goc'
     long_name = 'Fowl Language Comics (from GoComics)'
     url = 'http://www.gocomics.com/fowl-language'
+    _categories = ('FOWLLANGUAGE', )
 
 
 class NickAnderson(GenericGoComic):
@@ -4196,6 +4248,7 @@ class GarfieldGoComics(GenericGoComic):
     name = 'garfield-goc'
     long_name = 'Garfield (from GoComics)'
     url = 'http://www.gocomics.com/garfield'
+    _categories = ('GARFIELD', )
 
 
 class DorrisMcGoComics(GenericGoComic):
@@ -4238,6 +4291,7 @@ class NonSequitur(GenericGoComic):
 
 class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
+    _categories = ('TAPASTIC', )
 
     @classmethod
     def get_comic_info(cls, soup, archive_elt):
@@ -4286,6 +4340,7 @@ class FowlLanguageTapa(GenericTapasticComic):
     name = 'fowllanguage-tapa'
     long_name = 'Fowl Language Comics (from Tapastic)'
     url = 'http://tapastic.com/series/Fowl-Language-Comics'
+    _categories = ('FOWLLANGUAGE', )
 
 
 class OscillatingProfundities(GenericTapasticComic):
@@ -4318,6 +4373,7 @@ class TubeyToonsTapastic(GenericTapasticComic):
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
+    _categories = ('TUNEYTOONS', )
 
 
 class AnythingComicTapastic(GenericTapasticComic):
@@ -4335,6 +4391,7 @@ class UnearthedComicsTapastic(GenericTapasticComic):
     name = 'unearthed-tapa'
     long_name = 'Unearthed Comics (from Tapastic)'
     url = 'http://tapastic.com/series/UnearthedComics'
+    _categories = ('UNEARTHED', )
 
 
 class EverythingsStupidTapastic(GenericTapasticComic):
@@ -4360,6 +4417,7 @@ class ThorsThundershackTapastic(GenericTapasticComic):
     name = 'thor-tapa'
     long_name = 'Thor\'s Thundershack (from Tapastic)'
     url = 'http://tapastic.com/series/Thors-Thundershac'
+    _categories = ('THOR', )
 
 
 class OwlTurdTapastic(GenericTapasticComic):
@@ -4368,6 +4426,7 @@ class OwlTurdTapastic(GenericTapasticComic):
     name = 'owlturd-tapa'
     long_name = 'Owl Turd (from Tapastic)'
     url = 'http://tapastic.com/series/Owl-Turd-Comix'
+    _categories = ('OWLTURD', )
 
 
 class GoneIntoRaptureTapastic(GenericTapasticComic):
@@ -4444,6 +4503,7 @@ class TheAwkwardYetiTapa(GenericTapasticComic):
     name = 'yeti-tapa'
     long_name = 'The Awkward Yeti (from Tapastic)'
     url = 'https://tapastic.com/series/TheAwkwardYeti'
+    _categories = ('YETI', )
 
 
 class AsPerUsualTapa(GenericTapasticComic):
@@ -4461,6 +4521,7 @@ class OneOneOneOneComicTapa(GenericTapasticComic):
     name = '1111-tapa'
     long_name = '1111 Comics (from Tapastic)'
     url = 'https://tapastic.com/series/1111-Comics'
+    _categories = ('ONEONEONEONE', )
 
 
 class TumbleDryTapa(GenericTapasticComic):
@@ -4486,6 +4547,7 @@ class ChrisHallbeckMaxiTapa(GenericTapasticComic):
     name = 'hallbeckmaxi-tapa'
     long_name = 'Chris Hallback - Maximumble (from Tapastic)'
     url = 'https://tapastic.com/series/Maximumble'
+    _categories = ('HALLBACK', )
 
 
 class ChrisHallbeckMiniTapa(GenericTapasticComic):
@@ -4495,6 +4557,7 @@ class ChrisHallbeckMiniTapa(GenericTapasticComic):
     name = 'hallbeckmini-tapa'
     long_name = 'Chris Hallback - Minimumble (from Tapastic)'
     url = 'https://tapastic.com/series/Minimumble'
+    _categories = ('HALLBACK', )
 
 
 class ChrisHallbeckBiffTapa(GenericTapasticComic):
@@ -4504,6 +4567,7 @@ class ChrisHallbeckBiffTapa(GenericTapasticComic):
     name = 'hallbeckbiff-tapa'
     long_name = 'Chris Hallback - The Book of Biff (from Tapastic)'
     url = 'https://tapastic.com/series/Biff'
+    _categories = ('HALLBACK', )
 
 
 class RandoWisTapa(GenericTapasticComic):
@@ -4555,6 +4619,7 @@ class TalesOfAbsurdityTapa(GenericTapasticComic):
     name = 'absurdity-tapa'
     long_name = 'Tales of Absurdity (from Tapastic)'
     url = 'http://tapastic.com/series/Tales-Of-Absurdity'
+    _categories = ('ABSURDITY', )
 
 
 class BFGFSTapa(GenericTapasticComic):
