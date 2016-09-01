@@ -283,6 +283,7 @@ Comics supported
  * [Tubey Toons (from Tapastic)](http://tapastic.com/series/Tubey-Toons)
  * [Tubey Toons (from Tumblr)](http://tubeytoons.tumblr.com)
  * [Tumblr Dry (from Tapastic)](https://tapastic.com/series/TumbleDryComics)
+ * [Twisted Doodles](http://www.twisteddoodles.com)
  * [The Underfold (from Tumblr)](http://theunderfold.tumblr.com)
  * [Unearthed Comics](http://unearthedcomics.com)
  * [Unearthed Comics (from Tapastic)](http://tapastic.com/series/UnearthedComics)

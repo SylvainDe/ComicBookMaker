@@ -3921,6 +3921,13 @@ class YesterdaysPopcornTumblr(GenericTumblrV1):
     url = 'http://yesterdayspopcorn.tumblr.com'
 
 
+class TwistedDoodles(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Twisted Doodles comics."""
+    name = 'twisted'
+    long_name = 'Twisted Doodles'
+    url = 'http://www.twisteddoodles.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
