@@ -2897,12 +2897,13 @@ class AHamADay(GenericNavigableComic):
 
 class LittleLifeLines(GenericNavigableComic):
     """Class to retrieve Little Life Lines comics."""
+    # Also on https://little-life-lines.tumblr.com
     name = 'life'
     long_name = 'Little Life Lines'
     url = 'http://www.littlelifelines.com'
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
-    first_url = 'http://www.littlelifelines.com/comics/well-done'
+    first_url = 'http://www.littlelifelines.com/latest/well-done'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
@@ -3971,6 +3972,14 @@ class TwistedDoodles(GenericEmptyComic, GenericTumblrV1):
     name = 'twisted'
     long_name = 'Twisted Doodles'
     url = 'http://www.twisteddoodles.com'
+
+
+class LittleLifeLinesTumblr(GenericTumblrV1):
+    """Class to retrieve Little Life Lines comics."""
+    # Also on http://www.littlelifelines.com
+    name = 'life-tumblr'
+    long_name = 'Little Life Lines (from Tumblr)'
+    url = 'https://little-life-lines.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):

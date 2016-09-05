@@ -177,6 +177,7 @@ Comics supported
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
  * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
  * [Little Life Lines](http://www.littlelifelines.com)
+ * [Little Life Lines (from Tumblr)](https://little-life-lines.tumblr.com)
  * [L.I.N.S. Editions](https://linsedition.com)
  * [L.I.N.S. Editions (from Tumblr)](http://linscomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
