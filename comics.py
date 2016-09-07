@@ -3049,6 +3049,33 @@ class SheldonComics(GenericNavigableComic):
         }
 
 
+class Ubertool(GenericNavigableComic):
+    """Class to retrieve Ubertool comics."""
+    # Also on http://ubertool.tumblr.com
+    # Also on https://tapastic.com/series/ubertool
+    name = 'ubertool'
+    long_name = 'Ubertool'
+    url = 'http://ubertoolcomic.com'
+    _categories = ('UBERTOOL', )
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_a_comicnavbase_comicnavnext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2', class_='post-title').string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        imgs = soup.find('div', id='comic').find_all('img')
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class CubeDrone(GenericNavigableComic):
     """Class to retrieve Cube Drone comics."""
     name = 'cubedrone'
@@ -3971,6 +3998,16 @@ class TwistedDoodles(GenericEmptyComic, GenericTumblrV1):
     url = 'http://www.twisteddoodles.com'
 
 
+class UbertoolTumblr(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve Ubertool comics."""
+    # Also on http://ubertoolcomic.com
+    # Also on https://tapastic.com/series/ubertool
+    name = 'ubertool-tumblr'
+    long_name = 'Ubertool (from Tumblr)'
+    url = 'http://ubertool.tumblr.com'
+    _categories = ('UBERTOOL', )
+
+
 class LittleLifeLinesTumblr(GenericTumblrV1):
     """Class to retrieve Little Life Lines comics."""
     # Also on http://www.littlelifelines.com
@@ -4702,6 +4739,16 @@ class NamelessPCs(GenericTapasticComic):
     name = 'namelesspcs-tapa'
     long_name = 'NamelessPCs (from Tapastic)'
     url = 'https://tapastic.com/series/NamelessPC'
+
+
+class UbertoolTapa(GenericTapasticComic):
+    """Class to retrieve Ubertool comics."""
+    # Also on http://ubertoolcomic.com
+    # Also on http://ubertool.tumblr.com
+    name = 'ubertool-tapa'
+    long_name = 'Ubertool (from Tapastic)'
+    url = 'https://tapastic.com/series/ubertool'
+    _categories = ('UBERTOOL', )
 
 
 def get_subclasses(klass):
