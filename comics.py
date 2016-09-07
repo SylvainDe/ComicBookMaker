@@ -3239,10 +3239,8 @@ class GenericTumblrV1(GenericComic):
     @classmethod
     def get_comic_info(cls, post):
         """Get information about a particular comics."""
-        # print(post)
         type_ = post['type']
         if type_ != 'photo':
-            # print("Type is %s" % type_)
             return None
         tumblr_id = int(post['id'])
         api_url = cls.get_api_url() + '?id=%d' % (tumblr_id)
@@ -3266,7 +3264,7 @@ class GenericTumblrV1(GenericComic):
             'tags': tags,
             'img': [i.string for i in imgs],
             'tumblr-id': tumblr_id,
-            'api_url': api_url,  # for debug purposes
+            'api_url': api_url,
         }
 
     @classmethod
@@ -3278,7 +3276,7 @@ class GenericTumblrV1(GenericComic):
         waiting_for_url = last_comic['url'] if last_comic else None
         posts_acc = []
         if last_comic is not None:
-            # Sometimes, tumblr posts are deleted. We previous post is deleted, we
+            # Sometimes, tumblr posts are deleted. When previous post is deleted, we
             # might end up spending a lot of time looking for something that
             # doesn't exist. Failing early and clearly might be a better option.
             last_api_url = last_comic['api_url']
@@ -3298,7 +3296,6 @@ class GenericTumblrV1(GenericComic):
         assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
             api_url2 = api_url + '?start=%d&num=%d' % (starting_num, nb_post_per_call)
-            # print(api_url2)
             posts2 = get_soup_at_url(api_url2).find('posts')
             start2, total2 = int(posts2['start']), int(posts2['total'])
             assert starting_num == start2, "%d != %d" % (starting_num, start2)
