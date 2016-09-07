@@ -270,6 +270,7 @@ Comics supported
  * [The Ism](http://www.theism-comics.com)
  * [The Odd 1s Out (from Tapastic)](https://tapastic.com/series/Theodd1sout)
  * [The Odd 1s Out (from Tumblr)](http://theodd1sout.tumblr.com)
+ * [They Can Talk](http://theycantalk.com)
  * [Thor's Thundershack](http://www.thorsthundershack.com)
  * [Thor's Thundershack (from Tapastic)](http://tapastic.com/series/Thors-Thundershac)
  * [Three Word Phrase](http://threewordphrase.com)

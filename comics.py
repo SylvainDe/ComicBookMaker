@@ -3982,6 +3982,13 @@ class LittleLifeLinesTumblr(GenericTumblrV1):
     url = 'https://little-life-lines.tumblr.com'
 
 
+class TheyCanTalk(GenericEmptyComic, GenericTumblrV1):
+    """Class to retrieve They Can Talk comics."""
+    name = 'theycantalk'
+    long_name = 'They Can Talk'
+    url = 'http://theycantalk.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
