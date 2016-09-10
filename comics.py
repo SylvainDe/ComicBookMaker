@@ -2903,7 +2903,7 @@ class LittleLifeLines(GenericNavigableComic):
     url = 'http://www.littlelifelines.com'
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
-    first_url = 'http://www.littlelifelines.com/latest/well-done'
+    first_url = 'http://www.littlelifelines.com/comics/well-done'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
