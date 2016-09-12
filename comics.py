@@ -3624,6 +3624,18 @@ class AsPerUsualTumblr(GenericTumblrV1):
     name = 'usual-tumblr'
     long_name = 'As Per Usual (from Tumblr)'
     url = 'http://as-per-usual.tumblr.com'
+    categories = ('DAMILEE', )
+
+
+class HotComicsForCoolPeopleTumblr(GenericTumblrV1):
+    """Class to retrieve Hot Comics For Cool People."""
+    # Also on https://tapastic.com/series/Hot-Comics-For-Cool-People
+    # Also on http://hotcomics.biz (links to tumblr)
+    # Also on http://hcfcp.com (links to tumblr)
+    name = 'hotcomics-tumblr'
+    long_name = 'Hot Comics For Cool People (from Tumblr)'
+    url = 'http://hotcomicsforcoolpeople.tumblr.com'
+    categories = ('DAMILEE', )
 
 
 class OneOneOneOneComicTumblr(GenericTumblrV1):
@@ -4562,6 +4574,18 @@ class AsPerUsualTapa(GenericTapasticComic):
     name = 'usual-tapa'
     long_name = 'As Per Usual (from Tapastic)'
     url = 'https://tapastic.com/series/AsPerUsual'
+    categories = ('DAMILEE', )
+
+
+class HotComicsForCoolPeopleTapa(GenericTapasticComic):
+    """Class to retrieve Hot Comics For Cool People."""
+    # Also on http://hotcomicsforcoolpeople.tumblr.com
+    # Also on http://hotcomics.biz (links to tumblr)
+    # Also on http://hcfcp.com (links to tumblr)
+    name = 'hotcomics-tapa'
+    long_name = 'Hot Comics For Cool People (from Tapastic)'
+    url = 'https://tapastic.com/series/Hot-Comics-For-Cool-People'
+    categories = ('DAMILEE', )
 
 
 class OneOneOneOneComicTapa(GenericTapasticComic):
