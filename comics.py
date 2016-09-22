@@ -3888,7 +3888,7 @@ class BFGFSTumblr(GenericTumblrV1):
     url = 'http://bfgfs.tumblr.com'
 
 
-class DoodleForFood(GenericTumblrV1):
+class DoodleForFood(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Doodle For Food comics."""
     # Also on http://doodleforfood.com
     name = 'doodle'
