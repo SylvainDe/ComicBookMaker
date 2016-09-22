@@ -257,6 +257,7 @@ Comics supported
  * [Scandinavia And The World](http://satwcomic.com)
  * [Sheldon Comics](http://www.sheldoncomics.com)
  * [Sheldon Comics (from GoComics)](http://www.gocomics.com/sheldon)
+ * [Small Blue Yonder (from Tapastic)](https://tapastic.com/series/Small-Blue-Yonder)
  * [Saturday Morning Breakfast Cereal](http://www.smbc-comics.com)
  * [Saturday Morning Breakfast Cereal (from GoComics)](http://www.gocomics.com/saturday-morning-breakfast-cereal)
  * [Saturday Morning Breakfast Cereal (from Tumblr)](http://smbc-comics.tumblr.com)

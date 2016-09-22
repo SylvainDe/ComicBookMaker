@@ -4775,6 +4775,14 @@ class UbertoolTapa(GenericTapasticComic):
     _categories = ('UBERTOOL', )
 
 
+class SmallBlueYonderTapa(GenericTapasticComic):
+    """Class to retrieve Small Blue Yonder comics."""
+    # Also on http://www.smallblueyonder.com
+    name = 'smallblue-tapa'
+    long_name = 'Small Blue Yonder (from Tapastic)'
+    url = 'https://tapastic.com/series/Small-Blue-Yonder'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
