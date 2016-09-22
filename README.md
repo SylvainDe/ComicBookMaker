@@ -306,6 +306,7 @@ Comics supported
  * [Waffles And Pancakes](https://tapastic.com/series/Waffles-and-Pancakes)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Webcomic Name](http://webcomicname.com)
+ * [Will 5:00 Never Come ?](http://will5nevercome.com)
  * [Wondermark](http://wondermark.com)
  * [Wooden Plank Studios](http://woodenplankstudios.com)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
