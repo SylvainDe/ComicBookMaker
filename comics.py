@@ -3618,7 +3618,7 @@ class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     url = 'http://downtheupwardspiral.tumblr.com'
 
 
-class AsPerUsualTumblr(GenericTumblrV1):
+class AsPerUsualTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve As Per Usual comics."""
     # Also on https://tapastic.com/series/AsPerUsual
     name = 'usual-tumblr'
