@@ -255,6 +255,7 @@ Comics supported
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)
+ * [Sephko](http://sephko.tumblr.com)
  * [Sheldon Comics](http://www.sheldoncomics.com)
  * [Sheldon Comics (from GoComics)](http://www.gocomics.com/sheldon)
  * [Small Blue Yonder (from Tapastic)](https://tapastic.com/series/Small-Blue-Yonder)

@@ -4042,6 +4042,14 @@ class Will5NeverCome(GenericEmptyComic, GenericTumblrV1):
     url = 'http://will5nevercome.com'
 
 
+class Sephko(GenericTumblrV1):
+    """Class to retrieve Sephko Comics."""
+    # Also on http://www.sephko.com
+    name = 'sephko'
+    long_name = 'Sephko'
+    url = 'http://sephko.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
