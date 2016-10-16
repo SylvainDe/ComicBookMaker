@@ -4055,6 +4055,20 @@ class Sephko(GenericTumblrV1):
     url = 'http://sephko.tumblr.com'
 
 
+class BlazersAtDawn(GenericTumblrV1):
+    """Class to retrieve Blazers At Dawn Comics."""
+    name = 'blazers'
+    long_name = 'Blazers At Dawn'
+    url = 'http://blazersatdawn.tumblr.com'
+
+
+class ArtByMoga(GenericTumblrV1Empty):
+    """Class to retrieve Art By Moga Comics."""
+    name = 'moga'
+    long_name = 'Art By Moga'
+    url = 'http://artbymoga.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
