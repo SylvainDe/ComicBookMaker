@@ -1144,34 +1144,36 @@ class AmazingSuperPowers(GenericNavigableComic):
         }
 
 
-class ToonHole(GenericListableComic):
+class ToonHole(GenericNavigableComic):
     """Class to retrieve Toon Holes comics."""
     # Also on http://tapastic.com/series/TOONHOLE
     name = 'toonhole'
     long_name = 'Toon Hole'
     url = 'http://www.toonhole.com'
-    get_url_from_archive_element = get_href
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = link.string
-        date_str = remove_st_nd_rd_th_from_date(soup.find('div', class_='comicdate').string.strip())
+        short_url = soup.find('link', rel='shortlink')['href']
+        date_str = soup.find('time', class_='entry-date published').string
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
-        assert all(i['alt'] == i['title'] == title for i in imgs)
+        if imgs:
+            i = imgs[0]
+            title = i['alt']
+            assert i['title'] == title
+        else:
+            title = ""
         return {
+            'short_url': short_url,
             'title': title,
             'month': day.month,
             'year': day.year,
             'day': day.day,
             'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
         }
-
-    @classmethod
-    def get_archive_elements(cls):
-        archive_url = urljoin_wrapper(cls.url, 'archive/')
-        return reversed(get_soup_at_url(archive_url).find_all('a', rel='bookmark'))
 
 
 class Channelate(GenericNavigableComic):
