@@ -3436,7 +3436,7 @@ class Flocci(GenericTumblrV1):
     url = "http://floccinaucinihilipilificationa.tumblr.com"
 
 
-class UpAndOut(GenericTumblrV1):
+class UpAndOut(GenericTumblrV1Empty):
     """Class to retrieve Up & Out comics."""
     # Also on http://tapastic.com/series/UP-and-OUT
     name = 'upandout'
@@ -3548,7 +3548,7 @@ class ForLackOfABetterComic(GenericTumblrV1Empty):
     url = 'http://forlackofabettercomic.tumblr.com'
 
 
-class ZenPencilsTumblr(GenericTumblrV1):
+class ZenPencilsTumblr(GenericTumblrV1Empty):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.com
     # Also on http://www.gocomics.com/zen-pencils
