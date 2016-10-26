@@ -2463,7 +2463,7 @@ class PleasantThoughts(GenericNavigableComic):
     name = 'pleasant'
     long_name = 'Pleasant Thoughts'
     url = 'http://pleasant-thoughts.com'
-    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
 
     @classmethod
