@@ -1161,9 +1161,9 @@ class ToonHole(GenericNavigableComic):
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         if imgs:
-            i = imgs[0]
-            title = i['alt']
-            assert i['title'] == title
+            img = imgs[0]
+            title = img['alt']
+            assert img['title'] == title
         else:
             title = ""
         return {
