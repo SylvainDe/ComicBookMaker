@@ -3910,9 +3910,9 @@ class CassandraCalinTumblr(GenericTumblrV1Empty):
     url = 'http://c-cassandra.tumblr.com'
 
 
-class DougWasTaken(GenericTumblrV1):
+class DougWasTaken(GenericTumblrV1Empty):
     """Class to retrieve Doug Was Taken comics."""
-    name = 'doog'
+    name = 'doug'
     long_name = 'Doug Was Taken'
     url = 'http://dougwastaken.tumblr.com'
 
