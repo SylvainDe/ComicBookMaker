@@ -1448,7 +1448,7 @@ class PhDComics(GenericNavigableComic):
         }
 
 
-class Octopuns(GenericNavigableComic):
+class Octopuns(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Octopuns comics."""
     # Also on http://octopuns.tumblr.com
     name = 'octopuns'
