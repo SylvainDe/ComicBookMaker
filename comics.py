@@ -231,9 +231,7 @@ class GenericListableComic(GenericComic):
         for archive_elt in cls.get_archive_elements():
             url = cls.get_url_from_archive_element(archive_elt)
             cls.log("considering %s" % url)
-            if waiting_for_url and waiting_for_url == url:
-                waiting_for_url = None
-            elif waiting_for_url is None:
+            if waiting_for_url is None:
                 cls.log("about to get %s (%s)" % (url, str(archive_elt)))
                 soup = get_soup_at_url(url)
                 comic = cls.get_comic_info(soup, archive_elt)
@@ -241,6 +239,8 @@ class GenericListableComic(GenericComic):
                     assert 'url' not in comic
                     comic['url'] = url
                     yield comic
+            elif waiting_for_url == url:
+                waiting_for_url = None
         if waiting_for_url is not None:
             print("Did not find %s : there might be a problem" % waiting_for_url)
 
