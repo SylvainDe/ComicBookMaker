@@ -3340,12 +3340,7 @@ class GenericTumblrV1(GenericComic):
         return []
 
 
-class GenericTumblrV1Empty(GenericEmptyComic, GenericTumblrV1):
-    """Generic class for Tumblr comics with a problem."""
-    pass
-
-
-class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1Empty):
+class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
     # Also on http://www.gocomics.com/saturday-morning-breakfast-cereal
     # Also on http://www.smbc-comics.com
@@ -3436,7 +3431,7 @@ class Flocci(GenericTumblrV1):
     url = "http://floccinaucinihilipilificationa.tumblr.com"
 
 
-class UpAndOut(GenericTumblrV1Empty):
+class UpAndOut(GenericTumblrV1):
     """Class to retrieve Up & Out comics."""
     # Also on http://tapastic.com/series/UP-and-OUT
     name = 'upandout'
@@ -3451,7 +3446,7 @@ class Pundemonium(GenericTumblrV1):
     url = 'http://monstika.tumblr.com'
 
 
-class PoorlyDrawnLinesTumblr(GenericTumblrV1Empty):
+class PoorlyDrawnLinesTumblr(GenericTumblrV1):
     """Class to retrieve Poorly Drawn Lines comics."""
     # Also on http://poorlydrawnlines.com
     name = 'poorlydrawn-tumblr'
@@ -3482,7 +3477,7 @@ class MercworksTumblr(GenericTumblrV1):
     url = 'http://mercworks.tumblr.com'
 
 
-class OwlTurdTumblr(GenericTumblrV1Empty):
+class OwlTurdTumblr(GenericTumblrV1):
     """Class to retrieve Owl Turd comics."""
     # Also on http://tapastic.com/series/Owl-Turd-Comix
     name = 'owlturd-tumblr'
@@ -3540,7 +3535,7 @@ class CheerUpEmoKidTumblr(GenericTumblrV1):
     url = 'http://enzocomics.tumblr.com'
 
 
-class ForLackOfABetterComic(GenericTumblrV1Empty):
+class ForLackOfABetterComic(GenericTumblrV1):
     """Class to retrieve For Lack Of A Better Comics."""
     # Also on http://forlackofabettercomic.com
     name = 'lack'
@@ -3548,7 +3543,7 @@ class ForLackOfABetterComic(GenericTumblrV1Empty):
     url = 'http://forlackofabettercomic.tumblr.com'
 
 
-class ZenPencilsTumblr(GenericTumblrV1Empty):
+class ZenPencilsTumblr(GenericTumblrV1):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.com
     # Also on http://www.gocomics.com/zen-pencils
@@ -3599,7 +3594,7 @@ class BouletCorpTumblr(GenericTumblrV1):
     _categories = ('BOULET', )
 
 
-class TheAwkwardYetiTumblr(GenericTumblrV1Empty):
+class TheAwkwardYetiTumblr(GenericTumblrV1):
     """Class to retrieve The Awkward Yeti comics."""
     # Also on http://www.gocomics.com/the-awkward-yeti
     # Also on http://theawkwardyeti.com
@@ -3625,7 +3620,7 @@ class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     url = 'http://downtheupwardspiral.tumblr.com'
 
 
-class AsPerUsualTumblr(GenericTumblrV1Empty):
+class AsPerUsualTumblr(GenericTumblrV1):
     """Class to retrieve As Per Usual comics."""
     # Also on https://tapastic.com/series/AsPerUsual
     name = 'usual-tumblr'
@@ -3689,7 +3684,7 @@ class RespawnComicTumblr(GenericTumblrV1):
     url = 'http://respawncomic.tumblr.com'
 
 
-class ChrisHallbeckTumblr(GenericTumblrV1Empty):
+class ChrisHallbeckTumblr(GenericTumblrV1):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://tapastic.com/ChrisHallbeck
     # Also on http://maximumble.com
@@ -3752,7 +3747,7 @@ class TheUnderfoldTumblr(GenericTumblrV1):
     url = 'http://theunderfold.tumblr.com'
 
 
-class LolNeinTumblr(GenericTumblrV1Empty):
+class LolNeinTumblr(GenericTumblrV1):
     """Class to retrieve Lol Nein comics."""
     # Also on http://lolnein.com
     name = 'lolnein-tumblr'
@@ -3776,7 +3771,7 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     url = 'http://theworldisflatcomics.tumblr.com'
 
 
-class DorrisMc(GenericTumblrV1Empty):
+class DorrisMc(GenericTumblrV1):
     """Class to retrieve Dorris Mc Comics"""
     # Also on http://www.gocomics.com/dorris-mccomics
     name = 'dorrismc'
@@ -3784,7 +3779,7 @@ class DorrisMc(GenericTumblrV1Empty):
     url = 'http://dorrismccomics.com'
 
 
-class LeleozTumblr(GenericTumblrV1Empty):
+class LeleozTumblr(GenericEmptyComic, GenericTumblrV1):
     """Class to retrieve Leleoz comics."""
     # Also on https://tapastic.com/series/Leleoz
     name = 'leleoz-tumblr'
@@ -3895,7 +3890,7 @@ class BFGFSTumblr(GenericTumblrV1):
     url = 'http://bfgfs.tumblr.com'
 
 
-class DoodleForFood(GenericTumblrV1Empty):
+class DoodleForFood(GenericTumblrV1):
     """Class to retrieve Doodle For Food comics."""
     # Also on http://doodleforfood.com
     name = 'doodle'
@@ -3903,7 +3898,7 @@ class DoodleForFood(GenericTumblrV1Empty):
     url = 'http://doodleforfood.com'
 
 
-class CassandraCalinTumblr(GenericTumblrV1Empty):
+class CassandraCalinTumblr(GenericTumblrV1):
     """Class to retrieve C. Cassandra comics."""
     # Also on http://cassandracalin.com
     # Also on https://tapastic.com/series/C-Cassandra-comics
@@ -3912,42 +3907,42 @@ class CassandraCalinTumblr(GenericTumblrV1Empty):
     url = 'http://c-cassandra.tumblr.com'
 
 
-class DougWasTaken(GenericTumblrV1Empty):
+class DougWasTaken(GenericTumblrV1):
     """Class to retrieve Doug Was Taken comics."""
     name = 'doug'
     long_name = 'Doug Was Taken'
     url = 'http://dougwastaken.tumblr.com'
 
 
-class MandatoryRollerCoaster(GenericTumblrV1Empty):
+class MandatoryRollerCoaster(GenericTumblrV1):
     """Class to retrieve Mandatory Roller Coaster comics."""
     name = 'rollercoaster'
     long_name = 'Mandatory Roller Coaster'
     url = 'http://mandatoryrollercoaster.com'
 
 
-class CEstPasEnRegardantSesPompes(GenericTumblrV1Empty):
+class CEstPasEnRegardantSesPompes(GenericTumblrV1):
     """Class to retrieve C'Est Pas En Regardant Ses Pompes (...)  comics."""
     name = 'cperspqccltt'
     long_name = 'C Est Pas En Regardant Ses Pompes (...)'
     url = 'http://cperspqccltt.tumblr.com'
 
 
-class TheGrohlTroll(GenericTumblrV1Empty):
+class TheGrohlTroll(GenericTumblrV1):
     """Class to retrieve The Grohl Troll comics."""
     name = 'grohltroll'
     long_name = 'The Grohl Troll'
     url = 'http://thegrohltroll.com'
 
 
-class WebcomicName(GenericTumblrV1Empty):
+class WebcomicName(GenericTumblrV1):
     """Class to retrieve Webcomic Name comics."""
     name = 'webcomicname'
     long_name = 'Webcomic Name'
     url = 'http://webcomicname.com'
 
 
-class BooksOfAdam(GenericTumblrV1Empty):
+class BooksOfAdam(GenericTumblrV1):
     """Class to retrieve Books of Adam comics."""
     # Also on http://www.booksofadam.com
     name = 'booksofadam'
@@ -3955,7 +3950,7 @@ class BooksOfAdam(GenericTumblrV1Empty):
     url = 'http://booksofadam.tumblr.com'
 
 
-class HarkAVagrant(GenericTumblrV1Empty):
+class HarkAVagrant(GenericTumblrV1):
     """Class to retrieve Hark A Vagrant comics."""
     # Also on http://www.harkavagrant.com
     name = 'hark-tumblr'
@@ -3963,7 +3958,7 @@ class HarkAVagrant(GenericTumblrV1Empty):
     url = 'http://beatonna.tumblr.com'
 
 
-class OurSuperAdventureTumblr(GenericTumblrV1Empty):
+class OurSuperAdventureTumblr(GenericTumblrV1):
     """Class to retrieve Our Super Adventure comics."""
     # Also on https://tapastic.com/series/Our-Super-Adventure
     # Also on http://www.oursuperadventure.com
@@ -3980,7 +3975,7 @@ class JakeLikesOnions(GenericTumblrV1):
     url = 'http://jakelikesonions.com'
 
 
-class InYourFaceCake(GenericTumblrV1Empty):
+class InYourFaceCake(GenericTumblrV1):
     """Class to retrieve In Your Face Cake comics."""
     name = 'inyourfacecake-tumblr'
     long_name = 'In Your Face Cake (from Tumblr)'
@@ -4010,14 +4005,14 @@ class YesterdaysPopcornTumblr(GenericTumblrV1):
     url = 'http://yesterdayspopcorn.tumblr.com'
 
 
-class TwistedDoodles(GenericTumblrV1Empty):
+class TwistedDoodles(GenericTumblrV1):
     """Class to retrieve Twisted Doodles comics."""
     name = 'twisted'
     long_name = 'Twisted Doodles'
     url = 'http://www.twisteddoodles.com'
 
 
-class UbertoolTumblr(GenericTumblrV1Empty):
+class UbertoolTumblr(GenericTumblrV1):
     """Class to retrieve Ubertool comics."""
     # Also on http://ubertoolcomic.com
     # Also on https://tapastic.com/series/ubertool
@@ -4035,14 +4030,14 @@ class LittleLifeLinesTumblr(GenericTumblrV1):
     url = 'https://little-life-lines.tumblr.com'
 
 
-class TheyCanTalk(GenericTumblrV1Empty):
+class TheyCanTalk(GenericTumblrV1):
     """Class to retrieve They Can Talk comics."""
     name = 'theycantalk'
     long_name = 'They Can Talk'
     url = 'http://theycantalk.com'
 
 
-class Will5NeverCome(GenericTumblrV1Empty):
+class Will5NeverCome(GenericTumblrV1):
     """Class to retrieve Will 5:00 Never Come comics."""
     name = 'will5'
     long_name = 'Will 5:00 Never Come ?'
@@ -4064,7 +4059,7 @@ class BlazersAtDawn(GenericTumblrV1):
     url = 'http://blazersatdawn.tumblr.com'
 
 
-class ArtByMoga(GenericTumblrV1Empty):
+class ArtByMoga(GenericEmptyComic, GenericTumblrV1):  # Deactivated because it downloads too many things
     """Class to retrieve Art By Moga Comics."""
     name = 'moga'
     long_name = 'Art By Moga'
