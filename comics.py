@@ -3078,6 +3078,32 @@ class Ubertool(GenericNavigableComic):
         }
 
 
+class EarthExplodes(GenericNavigableComic):
+    """Class to retrieve The Earth Explodes comics."""
+    name = 'earthexplodes'
+    long_name = 'The Earth Explodes'
+    url = 'http://www.earthexplodes.com'
+    get_url_from_link = join_cls_url_to_href
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.earthexplodes.com/comics/000/'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', id='next' if next_ else 'prev')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find('div', id='image').find_all('img')
+        alt = imgs[0].get('title', '')
+        return {
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'title': title,
+        }
+
+
 class CubeDrone(GenericNavigableComic):
     """Class to retrieve Cube Drone comics."""
     name = 'cubedrone'
