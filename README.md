@@ -308,6 +308,7 @@ Comics supported
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg - l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Waffles And Pancakes](https://tapastic.com/series/Waffles-and-Pancakes)
+ * [War And Peas (from Tumblr)](http://warandpeas.tumblr.com)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Webcomic Name](http://webcomicname.com)
  * [Will 5:00 Never Come ?](http://will5nevercome.com)

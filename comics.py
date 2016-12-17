@@ -2274,6 +2274,7 @@ class LonnieMillsap(GenericNavigableComic):
 class LinsEditions(GenericNavigableComic):
     """Class to retrieve L.I.N.S. Editions comics."""
     # Also on http://linscomics.tumblr.com
+    # Now on https://warandpeas.com
     name = 'lins'
     long_name = 'L.I.N.S. Editions'
     url = 'https://linsedition.com'
@@ -3849,10 +3850,20 @@ class DagssonTumblr(GenericTumblrV1):
 class LinsEditionsTumblr(GenericTumblrV1):
     """Class to retrieve L.I.N.S. Editions comics."""
     # Also on https://linsedition.com
+    # Now on http://warandpeas.tumblr.com
     name = 'lins-tumblr'
     long_name = 'L.I.N.S. Editions (from Tumblr)'
     url = 'http://linscomics.tumblr.com'
     _categories = ('LINS', )
+
+
+class WarAndPeasTumblr(GenericTumblrV1):
+    """Class to retrieve War And Peas comics."""
+    # Was on http://linscomics.tumblr.com
+    name = 'warandpeas-tumblr'
+    long_name = 'War And Peas (from Tumblr)'
+    url = 'http://warandpeas.tumblr.com'
+    _categories = ('WARANDPEAS', )
 
 
 class OrigamiHotDish(GenericTumblrV1):
