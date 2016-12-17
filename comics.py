@@ -2228,7 +2228,8 @@ class AnythingComic(GenericListableComic):
         link = td_comic.find('a')
         title = link.string
         imgs = soup.find_all('img', id='comic_image')
-        day = string_to_date(td_date.string, '%d %b %Y %I:%M %p')
+        date_str = td_date.string
+        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y, %I:%M %p")
         assert len(imgs) == 1
         assert all(i.get('alt') == i.get('title') for i in imgs)
         return {
