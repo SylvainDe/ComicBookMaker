@@ -3102,6 +3102,7 @@ class EarthExplodes(GenericNavigableComic):
         return {
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
             'title': title,
+            'alt': alt,
         }
 
 
