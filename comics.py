@@ -1157,7 +1157,7 @@ class ToonHole(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         short_url = soup.find('link', rel='shortlink')['href']
-        date_str = soup.find('time', class_='entry-date published').string
+        date_str = soup.find('div', class_='entry-meta').contents[0].strip()
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         if imgs:
