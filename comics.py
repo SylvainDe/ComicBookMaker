@@ -4105,6 +4105,14 @@ class ArtByMoga(GenericEmptyComic, GenericTumblrV1):  # Deactivated because it d
     url = 'http://artbymoga.tumblr.com'
 
 
+class VerbalVomitTumblr(GenericTumblrV1):
+    """Class to retrieve Verbal Vomit comics."""
+    # Also on http://www.verbal-vomit.com
+    name = 'vomit-tumblr'
+    long_name = 'Verbal Vomit (from Tumblr)'
+    url = 'http://verbalvomits.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
