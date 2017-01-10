@@ -4163,17 +4163,18 @@ class HorovitzClassic(HorovitzComics):
 class GenericGoComic(GenericNavigableComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
     _categories = ('GOCOMIC', )
-    url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)$')
 
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', class_='beginning')
+        return get_soup_at_url(cls.url).find('a', class_='fa btn btn-outline-default btn-circle fa-backward sm ')
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return last_soup.find('a', class_='next' if next_ else 'prev', href=cls.url_date_re)
+        PREV = 'fa btn btn-outline-default btn-circle fa-caret-left sm '
+        NEXT = 'fa btn btn-outline-default btn-circle fa-caret-right sm '
+        return last_soup.find('a', class_=NEXT if next_ else PREV)
 
     @classmethod
     def get_url_from_link(cls, link):
@@ -4183,15 +4184,18 @@ class GenericGoComic(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        url = cls.get_url_from_link(link)
-        year, month, day = [int(s)
-                            for s in cls.url_date_re.match(url).groups()]
+        date_str = soup.find('meta', property='article:published_time')['content']
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find('picture', class_='img-fluid item-comic-image').find_all('img')
+        author = soup.find('meta', property='article:author')['content']
+        tags = soup.find('meta', property='article:tag')['content']
         return {
-            'day': day,
-            'month': month,
-            'year': year,
-            'img': [soup.find_all('img', class_='strip')[-1]['src']],
-            'author': soup.find('meta', attrs={'name': 'author'})['content']
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+            'author': author,
+            'tags': tags,
         }
 
 
