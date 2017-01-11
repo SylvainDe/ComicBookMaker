@@ -116,11 +116,13 @@ class GenericNavigableComic(GenericComic):
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for navigable comics."""
         url = last_comic['url'] if last_comic else None
+        cls.log("starting 'get_next_comic' from %s" % url)
         next_comic = \
             cls.get_next_link(get_soup_at_url(url)) \
             if url else \
             cls.get_first_comic_link()
         cls.log("next/first comic will be %s (url is %s)" % (str(next_comic), url))
+        # cls.check_navigation(url)
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
