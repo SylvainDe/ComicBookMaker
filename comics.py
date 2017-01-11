@@ -3182,6 +3182,44 @@ class MakeItStoopid(GenericNavigableComic):
         }
 
 
+class ConsoliaComics(GenericNavigableComic):
+    """Class to retrieve Consolia comics."""
+    name = 'consolia'
+    long_name = 'consolia'
+    url = 'https://consolia-comic.com'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('span', class_='first').find('a')
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('span', class_='next' if next_ else 'prev').find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        date_str = soup.find('time')["datetime"]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find('div', id='comic').find_all('img')
+        alt = imgs[0]['title']
+        # article = soup.find('div', id='blag')
+        # text = article.encode_contents()
+        return {
+            'title': title,
+            'alt': alt,
+            'img': [i['src'] for i in imgs],
+            # 'text': text,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+        }
+
+
 class TuMourrasMoinsBete(GenericNavigableComic):
     """Class to retrieve Tu Mourras Moins Bete comics."""
     name = 'mourrasmoinsbete'

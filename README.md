@@ -105,6 +105,7 @@ Comics supported
  * [Commit Strip (Fr)](http://www.commitstrip.com/fr)
  * [Over Compensating](http://www.overcompensating.com)
  * [Completely Serious Comics](http://completelyseriouscomics.com)
+ * [consolia](https://consolia-comic.com)
  * [Joan Cornella (from Tumblr)](http://cornellajoan.tumblr.com)
  * [C Est Pas En Regardant Ses Pompes (...)](http://cperspqccltt.tumblr.com)
  * [Cube Drone](http://cube-drone.com/comics)
