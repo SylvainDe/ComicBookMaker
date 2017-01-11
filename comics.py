@@ -2574,7 +2574,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
         }
 
 
-class EndlessOrigami(GenericNavigableComic):
+class EndlessOrigami(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Endless Origami Comics."""
     name = "origami"
     long_name = "Endless Origami"
