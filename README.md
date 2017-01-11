@@ -180,6 +180,7 @@ Comics supported
  * [Last Place Comics](http://lastplacecomics.com)
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
  * [Leleoz (from Tumblr)](http://leleozcomics.tumblr.com)
+ * [LibraryComic (from Tumblr)](http://librarycomic.tumblr.com)
  * [Little Life Lines](http://www.littlelifelines.com)
  * [Little Life Lines (from Tumblr)](https://little-life-lines.tumblr.com)
  * [L.I.N.S. Editions](https://linsedition.com)

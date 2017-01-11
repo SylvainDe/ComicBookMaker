@@ -4113,6 +4113,14 @@ class VerbalVomitTumblr(GenericTumblrV1):
     url = 'http://verbalvomits.tumblr.com'
 
 
+class LibraryComic(GenericTumblrV1):
+    """Class to retrieve LibraryComic."""
+    # Also on http://librarycomic.com
+    name = 'library-tumblr'
+    long_name = 'LibraryComic (from Tumblr)'
+    url = 'http://librarycomic.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
