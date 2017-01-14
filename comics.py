@@ -300,7 +300,11 @@ def get_a_comicnavbase_comicnavfirst(cls):
 @classmethod
 def simulate_first_link(cls):
     """Implementation of get_first_comic_link creating a link-like object from
-    an URL provided by the class."""
+    an URL provided by the class.
+
+    Note: The first URL can easily be found using :
+    `get_first_comic_link = navigate_to_first_comic`.
+    """
     return {'href': cls.first_url}
 
 
@@ -314,6 +318,8 @@ def navigate_to_first_comic(cls):
     there is no previous comics. Once this URL is reached, it
     is better to hardcode it but for development purposes, it
     is convenient to have an automatic way to find it.
+
+    Then, the URL found can easily be used via `simulate_first_link`.
     """
     url = input("Get starting URL: ")
     print(url)
@@ -3179,6 +3185,30 @@ class MakeItStoopid(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
+        }
+
+
+class MarketoonistComics(GenericNavigableComic):
+    """Class to retrieve Marketoonist Comics."""
+    name = 'marketoonist'
+    long_name = 'Marketoonist'
+    url = 'https://marketoonist.com/cartoons'
+    get_first_comic_link = simulate_first_link
+    get_navi_link = get_link_rel_next
+    first_url = 'https://marketoonist.com/2002/10/the-8-types-of-brand-managers-2.html'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        imgs = soup.find_all('meta', property='og:image')
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        title = soup.find('meta', property='og:title')['content']
+        return {
+            'img': [i['content'] for i in imgs],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'title': title,
         }
 
 
