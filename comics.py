@@ -105,12 +105,16 @@ class GenericNavigableComic(GenericComic):
     @classmethod
     def get_next_link(cls, last_soup):
         """Get link to next comic."""
-        return cls.get_navi_link(last_soup, True)
+        link = cls.get_navi_link(last_soup, True)
+        cls.log("Next link is %s" % link)
+        linkurn link
 
     @classmethod
     def get_prev_link(cls, last_soup):
         """Get link to previous comic."""
-        return cls.get_navi_link(last_soup, False)
+        link = cls.get_navi_link(last_soup, False)
+        cls.log("Prev link is %s" % link)
+        linkurn link
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -174,7 +178,8 @@ class GenericNavigableComic(GenericComic):
             if prevlink:
                 prevurl = cls.get_url_from_link(prevlink)
                 prevsoup = get_soup_at_url(prevurl)
-                prevnext = cls.get_url_from_link(cls.get_next_link(prevsoup))
+                prevnextlink = cls.get_next_link(prevsoup)
+                prevnext = cls.get_url_from_link(prevnextlink) if prevnextlink is not None else "NO URL"
                 if prevnext != url:
                     print("From %s, going backward then forward leads to %s" % (url, prevnext))
                     ok = False
@@ -182,7 +187,8 @@ class GenericNavigableComic(GenericComic):
                 nexturl = cls.get_url_from_link(nextlink)
                 if nexturl != url:
                     nextsoup = get_soup_at_url(nexturl)
-                    nextprev = cls.get_url_from_link(cls.get_prev_link(nextsoup))
+                    nextprevlink = cls.get_prev_link(nextsoup)
+                    nextprev = cls.get_url_from_link(nextprevlink) if nextprevlink is not None else "NO URL"
                     if nextprev != url:
                         print("From %s, going forward then backward leads to %s" % (url, nextprev))
                         ok = False
