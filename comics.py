@@ -107,14 +107,14 @@ class GenericNavigableComic(GenericComic):
         """Get link to next comic."""
         link = cls.get_navi_link(last_soup, True)
         cls.log("Next link is %s" % link)
-        linkurn link
+        return link
 
     @classmethod
     def get_prev_link(cls, last_soup):
         """Get link to previous comic."""
         link = cls.get_navi_link(last_soup, False)
         cls.log("Prev link is %s" % link)
-        linkurn link
+        return link
 
     @classmethod
     def get_next_comic(cls, last_comic):
