@@ -1570,7 +1570,7 @@ class Oglaf(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        div = last_soup.find("div", id="nx" if next_ else "pv")
+        div = last_soup.find("div", id="nx" if next_ else "pvs")
         return div.parent if div else None
 
     @classmethod
