@@ -1024,7 +1024,7 @@ class Mercworks(GenericNavigableComic):
     long_name = 'Mercworks'
     url = 'http://mercworks.net'
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_navi_link = get_a_rel_next
+    get_navi_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1032,15 +1032,12 @@ class Mercworks(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         metadesc = soup.find('meta', property='og:description')
         desc = metadesc['content'] if metadesc else ""
-        author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
-        date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
-        date_str = date_str[:10]
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'img': [i['content'] for i in imgs],
             'title': title,
-            'author': author,
             'desc': desc,
             'day': day.day,
             'month': day.month,
