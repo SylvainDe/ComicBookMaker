@@ -69,6 +69,7 @@ Comics supported
  * [Space Avalanche](http://www.spaceavalanche.com)
  * [Ma vie est tout a fait fascinante (Bagieu)](http://www.penelope-jolicoeur.com)
  * [Banana Twinky](http://bananatwinky.tumblr.com)
+ * [BarteNerds (from Tapastic)](https://tapastic.com/series/BarteNERDS)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Berkeley Mews (from GoComics)](http://www.gocomics.com/berkeley-mews)

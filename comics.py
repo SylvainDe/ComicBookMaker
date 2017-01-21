@@ -4952,6 +4952,14 @@ class UbertoolTapa(GenericTapasticComic):
     _categories = ('UBERTOOL', )
 
 
+class BarteNerdsTapa(GenericTapasticComic):
+    """Class to retrieve BarteNerds comics."""
+    # Also on http://www.bartenerds.com
+    name = 'bartenerds-tapa'
+    long_name = 'BarteNerds (from Tapastic)'
+    url = 'https://tapastic.com/series/BarteNERDS'
+
+
 class SmallBlueYonderTapa(GenericTapasticComic):
     """Class to retrieve Small Blue Yonder comics."""
     # Also on http://www.smallblueyonder.com
