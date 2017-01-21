@@ -4509,7 +4509,7 @@ class FoxTrotClassics(GenericGoComic):
     url = 'http://www.gocomics.com/foxtrotclassics'
 
 
-class MisterAndMeGoComics(GenericGoComic):
+class MisterAndMeGoComics(GenericEmptyComic, GenericGoComic):  # Removed ?
     """Class to retrieve Mister & Me Comics."""
     # Also on http://www.mister-and-me.com
     # Also on https://tapastic.com/series/Mister-and-Me
