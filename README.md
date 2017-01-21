@@ -288,6 +288,8 @@ Comics supported
  * [It's the tie](http://itsthetie.com)
  * [It's the tie (from Tumblr)](http://itsthetie.tumblr.com)
  * [Time Trabble (from Tumblr)](http://timetrabble.tumblr.com)
+ * [Tizzy Stitch Bird (from Tapastic)](https://tapastic.com/series/TizzyStitchbird)
+ * [Tizzy Stitch Bird (from Tumblr)](http://tizzystitchbird.tumblr.com)
  * [Tom Toles](http://www.gocomics.com/tomtoles)
  * [Toon Hole](http://www.toonhole.com)
  * [Toon Hole (from Tapastic)](http://tapastic.com/series/TOONHOLE)
