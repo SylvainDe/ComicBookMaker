@@ -3220,12 +3220,12 @@ class ConsoliaComics(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('span', class_='first').find('a')
+        return get_soup_at_url(cls.url).find('a', class_='first')
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return last_soup.find('span', class_='next' if next_ else 'prev').find('a')
+        return last_soup.find('a', class_='next' if next_ else 'prev')
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3233,15 +3233,10 @@ class ConsoliaComics(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find('time')["datetime"]
         day = string_to_date(date_str, "%Y-%m-%d")
-        imgs = soup.find('div', id='comic').find_all('img')
-        alt = imgs[0]['title']
-        # article = soup.find('div', id='blag')
-        # text = article.encode_contents()
+        imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'alt': alt,
-            'img': [i['src'] for i in imgs],
-            # 'text': text,
+            'img': [i['content'] for i in imgs],
             'day': day.day,
             'month': day.month,
             'year': day.year,
