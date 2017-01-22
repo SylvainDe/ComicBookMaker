@@ -1427,34 +1427,28 @@ class PhDComics(GenericNavigableComic):
     name = 'phd'
     long_name = 'PhD Comics'
     url = 'http://phdcomics.com/comics/archive.php'
-    get_url_from_link = join_cls_url_to_href
 
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('img', src='images/first_button.gif').parent
+        soup = get_soup_at_url(cls.url)
+        img = soup.find('img', src='http://phdcomics.com/comics/images/first_button.gif')
+        return None if img is None else img.parent
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        img = last_soup.find('img', src='images/next_button.gif' if next_ else 'images/prev_button.gif')
+        url = 'http://phdcomics.com/comics/images/%s_button.gif' % ('next' if next_ else 'prev')
+        img = last_soup.find('img', src=url)
         return None if img is None else img.parent
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        date_str = soup.find('font', face='Arial,Helvetica,Geneva,Swiss,SunSans-Regular', color='white').string.strip()
-        try:
-            day = string_to_date(date_str, '%m/%d/%Y')
-        except ValueError:
-            print("Invalid date %s" % date_str)
-            day = date.today()
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        imgs = soup.find_all('meta', property='og:image')
         return {
-            'year': day.year,
-            'month': day.month,
-            'day': day.day,
-            'img': [soup.find('img', id='comic')['src']],
+            'img': [i['content'] for i in imgs],
             'title': title,
         }
 
