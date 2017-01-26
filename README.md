@@ -260,6 +260,7 @@ Comics supported
  * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
  * [Robospunk](http://robospunk.com)
  * [Mandatory Roller Coaster](http://mandatoryrollercoaster.com)
+ * [Rock Paper Scissors](http://rps-comics.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)

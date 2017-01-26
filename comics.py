@@ -2195,6 +2195,29 @@ class HappleTea(GenericNavigableComic):
         }
 
 
+class RockPaperScissors(GenericNavigableComic):
+    """Class to retrieve Rock Paper Scissors comics."""
+    name = 'rps'
+    long_name = 'Rock Paper Scissors'
+    url = 'http://rps-comics.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find_all('meta', property='og:image')
+        short_url = soup.find('link', rel='shortlink')['href']
+        transcript = soup.find('div', id='transcript-content').string
+        return {
+            'title': title,
+            'transcript': transcript,
+            'short_url': short_url,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class FatAwesomeComics(GenericNavigableComic):
     """Class to retrieve Fat Awesome Comics."""
     # Also on http://fatawesomecomedy.tumblr.com
