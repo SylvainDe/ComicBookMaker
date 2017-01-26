@@ -1862,11 +1862,33 @@ class PicturesInBoxes(GenericNavigableComic):
         }
 
 
-class Penmen(GenericEmptyComic):
+class Penmen(GenericNavigableComic):
     """Class to retrieve Penmen comics."""
     name = 'penmen'
     long_name = 'Penmen'
     url = 'http://penmen.com'
+    get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://penmen.com/index.php/2016/09/12/penmen-announces-grin-big-brand-clothing/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find('div', class_='entry-content').find_all('img')
+        short_url = soup.find('link', rel='shortlink')['href']
+        tags = ' '.join(t.string for t in soup.find_all('a', rel='tag'))
+        date_str = soup.find('time')['datetime'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        return {
+            'title': title,
+            'short_url': short_url,
+            'img': [i['src'] for i in imgs],
+            'tags': tags,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
 class TheDoghouseDiaries(GenericNavigableComic):
