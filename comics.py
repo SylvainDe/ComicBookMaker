@@ -821,6 +821,7 @@ class Dilbert(GenericNavigableComic):
 
 class VictimsOfCircumsolar(GenericNavigableComic):
     """Class to retrieve VictimsOfCircumsolar comics."""
+    # Also on http://victimsofcomics.tumblr.com
     name = 'circumsolar'
     long_name = 'Victims Of Circumsolar'
     url = 'http://www.victimsofcircumsolar.com'
@@ -4214,6 +4215,14 @@ class TizzyStitchBirdTumblr(GenericTumblrV1):
     name = 'tizzy-tumblr'
     long_name = 'Tizzy Stitch Bird (from Tumblr)'
     url = 'http://tizzystitchbird.tumblr.com'
+
+
+class VictimsOfCircumsolarTumblr(GenericTumblrV1):
+    """Class to retrieve VictimsOfCircumsolar comics."""
+    # Also on http://www.victimsofcircumsolar.com
+    name = 'circumsolar-tumblr'
+    long_name = 'Victims Of Circumsolar (from Tumblr)'
+    url = 'http://victimsofcomics.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
