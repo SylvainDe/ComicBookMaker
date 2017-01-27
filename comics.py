@@ -4248,6 +4248,15 @@ class VictimsOfCircumsolarTumblr(GenericTumblrV1):
     url = 'http://victimsofcomics.tumblr.com'
 
 
+class RockPaperCynicTumblr(GenericTumblrV1):
+    """Class to retrieve RockPaperCynic comics."""
+    # Also on http://www.rockpapercynic.com
+    # Also on https://tapastic.com/series/rockpapercynic
+    name = 'rpc-tumblr'
+    long_name = 'Rock Paper Cynic (from Tumblr)'
+    url = 'http://rockpapercynic.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
@@ -5016,6 +5025,15 @@ class TizzyStitchBirdTapa(GenericTapasticComic):
     name = 'tizzy-tapa'
     long_name = 'Tizzy Stitch Bird (from Tapastic)'
     url = 'https://tapastic.com/series/TizzyStitchbird'
+
+
+class RockPaperCynicTapa(GenericTapasticComic):
+    """Class to retrieve RockPaperCynic comics."""
+    # Also on http://www.rockpapercynic.com
+    # Also on http://rockpapercynic.tumblr.com
+    name = 'rpc-tapa'
+    long_name = 'Rock Paper Cynic (from Tapastic)'
+    url = 'https://tapastic.com/series/rockpapercynic'
 
 
 def get_subclasses(klass):

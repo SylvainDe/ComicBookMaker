@@ -260,6 +260,8 @@ Comics supported
  * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
  * [Robospunk](http://robospunk.com)
  * [Mandatory Roller Coaster](http://mandatoryrollercoaster.com)
+ * [Rock Paper Cynic (from Tapastic)](https://tapastic.com/series/rockpapercynic)
+ * [Rock Paper Cynic (from Tumblr)](http://rockpapercynic.tumblr.com)
  * [Rock Paper Scissors](http://rps-comics.com)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
  * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
