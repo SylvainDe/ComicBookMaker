@@ -42,6 +42,45 @@ HTML_FOOTER = """
     </body>
 </html>"""
 
+XHTML_HEADER = """
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>%s</title>
+  <meta name='cover' content='%s'/>
+</head>
+
+<body>
+  Generated with '%s' at %s
+"""
+
+XHTML_TOC_ITEM = """
+        <a href='#%d'>%s</a><br/>"""
+
+XHTML_START = """
+    <h1>Comics</h1>"""
+
+XHTML_COMIC_INFO = """
+        <a name='%d'/><h2>%s</h2>
+            %s %s<br/>"""
+
+XHTML_COMIC_ADDITIONAL_INFO = """
+            %s<br/>"""
+
+XHTML_COMIC_IMG = """
+            <img src='%s' style='width:100%%'><br>"""
+
+XHTML_FOOTER = """
+</body>
+
+</html>"""
+
+HTML_TAGS = HTML_HEADER, HTML_TOC_ITEM, HTML_START, HTML_COMIC_INFO, HTML_COMIC_ADDITIONAL_INFO, HTML_COMIC_IMG, HTML_FOOTER
+XHTML_TAGS = XHTML_HEADER, XHTML_TOC_ITEM, XHTML_START, XHTML_COMIC_INFO, XHTML_COMIC_ADDITIONAL_INFO, XHTML_COMIC_IMG, XHTML_FOOTER
+
 
 def collect_comics(comic_classes):
     """Retrieve all comics for the list of comic classes provided."""
@@ -92,15 +131,17 @@ def convert_unicode_to_html(text):
     return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
 
 
-def make_book_from_comic_list(comics, title, file_name):
+def make_book_from_comic_list(comics, title, file_name, mobi=True):
     """Create book from a list of comics."""
     cover = 'empty.jpg'
     output_dir = 'generated_books'
     os.makedirs(output_dir, exist_ok=True)
     html_book = os.path.join(output_dir, file_name)
 
+    header, toc_item, start, com_info, com_add_info, com_img, footer = HTML_TAGS if mobi else XHTML_TAGS
+
     with open(html_book, 'w+') as book:
-        book.write(HTML_HEADER % (
+        book.write(header % (
             title,
             cover,
             ' '.join(sys.argv),
@@ -108,22 +149,23 @@ def make_book_from_comic_list(comics, title, file_name):
         ))
 
         for i, com in enumerate(comics):
-            book.write(HTML_TOC_ITEM % (i, com['url']))
+            book.write(toc_item % (i, com['url']))
 
-        book.write(HTML_START)
+        book.write(start)
 
         for i, com in enumerate(comics):
-            book.write(HTML_COMIC_INFO % (
+            book.write(com_info % (
                 i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
             for info in get_info_before_comic(com):
-                book.write(HTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
+                book.write(com_add_info % convert_unicode_to_html(info))
             for path in com['local_img']:
                 if path is not None:
                     assert os.path.isfile(path)
                     book.write(
-                        HTML_COMIC_IMG % urllib.parse.quote(os.path.relpath(path, output_dir)))
+                        com_img % urllib.parse.quote(os.path.relpath(path, output_dir)))
             for info in get_info_after_comic(com):
-                book.write(HTML_COMIC_ADDITIONAL_INFO % convert_unicode_to_html(info))
-        book.write(HTML_FOOTER)
+                book.write(com_add_info % convert_unicode_to_html(info))
+        book.write(footer)
 
-    subprocess.call([KINDLEGEN_PATH, '-verbose', '-dont_append_source', html_book])
+    if mobi:
+        subprocess.call([KINDLEGEN_PATH, '-verbose', '-dont_append_source', html_book])
