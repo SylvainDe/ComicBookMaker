@@ -241,6 +241,7 @@ Comics supported
  * [Plan C](http://www.plancomic.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Pleasant Thoughts](http://pleasant-thoughts.com)
+ * [Pom Comics / Piece of Me](http://www.pomcomic.com)
  * [Pond Scum](http://pondscumcomic.tumblr.com)
  * [Poorly Drawn Lines](http://poorlydrawnlines.com)
  * [Poorly Drawn Lines (from Tumblr)](http://pdlcomics.tumblr.com)
