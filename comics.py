@@ -3173,7 +3173,7 @@ class PomComics(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return last_soup.find('a', class_='btn_next' if next_ else 'btn_first')
+        return last_soup.find('a', class_='btn_next' if next_ else 'btn_prev')
 
     @classmethod
     def get_comic_info(cls, soup, link):
