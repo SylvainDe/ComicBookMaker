@@ -4289,6 +4289,12 @@ class RockPaperCynicTumblr(GenericTumblrV1):
     url = 'http://rockpapercynic.tumblr.com'
 
 
+class CatanaComics(GenericTumblrV1):
+    name = 'catana'
+    long_name = 'Catana'
+    url = 'http://www.catanacomics.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

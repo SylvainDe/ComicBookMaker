@@ -98,6 +98,7 @@ Comics supported
  * [Cancer Owl (from Tumblr)](http://cancerowl.tumblr.com)
  * [Cassandra Calin (from Tapastic)](https://tapastic.com/series/C-Cassandra-comics)
  * [Cassandra Calin (from Tumblr)](http://c-cassandra.tumblr.com)
+ * [Catana](http://www.catanacomics.com)
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
