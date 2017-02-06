@@ -4290,6 +4290,7 @@ class RockPaperCynicTumblr(GenericTumblrV1):
 
 
 class CatanaComics(GenericTumblrV1):
+    """Class to retrieve Catana comics."""
     name = 'catana'
     long_name = 'Catana'
     url = 'http://www.catanacomics.com'
