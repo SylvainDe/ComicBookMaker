@@ -219,6 +219,7 @@ Comics supported
  * [The Oatmeal (from Tumblr)](http://oatmeal.tumblr.com)
  * [Octopuns](http://www.octopuns.net)
  * [Octopuns (from Tumblr)](http://octopuns.tumblr.com)
+ * [Off The Leash Dog (from Tumblr)](http://rupertfawcettsdoggyblog.tumblr.com)
  * [Off The Mark](http://www.gocomics.com/offthemark)
  * [Oglaf [NSFW]](http://oglaf.com)
  * [Optipess](http://www.optipess.com)

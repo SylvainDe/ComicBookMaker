@@ -4296,6 +4296,16 @@ class CatanaComics(GenericTumblrV1):
     url = 'http://www.catanacomics.com'
 
 
+class OffTheLeashDogTumblr(GenericTumblrV1):
+    """Class to retrieve Off The Leash Dog comics."""
+    # Also on http://offtheleashdogcartoons.com
+    # Also on http://www.rupertfawcettcartoons.com
+    name = 'offtheleash-tumblr'
+    long_name = 'Off The Leash Dog (from Tumblr)'
+    url = 'http://rupertfawcettsdoggyblog.tumblr.com'
+    _categories = ('FAWCETT', )
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
