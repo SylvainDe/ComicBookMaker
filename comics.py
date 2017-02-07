@@ -731,11 +731,9 @@ class NeDroid(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
-        comic_url_re = re.compile('//nedroid.com/comics/([0-9]*)-([0-9]*)-([0-9]*).*')
         short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
         num = int(short_url_re.match(short_url).groups()[0])
         imgs = soup.find('div', id='comic').find_all('img')
-        year, month, day = [int(s) for s in comic_url_re.match(imgs[0]['src']).groups()]
         assert len(imgs) == 1
         title = imgs[0]['alt']
         title2 = imgs[0]['title']
@@ -744,9 +742,6 @@ class NeDroid(GenericNavigableComic):
             'title': title,
             'title2': title2,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'day': day,
-            'month': month,
-            'year': year,
             'num': num,
         }
 
