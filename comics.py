@@ -2912,10 +2912,10 @@ class MoonBeard(GenericNavigableComic):
         }
 
 
-class AHamADay(GenericNavigableComic):
-    """Class to retrieve class A Ham A Day comics."""
-    name = 'ham'
-    long_name = 'A Ham A Day'
+class AHammADay(GenericEmptyComic, GenericNavigableComic):
+    """Class to retrieve class A Hamm A Day comics."""
+    name = 'hamm'
+    long_name = 'A Hamm A Day'
     url = 'http://www.ahammaday.com'
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link

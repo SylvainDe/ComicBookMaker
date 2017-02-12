@@ -160,7 +160,7 @@ Comics supported
  * [Chris Hallback - The Book of Biff (from Tapastic)](https://tapastic.com/series/Biff)
  * [Chris Hallback - Maximumble (from Tapastic)](https://tapastic.com/series/Maximumble)
  * [Chris Hallback - Minimumble (from Tapastic)](https://tapastic.com/series/Minimumble)
- * [A Ham A Day](http://www.ahammaday.com)
+ * [A Hamm A Day](http://www.ahammaday.com)
  * [Happle Tea](http://www.happletea.com)
  * [Hark A Vagrant (from Tumblr)](http://beatonna.tumblr.com)
  * [Heck if I Know comics (from Tapastic)](http://tapastic.com/series/Regular)
