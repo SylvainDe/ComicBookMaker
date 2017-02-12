@@ -604,7 +604,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericNavigableComic):
+class ItsTheTie(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
@@ -5078,6 +5078,16 @@ class RockPaperCynicTapa(GenericTapasticComic):
     name = 'rpc-tapa'
     long_name = 'Rock Paper Cynic (from Tapastic)'
     url = 'https://tapastic.com/series/rockpapercynic'
+
+
+class ItsTheTieTapa(GenericTapasticComic):
+    """Class to retrieve It's the tie comics."""
+    # Also on http://itsthetie.com
+    # Also on http://itsthetie.tumblr.com
+    name = 'tie-tapa'
+    long_name = "It's the tie (from Tapastic)"
+    url = "https://tapastic.com/series/itsthetie"
+    _categories = ('TIE', )
 
 
 def get_subclasses(klass):
