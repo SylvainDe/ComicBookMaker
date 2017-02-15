@@ -173,6 +173,8 @@ Comics supported
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Hot Comics For Cool People (from Tapastic)](https://tapastic.com/series/Hot-Comics-For-Cool-People)
  * [Hot Comics For Cool People (from Tumblr)](http://hotcomicsforcoolpeople.tumblr.com)
+ * [Imogen Quest](http://imogenquest.net)
+ * [Imogen Quest (from Tumblr)](http://imoquest.tumblr.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [In Your Face Cake (from Tumblr)](http://in-your-face-cake.tumblr.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)

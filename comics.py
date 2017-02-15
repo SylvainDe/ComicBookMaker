@@ -919,6 +919,36 @@ class TheGentlemanArmchair(GenericNavigableComic):
         }
 
 
+class ImogenQuest(GenericEmptyComic, GenericNavigableComic):
+    """Class to retrieve Imogen Quest comics."""
+    # Also on http://imoquest.tumblr.com
+    name = 'imogen'
+    long_name = 'Imogen Quest'
+    url = 'http://imogenquest.net'
+    get_first_comic_link = get_div_navfirst_a
+    get_navi_link = get_a_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find("span", class_="post-author").find("a").string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%B %d, %Y')
+        imgs = soup.find('div', class_='comicpane').find_all('img')
+        assert all(i['alt'] == i['title'] for i in imgs)
+        title2 = imgs[0]['title']
+        return {
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'title2': title2,
+            'author': author,
+        }
+
+
 class MyExtraLife(GenericNavigableComic):
     """Class to retrieve My Extra Life comics."""
     name = 'extralife'
@@ -4309,6 +4339,14 @@ class OffTheLeashDogTumblr(GenericTumblrV1):
     long_name = 'Off The Leash Dog (from Tumblr)'
     url = 'http://rupertfawcettsdoggyblog.tumblr.com'
     _categories = ('FAWCETT', )
+
+
+class ImogenQuestTumblr(GenericTumblrV1):
+    """Class to retrieve Imogen Quest comics."""
+    # Also on http://imogenquest.net
+    name = 'imogen-tumblr'
+    long_name = 'Imogen Quest (from Tumblr)'
+    url = 'http://imoquest.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
