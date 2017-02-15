@@ -91,6 +91,9 @@ def main():
         elif action == 'reset_new':
             for com in comic_classes:
                 com.reset_new()
+        elif action == 'delete_last':
+            for com in comic_classes:
+                com.delete_last()
         else:
             print("Unknown action : %s" % action)
 

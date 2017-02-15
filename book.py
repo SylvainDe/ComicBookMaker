@@ -84,7 +84,7 @@ XHTML_TAGS = XHTML_HEADER, XHTML_TOC_ITEM, XHTML_START, XHTML_COMIC_INFO, XHTML_
 
 def collect_comics(comic_classes):
     """Retrieve all comics for the list of comic classes provided."""
-    return chain.from_iterable(c.load_db() for c in comic_classes)
+    return chain.from_iterable(c.get_comics() for c in comic_classes)
 
 
 def filter_comics(comics):

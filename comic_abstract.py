@@ -51,38 +51,48 @@ class GenericComic(object):
         logging.debug(inspect.stack()[1][3] + " " + cls.name + " " + string)
 
     @classmethod
-    def get_output_dir(cls):
+    def _get_output_dir(cls):
         """Returns the name of the output directory (for comics and JSON file).
         To be overridden if needed."""
         return cls.name
 
     @classmethod
-    def create_output_dir(cls):
+    def _create_output_dir(cls):
         """Create output directory for the comic on the file system."""
         cls.log("start")
-        os.makedirs(cls.get_output_dir(), exist_ok=True)
+        os.makedirs(cls._get_output_dir(), exist_ok=True)
         cls.log("done")
 
     @classmethod
-    def get_json_file_path(cls):
+    def _get_json_file_path(cls):
         """Get the full path to the JSON file."""
-        return os.path.join(cls.get_output_dir(), cls.name + '.json')
+        return os.path.join(cls._get_output_dir(), cls.name + '.json')
 
     @classmethod
-    def load_db(cls):
-        """Load the JSON file to return a list of comics."""
+    def _load_db(cls):
+        """Load the JSON file to return the list of comics."""
         cls.log("start")
         try:
-            with open(cls.get_json_file_path()) as file:
+            with open(cls._get_json_file_path()) as file:
                 return json.load(file)
         except IOError:
             return []
 
     @classmethod
-    def save_db(cls, data):
+    def get_comics(cls):
+        """Return the list of comics."""
+        return [c for c in cls._load_db() if 'deleted' not in c]
+
+    @classmethod
+    def get_last_comic(cls, comics):
+        """Return the last (non-deleted) comic."""
+        return next((c for c in reversed(comics) if 'deleted' not in c), None)
+
+    @classmethod
+    def _save_db(cls, data):
         """Save the list of comics in the JSON file."""
         cls.log("start")
-        with open(cls.get_json_file_path(), 'w+') as file:
+        with open(cls._get_json_file_path(), 'w+') as file:
             json.dump(data, file, indent=4, sort_keys=True)
         cls.log("done")
 
@@ -91,7 +101,7 @@ class GenericComic(object):
         """Download file from URL and save it in output folder."""
         cls.log("start (url:%s)" % url)
         filename = os.path.join(
-            cls.get_output_dir(),
+            cls._get_output_dir(),
             ('' if prefix is None else prefix) +
             get_filename_from_url(url))
         return get_file_at_url(url, filename)
@@ -101,7 +111,7 @@ class GenericComic(object):
         """Perform tests on the database to check that everything is ok."""
         cls.log("start")
         print(cls.name, ': about to check')
-        comics = cls.load_db()
+        comics = cls.get_comics()  # cls._load_db()
         imgs_paths = {}
         imgs_urls = {}
         prev_date, prev_num = None, None
@@ -142,8 +152,8 @@ class GenericComic(object):
                 if len(nums) > 1:
                     print("Url used multiple times", img_url, nums)
         if False:  # To check that all files in folder are useful
-            json = cls.get_json_file_path()
-            output_dir = cls.get_output_dir()
+            json = cls._get_json_file_path()
+            output_dir = cls._get_output_dir()
             for file_ in os.listdir(output_dir):
                 file_path = os.path.join(output_dir, file_)
                 if file_path not in imgs_paths and file_path != json:
@@ -190,12 +200,12 @@ class GenericComic(object):
             - data management (adds current date if no date is provided)."""
         cls.log("start")
         print(cls.name, ': about to update')
-        cls.create_output_dir()
-        comics = cls.load_db()
+        cls._create_output_dir()
+        comics = cls._load_db()
         new_comics = []
         start = time.time()
         try:
-            last_comic = comics[-1] if comics else None
+            last_comic = cls.get_last_comic(comics)
             cls.log("last comic is %s" % ('None' if last_comic is None else last_comic['url']))
             for comic in cls.get_next_comic(last_comic):
                 cls.log("got %s" % str(comic))
@@ -217,7 +227,7 @@ class GenericComic(object):
             end = time.time()
             if new_comics:
                 print()
-                cls.save_db(comics + new_comics)
+                cls._save_db(comics + new_comics)
                 print(cls.name, ": added", len(new_comics),
                       "comics in", end - start, "seconds")
             else:
@@ -230,8 +240,8 @@ class GenericComic(object):
         the first place."""
         cls.log("start")
         print(cls.name, ': about to try to get missing resources')
-        cls.create_output_dir()
-        comics = cls.load_db()
+        cls._create_output_dir()
+        comics = cls._load_db()
         change = False
         for comic in comics:
             local = comic['local_img']
@@ -247,7 +257,7 @@ class GenericComic(object):
                         change = True
                         comic['new'] = None
         if change:
-            cls.save_db(comics)
+            cls._save_db(comics)
             print(cls.name, ": some missing resources have been downloaded")
         cls.log("done")
 
@@ -255,8 +265,22 @@ class GenericComic(object):
     def reset_new(cls):
         """Remove the 'new' flag on comics in the DB."""
         cls.log("start")
-        cls.create_output_dir()
-        cls.save_db([{key: val for key, val in c.items() if key != 'new'} for c in cls.load_db()])
+        cls._create_output_dir()
+        cls._save_db([{key: val for key, val in c.items() if key != 'new'} for c in cls._load_db()])
+        cls.log("done")
+
+    @classmethod
+    def delete_last(cls):
+        """Delete last (non-deleted) comic."""
+        cls.log("start")
+        comics = cls._load_db()
+        last_comic = cls.get_last_comic(comics)
+        if last_comic is None:
+            cls.log("no comic to delete")
+        else:
+            cls.log("about to delete %s" % last_comic['url'])
+            last_comic['deleted'] = None  # "'deleted' in comic" to check if deleted
+            cls._save_db(comics)
         cls.log("done")
 
     @classmethod
@@ -264,8 +288,8 @@ class GenericComic(object):
         """Print information about the comics."""
         cls.log("start")
         print("%s (%s) : " % (cls.long_name, cls.url))
-        cls.create_output_dir()
-        comics = cls.load_db()
+        cls._create_output_dir()
+        comics = cls.get_comics()  # cls._load_db()
         dates = [get_date_for_comic(c) for c in comics]
         print("%d comics (%d new)" % (len(comics), sum(1 for c in comics if 'new' in c)))
         print("%d images" % sum(len(c['img']) for c in comics))
