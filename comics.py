@@ -4331,6 +4331,13 @@ class CatanaComics(GenericTumblrV1):
     url = 'http://www.catanacomics.com'
 
 
+class ShanghaiTango(GenericTumblrV1):
+    """Class to retrieve Shanghai Tango comic."""
+    name = 'tango'
+    long_name = 'Shanghai Tango'
+    url = 'http://tango2010weibo.tumblr.com'
+
+
 class OffTheLeashDogTumblr(GenericTumblrV1):
     """Class to retrieve Off The Leash Dog comics."""
     # Also on http://offtheleashdogcartoons.com
