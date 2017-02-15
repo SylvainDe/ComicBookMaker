@@ -2943,7 +2943,7 @@ class MoonBeard(GenericNavigableComic):
         }
 
 
-class AHammADay(GenericEmptyComic, GenericNavigableComic):
+class AHammADay(GenericNavigableComic):
     """Class to retrieve class A Hamm A Day comics."""
     name = 'hamm'
     long_name = 'A Hamm A Day'
