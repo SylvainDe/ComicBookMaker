@@ -876,6 +876,7 @@ class ThreeWordPhrase(GenericNavigableComic):
 class DeadlyPanel(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on https://tapastic.com/series/deadlypanel
+    # Also on http://deadlypanel.tumblr.com
     name = 'deadly'
     long_name = 'Deadly Panel'
     url = 'http://www.deadlypanel.com'
@@ -4282,6 +4283,15 @@ class RockPaperCynicTumblr(GenericTumblrV1):
     name = 'rpc-tumblr'
     long_name = 'Rock Paper Cynic (from Tumblr)'
     url = 'http://rockpapercynic.tumblr.com'
+
+
+class DeadlyPanelTumblr(GenericTumblrV1):
+    """Class to retrieve Deadly Panel comics."""
+    # Also on http://www.deadlypanel.com
+    # Also on https://tapastic.com/series/deadlypanel
+    name = 'deadly-tumblr'
+    long_name = 'Deadly Panel (from Tumblr)'
+    url = 'http://deadlypanel.tumblr.com'
 
 
 class CatanaComics(GenericTumblrV1):

@@ -119,6 +119,7 @@ Comics supported
  * [Dagsson Hugleikur (from Tumblr)](http://hugleikurdagsson.tumblr.com)
  * [Deadly Panel](http://www.deadlypanel.com)
  * [Deadly Panel (from Tapastic)](https://tapastic.com/series/deadlypanel)
+ * [Deadly Panel (from Tumblr)](http://deadlypanel.tumblr.com)
  * [Depressed Alien](http://depressedalien.com)
  * [According To Devin](http://accordingtodevin.tumblr.com)
  * [Mr Ethan Diamond](http://mrethandiamond.tumblr.com)
