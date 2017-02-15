@@ -4927,6 +4927,7 @@ class TumbleDryTapa(GenericTapasticComic):
 class DeadlyPanelTapa(GenericTapasticComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on http://www.deadlypanel.com
+    # Also on http://deadlypanel.tumblr.com
     name = 'deadly-tapa'
     long_name = 'Deadly Panel (from Tapastic)'
     url = 'https://tapastic.com/series/deadlypanel'
