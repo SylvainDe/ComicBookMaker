@@ -604,7 +604,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericEmptyComic, GenericNavigableComic):
+class ItsTheTie(GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
