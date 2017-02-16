@@ -65,8 +65,7 @@ def main():
         args.action = ['update']
     comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
     logging.debug('Starting')
-    arg_to_method = \
-    {
+    arg_to_method = {
         'list': 'print_name',
         'update': 'update',
         'info': 'info',
