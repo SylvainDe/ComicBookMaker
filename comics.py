@@ -919,7 +919,7 @@ class TheGentlemanArmchair(GenericNavigableComic):
         }
 
 
-class ImogenQuest(GenericEmptyComic, GenericNavigableComic):
+class ImogenQuest(GenericNavigableComic):
     """Class to retrieve Imogen Quest comics."""
     # Also on http://imoquest.tumblr.com
     name = 'imogen'
