@@ -284,10 +284,18 @@ class GenericComic(object):
         cls.log("done")
 
     @classmethod
+    def print_name(cls):
+        """Print name."""
+        cls.log("start")
+        print(cls.name)
+        cls.log("end")
+
+    @classmethod
     def info(cls):
         """Print information about the comics."""
         cls.log("start")
         print("%s (%s) : " % (cls.long_name, cls.url))
+        print("In " + ', '.join(cls.get_categories()))
         cls._create_output_dir()
         comics = cls.get_comics()  # cls._load_db()
         dates = [get_date_for_comic(c) for c in comics]

@@ -65,15 +65,23 @@ def main():
         args.action = ['update']
     comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
     logging.debug('Starting')
+    arg_to_method = \
+    {
+        'list': 'print_name',
+        'update': 'update',
+        'info': 'info',
+        'check': 'check_everything_is_ok',
+        'fix': 'try_to_get_missing_resources',
+        'reset_new': 'reset_new',
+        'delete_last': 'delete_last',
+    }
     for action in args.action:
-        if action == 'book':
+        method_name = arg_to_method.get(action, None)
+        if method_name is not None:
+            for com in comic_classes:
+                getattr(com, method_name)()
+        elif action == 'book':
             book.make_book(comic_classes)
-        elif action == 'update':
-            for com in comic_classes:
-                com.update()
-        elif action == 'info':
-            for com in comic_classes:
-                com.info()
         elif action == 'gitignore':
             path = '.gitignore'
             new_content = [com.gitignore() for com in comic_classes]
@@ -82,18 +90,6 @@ def main():
             path = 'README.md'
             new_content = [com.readme() for com in comic_classes]
             add_new_lines_after_tag(path, new_content, '----------------')
-        elif action == 'check':
-            for com in comic_classes:
-                com.check_everything_is_ok()
-        elif action == 'fix':
-            for com in comic_classes:
-                com.try_to_get_missing_resources()
-        elif action == 'reset_new':
-            for com in comic_classes:
-                com.reset_new()
-        elif action == 'delete_last':
-            for com in comic_classes:
-                com.delete_last()
         else:
             print("Unknown action : %s" % action)
 
