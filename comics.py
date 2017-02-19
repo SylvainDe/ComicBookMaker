@@ -4358,6 +4358,13 @@ class ImogenQuestTumblr(GenericTumblrV1):
     url = 'http://imoquest.tumblr.com'
 
 
+class Shitfest(GenericTumblrV1):
+    """Class to retrieve Shitfest comics."""
+    name = 'shitfest'
+    long_name = 'Shitfest'
+    url = 'http://shitfestcomic.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
