@@ -252,7 +252,7 @@ class GenericListableComic(GenericComic):
                 waiting_for_url = None
         if waiting_for_url is not None:
             print("Did not find %s in the %d comics: there might be a problem" %
-                        (waiting_for_url, len(archive_elts)))
+                  (waiting_for_url, len(archive_elts)))
 
 # Helper functions corresponding to get_first_comic_link/get_navi_link
 
