@@ -236,7 +236,8 @@ class GenericListableComic(GenericComic):
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for listable comics."""
         waiting_for_url = last_comic['url'] if last_comic else None
-        for archive_elt in cls.get_archive_elements():
+        archive_elts = list(cls.get_archive_elements())
+        for archive_elt in archive_elts:
             url = cls.get_url_from_archive_element(archive_elt)
             cls.log("considering %s" % url)
             if waiting_for_url is None:
@@ -250,7 +251,8 @@ class GenericListableComic(GenericComic):
             elif waiting_for_url == url:
                 waiting_for_url = None
         if waiting_for_url is not None:
-            print("Did not find %s : there might be a problem" % waiting_for_url)
+            print("Did not find %s in the %d comics: there might be a problem" %
+                        (waiting_for_url, len(archive_elts)))
 
 # Helper functions corresponding to get_first_comic_link/get_navi_link
 
@@ -2039,7 +2041,7 @@ class PoorlyDrawnLines(GenericListableComic):
     # Also on http://pdlcomics.tumblr.com
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
-    url = 'http://poorlydrawnlines.com'
+    url = 'http://www.poorlydrawnlines.com'
     _categories = ('POORLYDRAWN', )
     get_url_from_archive_element = get_href
 
