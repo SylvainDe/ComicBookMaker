@@ -2,6 +2,7 @@
 # vim: set expandtab tabstop=4 shiftwidth=4 :
 """Module with functions wrapping urllib"""
 
+import http.client
 import urllib.request
 import urllib.parse
 import json
@@ -64,7 +65,11 @@ def get_content(url):
     url is a string
     Returns a string"""
     log('(url : %s)' % url)
-    return urlopen_wrapper(url).read()
+    try:
+        return urlopen_wrapper(url).read()
+    except http.client.IncompleteRead as e:
+        print("Incomplete read of %s (%d more bytes expected)" % (url, e.expected))
+        return e.partial
 
 
 def extensions_are_equivalent(ext1, ext2):
