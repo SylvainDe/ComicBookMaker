@@ -3680,7 +3680,7 @@ class OwlTurdTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/Owl-Turd-Comix
     name = 'owlturd-tumblr'
     long_name = 'Owl Turd (from Tumblr)'
-    url = 'http://owlturd.com'
+    url = 'http://owlturdcomix.tumblr.com'
     _categories = ('OWLTURD', )
 
 
