@@ -4445,7 +4445,7 @@ class GenericGoComic(GenericNavigableComic):
             'day': day.day,
             'month': day.month,
             'year': day.year,
-            'img': [i['src'] for i in imgs],
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
             'author': author,
             'tags': tags,
         }
