@@ -3814,6 +3814,7 @@ class NellucNhoj(GenericTumblrV1):
 class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     """Class to retrieve Down The Upward Spiral comics."""
     # Also on http://www.downtheupwardspiral.com
+    # Also on https://tapastic.com/series/Down-the-Upward-Spiral
     name = 'spiral-tumblr'
     long_name = 'Down the Upward Spiral (from Tumblr)'
     url = 'http://downtheupwardspiral.tumblr.com'
@@ -5109,6 +5110,15 @@ class NamelessPCs(GenericTapasticComic):
     name = 'namelesspcs-tapa'
     long_name = 'NamelessPCs (from Tapastic)'
     url = 'https://tapastic.com/series/NamelessPC'
+
+
+class DownTheUpwardSpiralTapa(GenericTapasticComic):
+    """Class to retrieve Down The Upward Spiral comics."""
+    # Also on http://www.downtheupwardspiral.com
+    # Also on http://downtheupwardspiral.tumblr.com
+    name = 'spiral-tapa'
+    long_name = 'Down the Upward Spiral (from Tapastic)'
+    url = 'https://tapastic.com/series/Down-the-Upward-Spiral'
 
 
 class UbertoolTapa(GenericTapasticComic):

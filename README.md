@@ -282,6 +282,7 @@ Comics supported
  * [Saturday Morning Breakfast Cereal (from GoComics)](http://www.gocomics.com/saturday-morning-breakfast-cereal)
  * [Saturday Morning Breakfast Cereal (from Tumblr)](http://smbc-comics.tumblr.com)
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
+ * [Down the Upward Spiral (from Tapastic)](https://tapastic.com/series/Down-the-Upward-Spiral)
  * [Down the Upward Spiral (from Tumblr)](http://downtheupwardspiral.tumblr.com)
  * [Things in squares](http://www.thingsinsquares.com)
  * [Make it stoopid](http://makeitstoopid.com/comic.php)
