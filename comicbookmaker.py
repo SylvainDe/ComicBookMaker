@@ -31,6 +31,15 @@ def add_new_lines_after_tag(path, new_lines, tag):
 def main():
     """Main function"""
     logger = logging.getLogger()
+    arg_to_method = {
+        'list': 'print_name',
+        'update': 'update',
+        'info': 'info',
+        'check': 'check_everything_is_ok',
+        'fix': 'try_to_get_missing_resources',
+        'reset_new': 'reset_new',
+        'delete_last': 'delete_last',
+    }
     comic_names = sorted(COMIC_NAMES.keys())
     parser = argparse.ArgumentParser(
         description='Downloads webcomics and generates ebooks for offline reading')
@@ -50,6 +59,7 @@ def main():
         '--action', '-a',
         action='append',
         help=('actions required'),
+        choices=list(arg_to_method) + ['book', 'gitignore', 'readme'],
         default=[])
     parser.add_argument(
         '--loglevel', '-l',
@@ -65,15 +75,6 @@ def main():
         args.action = ['update']
     comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
     logging.debug('Starting')
-    arg_to_method = {
-        'list': 'print_name',
-        'update': 'update',
-        'info': 'info',
-        'check': 'check_everything_is_ok',
-        'fix': 'try_to_get_missing_resources',
-        'reset_new': 'reset_new',
-        'delete_last': 'delete_last',
-    }
     for action in args.action:
         method_name = arg_to_method.get(action, None)
         if method_name is not None:
