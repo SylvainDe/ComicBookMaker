@@ -695,9 +695,10 @@ class OneOneOneOneComic(GenericNavigableComic):
         }
 
 
-class AngryAtNothing(GenericNavigableComic):
+class AngryAtNothing(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Angry at Nothing comics."""
     # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
+    # Also on http://angryatnothing.tumblr.com
     name = 'angry'
     long_name = 'Angry At Nothing'
     url = 'http://www.angryatnothing.net'
@@ -4333,6 +4334,15 @@ class CatanaComics(GenericTumblrV1):
     url = 'http://www.catanacomics.com'
 
 
+class AngryAtNothingTumblr(GenericTumblrV1):
+    """Class to retrieve Angry at Nothing comics."""
+    # Also on http://www.angryatnothing.net
+    # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
+    name = 'angry-tumblr'
+    long_name = 'Angry At Nothing (from Tumblr)'
+    url = 'http://angryatnothing.tumblr.com'
+
+
 class ShanghaiTango(GenericTumblrV1):
     """Class to retrieve Shanghai Tango comic."""
     name = 'tango'
@@ -4878,6 +4888,7 @@ class ToonHoleTapa(GenericTapasticComic):
 class AngryAtNothingTapa(GenericTapasticComic):
     """Class to retrieve Angry at Nothing comics."""
     # Also on http://www.angryatnothing.net
+    # Also on http://angryatnothing.tumblr.com
     name = 'angry-tapa'
     long_name = 'Angry At Nothing (from Tapastic)'
     url = 'http://tapastic.com/series/Comics-yeah-definitely-comics-'

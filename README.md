@@ -61,6 +61,7 @@ Comics supported
  * [Tales of Absurdity (from Tumblr)](http://talesofabsurdity.tumblr.com)
  * [Angry At Nothing](http://www.angryatnothing.net)
  * [Angry At Nothing (from Tapastic)](http://tapastic.com/series/Comics-yeah-definitely-comics-)
+ * [Angry At Nothing (from Tumblr)](http://angryatnothing.tumblr.com)
  * [Anything Comic](http://www.anythingcomic.com)
  * [Anything Comic (from Tapastic)](http://tapastic.com/series/anything)
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
