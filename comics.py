@@ -3458,11 +3458,18 @@ class GenericTumblrV1(GenericComic):
 
     @classmethod
     def get_url_from_post(cls, post):
-        return post['url']
+        url = post['url']
+        if not url.startswith(cls.url):
+            print("url '%s' does not start with '%s'" % (url, cls.url))
+        return url
 
     @classmethod
     def get_api_url(cls):
         return urljoin_wrapper(cls.url, '/api/read/')
+
+    @classmethod
+    def get_api_url_for_id(cls, tumblr_id):
+        return cls.get_api_url() + '?id=%d' % (tumblr_id)
 
     @classmethod
     def get_comic_info(cls, post):
@@ -3471,7 +3478,7 @@ class GenericTumblrV1(GenericComic):
         if type_ != 'photo':
             return None
         tumblr_id = int(post['id'])
-        api_url = cls.get_api_url() + '?id=%d' % (tumblr_id)
+        api_url = cls.get_api_url_for_id(tumblr_id)
         day = datetime.datetime.fromtimestamp(int(post['unix-timestamp'])).date()
         caption = post.find('photo-caption')
         title = caption.string if caption else ""
@@ -3501,13 +3508,13 @@ class GenericTumblrV1(GenericComic):
 
         Posts are retrieved from newer to older as per the tumblr v1 api
         but are returned in chronological order."""
-        waiting_for_url = last_comic['url'] if last_comic else None
+        waiting_for_id = last_comic['tumblr-id'] if last_comic else None
         posts_acc = []
         if last_comic is not None:
             # Sometimes, tumblr posts are deleted. When previous post is deleted, we
             # might end up spending a lot of time looking for something that
             # doesn't exist. Failing early and clearly might be a better option.
-            last_api_url = last_comic['api_url']
+            last_api_url = cls.get_api_url_for_id(waiting_for_id)
             try:
                 get_soup_at_url(last_api_url)
             except urllib.error.HTTPError:
@@ -3530,12 +3537,13 @@ class GenericTumblrV1(GenericComic):
             # This may happen and should be handled in the future
             assert total == total2, "%d != %d" % (total, total2)
             for p in posts2.find_all('post'):
-                if waiting_for_url and waiting_for_url == cls.get_url_from_post(p):
+                tumblr_id = int(p['id'])
+                if waiting_for_id and waiting_for_id == tumblr_id:
                     return reversed(posts_acc)
                 posts_acc.append(p)
-        if waiting_for_url is None:
+        if waiting_for_id is None:
             return reversed(posts_acc)
-        print("Did not find %s : there might be a problem" % waiting_for_url)
+        print("Did not find %s : there might be a problem" % waiting_for_id)
         return []
 
 
@@ -3968,7 +3976,7 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/The-World-is-Flat
     name = 'flatworld-tumblr'
     long_name = 'The World Is Flat (from Tumblr)'
-    url = 'http://theworldisflatcomics.tumblr.com'
+    url = 'http://theworldisflatcomics.com'
 
 
 class DorrisMc(GenericTumblrV1):

@@ -142,7 +142,7 @@ Comics supported
  * [Fat Awesome](http://fatawesome.com/comics)
  * [Fat Awesome (from Tumblr)](http://fatawesomecomedy.tumblr.com)
  * [The World Is Flat (from Tapastic)](https://tapastic.com/series/The-World-is-Flat)
- * [The World Is Flat (from Tumblr)](http://theworldisflatcomics.tumblr.com)
+ * [The World Is Flat (from Tumblr)](http://theworldisflatcomics.com)
  * [floccinaucinihilipilification](http://floccinaucinihilipilificationa.tumblr.com)
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)
  * [Fowl Language Comics (from GoComics)](http://www.gocomics.com/fowl-language)
