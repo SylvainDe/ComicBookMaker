@@ -2910,7 +2910,7 @@ class PainTrainComic(GenericNavigableComic):
 
 class MoonBeard(GenericNavigableComic):
     """Class to retrieve MoonBeard comics."""
-    # Also on http://blog.squiresjam.es/moonbeard
+    # Also on http://blog.squiresjam.es
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
     name = 'moonbeard'
     long_name = 'Moon Beard'
@@ -4001,7 +4001,7 @@ class MoonBeardTumblr(GenericTumblrV1):
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
     name = 'moonbeard-tumblr'
     long_name = 'Moon Beard (from Tumblr)'
-    url = 'http://blog.squiresjam.es/moonbeard'
+    url = 'http://blog.squiresjam.es'
 
 
 class AComik(GenericTumblrV1):

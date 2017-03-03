@@ -209,7 +209,7 @@ Comics supported
  * [Art By Moga](http://artbymoga.tumblr.com)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Moon Beard](http://moonbeard.com)
- * [Moon Beard (from Tumblr)](http://blog.squiresjam.es/moonbeard)
+ * [Moon Beard (from Tumblr)](http://blog.squiresjam.es)
  * [Tu Mourras Moins Bete](http://tumourrasmoinsbete.blogspot.fr)
  * [Mouse Bear Comedy](http://www.mousebearcomedy.com)
  * [Mouse Bear Comedy (from Tumblr)](http://mousebearcomedy.tumblr.com)
