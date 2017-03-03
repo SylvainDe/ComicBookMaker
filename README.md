@@ -174,6 +174,7 @@ Comics supported
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Hot Comics For Cool People (from Tapastic)](https://tapastic.com/series/Hot-Comics-For-Cool-People)
  * [Hot Comics For Cool People (from Tumblr)](http://hotcomicsforcoolpeople.tumblr.com)
+ * [Ice Cream Sandwich Comics](http://icecreamsandwichcomics.com)
  * [Imogen Quest](http://imogenquest.net)
  * [Imogen Quest (from Tumblr)](http://imoquest.tumblr.com)
  * [Invisible Bread](http://invisiblebread.com)
