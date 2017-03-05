@@ -261,7 +261,7 @@ Comics supported
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
  * [RandoWis (from Tapastic)](https://tapastic.com/series/RandoWis)
  * [Classic Randy](http://classicrandy.tumblr.com)
- * [Gone Into Rapture](http://www.goneintorapture.com)
+ * [Gone Into Rapture](http://goneintorapture.com)
  * [Gone Into Rapture (from Tapastic)](http://tapastic.com/series/Goneintorapture)
  * [Respawn Comic](http://respawncomic.com )
  * [Respawn Comic (from Tumblr)](http://respawncomic.tumblr.com)
