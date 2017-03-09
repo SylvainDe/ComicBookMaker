@@ -134,6 +134,7 @@ Comics supported
  * [Dorris Mc](http://dorrismccomics.com)
  * [Dorris Mc (from GoComics)](http://www.gocomics.com/dorris-mccomics)
  * [Doug Was Taken](http://dougwastaken.tumblr.com)
+ * [Dustinteractive](http://dustinteractive.com)
  * [The Earth Explodes](http://www.earthexplodes.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Safely Endangered](http://www.safelyendangered.com)

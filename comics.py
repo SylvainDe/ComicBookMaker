@@ -4391,6 +4391,13 @@ class IceCreamSandwichComics(GenericTumblrV1):
     url = 'http://icecreamsandwichcomics.com'
 
 
+class Dustinteractive(GenericTumblrV1):
+    """Class to retrieve Dustinteractive comics."""
+    name = 'dustinteractive'
+    long_name = 'Dustinteractive'
+    url = 'http://dustinteractive.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
