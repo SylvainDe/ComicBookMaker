@@ -4398,6 +4398,13 @@ class Dustinteractive(GenericTumblrV1):
     url = 'http://dustinteractive.com'
 
 
+class StickyCinemaFloor(GenericTumblrV1):
+    """Class to retrieve Sticky Cinema Floor comics."""
+    name = 'stickycinema'
+    long_name = 'Sticky Cinema Floor'
+    url = 'http://stickycinemafloor.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'

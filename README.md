@@ -287,6 +287,7 @@ Comics supported
  * [Down the Upward Spiral (from Tapastic)](https://tapastic.com/series/Down-the-Upward-Spiral)
  * [Down the Upward Spiral (from Tumblr)](http://downtheupwardspiral.tumblr.com)
  * [Things in squares](http://www.thingsinsquares.com)
+ * [Sticky Cinema Floor](http://stickycinemafloor.tumblr.com)
  * [Make it stoopid](http://makeitstoopid.com/comic.php)
  * [Everything's Stupid](http://everythingsstupid.net)
  * [Everything's Stupid (from Tapastic)](http://tapastic.com/series/EverythingsStupid)
