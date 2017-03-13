@@ -606,7 +606,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericNavigableComic):
+class ItsTheTie(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
@@ -817,7 +817,7 @@ class Dilbert(GenericNavigableComic):
         }
 
 
-class VictimsOfCircumsolar(GenericNavigableComic):
+class VictimsOfCircumsolar(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve VictimsOfCircumsolar comics."""
     # Also on http://victimsofcomics.tumblr.com
     name = 'circumsolar'
@@ -2453,7 +2453,7 @@ class GerbilWithAJetpack(GenericNavigableComic):
         }
 
 
-class EveryDayBlues(GenericNavigableComic):
+class EveryDayBlues(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve EveryDayBlues Comics."""
     name = "blues"
     long_name = "Every Day Blues"
@@ -2946,7 +2946,7 @@ class MoonBeard(GenericNavigableComic):
         }
 
 
-class AHammADay(GenericNavigableComic):
+class AHammADay(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve class A Hamm A Day comics."""
     name = 'hamm'
     long_name = 'A Hamm A Day'
@@ -3219,7 +3219,7 @@ class PomComics(GenericNavigableComic):
         }
 
 
-class CubeDrone(GenericNavigableComic):
+class CubeDrone(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Cube Drone comics."""
     name = 'cubedrone'
     long_name = 'Cube Drone'
