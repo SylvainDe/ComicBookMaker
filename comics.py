@@ -819,7 +819,7 @@ class Dilbert(GenericNavigableComic):
 
 class VictimsOfCircumsolar(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve VictimsOfCircumsolar comics."""
-    # Also on http://victimsofcomics.tumblr.com
+    # Also on https://victimsofcomics.tumblr.com
     name = 'circumsolar'
     long_name = 'Victims Of Circumsolar'
     url = 'http://www.victimsofcircumsolar.com'
@@ -879,7 +879,7 @@ class ThreeWordPhrase(GenericNavigableComic):
 class DeadlyPanel(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on https://tapastic.com/series/deadlypanel
-    # Also on http://deadlypanel.tumblr.com
+    # Also on https://deadlypanel.tumblr.com
     name = 'deadly'
     long_name = 'Deadly Panel'
     url = 'http://www.deadlypanel.com'
@@ -1115,7 +1115,7 @@ class BerkeleyMews(GenericListableComic):
 
 class GenericBouletCorp(GenericNavigableComic):
     """Generic class to retrieve BouletCorp comics in different languages."""
-    # Also on http://bouletcorp.tumblr.com
+    # Also on https://bouletcorp.tumblr.com
     _categories = ('BOULET', )
     get_navi_link = get_link_rel_next
 
@@ -1801,7 +1801,7 @@ class BigFootJustice(GenericNavigableComic):
 
 class RespawnComic(GenericNavigableComic):
     """Class to retrieve Respawn Comic."""
-    # Also on http://respawncomic.tumblr.com
+    # Also on https://respawncomic.tumblr.com
     name = 'respawn'
     long_name = 'Respawn Comic'
     url = 'http://respawncomic.com '
@@ -1864,7 +1864,7 @@ class SafelyEndangered(GenericNavigableComic):
 
 class PicturesInBoxes(GenericNavigableComic):
     """Class to retrieve Pictures In Boxes comics."""
-    # Also on http://picturesinboxescomic.tumblr.com
+    # Also on https://picturesinboxescomic.tumblr.com
     name = 'picturesinboxes'
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
@@ -2000,7 +2000,7 @@ class DiscoBleach(GenericEmptyComic):  # Does not work anymore
 class TubeyToons(GenericEmptyComic):  # Does not work anymore
     """Class to retrieve TubeyToons comics."""
     # Also on http://tapastic.com/series/Tubey-Toons
-    # Also on http://tubeytoons.tumblr.com
+    # Also on https://tubeytoons.tumblr.com
     name = 'tubeytoons'
     long_name = 'Tubey Toons'
     url = 'http://tubeytoons.com'
@@ -2353,7 +2353,7 @@ class LonnieMillsap(GenericNavigableComic):
 
 class LinsEditions(GenericNavigableComic):
     """Class to retrieve L.I.N.S. Editions comics."""
-    # Also on http://linscomics.tumblr.com
+    # Also on https://linscomics.tumblr.com
     # Now on https://warandpeas.com
     name = 'lins'
     long_name = 'L.I.N.S. Editions'
@@ -2815,7 +2815,7 @@ class BoumerieFr(GenericBoumerie):
 class UnearthedComics(GenericNavigableComic):
     """Class to retrieve Unearthed comics."""
     # Also on http://tapastic.com/series/UnearthedComics
-    # Also on http://unearthedcomics.tumblr.com
+    # Also on https://unearthedcomics.tumblr.com
     name = 'unearthed'
     long_name = 'Unearthed Comics'
     url = 'http://unearthedcomics.com'
@@ -3135,7 +3135,7 @@ class SheldonComics(GenericNavigableComic):
 
 class Ubertool(GenericNavigableComic):
     """Class to retrieve Ubertool comics."""
-    # Also on http://ubertool.tumblr.com
+    # Also on https://ubertool.tumblr.com
     # Also on https://tapastic.com/series/ubertool
     name = 'ubertool'
     long_name = 'Ubertool'
@@ -3594,7 +3594,7 @@ class PicturesInBoxesTumblr(GenericTumblrV1):
     # Also on http://www.picturesinboxes.com
     name = 'picturesinboxes-tumblr'
     long_name = 'Pictures in Boxes (from Tumblr)'
-    url = 'http://picturesinboxescomic.tumblr.com'
+    url = 'https://picturesinboxescomic.tumblr.com'
 
 
 class TubeyToonsTumblr(GenericTumblrV1):
@@ -3603,7 +3603,7 @@ class TubeyToonsTumblr(GenericTumblrV1):
     # Also on http://tubeytoons.com
     name = 'tubeytoons-tumblr'
     long_name = 'Tubey Toons (from Tumblr)'
-    url = 'http://tubeytoons.tumblr.com'
+    url = 'https://tubeytoons.tumblr.com'
     _categories = ('TUNEYTOONS', )
 
 
@@ -3613,7 +3613,7 @@ class UnearthedComicsTumblr(GenericTumblrV1):
     # Also on http://unearthedcomics.com
     name = 'unearthed-tumblr'
     long_name = 'Unearthed Comics (from Tumblr)'
-    url = 'http://unearthedcomics.tumblr.com'
+    url = 'https://unearthedcomics.tumblr.com'
     _categories = ('UNEARTHED', )
 
 
@@ -3739,7 +3739,7 @@ class CheerUpEmoKidTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/CUEK
     name = 'cuek-tumblr'
     long_name = 'Cheer Up Emo Kid (from Tumblr)'
-    url = 'http://enzocomics.tumblr.com'
+    url = 'https://enzocomics.tumblr.com'
 
 
 class ForLackOfABetterComic(GenericTumblrV1):
@@ -3765,7 +3765,7 @@ class ThreeWordPhraseTumblr(GenericTumblrV1):
     # Also on http://threewordphrase.com
     name = 'threeword-tumblr'
     long_name = 'Three Word Phrase (from Tumblr)'
-    url = 'http://www.threewordphrase.tumblr.com'
+    url = 'http://threewordphrase.tumblr.com'
 
 
 class TimeTrabbleTumblr(GenericTumblrV1):
@@ -3797,7 +3797,7 @@ class BouletCorpTumblr(GenericTumblrV1):
     # Also on http://www.bouletcorp.com
     name = 'boulet-tumblr'
     long_name = 'Boulet Corp (from Tumblr)'
-    url = 'http://bouletcorp.tumblr.com'
+    url = 'https://bouletcorp.tumblr.com'
     _categories = ('BOULET', )
 
 
@@ -3889,7 +3889,7 @@ class RespawnComicTumblr(GenericTumblrV1):
     # Also on http://respawncomic.com
     name = 'respawn-tumblr'
     long_name = 'Respawn Comic (from Tumblr)'
-    url = 'http://respawncomic.tumblr.com'
+    url = 'https://respawncomic.tumblr.com'
 
 
 class ChrisHallbeckTumblr(GenericTumblrV1):
@@ -3900,7 +3900,7 @@ class ChrisHallbeckTumblr(GenericTumblrV1):
     # Also on http://thebookofbiff.com
     name = 'hallbeck-tumblr'
     long_name = 'Chris Hallback (from Tumblr)'
-    url = 'http://chrishallbeck.tumblr.com'
+    url = 'https://chrishallbeck.tumblr.com'
     _categories = ('HALLBACK', )
 
 
@@ -4023,7 +4023,7 @@ class DagssonTumblr(GenericTumblrV1):
     # Also on http://www.dagsson.com
     name = 'dagsson-tumblr'
     long_name = 'Dagsson Hugleikur (from Tumblr)'
-    url = 'http://hugleikurdagsson.tumblr.com'
+    url = 'https://hugleikurdagsson.tumblr.com'
 
 
 class LinsEditionsTumblr(GenericTumblrV1):
@@ -4032,13 +4032,13 @@ class LinsEditionsTumblr(GenericTumblrV1):
     # Now on http://warandpeas.tumblr.com
     name = 'lins-tumblr'
     long_name = 'L.I.N.S. Editions (from Tumblr)'
-    url = 'http://linscomics.tumblr.com'
+    url = 'https://linscomics.tumblr.com'
     _categories = ('LINS', )
 
 
 class WarAndPeasTumblr(GenericTumblrV1):
     """Class to retrieve War And Peas comics."""
-    # Was on http://linscomics.tumblr.com
+    # Was on https://linscomics.tumblr.com
     name = 'warandpeas-tumblr'
     long_name = 'War And Peas (from Tumblr)'
     url = 'http://warandpeas.tumblr.com'
@@ -4056,7 +4056,7 @@ class HitAndMissComicsTumblr(GenericTumblrV1):
     """Class to retrieve Hit and Miss Comics."""
     name = 'hitandmiss'
     long_name = 'Hit and Miss Comics'
-    url = 'http://hitandmisscomics.tumblr.com'
+    url = 'https://hitandmisscomics.tumblr.com'
 
 
 class HMBlanc(GenericTumblrV1):
@@ -4105,15 +4105,15 @@ class BFGFSTumblr(GenericTumblrV1):
     # Also on http://bfgfs.com
     name = 'bfgfs-tumblr'
     long_name = 'BFGFS (from Tumblr)'
-    url = 'http://bfgfs.tumblr.com'
+    url = 'https://bfgfs.tumblr.com'
 
 
 class DoodleForFood(GenericTumblrV1):
     """Class to retrieve Doodle For Food comics."""
-    # Also on http://doodleforfood.com
+    # Also on https://tapastic.com/series/Doodle-for-Food
     name = 'doodle'
     long_name = 'Doodle For Food'
-    url = 'http://doodleforfood.com'
+    url = 'https://doodleforfood.com'
 
 
 class CassandraCalinTumblr(GenericTumblrV1):
@@ -4129,7 +4129,7 @@ class DougWasTaken(GenericTumblrV1):
     """Class to retrieve Doug Was Taken comics."""
     name = 'doug'
     long_name = 'Doug Was Taken'
-    url = 'http://dougwastaken.tumblr.com'
+    url = 'https://dougwastaken.tumblr.com'
 
 
 class MandatoryRollerCoaster(GenericTumblrV1):
@@ -4197,7 +4197,7 @@ class InYourFaceCake(GenericTumblrV1):
     """Class to retrieve In Your Face Cake comics."""
     name = 'inyourfacecake-tumblr'
     long_name = 'In Your Face Cake (from Tumblr)'
-    url = 'http://in-your-face-cake.tumblr.com'
+    url = 'https://in-your-face-cake.tumblr.com'
 
 
 class Robospunk(GenericTumblrV1):
@@ -4211,7 +4211,7 @@ class BananaTwinky(GenericTumblrV1):
     """Class to retrieve Banana Twinky comics."""
     name = 'banana'
     long_name = 'Banana Twinky'
-    url = 'http://bananatwinky.tumblr.com'
+    url = 'https://bananatwinky.tumblr.com'
 
 
 class YesterdaysPopcornTumblr(GenericTumblrV1):
@@ -4236,7 +4236,7 @@ class UbertoolTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/ubertool
     name = 'ubertool-tumblr'
     long_name = 'Ubertool (from Tumblr)'
-    url = 'http://ubertool.tumblr.com'
+    url = 'https://ubertool.tumblr.com'
     _categories = ('UBERTOOL', )
 
 
@@ -4267,7 +4267,7 @@ class Sephko(GenericTumblrV1):
     # Also on http://www.sephko.com
     name = 'sephko'
     long_name = 'Sephko'
-    url = 'http://sephko.tumblr.com'
+    url = 'https://sephko.tumblr.com'
 
 
 class BlazersAtDawn(GenericTumblrV1):
@@ -4297,7 +4297,7 @@ class LibraryComic(GenericTumblrV1):
     # Also on http://librarycomic.com
     name = 'library-tumblr'
     long_name = 'LibraryComic (from Tumblr)'
-    url = 'http://librarycomic.tumblr.com'
+    url = 'https://librarycomic.tumblr.com'
 
 
 class TizzyStitchBirdTumblr(GenericTumblrV1):
@@ -4315,7 +4315,7 @@ class VictimsOfCircumsolarTumblr(GenericTumblrV1):
     # Also on http://www.victimsofcircumsolar.com
     name = 'circumsolar-tumblr'
     long_name = 'Victims Of Circumsolar (from Tumblr)'
-    url = 'http://victimsofcomics.tumblr.com'
+    url = 'https://victimsofcomics.tumblr.com'
 
 
 class RockPaperCynicTumblr(GenericTumblrV1):
@@ -4333,7 +4333,7 @@ class DeadlyPanelTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/deadlypanel
     name = 'deadly-tumblr'
     long_name = 'Deadly Panel (from Tumblr)'
-    url = 'http://deadlypanel.tumblr.com'
+    url = 'https://deadlypanel.tumblr.com'
 
 
 class CatanaComics(GenericTumblrV1):
@@ -4402,7 +4402,7 @@ class StickyCinemaFloor(GenericTumblrV1):
     """Class to retrieve Sticky Cinema Floor comics."""
     name = 'stickycinema'
     long_name = 'Sticky Cinema Floor'
-    url = 'http://stickycinemafloor.tumblr.com'
+    url = 'https://stickycinemafloor.tumblr.com'
 
 
 class HorovitzComics(GenericListableComic):
@@ -4805,7 +4805,7 @@ class SandersenTapastic(GenericTapasticComic):
 class TubeyToonsTapastic(GenericTapasticComic):
     """Class to retrieve TubeyToons comics."""
     # Also on http://tubeytoons.com
-    # Also on http://tubeytoons.tumblr.com
+    # Also on https://tubeytoons.tumblr.com
     name = 'tubeytoons-tapa'
     long_name = 'Tubey Toons (from Tapastic)'
     url = 'http://tapastic.com/series/Tubey-Toons'
@@ -4823,7 +4823,7 @@ class AnythingComicTapastic(GenericTapasticComic):
 class UnearthedComicsTapastic(GenericTapasticComic):
     """Class to retrieve Unearthed comics."""
     # Also on http://unearthedcomics.com
-    # Also on http://unearthedcomics.tumblr.com
+    # Also on https://unearthedcomics.tumblr.com
     name = 'unearthed-tapa'
     long_name = 'Unearthed Comics (from Tapastic)'
     url = 'http://tapastic.com/series/UnearthedComics'
@@ -4885,7 +4885,7 @@ class HeckIfIKnowComicsTapa(GenericTapasticComic):
 class CheerUpEmoKidTapa(GenericTapasticComic):
     """Class to retrieve CheerUpEmoKid comics."""
     # Also on http://www.cheerupemokid.com
-    # Also on http://enzocomics.tumblr.com
+    # Also on https://enzocomics.tumblr.com
     name = 'cuek-tapa'
     long_name = 'Cheer Up Emo Kid (from Tapastic)'
     url = 'http://tapastic.com/series/CUEK'
@@ -4984,7 +4984,7 @@ class TumbleDryTapa(GenericTapasticComic):
 class DeadlyPanelTapa(GenericTapasticComic):
     """Class to retrieve Deadly Panel comics."""
     # Also on http://www.deadlypanel.com
-    # Also on http://deadlypanel.tumblr.com
+    # Also on https://deadlypanel.tumblr.com
     name = 'deadly-tapa'
     long_name = 'Deadly Panel (from Tapastic)'
     url = 'https://tapastic.com/series/deadlypanel'
@@ -4992,7 +4992,7 @@ class DeadlyPanelTapa(GenericTapasticComic):
 
 class ChrisHallbeckMaxiTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
-    # Also on http://chrishallbeck.tumblr.com
+    # Also on https://chrishallbeck.tumblr.com
     # Also on http://maximumble.com
     name = 'hallbeckmaxi-tapa'
     long_name = 'Chris Hallback - Maximumble (from Tapastic)'
@@ -5002,7 +5002,7 @@ class ChrisHallbeckMaxiTapa(GenericTapasticComic):
 
 class ChrisHallbeckMiniTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
-    # Also on http://chrishallbeck.tumblr.com
+    # Also on https://chrishallbeck.tumblr.com
     # Also on http://minimumble.com
     name = 'hallbeckmini-tapa'
     long_name = 'Chris Hallback - Minimumble (from Tapastic)'
@@ -5012,7 +5012,7 @@ class ChrisHallbeckMiniTapa(GenericTapasticComic):
 
 class ChrisHallbeckBiffTapa(GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
-    # Also on http://chrishallbeck.tumblr.com
+    # Also on https://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
     name = 'hallbeckbiff-tapa'
     long_name = 'Chris Hallback - The Book of Biff (from Tapastic)'
@@ -5075,7 +5075,7 @@ class TalesOfAbsurdityTapa(GenericTapasticComic):
 class BFGFSTapa(GenericTapasticComic):
     """Class to retrieve BFGFS comics."""
     # Also on http://bfgfs.com
-    # Also on http://bfgfs.tumblr.com
+    # Also on https://bfgfs.tumblr.com
     name = 'bfgfs-tapa'
     long_name = 'BFGFS (from Tapastic)'
     url = 'https://tapastic.com/series/BFGFS'
@@ -5083,7 +5083,7 @@ class BFGFSTapa(GenericTapasticComic):
 
 class DoodleForFoodTapa(GenericTapasticComic):
     """Class to retrieve Doodle For Food comics."""
-    # Also on http://doodleforfood.com
+    # Also on https://doodleforfood.com
     name = 'doodle-tapa'
     long_name = 'Doodle For Food (from Tapastic)'
     url = 'https://tapastic.com/series/Doodle-for-Food'
@@ -5153,7 +5153,7 @@ class DownTheUpwardSpiralTapa(GenericTapasticComic):
 class UbertoolTapa(GenericTapasticComic):
     """Class to retrieve Ubertool comics."""
     # Also on http://ubertoolcomic.com
-    # Also on http://ubertool.tumblr.com
+    # Also on https://ubertool.tumblr.com
     name = 'ubertool-tapa'
     long_name = 'Ubertool (from Tapastic)'
     url = 'https://tapastic.com/series/ubertool'
