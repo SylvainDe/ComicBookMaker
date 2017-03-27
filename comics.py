@@ -4113,7 +4113,7 @@ class DoodleForFood(GenericTumblrV1):
     # Also on https://tapastic.com/series/Doodle-for-Food
     name = 'doodle'
     long_name = 'Doodle For Food'
-    url = 'https://doodleforfood.com'
+    url = 'http://www.doodleforfood.com'
 
 
 class CassandraCalinTumblr(GenericTumblrV1):
@@ -5083,7 +5083,7 @@ class BFGFSTapa(GenericTapasticComic):
 
 class DoodleForFoodTapa(GenericTapasticComic):
     """Class to retrieve Doodle For Food comics."""
-    # Also on https://doodleforfood.com
+    # Also on http://www.doodleforfood.com
     name = 'doodle-tapa'
     long_name = 'Doodle For Food (from Tapastic)'
     url = 'https://tapastic.com/series/Doodle-for-Food'
