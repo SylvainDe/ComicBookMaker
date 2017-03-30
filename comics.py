@@ -2042,7 +2042,7 @@ class PoorlyDrawnLines(GenericListableComic):
     # Also on http://pdlcomics.tumblr.com
     name = 'poorlydrawn'
     long_name = 'Poorly Drawn Lines'
-    url = 'http://www.poorlydrawnlines.com'
+    url = 'https://www.poorlydrawnlines.com'
     _categories = ('POORLYDRAWN', )
     get_url_from_archive_element = get_href
 

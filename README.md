@@ -251,7 +251,7 @@ Comics supported
  * [Pleasant Thoughts](http://pleasant-thoughts.com)
  * [Pom Comics / Piece of Me](http://www.pomcomic.com)
  * [Pond Scum](http://pondscumcomic.tumblr.com)
- * [Poorly Drawn Lines](http://www.poorlydrawnlines.com)
+ * [Poorly Drawn Lines](https://www.poorlydrawnlines.com)
  * [Poorly Drawn Lines (from Tumblr)](http://pdlcomics.tumblr.com)
  * [Yesterday's Popcorn (from Tapastic)](https://tapastic.com/series/Yesterdays-Popcorn)
  * [Yesterday's Popcorn (from Tumblr)](http://yesterdayspopcorn.tumblr.com)
