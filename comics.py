@@ -4465,7 +4465,7 @@ class GenericGoComic(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
         PREV = 'fa btn btn-outline-default btn-circle fa-caret-left sm '
-        NEXT = 'fa btn btn-outline-default btn-circle fa-caret-right sm '
+        NEXT = 'fa btn btn-outline-default btn-circle fa-caret-right hidden-sm-up sm '
         return last_soup.find('a', class_=NEXT if next_ else PREV)
 
     @classmethod
