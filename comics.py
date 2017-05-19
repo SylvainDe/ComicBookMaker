@@ -5000,7 +5000,7 @@ class ChrisHallbeckMaxiTapa(GenericTapasticComic):
     _categories = ('HALLBACK', )
 
 
-class ChrisHallbeckMiniTapa(GenericTapasticComic):
+class ChrisHallbeckMiniTapa(GenericEmptyComic, GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://minimumble.com
@@ -5010,7 +5010,7 @@ class ChrisHallbeckMiniTapa(GenericTapasticComic):
     _categories = ('HALLBACK', )
 
 
-class ChrisHallbeckBiffTapa(GenericTapasticComic):
+class ChrisHallbeckBiffTapa(GenericEmptyComic, GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
@@ -5123,7 +5123,7 @@ class YesterdaysPopcornTapastic(GenericTapasticComic):
     url = 'https://tapastic.com/series/Yesterdays-Popcorn'
 
 
-class OurSuperAdventureTapastic(GenericTapasticComic):
+class OurSuperAdventureTapastic(GenericEmptyComic, GenericTapasticComic):
     """Class to retrieve Our Super Adventure comics."""
     # Also on http://www.oursuperadventure.com
     # http://sarahssketchbook.tumblr.com
