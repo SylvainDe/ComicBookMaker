@@ -1015,7 +1015,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         }
 
 
-class PerryBibleFellowship(GenericListableComic):
+class PerryBibleFellowship(GenericListableComic):  # Is now navigable too
     """Class to retrieve Perry Bible Fellowship comics."""
     name = 'pbf'
     long_name = 'Perry Bible Fellowship'
@@ -1024,26 +1024,19 @@ class PerryBibleFellowship(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        comic_link_re = re.compile('^/[0-9]*/$')
-        return reversed(get_soup_at_url(cls.url).find_all('a', href=comic_link_re))
+        soup = get_soup_at_url(cls.url)
+        thumbnails = soup.find('div', id='all_thumbnails')
+        return reversed(thumbnails.find_all('a'))
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        url = cls.get_url_from_archive_element(link)
-        comic_img_re = re.compile('^/archive_b/PBF.*')
-        name = link.string
-        num = int(link['name'])
-        href = link['href']
-        assert href == '/%d/' % num
-        imgs = soup.find_all('img', src=comic_img_re)
+        name = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
         assert len(imgs) == 1
-        assert imgs[0]['alt'] == name
         return {
-            'num': num,
             'name': name,
-            'img': [urljoin_wrapper(url, i['src']) for i in imgs],
-            'prefix': '%d-' % num,
+            'img': [i['content'] for i in imgs],
         }
 
 
