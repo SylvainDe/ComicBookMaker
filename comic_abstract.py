@@ -284,6 +284,17 @@ class GenericComic(object):
         cls.log("done")
 
     @classmethod
+    def delete_all(cls):
+        """Delete all comics."""
+        cls.log("start")
+        comics = cls._load_db()
+        if comics:
+            for c in comics:
+                c['deleted'] = None  # "'deleted' in comic" to check if deleted
+            cls._save_db(comics)
+        cls.log("done")
+
+    @classmethod
     def print_name(cls):
         """Print name."""
         cls.log("start")

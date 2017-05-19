@@ -39,6 +39,7 @@ def main():
         'fix': 'try_to_get_missing_resources',
         'reset_new': 'reset_new',
         'delete_last': 'delete_last',
+        'delete_all': 'delete_all',
     }
     comic_names = sorted(COMIC_NAMES.keys())
     parser = argparse.ArgumentParser(
