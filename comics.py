@@ -3083,7 +3083,7 @@ class TheIsmComics(GenericWordPressInkblot):
     url = 'http://www.theism-comics.com'
 
 
-class WoodenPlankStudios(GenericWordPressInkblot):
+class WoodenPlankStudios(GenericEmptyComic, GenericWordPressInkblot):
     """Class to retrieve Wooden Plank Studios comics."""
     name = 'woodenplank'
     long_name = 'Wooden Plank Studios'
