@@ -569,7 +569,7 @@ class SpaceAvalanche(GenericNavigableComic):
         }
 
 
-class ZenPencils(GenericNavigableComic):
+class ZenPencils(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.tumblr.com
     # Also on http://www.gocomics.com/zen-pencils
