@@ -671,7 +671,7 @@ class PenelopeBagieu(GenericNavigableComic):
         }
 
 
-class OneOneOneOneComic(GenericNavigableComic):
+class OneOneOneOneComic(GenericEmptyComic, GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
     # Also on http://comics1111.tumblr.com
     # Also on https://tapastic.com/series/1111-Comics
