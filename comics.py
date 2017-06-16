@@ -3709,7 +3709,7 @@ class OwlTurdTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/Owl-Turd-Comix
     name = 'owlturd-tumblr'
     long_name = 'Owl Turd (from Tumblr)'
-    url = 'http://owlturdcomix.tumblr.com'
+    url = 'http://owlturd.com'
     _categories = ('OWLTURD', )
 
 
@@ -4163,7 +4163,7 @@ class CEstPasEnRegardantSesPompes(GenericTumblrV1):
     """Class to retrieve C'Est Pas En Regardant Ses Pompes (...)  comics."""
     name = 'cperspqccltt'
     long_name = 'C Est Pas En Regardant Ses Pompes (...)'
-    url = 'http://cperspqccltt.tumblr.com'
+    url = 'http://marcoandco.tumblr.com'
 
 
 class TheGrohlTroll(GenericTumblrV1):
