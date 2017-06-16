@@ -4425,6 +4425,14 @@ class StickyCinemaFloor(GenericTumblrV1):
     url = 'https://stickycinemafloor.tumblr.com'
 
 
+class IncidentalComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Incidental Comics."""
+    # Also on http://www.incidentalcomics.com
+    name = 'incidental-tumblr'
+    long_name = 'Incidental Comics (from Tumblr)'
+    url = 'http://incidentalcomics.tumblr.com'
+
+
 class HorovitzComics(GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     url = 'http://www.horovitzcomics.com'
