@@ -2144,6 +2144,30 @@ class DepressedAlien(GenericNavigableComic):
         }
 
 
+class TurnOffUs(GenericListableComic):
+    """Class to retrieve TurnOffUs comics."""
+    name = 'turnoffus'
+    long_name = 'Turn Off Us'
+    url = 'http://turnoff.us'
+    get_url_from_archive_element = join_cls_url_to_href
+
+    @classmethod
+    def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, 'all')
+        post_list = get_soup_at_url(archive_url).find('ul', class_='post-list')
+        return reversed(post_list.find_all('a', class_='post-link'))
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_elt):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+        }
+
+
 class ThingsInSquares(GenericListableComic):
     """Class to retrieve Things In Squares comics."""
     # This can be retrieved in other languages

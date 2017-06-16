@@ -316,6 +316,7 @@ Comics supported
  * [Tubey Toons (from Tapastic)](http://tapastic.com/series/Tubey-Toons)
  * [Tubey Toons (from Tumblr)](https://tubeytoons.tumblr.com)
  * [Tumblr Dry (from Tapastic)](https://tapastic.com/series/TumbleDryComics)
+ * [Turn Off Us](http://turnoff.us)
  * [Twisted Doodles](http://www.twisteddoodles.com)
  * [Ubertool](http://ubertoolcomic.com)
  * [Ubertool (from Tapastic)](https://tapastic.com/series/ubertool)
