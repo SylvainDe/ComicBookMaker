@@ -5090,7 +5090,7 @@ class MisterAndMeTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/Mister-and-Me'
 
 
-class TalesOfAbsurdityTapa(GenericTapasticComic):
+class TalesOfAbsurdityTapa(GenericEmptyComic, GenericTapasticComic):
     """Class to retrieve Tales Of Absurdity comics."""
     # Also on http://talesofabsurdity.com
     # Also on http://talesofabsurdity.tumblr.com
