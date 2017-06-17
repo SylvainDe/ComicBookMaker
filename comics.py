@@ -5233,6 +5233,14 @@ class ItsTheTieTapa(GenericTapasticComic):
     _categories = ('TIE', )
 
 
+class MomentumTapa(GenericTapasticComic):
+    """Class to retrieve Momentum comics."""
+    # Also on http://www.momentumcomic.com
+    name = 'momentum-tapa'
+    long_name = 'Momentum (from Tapastic)'
+    url = 'https://tapastic.com/series/momentum'
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()

@@ -209,6 +209,7 @@ Comics supported
  * [Mister & Me (from GoComics)](http://www.gocomics.com/mister-and-me)
  * [Mister & Me (from Tapastic)](https://tapastic.com/series/Mister-and-Me)
  * [Art By Moga](http://artbymoga.tumblr.com)
+ * [Momentum (from Tapastic)](https://tapastic.com/series/momentum)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Moon Beard](http://moonbeard.com)
  * [Moon Beard (from Tumblr)](http://blog.squiresjam.es)
