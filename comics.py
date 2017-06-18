@@ -3312,6 +3312,30 @@ class MakeItStoopid(GenericNavigableComic):
         }
 
 
+class OffTheLeashDog(GenericNavigableComic):
+    """Class to retrieve Off The Leash Dog comics."""
+    # Also on http://rupertfawcettsdoggyblog.tumblr.com
+    # Also on http://www.rupertfawcettcartoons.com
+    name = 'offtheleash'
+    long_name = 'Off The Leash Dog'
+    url = 'http://offtheleashdogcartoons.com'
+    _categories = ('FAWCETT', )
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://offtheleashdogcartoons.com/uncategorized/can-i-help-you/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+        title = soup.find("h1", class_="entry-title").string
+        imgs = soup.find('div', class_='entry-content').find_all('img')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class MarketoonistComics(GenericNavigableComic):
     """Class to retrieve Marketoonist Comics."""
     name = 'marketoonist'
