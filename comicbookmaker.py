@@ -77,7 +77,7 @@ def main():
     comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
     logging.debug('Starting')
     for action in args.action:
-        method_name = arg_to_method.get(action, None)
+        method_name = arg_to_method.get(action)
         if method_name is not None:
             for com in comic_classes:
                 getattr(com, method_name)()

@@ -2206,7 +2206,7 @@ class ThingsInSquares(GenericListableComic):
 
     @classmethod
     def get_url_from_archive_element(cls, tr):
-        _, td2, td3 = tr.find_all('td')
+        _, td2, __ = tr.find_all('td')
         return td2.find('a')['href']
 
     @classmethod
@@ -2316,7 +2316,7 @@ class AnythingComic(GenericListableComic):
     @classmethod
     def get_url_from_archive_element(cls, tr):
         """Get url corresponding to an archive element."""
-        td_num, td_comic, td_date, _ = tr.find_all('td')
+        _, td_comic, td_date, _ = tr.find_all('td')
         link = td_comic.find('a')
         return urljoin_wrapper(cls.url, link['href'])
 
