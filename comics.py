@@ -572,7 +572,7 @@ class SpaceAvalanche(GenericNavigableComic):
         }
 
 
-class ZenPencils(GenericEmptyComic, GenericNavigableComic):
+class ZenPencils(GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
     # Also on http://zenpencils.tumblr.com
     # Also on http://www.gocomics.com/zen-pencils
@@ -591,16 +591,14 @@ class ZenPencils(GenericEmptyComic, GenericNavigableComic):
         # imgs2 = soup.find_all('meta', property='og:image')
         post = soup.find('div', class_='post-content')
         author = post.find("span", class_="post-author").find("a").string
-        title = soup.find('meta', property='og:title')['content']
+        title = soup.find('h2', class_='post-title').string
         date_str = post.find('span', class_='post-date').string
         day = string_to_date(date_str, "%B %d, %Y")
         assert imgs
         assert all(i['alt'] == i['title'] for i in imgs)
         assert all(i['alt'] in (title, "") for i in imgs)
-        desc = soup.find('meta', property='og:description')['content']
         return {
             'title': title,
-            'description': desc,
             'author': author,
             'day': day.day,
             'month': day.month,
