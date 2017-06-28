@@ -4455,8 +4455,17 @@ class IncidentalComicsTumblr(GenericTumblrV1):
     url = 'http://incidentalcomics.tumblr.com'
 
 
-class HorovitzComics(GenericListableComic):
+class HorovitzComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Horovitz new comics."""
+    # Also on http://www.horovitzcomics.com
+    name = 'horovitz-tumblr'
+    long_name = 'Horovitz (from Tumblr)'
+    url = 'https://horovitzcomics.tumblr.com'
+
+
+class HorovitzComics(GenericEmptyComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
+    # Also on https://horovitzcomics.tumblr.com
     url = 'http://www.horovitzcomics.com'
     _categories = ('HOROVITZ', )
     img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')

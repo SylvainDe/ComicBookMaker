@@ -171,6 +171,7 @@ Comics supported
  * [Hit and Miss Comics](https://hitandmisscomics.tumblr.com)
  * [HM Blanc](http://hmblanc.tumblr.com)
  * [Hoomph](http://hoom.ph)
+ * [Horovitz (from Tumblr)](https://horovitzcomics.tumblr.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)
  * [Hot Comics For Cool People (from Tapastic)](https://tapastic.com/series/Hot-Comics-For-Cool-People)
