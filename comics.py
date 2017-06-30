@@ -2298,6 +2298,34 @@ class FatAwesomeComics(GenericNavigableComic):
         }
 
 
+class JuliasDrawings(GenericListableComic):
+    """Class to retrieve Julia's Drawings."""
+    name = 'julia'
+    long_name = "Julia's Drawings"
+    url = 'https://drawings.jvns.ca'
+    get_url_from_archive_element = get_href
+
+    @classmethod
+    def get_archive_elements(cls):
+        articles = get_soup_at_url(cls.url).find_all('article', class_='li post')
+        return [art.find('a') for art in reversed(articles)]
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_elt):
+        """Get information about a particular comics."""
+        date_str = soup.find('meta', property='og:article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        title = soup.find('h3', class_='p-post-title').string
+        imgs = soup.find('section', class_='post-content').find_all('img')
+        return {
+            'title': title,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class AnythingComic(GenericListableComic):
     """Class to retrieve Anything Comics."""
     # Also on http://tapastic.com/series/anything

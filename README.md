@@ -186,6 +186,7 @@ Comics supported
  * [Jake Likes Onions](http://jakelikesonions.com)
  * [My Jet Pack](http://myjetpack.tumblr.com)
  * [Jhall Comics (from Tumblr)](http://jhallcomics.tumblr.com)
+ * [Julia's Drawings](https://drawings.jvns.ca)
  * [Just Say Eh](http://www.justsayeh.com)
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
