@@ -5282,6 +5282,14 @@ class RockPaperCynicTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/rockpapercynic'
 
 
+class IsItCanonTapa(GenericTapasticComic):
+    """Class to retrieve Is It Canon comics."""
+    # Also on http://www.isitcanon.com
+    name = 'canon-tapa'
+    long_name = 'Is It Canon (from Tapastic)'
+    url = 'http://tapastic.com/series/isitcanon'
+
+
 class ItsTheTieTapa(GenericTapasticComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.com

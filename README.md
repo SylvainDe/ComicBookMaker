@@ -97,6 +97,7 @@ Comics supported
  * [Calvin and Hobbes](http://marcel-oehler.marcellosendos.ch/comics/ch/)
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)
  * [Cancer Owl (from Tumblr)](http://cancerowl.tumblr.com)
+ * [Is It Canon (from Tapastic)](http://tapastic.com/series/isitcanon)
  * [Cassandra Calin (from Tapastic)](https://tapastic.com/series/C-Cassandra-comics)
  * [Cassandra Calin (from Tumblr)](http://c-cassandra.tumblr.com)
  * [Catana](http://www.catanacomics.com)
