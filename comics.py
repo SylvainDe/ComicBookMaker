@@ -4498,6 +4498,17 @@ class DeepDarkFearsTumblr(GenericTumblrV1):
     url = 'http://deep-dark-fears.tumblr.com'
 
 
+class JamesOfNoTradesTumblr(GenericTumblrV1):
+    """Class to retrieve JamesOfNoTrades comics."""
+    # Also on http://jamesofnotrades.com
+    # Also on http://www.webtoons.com/en/challenge/james-of-no-trades/list?title_no=43422
+    # Also on https://tapas.io/series/James-of-No-Trades
+    name = 'jamesofnotrades-tumblr'
+    long_name = 'James Of No Trades (from Tumblr)'
+    url = 'http://jamesfregan.tumblr.com'
+    _categories = ('JAMESOFNOTRADES', )
+
+
 class HorovitzComics(GenericEmptyComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5305,6 +5316,17 @@ class ItsTheTieTapa(GenericTapasticComic):
     long_name = "It's the tie (from Tapastic)"
     url = "https://tapastic.com/series/itsthetie"
     _categories = ('TIE', )
+
+
+class JamesOfNoTradesTapa(GenericTapasticComic):
+    """Class to retrieve JamesOfNoTrades comics."""
+    # Also on http://jamesofnotrades.com
+    # Also on http://www.webtoons.com/en/challenge/james-of-no-trades/list?title_no=43422
+    # Also on http://jamesfregan.tumblr.com
+    name = 'jamesofnotrades-tapa'
+    long_name = 'James Of No Trades (from Tapastic)'
+    url = 'https://tapas.io/series/James-of-No-Trades'
+    _categories = ('JAMESOFNOTRADES', )
 
 
 class MomentumTapa(GenericTapasticComic):
