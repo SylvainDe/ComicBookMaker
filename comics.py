@@ -4498,6 +4498,7 @@ class HorovitzComicsTumblr(GenericTumblrV1):
     name = 'horovitz-tumblr'
     long_name = 'Horovitz (from Tumblr)'
     url = 'https://horovitzcomics.tumblr.com'
+    _categories = ('HOROVITZ', )
 
 
 class DeepDarkFearsTumblr(GenericTumblrV1):
