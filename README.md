@@ -258,6 +258,8 @@ Comics supported
  * [Plan C](http://www.plancomic.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Pleasant Thoughts](http://pleasant-thoughts.com)
+ * [A Pleasant Waste Of Time (from Tapastic)](https://tapas.io/series/A-Pleasant-)
+ * [A Pleasant Waste Of Time (from Tumblr)](https://artjcf.tumblr.com)
  * [Pom Comics / Piece of Me](http://www.pomcomic.com)
  * [Pond Scum](http://pondscumcomic.tumblr.com)
  * [Poorly Drawn Lines](https://www.poorlydrawnlines.com)

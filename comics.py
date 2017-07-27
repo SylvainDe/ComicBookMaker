@@ -4483,6 +4483,15 @@ class IncidentalComicsTumblr(GenericTumblrV1):
     url = 'http://incidentalcomics.tumblr.com'
 
 
+class APleasantWasteOfTimeTumblr(GenericTumblrV1):
+    """Class to retrieve A Pleasant Waste Of Time comics."""
+    # Also on https://tapas.io/series/A-Pleasant-
+    name = 'pleasant-waste-tumblr'
+    long_name = 'A Pleasant Waste Of Time (from Tumblr)'
+    url = 'https://artjcf.tumblr.com'
+    _categories = ('WASTE', )
+
+
 class HorovitzComicsTumblr(GenericTumblrV1):
     """Class to retrieve Horovitz new comics."""
     # Also on http://www.horovitzcomics.com
@@ -5335,6 +5344,15 @@ class MomentumTapa(GenericTapasticComic):
     name = 'momentum-tapa'
     long_name = 'Momentum (from Tapastic)'
     url = 'https://tapastic.com/series/momentum'
+
+
+class APleasantWasteOfTimeTapa(GenericTapasticComic):
+    """Class to retrieve A Pleasant Waste Of Time comics."""
+    # Also on https://artjcf.tumblr.com
+    name = 'pleasant-waste-tapa'
+    long_name = 'A Pleasant Waste Of Time (from Tapastic)'
+    url = 'https://tapas.io/series/A-Pleasant-'
+    _categories = ('WASTE', )
 
 
 def get_subclasses(klass):
