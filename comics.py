@@ -4491,6 +4491,13 @@ class HorovitzComicsTumblr(GenericTumblrV1):
     url = 'https://horovitzcomics.tumblr.com'
 
 
+class DeepDarkFearsTumblr(GenericTumblrV1):
+    """Class to retrieve DeepvDarkvFears comics."""
+    name = 'deep-dark-fears-tumblr'
+    long_name = 'Deep Dark Fears (from Tumblr)'
+    url = 'http://deep-dark-fears.tumblr.com'
+
+
 class HorovitzComics(GenericEmptyComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
