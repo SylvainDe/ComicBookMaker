@@ -3244,17 +3244,17 @@ class PomComics(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', class_='btn_first')
+        return get_soup_at_url(cls.url).find('a', class_='btn-first')
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return last_soup.find('a', class_='btn_next' if next_ else 'btn_prev')
+        return last_soup.find('a', class_='btn-next' if next_ else 'btn-prev')
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find('h1', id="comic-name").string
+        title = soup.find('h1').string
         desc = soup.find('meta', property='og:description')['content']
         tags = soup.find('meta', attrs={'name': 'keywords'})['content']
         imgs = soup.find('div', class_='comic').find_all('img')
