@@ -5277,7 +5277,7 @@ class UbertoolTapa(GenericTapasticComic):
     _categories = ('UBERTOOL', )
 
 
-class BarteNerdsTapa(GenericTapasticComic):
+class BarteNerdsTapa(GenericEmptyComic, GenericTapasticComic):
     """Class to retrieve BarteNerds comics."""
     # Also on http://www.bartenerds.com
     name = 'bartenerds-tapa'
