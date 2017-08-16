@@ -359,9 +359,11 @@ class GenericEmptyComic(GenericComic):
 
 class ExtraFabulousComics(GenericNavigableComic):
     """Class to retrieve Extra Fabulous Comics."""
+    # Also on https://extrafabulouscomics.tumblr.com
     name = 'efc'
     long_name = 'Extra Fabulous Comics'
     url = 'http://extrafabulouscomics.com'
+    _categories = ('EFC', )
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
 
@@ -4508,6 +4510,15 @@ class DeepDarkFearsTumblr(GenericTumblrV1):
     name = 'deep-dark-fears-tumblr'
     long_name = 'Deep Dark Fears (from Tumblr)'
     url = 'http://deep-dark-fears.tumblr.com'
+
+
+class ExtraFabulousComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Extra Fabulous Comics."""
+    # Also on http://extrafabulouscomics.com
+    name = 'efc-tumblr'
+    long_name = 'Extra Fabulous Comics (from Tumblr)'
+    url = 'https://extrafabulouscomics.tumblr.com'
+    _categories = ('EFC', )
 
 
 class JamesOfNoTradesTumblr(GenericTumblrV1):

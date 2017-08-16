@@ -139,6 +139,7 @@ Comics supported
  * [Dustinteractive](http://dustinteractive.com)
  * [The Earth Explodes](http://www.earthexplodes.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
+ * [Extra Fabulous Comics (from Tumblr)](https://extrafabulouscomics.tumblr.com)
  * [Safely Endangered](http://www.safelyendangered.com)
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)
  * [My Extra Life](http://www.myextralife.com)
