@@ -4658,7 +4658,7 @@ class Brevity(GenericGoComic):
     """Class to retrieve Brevity comics."""
     name = 'brevity'
     long_name = 'Brevity'
-    url = 'http://www.gocomics.com/brevitypanel'
+    url = 'http://www.gocomics.com/brevity'
 
 
 class MichaelRamirez(GenericGoComic):
