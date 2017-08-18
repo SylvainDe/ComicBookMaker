@@ -66,6 +66,7 @@ Comics supported
  * [Anything Comic (from Tapastic)](http://tapastic.com/series/anything)
  * [Argyle Sweater](http://www.gocomics.com/theargylesweater)
  * [Amazing Super Powers](http://www.amazingsuperpowers.com)
+ * [At Random Comics](http://www.atrandomcomics.com)
  * [Aurel](http://aurel.blog.lemonde.fr)
  * [Space Avalanche](http://www.spaceavalanche.com)
  * [Ma vie est tout a fait fascinante (Bagieu)](http://www.penelope-jolicoeur.com)

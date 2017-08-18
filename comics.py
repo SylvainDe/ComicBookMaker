@@ -3517,6 +3517,40 @@ class GloryOwlComix(GenericNavigableComic):
         }
 
 
+class AtRandomComics(GenericNavigableComic):
+    """Class to retrieve At Random Comics."""
+    name = 'atrandom'
+    long_name = 'At Random Comics'
+    url = 'http://www.atrandomcomics.com'
+    get_url_from_link = join_cls_url_to_href
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.atrandomcomics.com/at-random-comics-home/2015/5/5/can-of-worms'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', id='prevLink' if next_ else 'nextLink')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('time', itemprop='datePublished')["datetime"]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        author = soup.find('a', rel='author').string
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'author': author,
+            'description': desc,
+        }
+
+
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
     _categories = ('TUMBLR', )
