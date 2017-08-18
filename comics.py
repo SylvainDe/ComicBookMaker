@@ -4566,6 +4566,13 @@ class JamesOfNoTradesTumblr(GenericTumblrV1):
     _categories = ('JAMESOFNOTRADES', )
 
 
+class InfiniteGuff(GenericTumblrV1):
+    """Class to retrieve Infinite Guff comics."""
+    name = 'infiniteguff'
+    long_name = 'Infinite Guff'
+    url = 'http://infiniteguff.com'
+
+
 class HorovitzComics(GenericEmptyComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com

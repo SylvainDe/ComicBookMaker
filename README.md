@@ -184,6 +184,7 @@ Comics supported
  * [Imogen Quest](http://imogenquest.net)
  * [Imogen Quest (from Tumblr)](http://imoquest.tumblr.com)
  * [Incidental Comics (from Tumblr)](http://incidentalcomics.tumblr.com)
+ * [Infinite Guff](http://infiniteguff.com)
  * [Invisible Bread](http://invisiblebread.com)
  * [In Your Face Cake (from Tumblr)](https://in-your-face-cake.tumblr.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
