@@ -1011,7 +1011,6 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         day = string_to_date(date_str, "%B %d, %Y")
         return {
             'title': image1['title'],
-            'img': [urljoin_wrapper(cls.url, i) for i in imgs],
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i)) for i in imgs],
             'day': day.day,
             'month': day.month,
