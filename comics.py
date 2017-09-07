@@ -3029,6 +3029,36 @@ class AHammADay(GenericEmptyComic, GenericNavigableComic):
         }
 
 
+class SystemComic(GenericNavigableComic):
+    """Class to retrieve System Comic."""
+    name = 'system'
+    long_name = 'System Comic'
+    url = 'http://www.systemcomic.com'
+    get_navi_link = get_a_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('li', class_='first').find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('time')["datetime"]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find('figure').find_all('img')
+        return {
+            'title': title,
+            'description': desc,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [i['src'] for i in imgs],
+        }
+
+
 class LittleLifeLines(GenericNavigableComic):
     """Class to retrieve Little Life Lines comics."""
     # Also on https://little-life-lines.tumblr.com

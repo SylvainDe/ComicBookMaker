@@ -308,6 +308,7 @@ Comics supported
  * [Sunny Street](http://www.gocomics.com/sunny-street)
  * [Our Super Adventure (from Tapastic)](https://tapastic.com/series/Our-Super-Adventure)
  * [Our Super Adventure (from Tumblr)](http://sarahssketchbook.tumblr.com)
+ * [System Comic](http://www.systemcomic.com)
  * [Shanghai Tango](http://tango2010weibo.tumblr.com)
  * [The Ism](http://www.theism-comics.com)
  * [The Odd 1s Out (from Tapastic)](https://tapastic.com/series/Theodd1sout)
