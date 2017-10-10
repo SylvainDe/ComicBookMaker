@@ -4587,6 +4587,14 @@ class ExtraFabulousComicsTumblr(GenericTumblrV1):
     _categories = ('EFC', )
 
 
+class AlexLevesque(GenericTumblrV1):
+    """Class to retrieve AlexLevesque comics."""
+    name = 'alevesque'
+    long_name = 'Alex Levesque'
+    url = 'http://alexlevesque.com'
+    _categories = ('FRANCAIS', )
+
+
 class JamesOfNoTradesTumblr(GenericTumblrV1):
     """Class to retrieve JamesOfNoTrades comics."""
     # Also on http://jamesofnotrades.com
