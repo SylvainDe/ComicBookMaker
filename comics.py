@@ -357,6 +357,33 @@ class GenericEmptyComic(GenericComic):
         return []
 
 
+class GenericComicNotWorking(GenericEmptyComic):
+    """Subclass of GenericEmptyComic used when comic is not working.
+
+    This is more explicit than GenericEmptyComic as it hilights that
+    only the implementation is not working and it can be fixed."""
+    _categories = ('NOTWORKING', )
+
+
+class GenericUnavailableComic(GenericEmptyComic):
+    """Subclass of GenericEmptyComic used when a comic is not available.
+
+    This is more explicit than GenericEmptyComic as it hilights that
+    the source of the comic is not available but we expect it to be back
+    soonish. See also GenericDeletedComic."""
+    _categories = ('UNAVAILABLE', )
+
+
+class GenericDeletedComic(GenericEmptyComic):
+    """Subclass of GenericEmptyComic used when a comic does not exist anymore.
+
+    This is more explicit than GenericEmptyComic as it hilights that
+    the source of the comic does not exist anymore and it probably cannot
+    be fixed. Corresponding classes are kept as we can still use the
+    downloaded data. See also GenericUnavailableComic."""
+    _categories = ('DELETED', )
+
+
 class ExtraFabulousComics(GenericNavigableComic):
     """Class to retrieve Extra Fabulous Comics."""
     # Also on https://extrafabulouscomics.tumblr.com
@@ -475,7 +502,7 @@ class UneAnneeAuLycee(GenericLeMondeBlog):
     first_url = "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
 
 
-class Rall(GenericNavigableComic):
+class Rall(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
     # Also on http://www.gocomics.com/tedrall
     name = 'rall'
@@ -609,7 +636,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericEmptyComic, GenericNavigableComic):
+class ItsTheTie(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
@@ -671,7 +698,7 @@ class PenelopeBagieu(GenericNavigableComic):
         }
 
 
-class OneOneOneOneComic(GenericEmptyComic, GenericNavigableComic):
+class OneOneOneOneComic(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
     # Also on http://comics1111.tumblr.com
     # Also on https://tapastic.com/series/1111-Comics
@@ -698,7 +725,7 @@ class OneOneOneOneComic(GenericEmptyComic, GenericNavigableComic):
         }
 
 
-class AngryAtNothing(GenericEmptyComic, GenericNavigableComic):
+class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Angry at Nothing comics."""
     # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
     # Also on http://angryatnothing.tumblr.com
@@ -820,7 +847,7 @@ class Dilbert(GenericNavigableComic):
         }
 
 
-class VictimsOfCircumsolar(GenericEmptyComic, GenericNavigableComic):
+class VictimsOfCircumsolar(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve VictimsOfCircumsolar comics."""
     # Also on https://victimsofcomics.tumblr.com
     name = 'circumsolar'
@@ -879,7 +906,7 @@ class ThreeWordPhrase(GenericNavigableComic):
         }
 
 
-class DeadlyPanel(GenericEmptyComic, GenericNavigableComic):
+class DeadlyPanel(GenericComicNotWorking, GenericNavigableComic):  # Not working on my machine
     """Class to retrieve Deadly Panel comics."""
     # Also on https://tapastic.com/series/deadlypanel
     # Also on https://deadlypanel.tumblr.com
@@ -1479,7 +1506,7 @@ class PhDComics(GenericNavigableComic):
         }
 
 
-class Octopuns(GenericEmptyComic, GenericNavigableComic):
+class Octopuns(GenericComicNotWorking, GenericNavigableComic):  # Website has changed
     """Class to retrieve Octopuns comics."""
     # Also on http://octopuns.tumblr.com
     name = 'octopuns'
@@ -1633,7 +1660,7 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
         }
 
 
-class SomethingOfThatIlk(GenericEmptyComic):  # Does not exist anymore
+class SomethingOfThatIlk(GenericDeletedComic):
     """Class to retrieve the Something Of That Ilk comics."""
     name = 'somethingofthatilk'
     long_name = 'Something Of That Ilk'
@@ -1746,7 +1773,7 @@ class JustSayEh(GenericNavigableComic):
         }
 
 
-class MouseBearComedy(GenericNavigableComic):
+class MouseBearComedy(GenericComicNotWorking):  # Website has changed
     """Class to retrieve Mouse Bear Comedy comics."""
     # Also on http://mousebearcomedy.tumblr.com
     name = 'mousebear'
@@ -1917,7 +1944,7 @@ class Penmen(GenericNavigableComic):
         }
 
 
-class TheDoghouseDiaries(GenericNavigableComic):
+class TheDoghouseDiaries(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
@@ -1986,14 +2013,14 @@ class InvisibleBread(GenericListableComic):
         }
 
 
-class DiscoBleach(GenericEmptyComic):  # Does not work anymore
+class DiscoBleach(GenericDeletedComic):
     """Class to retrieve Disco Bleach Comics."""
     name = 'discobleach'
     long_name = 'Disco Bleach'
     url = 'http://discobleach.com'
 
 
-class TubeyToons(GenericEmptyComic):  # Does not work anymore
+class TubeyToons(GenericDeletedComic):
     """Class to retrieve TubeyToons comics."""
     # Also on http://tapastic.com/series/Tubey-Toons
     # Also on https://tubeytoons.tumblr.com
@@ -2501,7 +2528,7 @@ class GerbilWithAJetpack(GenericNavigableComic):
         }
 
 
-class EveryDayBlues(GenericEmptyComic, GenericNavigableComic):
+class EveryDayBlues(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve EveryDayBlues Comics."""
     name = "blues"
     long_name = "Every Day Blues"
@@ -2702,7 +2729,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
         }
 
 
-class EndlessOrigami(GenericEmptyComic, GenericNavigableComic):
+class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not working
     """Class to retrieve Endless Origami Comics."""
     name = "origami"
     long_name = "Endless Origami"
@@ -2995,7 +3022,7 @@ class MoonBeard(GenericNavigableComic):
         }
 
 
-class AHammADay(GenericEmptyComic, GenericNavigableComic):
+class AHammADay(GenericComicNotWorking, GenericNavigableComic):  # Website has changed
     """Class to retrieve class A Hamm A Day comics."""
     name = 'hamm'
     long_name = 'A Hamm A Day'
@@ -3298,7 +3325,7 @@ class PomComics(GenericNavigableComic):
         }
 
 
-class CubeDrone(GenericEmptyComic, GenericNavigableComic):
+class CubeDrone(GenericComicNotWorking, GenericNavigableComic):  # Website has changed
     """Class to retrieve Cube Drone comics."""
     name = 'cubedrone'
     long_name = 'Cube Drone'
@@ -3335,7 +3362,7 @@ class CubeDrone(GenericEmptyComic, GenericNavigableComic):
         }
 
 
-class MakeItStoopid(GenericNavigableComic):
+class MakeItStoopid(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Make It Stoopid Comics."""
     name = 'stoopid'
     long_name = 'Make it stoopid'
@@ -4124,7 +4151,7 @@ class DorrisMc(GenericTumblrV1):
     url = 'http://dorrismccomics.com'
 
 
-class LeleozTumblr(GenericEmptyComic, GenericTumblrV1):
+class LeleozTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Leleoz comics."""
     # Also on https://tapastic.com/series/Leleoz
     name = 'leleoz-tumblr'
@@ -4380,7 +4407,7 @@ class UbertoolTumblr(GenericTumblrV1):
     _categories = ('UBERTOOL', )
 
 
-class LittleLifeLinesTumblr(GenericTumblrV1):
+class LittleLifeLinesTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Little Life Lines comics."""
     # Also on http://www.littlelifelines.com
     name = 'life-tumblr'
@@ -4476,7 +4503,7 @@ class DeadlyPanelTumblr(GenericTumblrV1):
     url = 'https://deadlypanel.tumblr.com'
 
 
-class CatanaComics(GenericTumblrV1):
+class CatanaComics(GenericComicNotWorking):  # Not a Tumblr anymore ?
     """Class to retrieve Catana comics."""
     name = 'catana'
     long_name = 'Catana'
@@ -4620,7 +4647,7 @@ class InfiniteGuff(GenericTumblrV1):
     url = 'http://infiniteguff.com'
 
 
-class HorovitzComics(GenericEmptyComic, GenericListableComic):
+class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
     url = 'http://www.horovitzcomics.com'
@@ -4925,7 +4952,7 @@ class FoxTrotClassics(GenericGoComic):
     url = 'http://www.gocomics.com/foxtrotclassics'
 
 
-class MisterAndMeGoComics(GenericEmptyComic, GenericGoComic):  # Removed ?
+class MisterAndMeGoComics(GenericDeletedComic, GenericGoComic):
     """Class to retrieve Mister & Me Comics."""
     # Also on http://www.mister-and-me.com
     # Also on https://tapastic.com/series/Mister-and-Me
@@ -5216,7 +5243,7 @@ class ChrisHallbeckMaxiTapa(GenericTapasticComic):
     _categories = ('HALLBACK', )
 
 
-class ChrisHallbeckMiniTapa(GenericEmptyComic, GenericTapasticComic):
+class ChrisHallbeckMiniTapa(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://minimumble.com
@@ -5226,7 +5253,7 @@ class ChrisHallbeckMiniTapa(GenericEmptyComic, GenericTapasticComic):
     _categories = ('HALLBACK', )
 
 
-class ChrisHallbeckBiffTapa(GenericEmptyComic, GenericTapasticComic):
+class ChrisHallbeckBiffTapa(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve Chris Hallbeck comics."""
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
@@ -5278,7 +5305,7 @@ class MisterAndMeTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/Mister-and-Me'
 
 
-class TalesOfAbsurdityTapa(GenericEmptyComic, GenericTapasticComic):
+class TalesOfAbsurdityTapa(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve Tales Of Absurdity comics."""
     # Also on http://talesofabsurdity.com
     # Also on http://talesofabsurdity.tumblr.com
@@ -5339,7 +5366,7 @@ class YesterdaysPopcornTapastic(GenericTapasticComic):
     url = 'https://tapastic.com/series/Yesterdays-Popcorn'
 
 
-class OurSuperAdventureTapastic(GenericEmptyComic, GenericTapasticComic):
+class OurSuperAdventureTapastic(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve Our Super Adventure comics."""
     # Also on http://www.oursuperadventure.com
     # http://sarahssketchbook.tumblr.com
@@ -5376,7 +5403,7 @@ class UbertoolTapa(GenericTapasticComic):
     _categories = ('UBERTOOL', )
 
 
-class BarteNerdsTapa(GenericEmptyComic, GenericTapasticComic):
+class BarteNerdsTapa(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve BarteNerds comics."""
     # Also on http://www.bartenerds.com
     name = 'bartenerds-tapa'
