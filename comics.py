@@ -4578,6 +4578,13 @@ class DeepDarkFearsTumblr(GenericTumblrV1):
     url = 'http://deep-dark-fears.tumblr.com'
 
 
+class DakotaMcDadzean(GenericTumblrV1):
+    """Class to retrieve Dakota McDadzean comics."""
+    name = 'dakota'
+    long_name = 'Dakota McDadzean'
+    url = 'http://dakotamcfadzean.tumblr.com'
+
+
 class ExtraFabulousComicsTumblr(GenericTumblrV1):
     """Class to retrieve Extra Fabulous Comics."""
     # Also on http://extrafabulouscomics.com

@@ -121,6 +121,7 @@ Comics supported
  * [Les Culottees](http://lesculottees.blog.lemonde.fr)
  * [Cyanide and Happiness](http://explosm.net)
  * [Dagsson Hugleikur (from Tumblr)](https://hugleikurdagsson.tumblr.com)
+ * [Dakota McDadzean](http://dakotamcfadzean.tumblr.com)
  * [Deadly Panel](http://www.deadlypanel.com)
  * [Deadly Panel (from Tapastic)](https://tapastic.com/series/deadlypanel)
  * [Deadly Panel (from Tumblr)](https://deadlypanel.tumblr.com)
