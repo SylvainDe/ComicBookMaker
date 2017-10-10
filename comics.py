@@ -4331,11 +4331,13 @@ class JakeLikesOnions(GenericTumblrV1):
     url = 'http://jakelikesonions.com'
 
 
-class InYourFaceCake(GenericTumblrV1):
+class InYourFaceCakeTumblr(GenericTumblrV1):
     """Class to retrieve In Your Face Cake comics."""
+    # Also on https://tapas.io/series/In-Your-Face-Cake
     name = 'inyourfacecake-tumblr'
     long_name = 'In Your Face Cake (from Tumblr)'
     url = 'https://in-your-face-cake.tumblr.com'
+    _categories = ('INYOURFACECAKE', )
 
 
 class Robospunk(GenericTumblrV1):
@@ -5429,6 +5431,15 @@ class MomentumTapa(GenericTapasticComic):
     name = 'momentum-tapa'
     long_name = 'Momentum (from Tapastic)'
     url = 'https://tapastic.com/series/momentum'
+
+
+class InYourFaceCakeTapa(GenericTapasticComic):
+    """Class to retrieve In Your Face Cake comics."""
+    # Also on https://in-your-face-cake.tumblr.com
+    name = 'inyourfacecake-tapa'
+    long_name = 'In Your Face Cake (from Tapastic)'
+    url = 'https://tapas.io/series/In-Your-Face-Cake'
+    _categories = ('INYOURFACECAKE', )
 
 
 class APleasantWasteOfTimeTapa(GenericTapasticComic):

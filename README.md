@@ -186,6 +186,7 @@ Comics supported
  * [Incidental Comics (from Tumblr)](http://incidentalcomics.tumblr.com)
  * [Infinite Guff](http://infiniteguff.com)
  * [Invisible Bread](http://invisiblebread.com)
+ * [In Your Face Cake (from Tapastic)](https://tapas.io/series/In-Your-Face-Cake)
  * [In Your Face Cake (from Tumblr)](https://in-your-face-cake.tumblr.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
  * [Jake Likes Onions](http://jakelikesonions.com)
