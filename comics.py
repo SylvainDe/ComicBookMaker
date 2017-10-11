@@ -4647,6 +4647,13 @@ class InfiniteGuff(GenericTumblrV1):
     url = 'http://infiniteguff.com'
 
 
+class SkeletonClaw(GenericTumblrV1):
+    """Class to retrieve Skeleton Claw comics."""
+    name = 'skeletonclaw'
+    long_name = 'Skeleton Claw'
+    url = 'http://skeletonclaw.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
