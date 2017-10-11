@@ -1215,12 +1215,11 @@ class ToonHole(GenericNavigableComic):
     long_name = 'Toon Hole'
     url = 'http://www.toonhole.com'
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
-    get_navi_link = get_link_rel_next
+    get_navi_link = get_a_comicnavbase_comicnavnext
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        short_url = soup.find('link', rel='shortlink')['href']
         date_str = soup.find('div', class_='entry-meta').contents[0].strip()
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
@@ -1231,7 +1230,6 @@ class ToonHole(GenericNavigableComic):
         else:
             title = ""
         return {
-            'short_url': short_url,
             'title': title,
             'month': day.month,
             'year': day.year,
