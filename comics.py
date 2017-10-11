@@ -3161,7 +3161,7 @@ class EverythingsStupid(GenericWordPressInkblot):
     url = 'http://everythingsstupid.net'
 
 
-class TheIsmComics(GenericWordPressInkblot):
+class TheIsmComics(GenericDeletedComic, GenericWordPressInkblot):
     """Class to retrieve The Ism Comics."""
     # Also on https://tapastic.com/series/TheIsm (?)
     name = 'theism'
