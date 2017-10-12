@@ -3020,39 +3020,6 @@ class MoonBeard(GenericNavigableComic):
         }
 
 
-class AHammADay(GenericComicNotWorking, GenericNavigableComic):  # Website has changed
-    """Class to retrieve class A Hamm A Day comics."""
-    name = 'hamm'
-    long_name = 'A Hamm A Day'
-    url = 'http://www.ahammaday.com'
-    get_url_from_link = join_cls_url_to_href
-    get_first_comic_link = simulate_first_link
-    first_url = 'http://www.ahammaday.com/today/3/6/french'
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        """Get link to next or previous comic."""
-        # prev is next / next is prev
-        return last_soup.find('li', class_='previous' if next_ else 'next').find('a')
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        date_str = soup.find('time', class_='published')['datetime']
-        day = string_to_date(date_str, "%Y-%m-%d")
-        author = soup.find('span', class_='blog-author').find('a').string
-        title = soup.find('meta', property='og:title')['content']
-        imgs = soup.find_all('meta', itemprop='image')
-        return {
-            'img': [i['content'] for i in imgs],
-            'title': title,
-            'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
-        }
-
-
 class SystemComic(GenericNavigableComic):
     """Class to retrieve System Comic."""
     name = 'system'
@@ -3717,6 +3684,13 @@ class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     long_name = 'Saturday Morning Breakfast Cereal (from Tumblr)'
     url = 'http://smbc-comics.tumblr.com'
     _categories = ('SMBC', )
+
+
+class AHammADay(GenericTumblrV1):
+    """Class to retrieve class A Hamm A Day comics."""
+    name = 'hamm'
+    long_name = 'A Hamm A Day'
+    url = 'http://www.ahammaday.com'
 
 
 class IrwinCardozo(GenericTumblrV1):
