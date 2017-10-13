@@ -391,8 +391,9 @@ class ExtraFabulousComics(GenericNavigableComic):
     long_name = 'Extra Fabulous Comics'
     url = 'http://extrafabulouscomics.com'
     _categories = ('EFC', )
-    get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://extrafabulouscomics.com/comic/buttfly/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
