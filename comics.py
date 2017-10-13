@@ -3444,19 +3444,25 @@ class ConsoliaComics(GenericNavigableComic):
         }
 
 
-class TuMourrasMoinsBete(GenericNavigableComic):
-    """Class to retrieve Tu Mourras Moins Bete comics."""
-    name = 'mourrasmoinsbete'
-    long_name = 'Tu Mourras Moins Bete'
-    url = 'http://tumourrasmoinsbete.blogspot.fr'
-    _categories = ('FRANCAIS', )
+class GenericBlogspotComic(GenericNavigableComic):
+    """Generic class to retrieve comics from Blogspot."""
     get_first_comic_link = simulate_first_link
-    first_url = 'http://tumourrasmoinsbete.blogspot.fr/2008/06/essai.html'
+    first_url = NotImplemented
+    _categories = ('BLOGSPOT', )
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
         return last_soup.find('a', id='Blog1_blog-pager-newer-link' if next_ else 'Blog1_blog-pager-older-link')
+
+
+class TuMourrasMoinsBete(GenericBlogspotComic):
+    """Class to retrieve Tu Mourras Moins Bete comics."""
+    name = 'mourrasmoinsbete'
+    long_name = 'Tu Mourras Moins Bete'
+    url = 'http://tumourrasmoinsbete.blogspot.fr'
+    _categories = ('FRANCAIS', )
+    first_url = 'http://tumourrasmoinsbete.blogspot.fr/2008/06/essai.html'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3511,19 +3517,13 @@ class GeekAndPoke(GenericNavigableComic):
         }
 
 
-class GloryOwlComix(GenericNavigableComic):
+class GloryOwlComix(GenericBlogspotComic):
     """Class to retrieve Glory Owl comics."""
     name = 'gloryowl'
     long_name = 'Glory Owl'
     url = 'http://gloryowlcomix.blogspot.fr'
     _categories = ('NSFW', 'FRANCAIS')
-    get_first_comic_link = simulate_first_link
     first_url = 'http://gloryowlcomix.blogspot.fr/2013/02/1_7.html'
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        """Get link to next or previous comic."""
-        return last_soup.find('a', id='Blog1_blog-pager-newer-link' if next_ else 'Blog1_blog-pager-older-link')
 
     @classmethod
     def get_comic_info(cls, soup, link):
