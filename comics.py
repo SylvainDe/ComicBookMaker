@@ -2217,7 +2217,7 @@ class ThingsInSquares(GenericListableComic):
         desc = soup.find('meta', property='og:description')
         description = desc['content'] if desc else ''
         tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
-        imgs = soup.find('div', class_='entry-content').find_all('img')
+        imgs = soup.find_all('meta', property='og:image')
         return {
             'day': day.day,
             'month': day.month,
@@ -2226,8 +2226,7 @@ class ThingsInSquares(GenericListableComic):
             'title2': title2,
             'description': description,
             'tags': tags,
-            'img': [i['src'] for i in imgs],
-            'alt': ' '.join(i['alt'] for i in imgs),
+            'img': [i['content'] for i in imgs],
         }
 
     @classmethod
