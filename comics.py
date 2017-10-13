@@ -3378,7 +3378,6 @@ class OffTheLeashDog(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        print(link)
         title = soup.find("h1", class_="entry-title").string
         imgs = soup.find('div', class_='entry-content').find_all('img')
         return {
