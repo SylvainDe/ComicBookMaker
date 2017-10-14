@@ -1505,40 +1505,6 @@ class PhDComics(GenericNavigableComic):
         }
 
 
-class Octopuns(GenericComicNotWorking, GenericNavigableComic):  # Website has changed
-    """Class to retrieve Octopuns comics."""
-    # Also on http://octopuns.tumblr.com
-    name = 'octopuns'
-    long_name = 'Octopuns'
-    url = 'http://www.octopuns.net'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('img', src=re.compile('.*/First.png')).parent
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        """Get link to next or previous comic."""
-        link = last_soup.find('img', src=re.compile('.*/Next.png' if next_ else '.*/Back.png')).parent
-        return None if link.get('href') is None else link
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find('h3', class_='post-title entry-title').string
-        date_str = soup.find('h2', class_='date-header').string
-        day = string_to_date(date_str, "%A, %B %d, %Y")
-        imgs = soup.find_all('link', rel='image_src')
-        return {
-            'img': [i['href'] for i in imgs],
-            'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
-        }
-
-
 class Quarktees(GenericNavigableComic):
     """Class to retrieve the Quarktees comics."""
     name = 'quarktees'
@@ -3474,6 +3440,30 @@ class TuMourrasMoinsBete(GenericBlogspotComic):
             'img': [i['src'] for i in imgs],
             'author': author,
             'title': title,
+        }
+
+
+class Octopuns(GenericBlogspotComic):
+    """Class to retrieve Octopuns comics."""
+    # Also on http://octopuns.tumblr.com
+    name = 'octopuns'
+    long_name = 'Octopuns'
+    url = 'http://www.octopuns.net'  # or http://octopuns.blogspot.fr/
+    first_url = 'http://octopuns.blogspot.com/2010/12/17122010-always-read-label.html'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h3', class_='post-title entry-title').string
+        date_str = soup.find('h2', class_='date-header').string
+        day = string_to_date(date_str, "%A, %B %d, %Y")
+        imgs = soup.find_all('link', rel='image_src')
+        return {
+            'img': [i['href'] for i in imgs],
+            'title': title,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
         }
 
 
