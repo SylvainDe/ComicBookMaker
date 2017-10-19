@@ -92,6 +92,7 @@ Comics supported
  * [Boumeries (Fr)](http://bd.boumerie.com)
  * [Break Of Day](http://www.gocomics.com/break-of-day)
  * [Brevity](http://www.gocomics.com/brevity)
+ * [Brooklyn Cartoons (from Tumblr)](http://brooklyncartoons.tumblr.com)
  * [BuniComics](http://www.bunicomic.com)
  * [Electric Bunny Comic](http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell)
  * [Electric Bunny Comic (from Tumblr)](http://electricbunnycomics.tumblr.com)

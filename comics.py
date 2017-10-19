@@ -4615,6 +4615,15 @@ class SkeletonClaw(GenericTumblrV1):
     url = 'http://skeletonclaw.com'
 
 
+class BrooklynCartoonsTumblr(GenericTumblrV1):
+    """Class to retrieve Brooklyn Cartoons."""
+    # Also on https://www.brooklyncartoons.com
+    # Also on https://www.instagram.com/brooklyncartoons
+    name = 'brooklyn-tumblr'
+    long_name = 'Brooklyn Cartoons (from Tumblr)'
+    url = 'http://brooklyncartoons.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
