@@ -68,7 +68,7 @@ def get_content(url):
     try:
         return urlopen_wrapper(url).read()
     except http.client.IncompleteRead as e:
-        print("Incomplete read of %s (%d more bytes expected)" % (url, e.expected))
+        print("%s for %s" % (e, url))
         return e.partial
 
 
