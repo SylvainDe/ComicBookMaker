@@ -164,6 +164,7 @@ Comics supported
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)
  * [Glory Owl](http://gloryowlcomix.blogspot.fr)
+ * [Good Bear Comics (from Tumblr)](https://goodbearcomics.tumblr.com)
  * [Xavier Gorce](http://xaviergorce.blog.lemonde.fr)
  * [The Grohl Troll](http://thegrohltroll.com)
  * [Chris Hallback (from Tumblr)](https://chrishallbeck.tumblr.com)

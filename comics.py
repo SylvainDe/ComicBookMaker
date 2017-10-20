@@ -4615,6 +4615,14 @@ class SkeletonClaw(GenericTumblrV1):
     url = 'http://skeletonclaw.com'
 
 
+class GoodBearComicsTumblr(GenericTumblrV1):
+    """Class to retrieve GoodBearComics."""
+    # Also on https://goodbearcomics.com
+    name = 'goodbear-tumblr'
+    long_name = 'Good Bear Comics (from Tumblr)'
+    url = 'https://goodbearcomics.tumblr.com'
+
+
 class BrooklynCartoonsTumblr(GenericTumblrV1):
     """Class to retrieve Brooklyn Cartoons."""
     # Also on https://www.brooklyncartoons.com
