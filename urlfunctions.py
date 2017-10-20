@@ -134,7 +134,7 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False, save_in_file=False
     detect_meta is a hacky flag used to detect comics using similar plugin to
         be able to reuse code at some point
     detect_rel is a hacky flag to detect next/first comics automatically
-    save_in_file is a hacky flag to save content in temp file for bebugging
+    save_in_file is a hacky flag to save content in temp file for debugging
         purposes
     Returns a BeautifulSoup object."""
     content = get_content(url)
