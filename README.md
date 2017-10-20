@@ -287,6 +287,7 @@ Comics supported
  * [Respawn Comic (from Tumblr)](https://respawncomic.tumblr.com)
  * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
  * [Robospunk](http://robospunk.com)
+ * [Robotatertot (from Tumblr)](https://robotatertot.tumblr.com)
  * [Mandatory Roller Coaster](http://mandatoryrollercoaster.com)
  * [Rock Paper Cynic (from Tapastic)](https://tapastic.com/series/rockpapercynic)
  * [Rock Paper Cynic (from Tumblr)](http://rockpapercynic.tumblr.com)

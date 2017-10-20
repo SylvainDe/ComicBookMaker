@@ -4632,6 +4632,14 @@ class BrooklynCartoonsTumblr(GenericTumblrV1):
     url = 'http://brooklyncartoons.tumblr.com'
 
 
+class RobotatertotTumblr(GenericTumblrV1):
+    """Class to retrieve Robotatertot comics."""
+    # Also on https://www.instagram.com/robotatertotcomics
+    name = 'robotatertot-tumblr'
+    long_name = 'Robotatertot (from Tumblr)'
+    url = 'https://robotatertot.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
