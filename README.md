@@ -160,6 +160,7 @@ Comics supported
  * [Fowl Language Comics (from Tumblr)](http://fowllanguagecomics.tumblr.com)
  * [FoxTrot](http://www.gocomics.com/foxtrot)
  * [FoxTrot Classics](http://www.gocomics.com/foxtrotclassics)
+ * [Mrs Frollein (from Tumblr)](https://mrsfrollein.tumblr.com)
  * [Garfield](https://garfield.com)
  * [Garfield (from GoComics)](http://www.gocomics.com/garfield)
  * [Geek And Poke](http://geek-and-poke.com)

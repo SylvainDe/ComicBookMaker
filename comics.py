@@ -4615,6 +4615,14 @@ class SkeletonClaw(GenericTumblrV1):
     url = 'http://skeletonclaw.com'
 
 
+class MrsFrolleinTumblr(GenericTumblrV1):
+    """Class to retrieve Mrs Frollein comics."""
+    # Also on http://www.webtoons.com/en/challenge/mrsfrollein/list?title_no=51710
+    name = 'frollein'
+    long_name = 'Mrs Frollein (from Tumblr)'
+    url = 'https://mrsfrollein.tumblr.com'
+
+
 class GoodBearComicsTumblr(GenericTumblrV1):
     """Class to retrieve GoodBearComics."""
     # Also on https://goodbearcomics.com
