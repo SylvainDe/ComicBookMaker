@@ -115,6 +115,8 @@ Comics supported
  * [Completely Serious Comics](http://completelyseriouscomics.com)
  * [consolia](https://consolia-comic.com)
  * [Joan Cornella (from Tumblr)](http://cornellajoan.tumblr.com)
+ * [Cowardly Comics (from Tapastic)](https://tapas.io/series/CowardlyComics)
+ * [Cowardly Comics (from Tumblr)](http://cowardlycomics.tumblr.com)
  * [C Est Pas En Regardant Ses Pompes (...)](http://marcoandco.tumblr.com)
  * [Cube Drone](http://cube-drone.com/comics)
  * [Cheer Up Emo Kid (from Tapastic)](http://tapastic.com/series/CUEK)

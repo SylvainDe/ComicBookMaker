@@ -4640,6 +4640,15 @@ class RobotatertotTumblr(GenericTumblrV1):
     url = 'https://robotatertot.tumblr.com'
 
 
+class CowardlyComicsTumblr(GenericTumblrV1):
+    """Class to retrieve Cowardly Comics."""
+    # Also on https://tapas.io/series/CowardlyComics
+    # Also on http://www.webtoons.com/en/challenge/cowardly-comics/list?title_no=65893
+    name = 'cowardly-tumblr'
+    long_name = 'Cowardly Comics (from Tumblr)'
+    url = 'http://cowardlycomics.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5475,6 +5484,15 @@ class InYourFaceCakeTapa(GenericTapasticComic):
     long_name = 'In Your Face Cake (from Tapastic)'
     url = 'https://tapas.io/series/In-Your-Face-Cake'
     _categories = ('INYOURFACECAKE', )
+
+
+class CowardlyComicsTapa(GenericTapasticComic):
+    """Class to retrieve Cowardly Comics."""
+    # Also on http://cowardlycomics.tumblr.com
+    # Also on http://www.webtoons.com/en/challenge/cowardly-comics/list?title_no=65893
+    name = 'cowardly-tapa'
+    long_name = 'Cowardly Comics (from Tapastic)'
+    url = 'https://tapas.io/series/CowardlyComics'
 
 
 class APleasantWasteOfTimeTapa(GenericTapasticComic):
