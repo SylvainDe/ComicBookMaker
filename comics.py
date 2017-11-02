@@ -4640,6 +4640,13 @@ class BrooklynCartoonsTumblr(GenericTumblrV1):
     url = 'http://brooklyncartoons.tumblr.com'
 
 
+class GemmaCorrellTumblr(GenericTumblrV1):
+    # Also on http://www.gemmacorrell.com/portfolio/comics/
+    name = 'gemma-tumblr'
+    long_name = 'Gemma Correll (from Tumblr)'
+    url = 'http://gemmacorrell.tumblr.com'
+
+
 class RobotatertotTumblr(GenericTumblrV1):
     """Class to retrieve Robotatertot comics."""
     # Also on https://www.instagram.com/robotatertotcomics

@@ -166,6 +166,7 @@ Comics supported
  * [Garfield](https://garfield.com)
  * [Garfield (from GoComics)](http://www.gocomics.com/garfield)
  * [Geek And Poke](http://geek-and-poke.com)
+ * [Gemma Correll (from Tumblr)](http://gemmacorrell.tumblr.com)
  * [The Gentleman Armchair](http://thegentlemansarmchair.com)
  * [Gerbil With A Jetpack](http://gerbilwithajetpack.com)
  * [Glory Owl](http://gloryowlcomix.blogspot.fr)
