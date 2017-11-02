@@ -5000,6 +5000,13 @@ class NonSequitur(GenericGoComic):
     url = 'http://www.gocomics.com/nonsequitur'
 
 
+class JoeyAlisonSayers(GenericGoComic):
+    """Class to retrieve Joey Alison Sayers comics."""
+    name = 'joeyalison'
+    long_name = 'Joey Alison Sayers (from GoComics)'
+    url = 'http://www.gocomics.com/joey-alison-sayers-comics'
+
+
 class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
     _categories = ('TAPASTIC', )

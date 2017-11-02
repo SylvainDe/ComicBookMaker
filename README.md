@@ -205,6 +205,7 @@ Comics supported
  * [James Of No Trades (from Tumblr)](http://jamesfregan.tumblr.com)
  * [My Jet Pack](http://myjetpack.tumblr.com)
  * [Jhall Comics (from Tumblr)](http://jhallcomics.tumblr.com)
+ * [Joey Alison Sayers (from GoComics)](http://www.gocomics.com/joey-alison-sayers-comics)
  * [Julia's Drawings](https://drawings.jvns.ca)
  * [Just Say Eh](http://www.justsayeh.com)
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
