@@ -5549,6 +5549,46 @@ class APleasantWasteOfTimeTapa(GenericTapasticComic):
     _categories = ('WASTE', )
 
 
+class AbsurdoLapin(GenericNavigableComic):
+    """Class to retrieve Absurdo Lapin comics."""
+    name = 'absurdo'
+    long_name = 'Absurdo'
+    url = 'https://absurdo.lapin.org'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_nav(cls, soup):
+        """Get the navigation elements from soup object."""
+        cont = soup.find('div', id='content')
+        _, b2 = cont.find_all('div', class_='buttons')
+        # prev, first, last, next
+        return [li.find('a') for li in b2.find_all('li')]
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return cls.get_nav(get_soup_at_url(cls.url))[1]
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return cls.get_nav(last_soup)[3 if next_ else 0]
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        author = soup.find('meta', attrs={'name': 'author'})['content']
+        tags = soup.find('meta', attrs={'name': 'keywords'})['content']
+        title = soup.find('title').string
+        imgs = soup.find('div', id='content').find_all('img')
+        return {
+            'title': title,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'tags': tags,
+            'author': author,
+        }
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()
