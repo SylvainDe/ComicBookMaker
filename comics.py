@@ -4655,6 +4655,13 @@ class RobotatertotTumblr(GenericTumblrV1):
     url = 'https://robotatertot.tumblr.com'
 
 
+class HuffyPenguin(GenericTumblrV1):
+    """Class to retrieve Huffy Penguin comics."""
+    name = 'huffypenguin'
+    long_name = 'Huffy Penguin'
+    url = 'http://huffy-penguin.tumblr.com'
+
+
 class CowardlyComicsTumblr(GenericTumblrV1):
     """Class to retrieve Cowardly Comics."""
     # Also on https://tapas.io/series/CowardlyComics
