@@ -104,6 +104,8 @@ Comics supported
  * [Cassandra Calin (from Tapastic)](https://tapastic.com/series/C-Cassandra-comics)
  * [Cassandra Calin (from Tumblr)](http://c-cassandra.tumblr.com)
  * [Catana](http://www.catanacomics.com)
+ * [Caw4hw (from Tapastic)](https://tapas.io/series/CAW4HW)
+ * [Caw4hw (from Tumblr)](https://caw4hw.tumblr.com)
  * [Channelate](http://www.channelate.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)

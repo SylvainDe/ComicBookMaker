@@ -4657,6 +4657,14 @@ class CowardlyComicsTumblr(GenericTumblrV1):
     url = 'http://cowardlycomics.tumblr.com'
 
 
+class Caw4hwTumblr(GenericTumblrV1):
+    """Class to retrieve Caw4hw comics."""
+    # Also on https://tapas.io/series/CAW4HW
+    name = 'caw4hw-tumblr'
+    long_name = 'Caw4hw (from Tumblr)'
+    url = 'https://caw4hw.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5501,6 +5509,14 @@ class CowardlyComicsTapa(GenericTapasticComic):
     name = 'cowardly-tapa'
     long_name = 'Cowardly Comics (from Tapastic)'
     url = 'https://tapas.io/series/CowardlyComics'
+
+
+class Caw4hwTapa(GenericTapasticComic):
+    """Class to retrieve Caw4hw comics."""
+    # Also on https://caw4hw.tumblr.com
+    name = 'caw4hw-tapa'
+    long_name = 'Caw4hw (from Tapastic)'
+    url = 'https://tapas.io/series/CAW4HW'
 
 
 class APleasantWasteOfTimeTapa(GenericTapasticComic):
