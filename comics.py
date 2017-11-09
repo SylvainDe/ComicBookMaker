@@ -5007,6 +5007,14 @@ class JoeyAlisonSayers(GenericGoComic):
     url = 'http://www.gocomics.com/joey-alison-sayers-comics'
 
 
+class SavageChickenGoComics(GenericGoComic):
+    """Class to retrieve Savage Chicken comics."""
+    # Also on http://www.savagechickens.com
+    name = 'savage-goc'
+    long_name = 'Savage Chicken (from GoComics)'
+    url = 'http://www.gocomics.com/savage-chickens'
+
+
 class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
     _categories = ('TAPASTIC', )
