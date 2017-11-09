@@ -4679,6 +4679,13 @@ class Caw4hwTumblr(GenericTumblrV1):
     url = 'https://caw4hw.tumblr.com'
 
 
+class TheseInsideJokesTumblr(GenericTumblrV1):
+    # Also on http://www.theseinsidejokes.com
+    name = 'theseinsidejokes-tumblr'
+    long_name = 'These Inside Jokes (from Tumblr)'
+    url = 'http://theseinsidejokes.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
