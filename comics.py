@@ -4679,11 +4679,27 @@ class Caw4hwTumblr(GenericTumblrV1):
     url = 'https://caw4hw.tumblr.com'
 
 
+class WeFlapsTumblr(GenericTumblrV1):
+    """Class to retrieve WeFlaps comics."""
+    name = 'weflaps-tumblr'
+    long_name = 'We Flaps (from Tumblr)'
+    url = 'https://weflaps.tumblr.com'
+
+
 class TheseInsideJokesTumblr(GenericTumblrV1):
+    """Class to retrieve These Inside Jokes comics."""
     # Also on http://www.theseinsidejokes.com
     name = 'theseinsidejokes-tumblr'
     long_name = 'These Inside Jokes (from Tumblr)'
     url = 'http://theseinsidejokes.tumblr.com'
+
+
+class SinewynTumblr(GenericTumblrV1):
+    """Class to retrieve Sinewyn comics."""
+    # Also on https://sinewyn.wordpress.com
+    name = 'sinewyn-tumblr'
+    long_name = 'Sinewyn (from Tumblr)'
+    url = 'https://sinewyn.tumblr.com'
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
