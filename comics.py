@@ -3170,6 +3170,29 @@ class SheldonComics(GenericNavigableComic):
         }
 
 
+class ManVersusManatee(GenericNavigableComic):
+    url = 'http://manvsmanatee.com'
+    name = 'manvsmanatee'
+    long_name = 'Man Versus Manatee'
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_a_comicnavbase_comicnavnext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2', class_='post-title').string
+        imgs = soup.find('div', id='comic').find_all('img')
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, "%B %d, %Y")
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class Ubertool(GenericNavigableComic):
     """Class to retrieve Ubertool comics."""
     # Also on https://ubertool.tumblr.com
