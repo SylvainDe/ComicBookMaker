@@ -3598,11 +3598,14 @@ class GenericTumblrV1(GenericComic):
                 yield comic
 
     @classmethod
-    def get_url_from_post(cls, post):
-        url = post['url']
+    def check_url(cls, url):
         if not url.startswith(cls.url):
             print("url '%s' does not start with '%s'" % (url, cls.url))
         return url
+
+    @classmethod
+    def get_url_from_post(cls, post):
+        return cls.check_url(post['url'])
 
     @classmethod
     def get_api_url(cls):
@@ -3652,6 +3655,8 @@ class GenericTumblrV1(GenericComic):
         waiting_for_id = last_comic['tumblr-id'] if last_comic else None
         posts_acc = []
         if last_comic is not None:
+            cls.check_url(last_comic['url'])
+            cls.check_url(last_comic['api_url'])
             # Sometimes, tumblr posts are deleted. When previous post is deleted, we
             # might end up spending a lot of time looking for something that
             # doesn't exist. Failing early and clearly might be a better option.
