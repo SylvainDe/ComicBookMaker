@@ -1880,7 +1880,7 @@ class PicturesInBoxes(GenericNavigableComic):
         }
 
 
-class Penmen(GenericNavigableComic):
+class Penmen(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Penmen comics."""
     name = 'penmen'
     long_name = 'Penmen'
