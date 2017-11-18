@@ -3171,6 +3171,7 @@ class SheldonComics(GenericNavigableComic):
 
 
 class ManVersusManatee(GenericNavigableComic):
+    """Class to retrieve Man Versus Manatee comics."""
     url = 'http://manvsmanatee.com'
     name = 'manvsmanatee'
     long_name = 'Man Versus Manatee'
@@ -3190,6 +3191,25 @@ class ManVersusManatee(GenericNavigableComic):
             'month': day.month,
             'year': day.year,
             'day': day.day,
+        }
+
+
+class TheMeerkatguy(GenericNavigableComic):
+    """Class to retrieve The Meerkatguy comics."""
+    long_name = 'The Meerkatguy'
+    url = 'http://www.themeerkatguy.com'
+    name = 'meerkatguy'
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_a_comicnavbase_comicnavnext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('title').string
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'img': [i['content'] for i in imgs],
+            'title': title,
         }
 
 

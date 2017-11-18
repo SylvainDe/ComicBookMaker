@@ -226,6 +226,7 @@ Comics supported
  * [Une Annee au Lycee](http://uneanneeaulycee.blog.lemonde.fr)
  * [Man Versus Manatee](http://manvsmanatee.com)
  * [Marketoonist](https://marketoonist.com/cartoons)
+ * [The Meerkatguy](http://www.themeerkatguy.com)
  * [Mercworks](http://mercworks.net)
  * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
