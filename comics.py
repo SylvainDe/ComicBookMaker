@@ -272,6 +272,7 @@ def get_a_rel_next(cls, last_soup, next_):
 @classmethod
 def get_a_navi_navinext(cls, last_soup, next_):
     """Implementation of get_navi_link."""
+    # ComicPress (WordPress plugin)
     return last_soup.find('a', class_='navi navi-next' if next_ else 'navi navi-prev')
 
 
@@ -290,6 +291,7 @@ def get_a_comicnavbase_comicnavnext(cls, last_soup, next_):
 @classmethod
 def get_a_navi_navifirst(cls):
     """Implementation of get_first_comic_link."""
+    # ComicPress (WordPress plugin)
     return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
 
 
@@ -3677,7 +3679,7 @@ class GenericTumblrV1(GenericComic):
         waiting_for_id = last_comic['tumblr-id'] if last_comic else None
         posts_acc = []
         if last_comic is not None:
-            cls.check_url(last_comic['url'])
+            # cls.check_url(last_comic['url'])
             cls.check_url(last_comic['api_url'])
             # Sometimes, tumblr posts are deleted. When previous post is deleted, we
             # might end up spending a lot of time looking for something that
@@ -5109,7 +5111,7 @@ class GenericTapasticComic(GenericListableComic):
         day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
         if not imgs:
-            print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
+            # print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
             return None
         assert len(imgs) > 0, imgs
         return {
