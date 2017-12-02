@@ -768,7 +768,7 @@ class NeDroid(GenericNavigableComic):
         short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
         num = int(short_url_re.match(short_url).groups()[0])
         imgs = soup.find('div', id='comic').find_all('img')
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         title = imgs[0]['alt']
         title2 = imgs[0]['title']
         return {
@@ -1064,7 +1064,7 @@ class PerryBibleFellowship(GenericListableComic):  # Is now navigable too
         """Get information about a particular comics."""
         name = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', property='og:image')
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         return {
             'name': name,
             'img': [i['content'] for i in imgs],
@@ -1587,9 +1587,9 @@ class Oglaf(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('title').string
         title_imgs = soup.find('div', id='tt').find_all('img')
-        assert len(title_imgs) == 1
+        assert len(title_imgs) == 1, title_imgs
         strip_imgs = soup.find_all('img', id='strip')
-        assert len(strip_imgs) == 1
+        assert len(strip_imgs) == 1, strip_imgs
         imgs = title_imgs + strip_imgs
         desc = ' '.join(i['title'] for i in imgs)
         return {
@@ -1967,7 +1967,7 @@ class InvisibleBread(GenericListableComic):
         date_str = month_and_day + ' ' + year
         day = string_to_date(date_str, '%b %d %Y')
         imgs = [soup.find('div', id='comic').find('img')]
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
             'month': day.month,
@@ -2038,7 +2038,7 @@ class PoorlyDrawnLines(GenericListableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find('div', class_='post').find_all('img')
-        assert len(imgs) <= 1
+        assert len(imgs) <= 1, imgs
         return {
             'img': [i['src'] for i in imgs],
             'title': imgs[0].get('title', "") if imgs else "",
@@ -2278,7 +2278,7 @@ class FatAwesomeComics(GenericNavigableComic):
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('img', attrs={'data-recalc-dims': "1"})
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         return {
             'title': title,
             'description': description,
@@ -2349,7 +2349,7 @@ class AnythingComic(GenericListableComic):
         imgs = soup.find_all('img', id='comic_image')
         date_str = td_date.string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y, %I:%M %p")
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         assert all(i.get('alt') == i.get('title') for i in imgs)
         return {
             'num': num,
@@ -2509,7 +2509,7 @@ class EveryDayBlues(GenericDeletedComic, GenericNavigableComic):
         day = string_to_date(date_str, "%d. %B %Y", "de_DE.utf8")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] == title for i in imgs)
-        assert len(imgs) <= 1
+        assert len(imgs) <= 1, imgs
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
@@ -2537,7 +2537,7 @@ class BiterComics(GenericNavigableComic):
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         alt = imgs[0]['alt']
         return {
             'img': [i['src'] for i in imgs],
@@ -2618,7 +2618,7 @@ class MisterAndMe(GenericNavigableComic):
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) <= 1
+        assert len(imgs) <= 1, imgs
         alt = imgs[0]['alt'] if imgs else ""
         return {
             'img': [i['src'] for i in imgs],
@@ -2648,7 +2648,7 @@ class LastPlaceComics(GenericNavigableComic):
         day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) <= 1
+        assert len(imgs) <= 1, imgs
         alt = imgs[0]['alt'] if imgs else ""
         return {
             'img': [i['src'] for i in imgs],
@@ -2759,7 +2759,7 @@ class BuniComic(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         return {
             'img': [i['src'] for i in imgs],
             'title': imgs[0]['title'],
@@ -3164,7 +3164,7 @@ class SheldonComics(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find("div", id="comic-foot").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         title = imgs[0]['title']
         return {
             'title': title,
@@ -4778,7 +4778,7 @@ class HorovitzComics(GenericDeletedComic, GenericListableComic):
         num = int(cls.link_re.match(href).groups()[0])
         title = link.string
         imgs = soup.find_all('img', id='comic')
-        assert len(imgs) == 1
+        assert len(imgs) == 1, imgs
         year, month, day = [int(s)
                             for s in cls.img_re.match(imgs[0]['src']).groups()]
         return {
@@ -5111,7 +5111,7 @@ class GenericTapasticComic(GenericListableComic):
         if not imgs:
             print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
             return None
-        assert len(imgs) > 0
+        assert len(imgs) > 0, imgs
         return {
             'day': day.day,
             'year': day.year,
