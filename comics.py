@@ -2851,7 +2851,7 @@ class BoumerieFr(GenericBoumerie):
     long_name = 'Boumeries (Fr)'
     url = 'http://bd.boumerie.com'
     _categories = ('BOUMERIES', 'FRANCAIS')
-    date_format = "%B %d, %Y" # "%A, %d %B %Y"
+    date_format = "%B %d, %Y"  # Used to be "%A, %d %B %Y"
     lang = "fr_FR.utf8"
 
 
