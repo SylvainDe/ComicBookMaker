@@ -127,13 +127,14 @@ def load_json_at_url(url):
     return json.loads(get_content(url).decode())
 
 
-def get_soup_at_url(url, detect_meta=False, detect_rel=False, save_in_file=False):
+def get_soup_at_url(url, detect_meta=False, detect_rel=False, detect_angular=False, save_in_file=False):
     """Get content at url as BeautifulSoup.
 
     url is a string
     detect_meta is a hacky flag used to detect comics using similar plugin to
         be able to reuse code at some point
     detect_rel is a hacky flag to detect next/first comics automatically
+    detect_rel is a hacky flag to detect if page corresponds to an Angular app
     save_in_file is a hacky flag to save content in temp file for debugging
         purposes
     Returns a BeautifulSoup object."""
@@ -149,6 +150,10 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False, save_in_file=False
             next_ = soup.find(tag, rel='next')
             if next_ is not None:
                 print(next_)
+    if detect_angular:
+        html = soup.find('html')
+        if html.has_attr('ng-app'):
+            print(url)
     if save_in_file:
         time_ms = time.time() * 1000
         prefix = 'get_soup_at_url_' + str(time_ms) + '_'
