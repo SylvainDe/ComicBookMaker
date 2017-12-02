@@ -2806,6 +2806,7 @@ class CommitStripEn(GenericCommitStrip):
 
 class GenericBoumerie(GenericNavigableComic):
     """Generic class to retrieve Boumeries comics in different languages."""
+    # Also on http://boumeries.tumblr.com
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
     date_format = NotImplemented
@@ -2837,6 +2838,7 @@ class BoumerieEn(GenericBoumerie):
     name = 'boumeries_en'
     long_name = 'Boumeries (En)'
     url = 'http://comics.boumerie.com'
+    _categories = ('BOUMERIES', )
     date_format = "%B %d, %Y"
     lang = 'en_GB.UTF-8'
 
@@ -2846,8 +2848,8 @@ class BoumerieFr(GenericBoumerie):
     name = 'boumeries_fr'
     long_name = 'Boumeries (Fr)'
     url = 'http://bd.boumerie.com'
-    _categories = ('FRANCAIS', )
-    date_format = "%A, %d %B %Y"
+    _categories = ('BOUMERIES', 'FRANCAIS')
+    date_format = "%B %d, %Y" # "%A, %d %B %Y"
     lang = "fr_FR.utf8"
 
 
@@ -4748,6 +4750,16 @@ class SinewynTumblr(GenericTumblrV1):
     name = 'sinewyn-tumblr'
     long_name = 'Sinewyn (from Tumblr)'
     url = 'https://sinewyn.tumblr.com'
+
+
+class BoumeriesTumblr(GenericTumblrV1):
+    """Class to retrieve Boumeries comics."""
+    # Also on http://bd.boumerie.com
+    # Also on http://comics.boumerie.com
+    name = 'boumeries-tumblr'
+    long_name = 'Boumeries (from Tumblr)'
+    url = 'http://boumeries.tumblr.com/'
+    _categories = ('BOUMERIES', )
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):

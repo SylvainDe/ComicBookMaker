@@ -89,6 +89,7 @@ Comics supported
  * [Boulet Corp](http://www.bouletcorp.com)
  * [Boulet Corp (from Tumblr)](https://bouletcorp.tumblr.com)
  * [Boulet Corp English](http://english.bouletcorp.com)
+ * [Boumeries (from Tumblr)](http://boumeries.tumblr.com/)
  * [Boumeries (En)](http://comics.boumerie.com)
  * [Boumeries (Fr)](http://bd.boumerie.com)
  * [Break Of Day](http://www.gocomics.com/break-of-day)
