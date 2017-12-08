@@ -1650,8 +1650,41 @@ class SomethingOfThatIlk(GenericDeletedComic):
     url = 'http://www.somethingofthatilk.com'
 
 
+class MonkeyUser(GenericNavigableComic):
+    """Class to retrieve Monkey User comics."""
+    name = 'monkeyuser'
+    long_name = 'Monkey User'
+    url = 'http://www.monkeyuser.com'
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.monkeyuser.com/2016/project-lifecycle/'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        div = last_soup.find('div', title='next' if next_ else 'previous')
+        return None if div is None else div.find('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        imgs = soup.find_all('meta', property='og:image')
+        date_str = soup.find('span', class_='post-date').find('time').string
+        day = string_to_date(date_str, "%d %b %Y")
+        return {
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [i['content'] for i in imgs],
+            'title': title,
+            'description': desc,
+        }
+
+
 class InfiniteMonkeyBusiness(GenericNavigableComic):
-    """Generic class to retrieve InfiniteMonkeyBusiness comics."""
+    """Class to retrieve InfiniteMonkeyBusiness comics."""
     name = 'monkey'
     long_name = 'Infinite Monkey Business'
     url = 'http://infinitemonkeybusiness.net'
