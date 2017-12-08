@@ -24,23 +24,39 @@ class Xkcd(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        json_url = urljoin_wrapper(cls.url, 'info.0.json')
         first_num = last_comic['num'] if last_comic else 0
-        last_num = load_json_at_url(
-            urljoin_wrapper(cls.url, 'info.0.json'))['num']
+        last_num = load_json_at_url(json_url)['num']
 
         for num in range(first_num + 1, last_num + 1):
-            if num != 404:
-                json_url = urljoin_wrapper(cls.url, '%d/info.0.json' % num)
-                comic = load_json_at_url(json_url)
-                comic['img'] = [comic['img']]
-                comic['prefix'] = '%d-' % num
-                comic['json_url'] = json_url
-                comic['url'] = urljoin_wrapper(cls.url, str(num))
-                comic['day'] = int(comic['day'])
-                comic['month'] = int(comic['month'])
-                comic['year'] = int(comic['year'])
-                assert comic['num'] == num
+            comic = cls.get_comic_info(num)
+            if comic is not None:
                 yield comic
+
+    @classmethod
+    def get_comic_info(cls, num):
+        """Get information about a particular comics."""
+        if num == 404:
+            return None
+        json_url = urljoin_wrapper(cls.url, '%d/info.0.json' % num)
+        comic_json = load_json_at_url(json_url)
+        assert comic_json['num'] == num, json_url
+        return {
+            'json_url': json_url,
+            'num': num,
+            'url': urljoin_wrapper(cls.url, str(num)),
+            'prefix': '%d-' % num,
+            'img': [comic_json['img']],
+            'day': int(comic_json['day']),
+            'month': int(comic_json['month']),
+            'year': int(comic_json['year']),
+            'link': comic_json['link'],
+            'news': comic_json['news'],
+            'safe_title': comic_json['safe_title'],
+            'transcript': comic_json['transcript'],
+            'alt': comic_json['alt'],
+            'title': comic_json['title'],
+        }
 
 
 # Helper functions corresponding to get_url_from_link/get_url_from_archive_element
