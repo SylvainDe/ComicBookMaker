@@ -3548,7 +3548,8 @@ class GeekAndPoke(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
-        desc = soup.find('meta', property='og:description')['content']
+        desc = soup.find('meta', property='og:description')
+        desc_str = "" if desc is None else desc['content']
         date_str = soup.find('time', class_='published')['datetime']
         day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
@@ -3561,7 +3562,7 @@ class GeekAndPoke(GenericNavigableComic):
         return {
             'title': title,
             'alt': alt,
-            'description': desc,
+            'description': desc_str,
             'author': author,
             'day': day.day,
             'month': day.month,
