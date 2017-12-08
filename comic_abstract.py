@@ -209,6 +209,8 @@ class GenericComic(object):
             cls.log("last comic is %s" % ('None' if last_comic is None else last_comic['url']))
             for comic in cls.get_next_comic(last_comic):
                 cls.log("got %s" % str(comic))
+                assert 'url' in comic
+                assert 'img' in comic
                 if 'day' in comic:
                     assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
                 else:
