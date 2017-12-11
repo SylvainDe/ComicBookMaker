@@ -132,6 +132,7 @@ Comics supported
  * [Deadly Panel](http://www.deadlypanel.com)
  * [Deadly Panel (from Tapastic)](https://tapastic.com/series/deadlypanel)
  * [Deadly Panel (from Tumblr)](https://deadlypanel.tumblr.com)
+ * [Death Bulge](http://www.deathbulge.com)
  * [Deep Dark Fears (from Tumblr)](http://deep-dark-fears.tumblr.com)
  * [Depressed Alien](http://depressedalien.com)
  * [According To Devin](http://accordingtodevin.tumblr.com)

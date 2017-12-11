@@ -3659,6 +3659,41 @@ class AtRandomComics(GenericNavigableComic):
         }
 
 
+class DeathBulge(GenericComic):
+    """Class to retrieve the DeathBulge comics."""
+    name = 'deathbulge'
+    long_name = 'Death Bulge'
+    url = 'http://www.deathbulge.com'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        json_url = urljoin_wrapper(cls.url, 'api/comics/1')
+        json = load_json_at_url(json_url)
+        pagination = json['pagination_links']
+        first_num = last_comic['num'] if last_comic else pagination['first']
+        last_num = pagination['last']
+        for num in range(first_num + 1, last_num):
+            json_url = urljoin_wrapper(cls.url, 'api/comics/%d' % num)
+            json = load_json_at_url(json_url)
+            pagination = json['pagination_links']
+            comic_json = json['comic']
+            date_str = comic_json['timestamp'][:10]
+            day = string_to_date(date_str, "%Y-%m-%d")
+            comic_id = comic_json['id']  # not exactly 'num' o_O
+            yield {
+                'json_url': json_url,
+                'num': comic_id,
+                'url': urljoin_wrapper(cls.url, 'comics/%d' % num),
+                'alt': comic_json['alt_text'],
+                'title': comic_json['title'],
+                'img': [urljoin_wrapper(cls.url, comic_json['comic'])],
+                'month': day.month,
+                'year': day.year,
+                'day': day.day,
+            }
+
+
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
     _categories = ('TUMBLR', )
