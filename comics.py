@@ -3650,19 +3650,21 @@ class GloryOwlComix(GenericBlogspotComic):
         }
 
 
-class AtRandomComics(GenericNavigableComic):
-    """Class to retrieve At Random Comics."""
-    name = 'atrandom'
-    long_name = 'At Random Comics'
-    url = 'http://www.atrandomcomics.com'
+class GenericSquareSpace(GenericNavigableComic):
+    """Generic class to retrieve comics using SquareSpace."""
+    _categories = ('SQUARESPACE', )
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
-    first_url = 'http://www.atrandomcomics.com/at-random-comics-home/2015/5/5/can-of-worms'
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
         return last_soup.find('a', id='prevLink' if next_ else 'nextLink')
+
+    @classmethod
+    def get_images(cls, soup):
+        """Get image URLs for a comic."""
+        raise NotImplementedError
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3675,13 +3677,41 @@ class AtRandomComics(GenericNavigableComic):
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'img': [i['content'] for i in imgs],
+            'img': cls.get_images(soup),
             'month': day.month,
             'year': day.year,
             'day': day.day,
             'author': author,
             'description': desc,
         }
+
+
+class AtRandomComics(GenericSquareSpace):
+    """Class to retrieve At Random Comics."""
+    name = 'atrandom'
+    long_name = 'At Random Comics'
+    url = 'http://www.atrandomcomics.com'
+    first_url = 'http://www.atrandomcomics.com/at-random-comics-home/2015/5/5/can-of-worms'
+
+    @classmethod
+    def get_images(cls, soup):
+        """Get image URLs for a comic."""
+        imgs = soup.find_all('meta', property='og:image')
+        return [i['content'] for i in imgs]
+
+
+class NothingSuspicious(GenericSquareSpace):
+    """Class to retrieve Nothing Suspicious comics."""
+    name = 'nothingsuspicious'
+    long_name = 'Nothing Suspicious'
+    url = 'https://nothingsuspicio.us'
+    first_url = 'https://nothingsuspicio.us/?offset=1483592400908'
+
+    @classmethod
+    def get_images(cls, soup):
+        """Get image URLs for a comic."""
+        imgs = soup.find('div', class_='content-wrapper').find('img')
+        return [i['src'] for i in [imgs]]
 
 
 class DeathBulge(GenericComic):
