@@ -5767,6 +5767,15 @@ class Caw4hwTapa(GenericTapasticComic):
     url = 'https://tapas.io/series/CAW4HW'
 
 
+class DontBeDadTapa(GenericTapasticComic):
+    """Class to retrieve Don't Be Dad comics."""
+    # Also on https://dontbedad.com/
+    # Also on http://www.webtoons.com/en/challenge/dontbedad/list?title_no=123074
+    name = 'dontbedad-tapa'
+    long_name = "Don't Be Dad (from Tapastic)"
+    url = 'https://tapas.io/series/DontBeDad-Comics'
+
+
 class APleasantWasteOfTimeTapa(GenericTapasticComic):
     """Class to retrieve A Pleasant Waste Of Time comics."""
     # Also on https://artjcf.tumblr.com
