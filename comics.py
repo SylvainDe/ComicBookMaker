@@ -2342,6 +2342,31 @@ class FatAwesomeComics(GenericNavigableComic):
         }
 
 
+class PeterLauris(GenericNavigableComic):
+    """Class to retrieve Peter Lauris comics."""
+    name = 'peterlauris'
+    long_name = 'Peter Lauris'
+    url = 'http://peterlauris.com/comics'
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://peterlauris.com/comics/just-in-case/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find_all('meta', property='og:image')
+        return {
+            'title': title,
+            'img': [i['content'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
+
+
 class JuliasDrawings(GenericListableComic):
     """Class to retrieve Julia's Drawings."""
     name = 'julia'
