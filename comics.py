@@ -4888,6 +4888,16 @@ class BoumeriesTumblr(GenericTumblrV1):
     _categories = ('BOUMERIES', )
 
 
+class InfiniteImmortalBensTumblr(GenericTumblrV1):
+    """Class to retrieve Infinite Immortal Bens comics."""
+    # Also on http://www.webtoons.com/en/challenge/infinite-immortal-bens/list?title_no=32847
+    # Also on https://tapas.io/series/Infinite-Immortal-Bens
+    url = 'https://infiniteimmortalbens.tumblr.com'
+    name = 'infiniteimmortal-tumblr'
+    long_name = 'Infinite Immortal Bens (from Tumblr)'
+    _categories = ('INFINITEIMMORTAL', )
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5764,6 +5774,16 @@ class APleasantWasteOfTimeTapa(GenericTapasticComic):
     long_name = 'A Pleasant Waste Of Time (from Tapastic)'
     url = 'https://tapas.io/series/A-Pleasant-'
     _categories = ('WASTE', )
+
+
+class InfiniteImmortalBensTapa(GenericTapasticComic):
+    """Class to retrieve Infinite Immortal Bens comics."""
+    # Also on http://www.webtoons.com/en/challenge/infinite-immortal-bens/list?title_no=32847
+    # Also on https://infiniteimmortalbens.tumblr.com
+    url = 'https://tapas.io/series/Infinite-Immortal-Bens'
+    name = 'infiniteimmortal-tapa'
+    long_name = 'Infinite Immortal Bens (from Tapastic)'
+    _categories = ('INFINITEIMMORTAL', )
 
 
 class AbsurdoLapin(GenericNavigableComic):
