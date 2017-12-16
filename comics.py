@@ -4856,12 +4856,26 @@ class TheseInsideJokesTumblr(GenericTumblrV1):
     url = 'http://theseinsidejokes.tumblr.com'
 
 
+class RustledJimmies(GenericTumblrV1):
+    """Class to retrieve Rustled Jimmies comics."""
+    name = 'restled'
+    long_name = 'Rustled Jimmies'
+    url = 'http://rustledjimmies.net'
+
+
 class SinewynTumblr(GenericTumblrV1):
     """Class to retrieve Sinewyn comics."""
     # Also on https://sinewyn.wordpress.com
     name = 'sinewyn-tumblr'
     long_name = 'Sinewyn (from Tumblr)'
     url = 'https://sinewyn.tumblr.com'
+
+
+class ItFoolsAMonster(GenericTumblrV1):
+    """Class to retrieve It Fools A Monster comics."""
+    name = 'itfoolsamonster'
+    long_name = 'It Fools A Monster'
+    url = 'http://itfoolsamonster.com'
 
 
 class BoumeriesTumblr(GenericTumblrV1):
