@@ -3674,7 +3674,6 @@ class GenericSquareSpace(GenericNavigableComic):
         date_str = soup.find('time', itemprop='datePublished')["datetime"]
         day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
-        imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'img': cls.get_images(soup),
