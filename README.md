@@ -269,7 +269,7 @@ Comics supported
  * [Endless Origami](http://endlessorigami.com)
  * [Origami Hot Dish](http://origamihotdish.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
- * [Owl Turd (from Tapastic)](http://tapastic.com/series/Owl-Turd-Comix)
+ * [Owl Turd (from Tapastic)](https://tapas.io/series/Shen-Comix)
  * [Owl Turd (from Tumblr)](http://owlturd.com)
  * [Pain Train Comics](http://paintraincomic.com)
  * [Perry Bible Fellowship](http://pbfcomics.com)

@@ -5406,7 +5406,7 @@ class OwlTurdTapastic(GenericTapasticComic):
     # Also on http://owlturd.com
     name = 'owlturd-tapa'
     long_name = 'Owl Turd (from Tapastic)'
-    url = 'http://tapastic.com/series/Owl-Turd-Comix'
+    url = 'https://tapas.io/series/Shen-Comix'
     _categories = ('OWLTURD', )
 
 
