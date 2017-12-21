@@ -109,6 +109,7 @@ def get_file_at_url(url, path):
                 path = add_extension_to_filename_if_needed(data[0], path)
             with open(path, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
+                time.sleep(0.4)
                 return path
     except (urllib.error.HTTPError, urllib.error.URLError):
         return None
@@ -138,6 +139,7 @@ def get_soup_at_url(url, detect_meta=False, detect_rel=False, detect_angular=Fal
     save_in_file is a hacky flag to save content in temp file for debugging
         purposes
     Returns a BeautifulSoup object."""
+    time.sleep(0.4)
     content = get_content(url)
     soup = BeautifulSoup(content, "html.parser")
     if detect_meta:
