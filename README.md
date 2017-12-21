@@ -109,6 +109,7 @@ Comics supported
  * [Caw4hw (from Tapastic)](https://tapas.io/series/CAW4HW)
  * [Caw4hw (from Tumblr)](https://caw4hw.tumblr.com)
  * [Channelate](http://www.channelate.com)
+ * [Cheese Cornz (from Tumblr)](https://cheesecornz.tumblr.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
  * [Victims Of Circumsolar (from Tumblr)](https://victimsofcomics.tumblr.com)

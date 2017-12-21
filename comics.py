@@ -4927,6 +4927,13 @@ class InfiniteImmortalBensTumblr(GenericTumblrV1):
     _categories = ('INFINITEIMMORTAL', )
 
 
+class CheeseCornzTumblr(GenericTumblrV1):
+    """Class to retrieve Cheese Cornz comics."""
+    name = 'cheesecornz-tumblr'
+    long_name = 'Cheese Cornz (from Tumblr)'
+    url = 'https://cheesecornz.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
