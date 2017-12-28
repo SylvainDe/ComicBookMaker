@@ -4934,6 +4934,14 @@ class CheeseCornzTumblr(GenericTumblrV1):
     url = 'https://cheesecornz.tumblr.com'
 
 
+class CinismoIlustrado(GenericTumblrV1):
+    """Class to retrieve CinismoIlustrado comics."""
+    name = 'cinismo'
+    long_name = 'Cinismo Ilustrado'
+    url = 'http://cinismoilustrado.com'
+    _categories = ('ESPANOL', )
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
