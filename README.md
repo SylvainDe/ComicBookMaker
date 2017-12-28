@@ -232,6 +232,7 @@ Comics supported
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Une Annee au Lycee](http://uneanneeaulycee.blog.lemonde.fr)
+ * [Macadam Valley](http://macadamvalley.com)
  * [Man Versus Manatee](http://manvsmanatee.com)
  * [Marketoonist](https://marketoonist.com/cartoons)
  * [The Meerkatguy](http://www.themeerkatguy.com)

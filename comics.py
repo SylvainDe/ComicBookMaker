@@ -3473,6 +3473,34 @@ class OffTheLeashDog(GenericNavigableComic):
         }
 
 
+class MacadamValley(GenericNavigableComic):
+    """Class to retrieve Macadam Valley comics."""
+    name = 'macadamvalley'
+    long_name = 'Macadam Valley'
+    url = 'http://macadamvalley.com'
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://macadamvalley.com/le-debut-de-la-fin/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find("h1", class_="entry-title").string
+        img = soup.find('div', class_='entry-content').find('img')
+        date_str = soup.find('time', class_='entry-date')['datetime']
+        date_str = date_str[:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        author = soup.find('a', rel='author').string
+        return {
+            'title': title,
+            'img': [i['src'] for i in [img]],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'author': author,
+        }
+
+
 class MarketoonistComics(GenericNavigableComic):
     """Class to retrieve Marketoonist Comics."""
     name = 'marketoonist'
