@@ -152,6 +152,8 @@ Comics supported
  * [Doug Was Taken](https://dougwastaken.tumblr.com)
  * [Dustinteractive](http://dustinteractive.com)
  * [The Earth Explodes](http://www.earthexplodes.com)
+ * [Eat My Paint (from Tapastic)](https://tapas.io/series/eatmypaint)
+ * [Eat My Paint (from Tumblr)](https://eatmypaint.tumblr.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Extra Fabulous Comics (from Tumblr)](https://extrafabulouscomics.tumblr.com)
  * [Safely Endangered](http://www.safelyendangered.com)

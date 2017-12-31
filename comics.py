@@ -4970,6 +4970,15 @@ class CinismoIlustrado(GenericTumblrV1):
     _categories = ('ESPANOL', )
 
 
+class EatMyPaintTumblr(GenericTumblrV1):
+    """Class to retrieve Eat My Paint comics."""
+    # Also on https://tapas.io/series/eatmypaint
+    name = 'eatmypaint-tumblr'
+    long_name = 'Eat My Paint (from Tumblr)'
+    url = 'https://eatmypaint.tumblr.com'
+    _categories = ('EATMYPAINT', )
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5865,6 +5874,15 @@ class InfiniteImmortalBensTapa(GenericTapasticComic):
     name = 'infiniteimmortal-tapa'
     long_name = 'Infinite Immortal Bens (from Tapastic)'
     _categories = ('INFINITEIMMORTAL', )
+
+
+class EatMyPaintTapa(GenericTapasticComic):
+    """Class to retrieve Eat My Paint comics."""
+    # Also on https://eatmypaint.tumblr.com
+    name = 'eatmypaint-tapa'
+    long_name = 'Eat My Paint (from Tapastic)'
+    url = 'https://tapas.io/series/eatmypaint'
+    _categories = ('EATMYPAINT', )
 
 
 class AbsurdoLapin(GenericNavigableComic):
