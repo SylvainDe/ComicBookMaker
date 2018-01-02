@@ -4029,12 +4029,12 @@ class MercworksTumblr(GenericTumblrV1):
 
 
 class OwlTurdTumblr(GenericTumblrV1):
-    """Class to retrieve Owl Turd comics."""
-    # Also on http://tapastic.com/series/Owl-Turd-Comix
+    """Class to retrieve Owl Turd / Shen comix."""
+    # Also on https://tapas.io/series/Shen-Comix
     name = 'owlturd-tumblr'
-    long_name = 'Owl Turd (from Tumblr)'
-    url = 'http://owlturd.com'
-    _categories = ('OWLTURD', )
+    long_name = 'Owl Turd / Shen Comix (from Tumblr)'
+    url = 'http://shencomix.com'
+    _categories = ('OWLTURD', 'SHENCOMIX')
 
 
 class VectorBelly(GenericTumblrV1):
@@ -5447,12 +5447,12 @@ class ThorsThundershackTapastic(GenericTapasticComic):
 
 
 class OwlTurdTapastic(GenericTapasticComic):
-    """Class to retrieve Owl Turd comics."""
-    # Also on http://owlturd.com
+    """Class to retrieve Owl Turd / Shen comix."""
+    # Also on http://shencomix.com
     name = 'owlturd-tapa'
-    long_name = 'Owl Turd (from Tapastic)'
+    long_name = 'Owl Turd / Shen Comix (from Tapastic)'
     url = 'https://tapas.io/series/Shen-Comix'
-    _categories = ('OWLTURD', )
+    _categories = ('OWLTURD', 'SHENCOMIX')
 
 
 class GoneIntoRaptureTapastic(GenericTapasticComic):
