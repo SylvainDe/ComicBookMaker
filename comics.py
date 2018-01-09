@@ -2466,17 +2466,25 @@ class LonnieMillsap(GenericNavigableComic):
         }
 
 
-class LinsEditions(GenericNavigableComic):
+class LinsEditions(GenericDeletedComic):  # Permanently moved to warandpeas
     """Class to retrieve L.I.N.S. Editions comics."""
     # Also on https://linscomics.tumblr.com
     # Now on https://warandpeas.com
     name = 'lins'
     long_name = 'L.I.N.S. Editions'
     url = 'https://linsedition.com'
-    _categories = ('LINS', )
+    _categories = ('WARANDPEAS', 'LINS')
+
+
+class WarAndPeas(GenericNavigableComic):
+    """Class to retrieve War And Peas comics."""
+    name = 'warandpeas'
+    long_name = 'War And Peas'
+    url = 'https://warandpeas.com'
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
-    first_url = 'https://linsedition.com/2011/09/07/l-i-n-s/'
+    first_url = 'https://warandpeas.com/2011/11/07/565/'
+    _categories = ('WARANDPEAS', 'LINS')
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -4378,7 +4386,7 @@ class LinsEditionsTumblr(GenericTumblrV1):
     name = 'lins-tumblr'
     long_name = 'L.I.N.S. Editions (from Tumblr)'
     url = 'https://linscomics.tumblr.com'
-    _categories = ('LINS', )
+    _categories = ('WARANDPEAS', 'LINS')
 
 
 class WarAndPeasTumblr(GenericTumblrV1):
@@ -4387,7 +4395,7 @@ class WarAndPeasTumblr(GenericTumblrV1):
     name = 'warandpeas-tumblr'
     long_name = 'War And Peas (from Tumblr)'
     url = 'http://warandpeas.tumblr.com'
-    _categories = ('WARANDPEAS', )
+    _categories = ('WARANDPEAS', 'LINS')
 
 
 class OrigamiHotDish(GenericTumblrV1):

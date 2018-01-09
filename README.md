@@ -385,6 +385,7 @@ Comics supported
  * [Vidberg - l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Verbal Vomit (from Tumblr)](http://verbalvomits.tumblr.com)
  * [Waffles And Pancakes](https://tapastic.com/series/Waffles-and-Pancakes)
+ * [War And Peas](https://warandpeas.com)
  * [War And Peas (from Tumblr)](http://warandpeas.tumblr.com)
  * [Warehouse Comic](http://warehousecomic.com)
  * [Webcomic Name](http://webcomicname.com)
