@@ -4987,6 +4987,13 @@ class EatMyPaintTumblr(GenericTumblrV1):
     _categories = ('EATMYPAINT', )
 
 
+class AnomalyTownFromTumblr(GenericTumblrV1):
+    """Class to retrieve Anomaly Town."""
+    name = 'anomalytown-tumblr'
+    long_name = 'Anomaly Town (from Tumblr)'
+    url = 'https://anomalytown.tumblr.com'
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
