@@ -240,6 +240,7 @@ Comics supported
  * [Marketoonist](https://marketoonist.com/cartoons)
  * [The Meerkatguy](http://www.themeerkatguy.com)
  * [Mercworks](http://mercworks.net)
+ * [Mercworks (from Tapastic)](https://tapastic.com/series/MercWorks)
  * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Mister & Me](http://www.mister-and-me.com)

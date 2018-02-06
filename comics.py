@@ -1089,12 +1089,15 @@ class PerryBibleFellowship(GenericListableComic):  # Is now navigable too
         }
 
 
-class Mercworks(GenericNavigableComic):
+class Mercworks(GenericDeletedComic):  # Moved to Webtoons
     """Class to retrieve Mercworks comics."""
     # Also on http://mercworks.tumblr.com
+    # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
+    # Also on https://tapastic.com/series/MercWorks
     name = 'mercworks'
     long_name = 'Mercworks'
     url = 'http://mercworks.net'
+    _categories = ('MERCWORKS', )
     get_first_comic_link = get_a_comicnavbase_comicnavfirst
     get_navi_link = get_link_rel_next
 
@@ -4031,9 +4034,12 @@ class PondScumComics(GenericTumblrV1):
 class MercworksTumblr(GenericTumblrV1):
     """Class to retrieve Mercworks comics."""
     # Also on http://mercworks.net
+    # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
+    # Also on https://tapastic.com/series/MercWorks
     name = 'mercworks-tumblr'
     long_name = 'Mercworks (from Tumblr)'
     url = 'http://mercworks.tumblr.com'
+    _categories = ('MERCWORKS', )
 
 
 class OwlTurdTumblr(GenericTumblrV1):
@@ -5898,6 +5904,17 @@ class EatMyPaintTapa(GenericTapasticComic):
     long_name = 'Eat My Paint (from Tapastic)'
     url = 'https://tapas.io/series/eatmypaint'
     _categories = ('EATMYPAINT', )
+
+
+class MercworksTapa(GenericTapasticComic):
+    """Class to retrieve Mercworks comics."""
+    # Also on http://mercworks.net
+    # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
+    # Also on http://mercworks.tumblr.com
+    name = 'mercworks-tapa'
+    long_name = 'Mercworks (from Tapastic)'
+    url = 'https://tapastic.com/series/MercWorks'
+    _categories = ('MERCWORKS', )
 
 
 class AbsurdoLapin(GenericNavigableComic):
