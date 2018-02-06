@@ -5068,14 +5068,14 @@ class GenericGoComic(GenericNavigableComic):
         """Get information about a particular comics."""
         date_str = soup.find('meta', property='article:published_time')['content']
         day = string_to_date(date_str, "%Y-%m-%d")
-        imgs = soup.find('picture', class_='img-fluid item-comic-image').find_all('img')
+        imgs = soup.find_all('meta', property='og:image')
         author = soup.find('meta', property='article:author')['content']
         tags = soup.find('meta', property='article:tag')['content']
         return {
             'day': day.day,
             'month': day.month,
             'year': day.year,
-            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
         }
