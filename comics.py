@@ -1488,10 +1488,11 @@ class AbstruseGoose(GenericListableComic):
     def get_comic_info(cls, soup, archive_elt):
         comic_url = cls.get_url_from_archive_element(archive_elt)
         num = int(cls.comic_url_re.match(comic_url).groups()[0])
+        imgs = soup.find_all('img', src=cls.comic_img_re)
         return {
             'num': num,
             'title': archive_elt.string,
-            'img': [soup.find('img', src=cls.comic_img_re)['src']]
+            'img': [i['src'] for i in imgs],
         }
 
 
