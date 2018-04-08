@@ -2435,7 +2435,7 @@ class AnythingComic(GenericListableComic):
             'num': num,
             'title': title,
             'alt': imgs[0].get('alt', ''),
-            'img': [i['src'] for i in imgs],
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
             'month': day.month,
             'year': day.year,
             'day': day.day,
