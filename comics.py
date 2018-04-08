@@ -2380,8 +2380,8 @@ class JuliasDrawings(GenericListableComic):
 
     @classmethod
     def get_archive_elements(cls):
-        articles = get_soup_at_url(cls.url).find_all('article', class_='li post')
-        return [art.find('a') for art in reversed(articles)]
+        div = get_soup_at_url(cls.url).find('div', class_='drawings')
+        return reversed(div.find_all('a'))
 
     @classmethod
     def get_comic_info(cls, soup, archive_elt):
