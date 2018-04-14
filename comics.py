@@ -1312,7 +1312,7 @@ class CyanideAndHappiness(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        link = last_soup.find('a', class_='next-comic' if next_ else 'previous-comic ')
+        link = last_soup.find('a', class_='nav-next' if next_ else 'nav-previous')
         return None if link.get('href') is None else link
 
     @classmethod
@@ -1320,11 +1320,8 @@ class CyanideAndHappiness(GenericNavigableComic):
         """Get information about a particular comics."""
         url2 = soup.find('meta', property='og:url')['content']
         num = int(url2.split('/')[-2])
-        date_str = soup.find('h3').find('a').string
+        date_str, _, author = soup.find('div', id='comic-author').text.strip().partition('\nby ')
         day = string_to_date(date_str, '%Y.%m.%d')
-        author = soup.find('small', class_="author-credit-name").string
-        assert author.startswith('by ')
-        author = author[3:]
         imgs = soup.find_all('img', id='main-comic')
         return {
             'num': num,
