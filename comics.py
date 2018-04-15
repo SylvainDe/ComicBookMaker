@@ -2368,6 +2368,34 @@ class PeterLauris(GenericNavigableComic):
         }
 
 
+class RandomCrab(GenericNavigableComic):
+    """Class to retrieve Random Crab comics."""
+    name = 'randomcrab'
+    long_name = 'Random Crab'
+    url = 'https://randomcrab.com'
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = navigate_to_first_comic
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find_all('meta', property='og:image')
+        author = soup.find('a', rel='author').string
+        return {
+            'title': title,
+            'desc': desc,
+            'img': [i['content'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'author': author,
+        }
+
+
 class JuliasDrawings(GenericListableComic):
     """Class to retrieve Julia's Drawings."""
     name = 'julia'

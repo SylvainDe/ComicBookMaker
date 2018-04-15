@@ -306,6 +306,7 @@ Comics supported
  * [Ted Rall](http://rall.com/comic)
  * [Ted Rall (from GoComics)](http://www.gocomics.com/ted-rall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)
+ * [Random Crab](https://randomcrab.com)
  * [RandoWis (from Tapastic)](https://tapastic.com/series/RandoWis)
  * [Classic Randy](http://classicrandy.tumblr.com)
  * [Gone Into Rapture](http://goneintorapture.com)
