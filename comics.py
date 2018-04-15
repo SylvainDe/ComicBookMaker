@@ -4998,6 +4998,15 @@ class AnomalyTownFromTumblr(GenericTumblrV1):
     url = 'https://anomalytown.tumblr.com'
 
 
+class RoryTumblr(GenericTumblrV1):
+    """Class to retrieve Rory comics."""
+    # Also on https://tapas.io/series/Share-Your-Vulnerability
+    name = 'rory-tumblr'
+    long_name = 'Rory (from Tumblr)'
+    url = 'https://rorycomics.tumblr.com/'
+    _categories = ('RORY',)
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
     # Also on https://horovitzcomics.tumblr.com
@@ -5903,6 +5912,15 @@ class EatMyPaintTapa(GenericTapasticComic):
     long_name = 'Eat My Paint (from Tapastic)'
     url = 'https://tapas.io/series/eatmypaint'
     _categories = ('EATMYPAINT', )
+
+
+class RoryTapastic(GenericTapasticComic):
+    """Class to retrieve Rory comics."""
+    # Also on https://rorycomics.tumblr.com/
+    name = 'rory-tapa'
+    long_name = 'Rory (from Tapastic)'
+    url = 'https://tapas.io/series/Share-Your-Vulnerability'
+    _categories = ('RORY',)
 
 
 class MercworksTapa(GenericTapasticComic):

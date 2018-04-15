@@ -317,6 +317,8 @@ Comics supported
  * [Robospunk](http://robospunk.com)
  * [Robotatertot (from Tumblr)](https://robotatertot.tumblr.com)
  * [Mandatory Roller Coaster](http://mandatoryrollercoaster.com)
+ * [Rory (from Tapastic)](https://tapas.io/series/Share-Your-Vulnerability)
+ * [Rory (from Tumblr)](https://rorycomics.tumblr.com/)
  * [Rock Paper Cynic (from Tapastic)](https://tapastic.com/series/rockpapercynic)
  * [Rock Paper Cynic (from Tumblr)](http://rockpapercynic.tumblr.com)
  * [Rock Paper Scissors](http://rps-comics.com)
