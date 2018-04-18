@@ -32,18 +32,19 @@ def convert_iri_to_plain_ascii_uri(uri):
     return url
 
 
-def urlopen_wrapper(url):
+def urlopen_wrapper(url, referer=None):
     """Wrapper around urllib.request.urlopen (user-agent, etc).
 
     url is a string
+    referer is an optional string
     Returns a byte object."""
     log('(url : %s)' % url)
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30'
     try:
-        response = urllib.request.urlopen(
-            urllib.request.Request(
-                url,
-                headers={'User-Agent': user_agent, 'Accept': '*/*'}))
+        req = urllib.request.Request(url, headers={'User-Agent': user_agent, 'Accept': '*/*'})
+        if referer:
+            req.add_header('Referer', referer)
+        response = urllib.request.urlopen(req)
         if response.info().get('Content-Encoding') == 'gzip':
             return gzip.GzipFile(fileobj=response)
         return response
@@ -90,7 +91,7 @@ def add_extension_to_filename_if_needed(ext, filename):
         return filename + '.' + ext
 
 
-def get_file_at_url(url, path):
+def get_file_at_url(url, path, referer=None):
     """Save content at url in path on file system.
     In theory, this could have been achieved with urlretrieve but it seems
     to be about to get deprecated and adding a user-agent seems to be quite
@@ -98,10 +99,11 @@ def get_file_at_url(url, path):
 
     url is a string
     path is a string corresponding to the file location
+    referer is an optional string
     Returns the path if the file is retrieved properly, None otherwise."""
     log('(url : %s, path : %s)' % (url, path))
     try:
-        with urlopen_wrapper(url) as response:
+        with urlopen_wrapper(url, referer) as response:
             content_type = response.info().get('Content-Type', '').split('/')
             assert 1 <= len(content_type) <= 2
             if len(content_type) == 2:

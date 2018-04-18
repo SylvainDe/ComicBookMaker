@@ -97,14 +97,14 @@ class GenericComic(object):
         cls.log("done")
 
     @classmethod
-    def get_file_in_output_dir(cls, url, prefix=None):
+    def get_file_in_output_dir(cls, url, prefix=None, referer=None):
         """Download file from URL and save it in output folder."""
         cls.log("start (url:%s)" % url)
         filename = os.path.join(
             cls._get_output_dir(),
             ('' if prefix is None else prefix) +
             get_filename_from_url(url))
-        return get_file_at_url(url, filename)
+        return get_file_at_url(url, filename, referer)
 
     @classmethod
     def check_everything_is_ok(cls):
@@ -219,7 +219,7 @@ class GenericComic(object):
                     comic['day'], comic['month'], comic['year'] = \
                         day.day, day.month, day.year
                 prefix = comic.get('prefix', '')
-                comic['local_img'] = [cls.get_file_in_output_dir(i, prefix)
+                comic['local_img'] = [cls.get_file_in_output_dir(i, prefix, referer=comic['url'])
                                       for i in comic['img']]
                 comic['comic'] = cls.long_name
                 comic['new'] = None  # "'new' in comic" to check if new
@@ -246,11 +246,12 @@ class GenericComic(object):
         comics = cls._load_db()
         change = False
         for comic in comics:
+            comicurl = comic['url']
             local = comic['local_img']
             prefix = comic.get('prefix', '')
             for i, (path, url) in enumerate(zip(local, comic['img'])):
                 if path is None:
-                    new_path = cls.get_file_in_output_dir(url, prefix)
+                    new_path = cls.get_file_in_output_dir(url, prefix, referer=comicurl)
                     if new_path is None:
                         print(cls.name, ': failed to get', url)
                     else:
