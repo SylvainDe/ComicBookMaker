@@ -437,6 +437,7 @@ class GenericLeMondeBlog(GenericNavigableComic):
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = NotImplemented
+    date_format = "%d %B %Y"
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -444,7 +445,7 @@ class GenericLeMondeBlog(GenericNavigableComic):
         url2 = soup.find('link', rel='shortlink')['href']
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find("span", class_="entry-date").string
-        day = string_to_date(date_str, "%d %B %Y", "fr_FR.utf8")
+        day = string_to_date(date_str, cls.date_format, "fr_FR.utf8")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
@@ -519,6 +520,31 @@ class UneAnneeAuLycee(GenericLeMondeBlog):
     long_name = 'Une Annee au Lycee'
     url = 'http://uneanneeaulycee.blog.lemonde.fr'
     first_url = "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
+
+
+class LisaMandel(GenericLeMondeBlog):
+    """Class to retrieve Lisa Mandel comics."""
+    name = 'mandel'
+    long_name = 'Lisa Mandel (HP, hors-service)'
+    url = 'http://lisamandel.blog.lemonde.fr'
+    first_url = 'http://lisamandel.blog.lemonde.fr/2016/02/23/premiers-jours-a-calais/'
+
+
+class Avventura(GenericLeMondeBlog):
+    """Class to retrieve L'Avventura comics."""
+    name = 'avventura'
+    long_name = 'Avventura'
+    url = 'http://lavventura.blog.lemonde.fr'
+    first_url = 'http://lavventura.blog.lemonde.fr/2013/11/23/roma-paris-aller-simple/'
+    date_format = "%d/%m/%Y"
+
+
+class MorganNavarro(GenericLeMondeBlog):
+    """Class to retrieve Morgan Navarro comics."""
+    name = 'navarro'
+    long_name = 'Morgan Navarro (Ma vie de reac)'
+    url = 'http://morgannavarro.blog.lemonde.fr'
+    first_url = 'http://morgannavarro.blog.lemonde.fr/2015/09/09/le-doute/'
 
 
 class Rall(GenericComicNotWorking, GenericNavigableComic):
