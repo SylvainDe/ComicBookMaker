@@ -347,16 +347,17 @@ def navigate_to_first_comic(cls):
 
     Then, the URL found can easily be used via `simulate_first_link`.
     """
-    try:
-        url = cls.first_url
-    except AttributeError:
-        url = input("Get starting URL: ")
+    url = getattr(cls, 'first_url', None)
+    if url is None or url == NotImplemented:
+        prompt = "Get starting URL for %s (%s):" % (cls.name, cls.url)
+        url = input(prompt)
     print(url)
     comic = cls.get_prev_link(get_soup_at_url(url))
     while comic:
         url = cls.get_url_from_link(comic)
         print(url)
         comic = cls.get_prev_link(get_soup_at_url(url))
+    cls.first_url = url
     return {'href': url}
 
 
