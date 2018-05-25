@@ -3928,7 +3928,11 @@ class GenericTumblrV1(GenericComic):
                     print("Did not find previous post %s : it might have been deleted" % last_api_url)
                 return reversed(posts_acc)
         api_url = cls.get_api_url()
-        posts = get_soup_at_url(api_url).find('posts')
+        soup = get_soup_at_url(api_url)
+        posts = soup.find('posts')
+        if posts is None:
+            print("Could not get post info from url %s - problem with GDPR diclaimer?" % api_url)
+            return []
         start, total = int(posts['start']), int(posts['total'])
         assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
