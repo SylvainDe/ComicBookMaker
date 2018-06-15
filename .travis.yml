@@ -16,10 +16,11 @@ install:
   - pip install --upgrade pyflakes
 
 before_script:
- - pyflakes .
+ - python -VV
  - pep8 *.py --ignore=E501
   # to have the list anyway
  - pep8 *.py --select=E501 || true
+ - pyflakes . || true
 
 script:
  - true
