@@ -1070,7 +1070,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', rel='start')
+        return get_soup_at_url(cls.url).find('a', rel='first')
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -1081,7 +1081,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         image_url2 = aftercomic.find('img')['src'] if aftercomic else ''
         imgs = [image_url1] + ([image_url2] if image_url2 else [])
         date_str = soup.find('div', class_='cc-publishtime').contents[0]
-        day = string_to_date(date_str, "%B %d, %Y")
+        day = string_to_date(date_str, "Posted %B %d, %Y at %I:%M %p")
         return {
             'title': image1['title'],
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i)) for i in imgs],
