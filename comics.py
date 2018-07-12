@@ -3827,10 +3827,9 @@ class DeathBulge(GenericComic):
             comic_json = json['comic']
             date_str = comic_json['timestamp'][:10]
             day = string_to_date(date_str, "%Y-%m-%d")
-            comic_id = comic_json['id']  # not exactly 'num' o_O
             yield {
                 'json_url': json_url,
-                'num': comic_id,
+                'num': num,
                 'url': urljoin_wrapper(cls.url, 'comics/%d' % num),
                 'alt': comic_json['alt_text'],
                 'title': comic_json['title'],
