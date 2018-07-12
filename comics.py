@@ -5062,8 +5062,16 @@ class RoryTumblr(GenericTumblrV1):
     # Also on https://tapas.io/series/Share-Your-Vulnerability
     name = 'rory-tumblr'
     long_name = 'Rory (from Tumblr)'
-    url = 'https://rorycomics.tumblr.com/'
+    url = 'https://rorycomics.tumblr.com'
     _categories = ('RORY',)
+
+
+class OneGiantHand(GenericTumblrV1):
+    """Class to retrieve One Giant Hand comics."""
+    # Also on https://www.instagram.com/onegianthand
+    name = 'onegianthand'
+    long_name = 'One Giant Hand'
+    url = 'http://onegianthand.com'
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
