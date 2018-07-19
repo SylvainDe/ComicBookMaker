@@ -1415,14 +1415,16 @@ class DinosaurComics(GenericListableComic):
         date_str = link.string
         text = link.next_sibling.string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
-        comic_img_re = re.compile('^%s/comics/' % cls.url)
-        img = soup.find('img', src=comic_img_re)
+        imgs = soup.find_all('meta', property='og:image')
+        title = soup.find('title').string
+        desc = soup.find('meta', property='og:description')['content']
         return {
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'img': [img.get('src')],
-            'title': img.get('title'),
+            'img': [i['content'] for i in imgs],
+            'title': title,
+            'description': desc,
             'text': text,
             'num': num,
         }
