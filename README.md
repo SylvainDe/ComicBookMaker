@@ -158,7 +158,7 @@ Comics supported
  * [Eat My Paint (from Tumblr)](https://eatmypaint.tumblr.com)
  * [Extra Fabulous Comics](http://extrafabulouscomics.com)
  * [Extra Fabulous Comics (from Tumblr)](https://extrafabulouscomics.tumblr.com)
- * [Safely Endangered](http://www.safelyendangered.com)
+ * [Safely Endangered](https://www.safelyendangered.com)
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)
  * [My Extra Life](http://www.myextralife.com)
  * [Fat Awesome](http://fatawesome.com/comics)

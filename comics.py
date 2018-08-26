@@ -1906,10 +1906,10 @@ class SafelyEndangered(GenericNavigableComic):
     # Also on http://tumblr.safelyendangered.com
     name = 'endangered'
     long_name = 'Safely Endangered'
-    url = 'http://www.safelyendangered.com'
+    url = 'https://www.safelyendangered.com'
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
-    first_url = 'http://www.safelyendangered.com/comic/ignored/'
+    first_url = 'https://www.safelyendangered.com/comic/ignored/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -4194,7 +4194,7 @@ class TimeTrabbleTumblr(GenericTumblrV1):
 
 class SafelyEndangeredTumblr(GenericTumblrV1):
     """Class to retrieve Safely Endangered comics."""
-    # Also on http://www.safelyendangered.com
+    # Also on https://www.safelyendangered.com
     name = 'endangered-tumblr'
     long_name = 'Safely Endangered (from Tumblr)'
     url = 'http://tumblr.safelyendangered.com'
