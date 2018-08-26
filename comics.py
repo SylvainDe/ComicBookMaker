@@ -4747,7 +4747,7 @@ class DeadlyPanelTumblr(GenericTumblrV1):
     url = 'https://deadlypanel.tumblr.com'
 
 
-class CatanaComics(GenericComicNotWorking): # Not a tumblr anymore - an instagram ?
+class CatanaComics(GenericComicNotWorking):  # Not a tumblr anymore - an instagram ?
     """Class to retrieve Catana comics."""
     name = 'catana'
     long_name = 'Catana'
