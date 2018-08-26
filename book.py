@@ -92,7 +92,13 @@ def filter_comics(comics):
 
     On the long run, I'd like the criteria to be provided via command-line
     arguments."""
-    return [c for c in comics if 'new' in c]
+    comics = list(comics)
+    initial_len = len(comics)
+    filtered_comics = [c for c in comics if 'new' in c]
+    filtered_len = len(filtered_comics)
+    if initial_len != filtered_len:
+        print("After filtering, %d out of %d comics were kept" % (filtered_len, initial_len))
+    return filtered_comics
 
 
 def sort_comics(comics):
@@ -100,7 +106,7 @@ def sort_comics(comics):
 
     On the long run, I'd like the criteria to be provided via command-line
     arguments."""
-    return sorted(comics, key=get_date_for_comic, reverse=True)
+    return sorted(comics, key=get_date_for_comic)
 
 
 def truncate_comics(comics):
@@ -108,7 +114,11 @@ def truncate_comics(comics):
 
     On the long run, I'd like the criteria to be provided via command-line
     arguments."""
-    return comics[:3000]
+    limit = 3000
+    len_comics = len(comics)
+    if len_comics > limit:
+        print("Keeping %d comics out of %d" % (limit, len_comics))
+    return comics[-limit:]
 
 
 def make_book(comic_classes):
