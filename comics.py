@@ -2136,16 +2136,8 @@ class LoadingComics(GenericNavigableComic):
     name = 'loadingartist'
     long_name = 'Loading Artist'
     url = 'http://www.loadingartist.com/latest'
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', title="First")
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        """Get link to next or previous comic."""
-        return last_soup.find('a', title='Next' if next_ else 'Previous')
+    get_navi_link = get_a_next
+    get_first_comic_link = get_a_first
 
     @classmethod
     def get_comic_info(cls, soup, link):
