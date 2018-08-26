@@ -4747,7 +4747,7 @@ class DeadlyPanelTumblr(GenericTumblrV1):
     url = 'https://deadlypanel.tumblr.com'
 
 
-class CatanaComics(GenericComicNotWorking):  # Not a Tumblr anymore ?
+class CatanaComics(GenericComicNotWorking): # Not a tumblr anymore - an instagram ?
     """Class to retrieve Catana comics."""
     name = 'catana'
     long_name = 'Catana'
@@ -4978,7 +4978,7 @@ class TheseInsideJokesTumblr(GenericTumblrV1):
     url = 'http://theseinsidejokes.tumblr.com'
 
 
-class RustledJimmies(GenericTumblrV1):
+class RustledJimmies(GenericComicNotWorking):  # Not a tumblr anymore
     """Class to retrieve Rustled Jimmies comics."""
     name = 'restled'
     long_name = 'Rustled Jimmies'
