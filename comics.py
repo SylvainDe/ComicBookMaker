@@ -4002,7 +4002,7 @@ class OctopunsTumblr(GenericTumblrV1):
     url = 'http://octopuns.tumblr.com'
 
 
-class PicturesInBoxesTumblr(GenericTumblrV1):
+class PicturesInBoxesTumblr(GenericComicNotWorking, GenericTumblrV1):
     """Class to retrieve Pictures In Boxes comics."""
     # Also on http://www.picturesinboxes.com
     name = 'picturesinboxes-tumblr'
