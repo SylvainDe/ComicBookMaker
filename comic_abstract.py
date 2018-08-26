@@ -71,9 +71,14 @@ class GenericComic(object):
     @classmethod
     def _load_db(cls):
         """Load the JSON file to return the list of comics."""
+        return cls._load_db_from_file(cls._get_json_file_path())
+
+    @classmethod
+    def _load_db_from_file(cls, filepath):
+        """Load the JSON file to return the list of comics."""
         cls.log("start")
         try:
-            with open(cls._get_json_file_path()) as file:
+            with open(filepath) as file:
                 return json.load(file)
         except IOError:
             return []
@@ -91,9 +96,19 @@ class GenericComic(object):
     @classmethod
     def _save_db(cls, data):
         """Save the list of comics in the JSON file."""
+        return cls._save_db_in_file(data, cls._get_json_file_path())
+
+    @classmethod
+    def _save_db_in_file(cls, data, filepath):
+        """Save the list of comics in the JSON file."""
         cls.log("start")
-        with open(cls._get_json_file_path(), 'w+') as file:
-            json.dump(data, file, indent=4, sort_keys=True)
+        with open(filepath, 'w+') as file:
+            try:
+                json.dump(data, file, indent=4, sort_keys=True)
+            except KeyboardInterrupt as e:
+                print("Caught exception %s - will finish saving the DB first" % e)
+                json.dump(data, file, indent=4, sort_keys=True)
+                raise
         cls.log("done")
 
     @classmethod
@@ -199,7 +214,7 @@ class GenericComic(object):
             - file download
             - data management (adds current date if no date is provided)."""
         cls.log("start")
-        print(cls.name, ': about to update')
+        # print(cls.name, ': about to update')
         cls._create_output_dir()
         comics = cls._load_db()
         new_comics = []
@@ -310,6 +325,7 @@ class GenericComic(object):
         cls.log("start")
         print("%s (%s) : " % (cls.long_name, cls.url))
         print("In " + ', '.join(cls.get_categories()))
+        print("Implemented via " + ', '.join((c.__name__ for c in cls.__mro__)))
         cls._create_output_dir()
         comics = cls.get_comics()  # cls._load_db()
         dates = [get_date_for_comic(c) for c in comics]
