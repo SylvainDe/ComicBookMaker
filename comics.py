@@ -4993,11 +4993,30 @@ class SinewynTumblr(GenericTumblrV1):
     url = 'https://sinewyn.tumblr.com'
 
 
-class ItFoolsAMonster(GenericTumblrV1):
+class ItFoolsAMonster(GenericNavigableComic):
     """Class to retrieve It Fools A Monster comics."""
     name = 'itfoolsamonster'
     long_name = 'It Fools A Monster'
     url = 'http://itfoolsamonster.com'
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2', class_='post-title').string
+        author = soup.find('a', rel='author').string
+        date_str = soup.find('span', class_='post-date').string
+        day = string_to_date(date_str, '%B %d, %Y')
+        imgs = soup.find('div', id='comic').find_all('img')
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
+            'author': author,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
 class BoumeriesTumblr(GenericTumblrV1):
