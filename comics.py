@@ -4884,8 +4884,9 @@ class JamesOfNoTradesTumblr(GenericTumblrV1):
     _categories = ('JAMESOFNOTRADES', )
 
 
-class InfiniteGuff(GenericTumblrV1):
+class InfiniteGuff(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Infinite Guff comics."""
+    # Also on https://www.instagram.com/infiniteguff/
     name = 'infiniteguff'
     long_name = 'Infinite Guff'
     url = 'http://infiniteguff.com'
