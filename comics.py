@@ -1795,7 +1795,7 @@ class WarehouseComic(GenericNavigableComic):
         }
 
 
-class JustSayEh(GenericNavigableComic):
+class JustSayEh(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Just Say Eh comics."""
     # Also on http//tapastic.com/series/Just-Say-Eh
     name = 'justsayeh'
@@ -2713,7 +2713,7 @@ class TheAwkwardYeti(GenericNavigableComic):
         }
 
 
-class PleasantThoughts(GenericNavigableComic):
+class PleasantThoughts(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Pleasant Thoughts comics."""
     name = 'pleasant'
     long_name = 'Pleasant Thoughts'
@@ -3531,7 +3531,7 @@ class OffTheLeashDog(GenericNavigableComic):
         }
 
 
-class MacadamValley(GenericNavigableComic):
+class MacadamValley(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Macadam Valley comics."""
     name = 'macadamvalley'
     long_name = 'Macadam Valley'
@@ -3955,7 +3955,7 @@ class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     _categories = ('SMBC', )
 
 
-class AHammADay(GenericTumblrV1):
+class AHammADay(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve class A Hamm A Day comics."""
     name = 'hamm'
     long_name = 'A Hamm A Day'
@@ -4555,7 +4555,7 @@ class CEstPasEnRegardantSesPompes(GenericTumblrV1):
     url = 'http://marcoandco.tumblr.com'
 
 
-class TheGrohlTroll(GenericTumblrV1):
+class TheGrohlTroll(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve The Grohl Troll comics."""
     name = 'grohltroll'
     long_name = 'The Grohl Troll'
