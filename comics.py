@@ -5072,7 +5072,7 @@ class AnomalyTownFromTumblr(GenericTumblrV1):
 
 class RoryTumblr(GenericTumblrV1):
     """Class to retrieve Rory comics."""
-    # Also on https://tapas.io/series/Share-Your-Vulnerability
+    # Also on https://tapas.io/series/rorycomics
     name = 'rory-tumblr'
     long_name = 'Rory (from Tumblr)'
     url = 'https://rorycomics.tumblr.com'
@@ -5999,7 +5999,7 @@ class RoryTapastic(GenericTapasticComic):
     # Also on https://rorycomics.tumblr.com/
     name = 'rory-tapa'
     long_name = 'Rory (from Tapastic)'
-    url = 'https://tapas.io/series/Share-Your-Vulnerability'
+    url = 'https://tapas.io/series/rorycomics'
     _categories = ('RORY',)
 
 
