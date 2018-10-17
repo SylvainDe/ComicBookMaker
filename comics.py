@@ -4528,7 +4528,7 @@ class DoodleForFood(GenericTumblrV1):
 class CassandraCalinTumblr(GenericTumblrV1):
     """Class to retrieve C. Cassandra comics."""
     # Also on http://cassandracalin.com
-    # Also on https://tapastic.com/series/C-Cassandra-comics
+    # Also on https://tapas.io/series/Cassandra-Comics
     name = 'cassandra-tumblr'
     long_name = 'Cassandra Calin (from Tumblr)'
     url = 'http://c-cassandra.tumblr.com'
@@ -5802,7 +5802,7 @@ class CassandraCalinTapa(GenericTapasticComic):
     # Also on http://c-cassandra.tumblr.com
     name = 'cassandra-tapa'
     long_name = 'Cassandra Calin (from Tapastic)'
-    url = 'https://tapastic.com/series/C-Cassandra-comics'
+    url = 'https://tapas.io/series/Cassandra-Comics'
 
 
 class WafflesAndPancakes(GenericTapasticComic):
