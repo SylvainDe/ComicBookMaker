@@ -1622,7 +1622,7 @@ class OverCompensating(GenericNavigableComic):
         }
 
 
-class Oglaf(GenericNavigableComic):
+class Oglaf(GenericComicNotWorking):
     """Class to retrieve Oglaf comics."""
     name = 'oglaf'
     long_name = 'Oglaf [NSFW]'
