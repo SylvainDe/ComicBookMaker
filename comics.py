@@ -2905,10 +2905,10 @@ class BuniComic(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
-        assert len(imgs) == 1, imgs
+        title = imgs[0]['title'] if imgs else soup.find('title').string
         return {
             'img': [i['src'] for i in imgs],
-            'title': imgs[0]['title'],
+            'title': title,
         }
 
 
