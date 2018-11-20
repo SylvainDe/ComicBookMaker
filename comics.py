@@ -286,6 +286,12 @@ def get_a_rel_next(cls, last_soup, next_):
 
 
 @classmethod
+def get_a_next(cls, last_soup, next_):
+    """Implementation of get_navi_link."""
+    return last_soup.find('a', title='Next' if next_ else 'Previous')
+
+
+@classmethod
 def get_a_navi_navinext(cls, last_soup, next_):
     """Implementation of get_navi_link."""
     # ComicPress (WordPress plugin)
@@ -309,6 +315,12 @@ def get_a_navi_navifirst(cls):
     """Implementation of get_first_comic_link."""
     # ComicPress (WordPress plugin)
     return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+
+
+@classmethod
+def get_a_first(cls):
+    """Implementation of get_first_comic_link."""
+    return get_soup_at_url(cls.url).find('a', title='First')
 
 
 @classmethod
