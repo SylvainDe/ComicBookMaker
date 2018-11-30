@@ -252,7 +252,7 @@ Comics supported
  * [Momentum (from Tapastic)](https://tapastic.com/series/momentum)
  * [Infinite Monkey Business](http://infinitemonkeybusiness.net)
  * [Monkey User](http://www.monkeyuser.com)
- * [Moon Beard](http://moonbeard.com)
+ * [Moon Beard](https://moonbeard.com)
  * [Moon Beard (from Tumblr)](http://squireseses.tumblr.com)
  * [Tu Mourras Moins Bete](http://tumourrasmoinsbete.blogspot.fr)
  * [Mouse Bear Comedy](http://www.mousebearcomedy.com)

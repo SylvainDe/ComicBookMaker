@@ -3101,7 +3101,7 @@ class MoonBeard(GenericNavigableComic):
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
     name = 'moonbeard'
     long_name = 'Moon Beard'
-    url = 'http://moonbeard.com'
+    url = 'https://moonbeard.com'
     _categories = ('MOONBEARD', )
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_a_navi_navinext
