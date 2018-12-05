@@ -693,7 +693,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericDeletedComic, GenericNavigableComic):
+class ItsTheTie(GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
     # Also on http://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
@@ -701,31 +701,23 @@ class ItsTheTie(GenericDeletedComic, GenericNavigableComic):
     long_name = "It's the tie"
     url = "http://itsthetie.com"
     _categories = ('TIE', )
-    get_first_comic_link = get_div_navfirst_a
-    get_navi_link = get_a_rel_next
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find('h1', class_='comic-title').find('a').string
-        date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
-        day = string_to_date(date_str, "%B %d, %Y")
-        # Bonus images may or may not be in meta og:image.
-        imgs = soup.find_all('meta', property='og:image')
-        imgs_src = [i['content'] for i in imgs]
-        bonus = soup.find_all('img', attrs={'data-oversrc': True})
-        bonus_src = [b['data-oversrc'] for b in bonus]
-        all_imgs_src = imgs_src + [s for s in bonus_src if s not in imgs_src]
-        all_imgs_src = [s for s in all_imgs_src if not s.endswith("/2016/01/bonus-panel.png")]
-        tag_meta = soup.find('meta', property='article:tag')
-        tags = tag_meta['content'] if tag_meta else ""
+        title = soup.find('title').string
+        date_str = soup.find('time')['datetime'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = soup.find('div', id='comic').find_all('img')
+        imgs_src = [i.get('oversrc') or i.get('src') for i in imgs]
         return {
             'title': title,
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'img': all_imgs_src,
-            'tags': tags,
+            'img': imgs_src,
         }
 
 
