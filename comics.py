@@ -1614,24 +1614,16 @@ class OverCompensating(GenericNavigableComic):
         }
 
 
-class Oglaf(GenericComicNotWorking):
+class Oglaf(GenericNavigableComic):
     """Class to retrieve Oglaf comics."""
     name = 'oglaf'
     long_name = 'Oglaf [NSFW]'
     url = 'http://oglaf.com'
     _categories = ('NSFW', )
     get_url_from_link = join_cls_url_to_href
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return get_soup_at_url(cls.url).find("div", id="st").parent
-
-    @classmethod
-    def get_navi_link(cls, last_soup, next_):
-        """Get link to next or previous comic."""
-        div = last_soup.find("div", id="nx" if next_ else "pvs")
-        return div.parent if div else None
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'https://www.oglaf.com/cumsprite/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
