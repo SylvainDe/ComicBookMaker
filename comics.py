@@ -725,11 +725,11 @@ class PenelopeBagieu(GenericNavigableComic):
     """Class to retrieve comics from Penelope Bagieu's blog."""
     name = 'bagieu'
     long_name = 'Ma vie est tout a fait fascinante (Bagieu)'
-    url = 'http://www.penelope-jolicoeur.com'
+    url = 'https://www.penelope-jolicoeur.com'
     _categories = ('FRANCAIS', )
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
-    first_url = 'http://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'
+    first_url = 'https://www.penelope-jolicoeur.com/2007/02/ma-vie-mon-oeuv.html'
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -4518,7 +4518,7 @@ class DoodleForFood(GenericTumblrV1):
     # Also on https://tapastic.com/series/Doodle-for-Food
     name = 'doodle'
     long_name = 'Doodle For Food'
-    url = 'http://www.doodleforfood.com'
+    url = 'https://www.doodleforfood.com'
 
 
 class CassandraCalinTumblr(GenericTumblrV1):
@@ -4541,7 +4541,7 @@ class MandatoryRollerCoaster(GenericTumblrV1):
     """Class to retrieve Mandatory Roller Coaster comics."""
     name = 'rollercoaster'
     long_name = 'Mandatory Roller Coaster'
-    url = 'http://mandatoryrollercoaster.com'
+    url = 'https://mandatoryrollercoaster.com'
 
 
 class CEstPasEnRegardantSesPompes(GenericTumblrV1):
@@ -5778,7 +5778,7 @@ class BFGFSTapa(GenericTapasticComic):
 
 class DoodleForFoodTapa(GenericTapasticComic):
     """Class to retrieve Doodle For Food comics."""
-    # Also on http://www.doodleforfood.com
+    # Also on https://www.doodleforfood.com
     name = 'doodle-tapa'
     long_name = 'Doodle For Food (from Tapastic)'
     url = 'https://tapastic.com/series/Doodle-for-Food'
