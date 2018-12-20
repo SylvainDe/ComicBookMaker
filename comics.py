@@ -559,6 +559,36 @@ class MorganNavarro(GenericLeMondeBlog):
     first_url = 'http://morgannavarro.blog.lemonde.fr/2015/09/09/le-doute/'
 
 
+class EveVelo(GenericNavigableComic):
+    """Class to retrieve  Eve Velo comics."""
+    name = 'evevelo'
+    long_name = 'Eve Velo - chroniques du velotaf'
+    url = 'http://evevelo.the-comic.org'
+    _categories = ('FRANCAIS', )
+    get_url_from_link = join_cls_url_to_href
+    get_navi_link = get_a_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('a', rel='start')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2').string
+        date_str = soup.find('div', class_="headingsub").find('b').string
+        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%d %b %Y, %I:%M %p")  # 29th Mar 2018, 8:59 AM
+        imgs = soup.find('div', id='comicimagewrap').find_all('img')
+        return {
+            'title': title,
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+        }
+
+
 class Rall(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
     # Also on http://www.gocomics.com/tedrall

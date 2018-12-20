@@ -160,6 +160,7 @@ Comics supported
  * [Extra Fabulous Comics (from Tumblr)](https://extrafabulouscomics.tumblr.com)
  * [Safely Endangered](https://www.safelyendangered.com)
  * [Safely Endangered (from Tumblr)](http://tumblr.safelyendangered.com)
+ * [Eve Velo - chroniques du velotaf](http://evevelo.the-comic.org)
  * [My Extra Life](http://www.myextralife.com)
  * [Fat Awesome](http://fatawesome.com/comics)
  * [Fat Awesome (from Tumblr)](http://fatawesomecomedy.tumblr.com)
