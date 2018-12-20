@@ -747,7 +747,7 @@ class PenelopeBagieu(GenericNavigableComic):
         }
 
 
-class OneOneOneOneComic(GenericComicNotWorking, GenericNavigableComic):
+class OneOneOneOneComic(GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
     # Also on http://comics1111.tumblr.com
     # Also on https://tapastic.com/series/1111-Comics
@@ -755,22 +755,33 @@ class OneOneOneOneComic(GenericComicNotWorking, GenericNavigableComic):
     long_name = '1111 Comics'
     url = 'http://www.1111comics.me'
     _categories = ('ONEONEONEONE', )
-    get_first_comic_link = get_div_navfirst_a
+    get_url_from_link = join_cls_url_to_href
     get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('div', class_='post-nav-oldest').parent
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        div = last_soup.find('div', class_='post-nav-next' if next_ else 'post-nav-previous')
+        return None if div is None else div.parent
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find('h1', class_='comic-title').find('a').string
-        date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
-        day = string_to_date(date_str, "%B %d, %Y")
-        imgs = soup.find_all('meta', property='og:image')
+        title = soup.find('title').string
+        date_str = soup.find('div', class_='flex justify-between grey-3').find('p').string
+        day = string_to_date(date_str, "%a, %b %d, %Y")  # Thu, Apr 24, 2014
+        imgs = soup.find('div', class_='cms mw6').find_all('img')
         return {
             'title': title,
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'img': [i['content'] for i in imgs],
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
 
