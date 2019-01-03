@@ -564,7 +564,7 @@ class EveVelo(GenericNavigableComic):
     name = 'evevelo'
     long_name = 'Eve Velo - chroniques du velotaf'
     url = 'http://evevelo.the-comic.org'
-    _categories = ('FRANCAIS', )
+    _categories = ('FRANCAIS', 'BIKE')
     get_url_from_link = join_cls_url_to_href
     get_navi_link = get_a_rel_next
 
@@ -5053,6 +5053,26 @@ class ItFoolsAMonster(GenericNavigableComic):
             'month': day.month,
             'year': day.year,
             'day': day.day,
+        }
+
+
+class KickstandComics(GenericNavigableComic):
+    """Class to retrieve Kickstand Comics."""
+    name = 'kickstand'
+    long_name = 'Kickstand Comics featuring Yehuda Moon'
+    url = 'http://yehudamoon.com'
+    _categories = ('BIKE', )
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_a_comicnavbase_comicnavnext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h2', class_='post-title').string
+        imgs = soup.find('div', id='comic').find_all('img')
+        return {
+            'img': [i['src'] for i in imgs],
+            'title': title,
         }
 
 

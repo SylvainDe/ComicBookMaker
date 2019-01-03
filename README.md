@@ -223,6 +223,7 @@ Comics supported
  * [Julia's Drawings](https://drawings.jvns.ca)
  * [Just Say Eh](http://www.justsayeh.com)
  * [Just Say Eh (from Tapastic)](http://tapastic.com/series/Just-Say-Eh)
+ * [Kickstand Comics featuring Yehuda Moon](http://yehudamoon.com)
  * [For Lack Of A Better Comic](http://forlackofabettercomic.tumblr.com)
  * [Last Place Comics](http://lastplacecomics.com)
  * [Leleoz (from Tapastic)](https://tapastic.com/series/Leleoz)
