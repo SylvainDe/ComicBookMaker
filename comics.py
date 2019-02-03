@@ -1940,7 +1940,7 @@ class RespawnComic(GenericNavigableComic):
 
 class SafelyEndangered(GenericNavigableComic):
     """Class to retrieve Safely Endangered comics."""
-    # Also on http://tumblr.safelyendangered.com
+    # Also on https://tumblr.safelyendangered.com
     name = 'endangered'
     long_name = 'Safely Endangered'
     url = 'https://www.safelyendangered.com'
@@ -4226,7 +4226,7 @@ class SafelyEndangeredTumblr(GenericTumblrV1):
     # Also on https://www.safelyendangered.com
     name = 'endangered-tumblr'
     long_name = 'Safely Endangered (from Tumblr)'
-    url = 'http://tumblr.safelyendangered.com'
+    url = 'https://tumblr.safelyendangered.com'
 
 
 class MouseBearComedyTumblr(GenericTumblrV1):
