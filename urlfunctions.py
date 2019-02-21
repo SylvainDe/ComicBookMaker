@@ -5,6 +5,7 @@
 import http.client
 import urllib.request
 import urllib.parse
+import ssl
 import json
 import shutil
 import gzip
@@ -48,7 +49,7 @@ def urlopen_wrapper(url, referer=None):
         if response.info().get('Content-Encoding') == 'gzip':
             return gzip.GzipFile(fileobj=response)
         return response
-    except (urllib.error.HTTPError, http.client.RemoteDisconnected, urllib.error.URLError, ConnectionResetError) as e:
+    except (urllib.error.HTTPError, http.client.RemoteDisconnected, urllib.error.URLError, ConnectionResetError, ssl.CertificateError) as e:
         print("Exception %s for url %s" % (e, url))
         raise
 
