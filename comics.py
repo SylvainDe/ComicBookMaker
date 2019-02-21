@@ -1045,9 +1045,11 @@ class TheGentlemanArmchair(GenericNavigableComic):
 class ImogenQuest(GenericNavigableComic):
     """Class to retrieve Imogen Quest comics."""
     # Also on http://imoquest.tumblr.com
+    # Also on https://www.gocomics.com/imogen-quest
     name = 'imogen'
     long_name = 'Imogen Quest'
     url = 'http://imogenquest.net'
+    _categories = ('IMOGEN', )
     get_first_comic_link = get_div_navfirst_a
     get_navi_link = get_a_rel_next
 
@@ -4823,9 +4825,11 @@ class OffTheLeashDogTumblr(GenericTumblrV1):
 class ImogenQuestTumblr(GenericTumblrV1):
     """Class to retrieve Imogen Quest comics."""
     # Also on http://imogenquest.net
+    # Also on https://www.gocomics.com/imogen-quest
     name = 'imogen-tumblr'
     long_name = 'Imogen Quest (from Tumblr)'
     url = 'http://imoquest.tumblr.com'
+    _categories = ('IMOGEN', )
 
 
 class Shitfest(GenericTumblrV1):
@@ -5493,6 +5497,16 @@ class OwlTurdGoComics(GenericGoComic):
     long_name = 'Owl Turd / Shen Comix (from GoComics)'
     url = 'https://www.gocomics.com/shen-comix'
     _categories = ('OWLTURD', 'SHENCOMIX')
+
+
+class ImogenQuestGoComics(GenericGoComic):
+    """Class to retrieve Imogen Quest comics."""
+    # Also on http://imogenquest.net
+    # Also on http://imoquest.tumblr.com
+    name = 'imogen-goc'
+    long_name = 'Imogen Quest (from GoComics)'
+    url = 'https://www.gocomics.com/imogen-quest'
+    _categories = ('IMOGEN', )
 
 
 class GenericTapasticComic(GenericListableComic):

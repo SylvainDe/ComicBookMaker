@@ -204,6 +204,7 @@ Comics supported
  * [Huffy Penguin](http://huffy-penguin.tumblr.com)
  * [Ice Cream Sandwich Comics](http://icecreamsandwichcomics.com)
  * [Imogen Quest](http://imogenquest.net)
+ * [Imogen Quest (from GoComics)](https://www.gocomics.com/imogen-quest)
  * [Imogen Quest (from Tumblr)](http://imoquest.tumblr.com)
  * [Incidental Comics (from Tumblr)](http://incidentalcomics.tumblr.com)
  * [Infinite Guff](http://infiniteguff.com)
