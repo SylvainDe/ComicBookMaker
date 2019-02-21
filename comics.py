@@ -4134,6 +4134,7 @@ class OwlTurdTumblr(GenericTumblrV1):
     """Class to retrieve Owl Turd / Shen comix."""
     # Also on https://tapas.io/series/Shen-Comix
     # Also on http://shencomix.com
+    # Also on https://www.gocomics.com/shen-comix
     name = 'owlturd-tumblr'
     long_name = 'Owl Turd / Shen Comix (from Tumblr)'
     url = 'https://shencomix.tumblr.com'
@@ -5483,6 +5484,17 @@ class SavageChickenGoComics(GenericGoComic):
     url = 'http://www.gocomics.com/savage-chickens'
 
 
+class OwlTurdGoComics(GenericGoComic):
+    """Class to retrieve Owl Turd / Shen comix."""
+    # Also on https://tapas.io/series/Shen-Comix
+    # Also on http://shencomix.com
+    # Also on http://shencomix.tumblr.com
+    name = 'owlturd-goc'
+    long_name = 'Owl Turd / Shen Comix (from GoComics)'
+    url = 'https://www.gocomics.com/shen-comix'
+    _categories = ('OWLTURD', 'SHENCOMIX')
+
+
 class GenericTapasticComic(GenericListableComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
     _categories = ('TAPASTIC', )
@@ -5618,6 +5630,7 @@ class OwlTurdTapastic(GenericTapasticComic):
     """Class to retrieve Owl Turd / Shen comix."""
     # Also on http://shencomix.com
     # Also on http://shencomix.tumblr.com
+    # Also on https://www.gocomics.com/shen-comix
     name = 'owlturd-tapa'
     long_name = 'Owl Turd / Shen Comix (from Tapastic)'
     url = 'https://tapas.io/series/Shen-Comix'

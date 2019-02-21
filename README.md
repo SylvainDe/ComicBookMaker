@@ -281,6 +281,7 @@ Comics supported
  * [Endless Origami](http://endlessorigami.com)
  * [Origami Hot Dish](http://origamihotdish.com)
  * [Oscillating Profundities](http://tapastic.com/series/oscillatingprofundities)
+ * [Owl Turd / Shen Comix (from GoComics)](https://www.gocomics.com/shen-comix)
  * [Owl Turd / Shen Comix (from Tapastic)](https://tapas.io/series/Shen-Comix)
  * [Owl Turd / Shen Comix (from Tumblr)](https://shencomix.tumblr.com)
  * [Pain Train Comics](http://paintraincomic.com)
