@@ -100,7 +100,7 @@ Comics supported
  * [BuniComics](http://www.bunicomic.com)
  * [Electric Bunny Comic](http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell)
  * [Electric Bunny Comic (from Tumblr)](http://electricbunnycomics.tumblr.com)
- * [ButterSafe](http://buttersafe.com)
+ * [ButterSafe](https://www.buttersafe.com)
  * [Calvin and Hobbes](http://marcel-oehler.marcellosendos.ch/comics/ch/)
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)
  * [Cancer Owl (from Tumblr)](http://cancerowl.tumblr.com)

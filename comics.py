@@ -1478,14 +1478,15 @@ class ButterSafe(GenericListableComic):
     """Class to retrieve Butter Safe comics."""
     name = 'butter'
     long_name = 'ButterSafe'
-    url = 'http://buttersafe.com'
+    url = 'https://www.buttersafe.com'
     get_url_from_archive_element = get_href
     comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % url)
 
     @classmethod
     def get_archive_elements(cls):
         archive_url = urljoin_wrapper(cls.url, 'archive/')
-        return reversed(get_soup_at_url(archive_url).find_all('a', href=cls.comic_link_re))
+        soup = get_soup_at_url(archive_url)
+        return reversed(soup.find_all('a', href=cls.comic_link_re))
 
     @classmethod
     def get_comic_info(cls, soup, link):
