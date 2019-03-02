@@ -326,7 +326,8 @@ def get_a_first(cls):
 @classmethod
 def get_div_navfirst_a(cls):
     """Implementation of get_first_comic_link."""
-    return get_soup_at_url(cls.url).find('div', class_="nav-first").find('a')
+    div = get_soup_at_url(cls.url).find('div', class_="nav-first")
+    return None if div is None else div.find('a')
 
 
 @classmethod
@@ -2195,32 +2196,12 @@ class LoadingComics(GenericNavigableComic):
         }
 
 
-class ChuckleADuck(GenericNavigableComic):
+class ChuckleADuck(GenericDeletedComic):
     """Class to retrieve Chuckle-A-Duck comics."""
+    # Now, Crowden Satz posts on https://crowdensatz.com
     name = 'chuckleaduck'
     long_name = 'Chuckle-A-duck'
     url = 'http://chuckleaduck.com'
-    get_first_comic_link = get_div_navfirst_a
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
-        author = soup.find('span', class_='post-author').string
-        div = soup.find('div', id='comic')
-        imgs = div.find_all('img') if div else []
-        title = imgs[0]['title'] if imgs else ""
-        assert all(i['title'] == i['alt'] == title for i in imgs)
-        return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
-            'img': [i['src'] for i in imgs],
-            'title': title,
-            'author': author,
-        }
 
 
 class DepressedAlien(GenericNavigableComic):
