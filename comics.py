@@ -3955,7 +3955,7 @@ class GenericTumblrV1(GenericComic):
         soup = get_soup_at_url(api_url)
         posts = soup.find('posts')
         if posts is None:
-            print("Could not get post info from url %s - problem with GDPR diclaimer?" % api_url)
+            cls.log("Could not get post info from url %s - problem with GDPR disclaimer?" % api_url)
             return []
         start, total = int(posts['start']), int(posts['total'])
         assert start == 0
