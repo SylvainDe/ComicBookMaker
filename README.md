@@ -232,6 +232,8 @@ Comics supported
  * [LibraryComic (from Tumblr)](https://librarycomic.tumblr.com)
  * [Little Life Lines](http://www.littlelifelines.com)
  * [Little Life Lines (from Tumblr)](https://little-life-lines.tumblr.com)
+ * [Light Roast Comics](http://lightroastcomics.com)
+ * [Light Roast Comics (from Tapastic)](https://tapas.io/series/Light-Roast-Comics)
  * [L.I.N.S. Editions](https://linsedition.com)
  * [L.I.N.S. Editions (from Tumblr)](https://linscomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)

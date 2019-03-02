@@ -3599,6 +3599,38 @@ class MacadamValley(GenericDeletedComic, GenericNavigableComic):
         }
 
 
+class LightRoastComics(GenericNavigableComic):
+    """Class to retrieve Light Roast Comics."""
+    # Also on https://tapas.io/series/Light-Roast-Comics
+    # Also on https://www.webtoons.com/en/challenge/light-roast-comics/list?title_no=171110&page=1
+    # Also on https://www.instagram.com/lightroastcomics/?hl=fr
+    name = 'lightroast'
+    long_name = 'Light Roast Comics'
+    url = 'http://lightroastcomics.com'
+    get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://lightroastcomics.com/oh-thats-why'
+    _categories = ('LIGHTROAST', )
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        imgs = soup.find_all('meta', property='og:image')
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        title = soup.find('meta', property='og:title')['content']
+        author = soup.find("span", class_="author vcard").find("a").string
+        return {
+            'img': [i['content'] for i in imgs],
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'title': title,
+            'author': author,
+            'tags': ' '.join(t.string for t in soup.find_all('a', rel='category tag')),
+        }
+
+
 class MarketoonistComics(GenericNavigableComic):
     """Class to retrieve Marketoonist Comics."""
     name = 'marketoonist'
@@ -6088,6 +6120,17 @@ class RoryTapastic(GenericTapasticComic):
     long_name = 'Rory (from Tapastic)'
     url = 'https://tapas.io/series/rorycomics'
     _categories = ('RORY',)
+
+
+class LightRoastComicsTapa(GenericTapasticComic):
+    """Class to retrieve Light Roast Comics."""
+    # Also on http://lightroastcomics.com
+    # Also on https://www.webtoons.com/en/challenge/light-roast-comics/list?title_no=171110&page=1
+    # Also on https://www.instagram.com/lightroastcomics/?hl=fr
+    name = 'lightroast-tapa'
+    long_name = 'Light Roast Comics (from Tapastic)'
+    url = 'https://tapas.io/series/Light-Roast-Comics'
+    _categories = ('LIGHTROAST', )
 
 
 class MercworksTapa(GenericTapasticComic):
