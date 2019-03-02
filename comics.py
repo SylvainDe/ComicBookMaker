@@ -1338,7 +1338,7 @@ class Channelate(GenericNavigableComic):
     name = 'channelate'
     long_name = 'Channelate'
     url = 'http://www.channelate.com'
-    get_first_comic_link = get_div_navfirst_a
+    get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
     get_url_from_link = join_cls_url_to_href
 
