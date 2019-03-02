@@ -2330,37 +2330,12 @@ class RockPaperScissors(GenericNavigableComic):
         }
 
 
-class FatAwesomeComics(GenericNavigableComic):
+class FatAwesomeComics(GenericDeletedComic):
     """Class to retrieve Fat Awesome Comics."""
     # Also on http://fatawesomecomedy.tumblr.com
     name = 'fatawesome'
     long_name = 'Fat Awesome'
     url = 'http://fatawesome.com/comics'
-    get_navi_link = get_a_rel_next
-    get_first_comic_link = simulate_first_link
-    first_url = 'http://fatawesome.com/shortbus/'
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
-        description = soup.find('meta', attrs={'name': 'description'})['content']
-        tags_prop = soup.find('meta', property='article:tag')
-        tags = tags_prop['content'] if tags_prop else ""
-        date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
-        imgs = soup.find_all('img', attrs={'data-recalc-dims': "1"})
-        assert len(imgs) == 1, imgs
-        return {
-            'title': title,
-            'description': description,
-            'tags': tags,
-            'alt': "".join(i['alt'] for i in imgs),
-            'img': [i['src'].rsplit('?', 1)[0] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
-        }
 
 
 class PeterLauris(GenericNavigableComic):
