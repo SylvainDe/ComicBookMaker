@@ -260,7 +260,7 @@ Comics supported
  * [Moon Beard](https://moonbeard.com)
  * [Moon Beard (from Tumblr)](http://squireseses.tumblr.com)
  * [Tu Mourras Moins Bete](http://tumourrasmoinsbete.blogspot.fr)
- * [Mouse Bear Comedy](http://www.mousebearcomedy.com)
+ * [Mouse Bear Comedy](http://www.mousebearcomedy.com/category/comics/)
  * [Mouse Bear Comedy (from Tumblr)](http://mousebearcomedy.tumblr.com)
  * [Mr. Lovenstein](http://www.mrlovenstein.com)
  * [Mr. Lovenstein (from Tapastic)](https://tapastic.com/series/MrLovenstein)

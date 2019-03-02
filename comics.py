@@ -1843,27 +1843,7 @@ class MouseBearComedy(GenericComicNotWorking):  # Website has changed
     # Also on http://mousebearcomedy.tumblr.com
     name = 'mousebear'
     long_name = 'Mouse Bear Comedy'
-    url = 'http://www.mousebearcomedy.com'
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_a_navi_comicnavnext_navinext
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find('h2', class_='post-title').string
-        author = soup.find("span", class_="post-author").find("a").string
-        date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, '%B %d, %Y')
-        imgs = soup.find("div", id="comic").find_all("img")
-        assert all(i['alt'] == i['title'] == title for i in imgs)
-        return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
-            'img': [i['src'] for i in imgs],
-            'title': title,
-            'author': author,
-        }
+    url = 'http://www.mousebearcomedy.com/category/comics/'
 
 
 class BigFootJustice(GenericNavigableComic):
@@ -4203,7 +4183,7 @@ class SafelyEndangeredTumblr(GenericTumblrV1):
 
 class MouseBearComedyTumblr(GenericTumblrV1):
     """Class to retrieve Mouse Bear Comedy comics."""
-    # Also on http://www.mousebearcomedy.com
+    # Also on http://www.mousebearcomedy.com/category/comics/
     name = 'mousebear-tumblr'
     long_name = 'Mouse Bear Comedy (from Tumblr)'
     url = 'http://mousebearcomedy.tumblr.com'
