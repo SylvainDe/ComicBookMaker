@@ -1075,33 +1075,12 @@ class ImogenQuest(GenericNavigableComic):
         }
 
 
-class MyExtraLife(GenericNavigableComic):
+class MyExtraLife(GenericDeletedComic):
     """Class to retrieve My Extra Life comics."""
+    # Redirects to a new site https://www.frogpants.com
     name = 'extralife'
     long_name = 'My Extra Life'
     url = 'http://www.myextralife.com'
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        return get_soup_at_url(cls.url).find('a', class_='comic_nav_link first_comic_link')
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find("h1", class_="comic_title").string
-        date_str = soup.find("span", class_="comic_date").string
-        day = string_to_date(date_str, "%B %d, %Y")
-        imgs = soup.find_all("img", class_="comic")
-        assert all(i['alt'] == i['title'] == title for i in imgs)
-        return {
-            'title': title,
-            'img': [i['src'] for i in imgs if i["src"]],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
-        }
 
 
 class SaturdayMorningBreakfastCereal(GenericNavigableComic):
