@@ -5720,6 +5720,15 @@ class TheAwkwardYetiTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/TheAwkwardYeti'
     _categories = ('YETI', )
 
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        # That webcomic exists but there is no item in it for the time being
+        # Let's avoid the warning from GenericListableComic implementation
+        archive_elts = cls.get_archive_elements()
+        assert all(False for _ in archive_elts)  # Iterable is empty
+        return []
+
 
 class AsPerUsualTapa(GenericTapasticComic):
     """Class to retrieve As Per Usual comics."""
