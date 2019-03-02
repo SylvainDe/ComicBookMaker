@@ -74,7 +74,7 @@ def main():
         args.comic = comic_names
     if not args.action:
         args.action = ['update']
-    comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
+    comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded), reverse=False)]
     logging.debug('Starting')
     for action in args.action:
         method_name = arg_to_method.get(action)

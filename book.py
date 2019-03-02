@@ -9,7 +9,9 @@ import os
 import urllib.parse
 import datetime
 from itertools import chain
+import zipfile
 from comic_abstract import get_date_for_comic, get_info_before_comic, get_info_after_comic
+from PIL import Image
 
 # http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
 KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
@@ -32,7 +34,7 @@ HTML_START = """
     <a name='start' />"""
 HTML_COMIC_INFO = """
         <mbp:pagebreak />
-        <a name='%d'/><h2>%s</h2>
+        <a name='%d'/><h2><a href='%s'>%s</a></h2>
             %s %s<br>"""
 HTML_COMIC_ADDITIONAL_INFO = """
             %s<br>"""
@@ -64,7 +66,7 @@ XHTML_START = """
     <h1>Comics</h1>"""
 
 XHTML_COMIC_INFO = """
-        <a name='%d'/><h2>%s</h2>
+        <a name='%d'/><h2><a href='%s'>%s</a></h2>
             %s %s<br/>"""
 
 XHTML_COMIC_ADDITIONAL_INFO = """
@@ -141,6 +143,9 @@ def convert_unicode_to_html(text):
     return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
 
 
+def split_image(img):
+    return [img]
+
 def make_book_from_comic_list(comics, title, file_name, mobi=True):
     """Create book from a list of comics."""
     cover = 'empty.jpg'
@@ -165,14 +170,17 @@ def make_book_from_comic_list(comics, title, file_name, mobi=True):
 
         for i, com in enumerate(comics):
             book.write(com_info % (
-                i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+                i, com['url'], com['url'],
+                com['comic'], get_date_for_comic(com).strftime('%x')))
             for info in get_info_before_comic(com):
                 book.write(com_add_info % convert_unicode_to_html(info))
-            for path in com['local_img']:
-                if path is not None:
-                    assert os.path.isfile(path)
-                    book.write(
-                        com_img % urllib.parse.quote(os.path.relpath(path, output_dir)))
+            for img in com['local_img']:
+                for path in split_image(img):
+                    if path is not None:
+                        if os.path.isfile(path):
+                            book.write(com_img % urllib.parse.quote(os.path.relpath(path, output_dir)))
+                        else:
+                            print("Oops, %s is not a file" % path)
             for info in get_info_after_comic(com):
                 book.write(com_add_info % convert_unicode_to_html(info))
         book.write(footer)

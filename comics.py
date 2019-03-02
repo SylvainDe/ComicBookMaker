@@ -142,7 +142,7 @@ class GenericNavigableComic(GenericComic):
             if url else \
             cls.get_first_comic_link()
         cls.log("next/first comic will be %s (url is %s)" % (str(next_comic), url))
-        # cls.check_navigation(url)
+        cls.check_navigation(url)
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
@@ -271,68 +271,75 @@ class GenericListableComic(GenericComic):
                   (waiting_for_url, len(archive_elts)))
 
 # Helper functions corresponding to get_first_comic_link/get_navi_link
-
-
-@classmethod
-def get_link_rel_next(cls, last_soup, next_):
+def link_rel_next(soup, next_):
     """Implementation of get_navi_link."""
-    return last_soup.find('link', rel='next' if next_ else 'prev')
+    rel = 'next' if next_ else 'prev'
+    return soup.find('link', rel=rel)
 
 
-@classmethod
-def get_a_rel_next(cls, last_soup, next_):
+def a_rel_next(soup, next_):
     """Implementation of get_navi_link."""
-    return last_soup.find('a', rel='next' if next_ else 'prev')
+    rel = 'next' if next_ else 'prev'
+    return soup.find('a', rel=rel)
 
 
-@classmethod
-def get_a_next(cls, last_soup, next_):
+def a_navi_navinext(soup, next_):
     """Implementation of get_navi_link."""
-    return last_soup.find('a', title='Next' if next_ else 'Previous')
+    class_ = 'navi navi-next' if next_ else 'navi navi-prev'
+    return soup.find('a', class_=class_)
 
 
-@classmethod
-def get_a_navi_navinext(cls, last_soup, next_):
+def a_navi_comicnavnext_navinext(soup, next_):
     """Implementation of get_navi_link."""
-    # ComicPress (WordPress plugin)
-    return last_soup.find('a', class_='navi navi-next' if next_ else 'navi navi-prev')
+    class_ = 'navi comic-nav-next navi-next' if next_ else 'navi comic-nav-previous navi-prev'
+    return soup.find('a', class_=class_)
 
 
-@classmethod
-def get_a_navi_comicnavnext_navinext(cls, last_soup, next_):
+def a_comicnavbase_comicnavnext(soup, next_):
     """Implementation of get_navi_link."""
-    return last_soup.find('a', class_='navi comic-nav-next navi-next' if next_ else 'navi comic-nav-previous navi-prev')
+    class_ = 'comic-nav-base comic-nav-next' if next_ else 'comic-nav-base comic-nav-previous'
+    return soup.find('a', class_=class_)
 
 
-@classmethod
-def get_a_comicnavbase_comicnavnext(cls, last_soup, next_):
-    """Implementation of get_navi_link."""
-    return last_soup.find('a', class_='comic-nav-base comic-nav-next' if next_ else 'comic-nav-base comic-nav-previous')
+def a_next(soup, next_):
+    return soup.find('a', title='Next' if next_ else 'Previous')
 
-
-@classmethod
-def get_a_navi_navifirst(cls):
+def a_navi_navifirst(soup):
     """Implementation of get_first_comic_link."""
     # ComicPress (WordPress plugin)
-    return get_soup_at_url(cls.url).find('a', class_='navi navi-first')
+    return soup.find('a', class_='navi navi-first')
 
 
-@classmethod
-def get_a_first(cls):
+def div_navfirst_a(soup):
     """Implementation of get_first_comic_link."""
-    return get_soup_at_url(cls.url).find('a', title='First')
+    div = soup.find('div', class_="nav-first")
+    return None if div is None else div.find('a')
 
 
-@classmethod
-def get_div_navfirst_a(cls):
+def a_comicnavbase_comicnavfirst(soup):
     """Implementation of get_first_comic_link."""
-    return get_soup_at_url(cls.url).find('div', class_="nav-first").find('a')
+    return soup.find('a', class_='comic-nav-base comic-nav-first')
 
+def a_first(soup):
+    return soup.find('a', title="First")
 
-@classmethod
-def get_a_comicnavbase_comicnavfirst(cls):
-    """Implementation of get_first_comic_link."""
-    return get_soup_at_url(cls.url).find('a', class_='comic-nav-base comic-nav-first')
+def apply_to_cls_url(func):
+    @classmethod
+    def get_first_comic_link_inner(cls):
+        return func(get_soup_at_url(cls.url))
+    return get_first_comic_link_inner
+
+get_link_rel_next = staticmethod(link_rel_next)
+get_a_rel_next = staticmethod(a_rel_next)
+get_a_navi_navinext = staticmethod(a_navi_navinext)
+get_a_navi_comicnavnext_navinext = staticmethod(a_navi_comicnavnext_navinext)
+get_a_comicnavbase_comicnavnext = staticmethod(a_comicnavbase_comicnavnext)
+get_a_next = staticmethod(a_next)
+
+get_a_navi_navifirst = apply_to_cls_url(a_navi_navifirst)
+get_div_navfirst_a = apply_to_cls_url(div_navfirst_a)
+get_a_comicnavbase_comicnavfirst = apply_to_cls_url(a_comicnavbase_comicnavfirst)
+get_a_first = apply_to_cls_url(a_first)
 
 
 @classmethod
@@ -371,6 +378,17 @@ def navigate_to_first_comic(cls):
         comic = cls.get_prev_link(get_soup_at_url(url))
     cls.first_url = url
     return {'href': url}
+
+
+
+# cat comics.py | tr -d '"' | tr -d "'" | sort | uniq -c | sort -n | grep "meta"
+def meta_og_title(soup):
+    return soup.find('meta', property='og:title')['content']
+
+def meta_twitter_title(soup):
+    return soup.find('meta', attrs={'name': 'twitter:title'})['content']
+
+
 
 
 class GenericEmptyComic(GenericComic):
@@ -413,6 +431,19 @@ class GenericDeletedComic(GenericEmptyComic):
     be fixed. Corresponding classes are kept as we can still use the
     downloaded data. See also GenericUnavailableComic."""
     _categories = ('DELETED', )
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Implementation of get_next_comic returning no comics."""
+        cls.log("comic is considered as deleted")
+        if False:
+            try:
+                get_soup_at_url(cls.url)
+            except (urllib.error.HTTPError, urllib.error.URLError) as e:
+                cls.log("comic is indeed deleted - got error %s for %s" % (e, cls.url))
+            else:
+                cls.log("comic %s seems to be available" % cls.url)
+        return []
 
 
 class ExtraFabulousComics(GenericNavigableComic):
@@ -1074,7 +1105,7 @@ class ImogenQuest(GenericNavigableComic):
         }
 
 
-class MyExtraLife(GenericNavigableComic):
+class MyExtraLife(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve My Extra Life comics."""
     name = 'extralife'
     long_name = 'My Extra Life'
@@ -1863,9 +1894,17 @@ class MouseBearComedy(GenericComicNotWorking):  # Website has changed
     # Also on http://mousebearcomedy.tumblr.com
     name = 'mousebear'
     long_name = 'Mouse Bear Comedy'
-    url = 'http://www.mousebearcomedy.com'
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_a_navi_comicnavnext_navinext
+    url = 'http://www.mousebearcomedy.com/comics/'
+    get_url_from_archive_element = get_href
+    # get_first_comic_link = get_a_navi_navifirst
+    # get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_archive_elements(cls):
+        soup = get_soup_at_url(cls.url)
+        dts = soup.find('div', id='gallery-2').find_all('dt')
+        print(dts)
+        return [dt.find('a') for dt in dts]
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -2370,7 +2409,7 @@ class RockPaperScissors(GenericNavigableComic):
         }
 
 
-class FatAwesomeComics(GenericNavigableComic):
+class FatAwesomeComics(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Fat Awesome Comics."""
     # Also on http://fatawesomecomedy.tumblr.com
     name = 'fatawesome'
@@ -3828,7 +3867,8 @@ class GenericSquareSpace(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
-        desc = soup.find('meta', property='og:description')['content']
+        desc = soup.find('meta', property='og:description')
+        description = desc['content'] if desc else ''
         date_str = soup.find('time', itemprop='datePublished')["datetime"]
         day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
@@ -3857,12 +3897,20 @@ class AtRandomComics(GenericSquareSpace):
         return [i['content'] for i in imgs]
 
 
-class NothingSuspicious(GenericSquareSpace):
+class NothingSuspicious(GenericComicNotWorking, GenericSquareSpace):
     """Class to retrieve Nothing Suspicious comics."""
     name = 'nothingsuspicious'
     long_name = 'Nothing Suspicious'
     url = 'https://nothingsuspicio.us'
     first_url = 'https://nothingsuspicio.us/?offset=1483592400908'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        #return last_soup.find('a', class_='comic-nav-button previous-btn' if next_ else 'comic-nav-button next-btn')
+        link = last_soup.find('a', title='Previous' if next_ else 'Next')
+        print(link)
+        return None if link.get('href') is None else link
 
     @classmethod
     def get_images(cls, soup):
@@ -3995,7 +4043,7 @@ class GenericTumblrV1(GenericComic):
         soup = get_soup_at_url(api_url)
         posts = soup.find('posts')
         if posts is None:
-            print("Could not get post info from url %s - problem with GDPR diclaimer?" % api_url)
+            cls.log("Could not get post info from url %s - problem with GDPR diclaimer?" % api_url)
             return []
         start, total = int(posts['start']), int(posts['total'])
         assert start == 0
@@ -4941,7 +4989,7 @@ class ExtraFabulousComicsTumblr(GenericTumblrV1):
     _categories = ('EFC', )
 
 
-class AlexLevesque(GenericTumblrV1):
+class AlexLevesque(GenericComicNotWorking, GenericTumblrV1):
     """Class to retrieve AlexLevesque comics."""
     name = 'alevesque'
     long_name = 'Alex Levesque'
@@ -5231,6 +5279,7 @@ class HorovitzClassic(HorovitzComics):
     link_re = re.compile('^/comics/classic/([0-9]+)$')
 
 
+#class GenericGoComic(GenericComicNotWorking, GenericNavigableComic):
 class GenericGoComic(GenericNavigableComic):
     """Generic class to handle the logic common to comics from gocomics.com."""
     _categories = ('GOCOMIC', )
@@ -5760,6 +5809,13 @@ class TheAwkwardYetiTapa(GenericTapasticComic):
     url = 'https://tapastic.com/series/TheAwkwardYeti'
     _categories = ('YETI', )
 
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Hack."""
+        archive_elts = list(cls.get_archive_elements())
+        assert not archive_elts
+        return []
+
 
 class AsPerUsualTapa(GenericTapasticComic):
     """Class to retrieve As Per Usual comics."""
@@ -6144,6 +6200,47 @@ class MercworksTapa(GenericTapasticComic):
     _categories = ('MERCWORKS', )
 
 
+class GenericWebToons():
+#class GenericWebToons(GenericComicNotWorking, GenericNavigableComic):
+    """Generic class to handle the logic common to comics from webtoons.com."""
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('a', id='_btnEpisode')
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', title='Next Episode' if next_ else 'Previous Episode')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+        author = soup.find('meta', property='com-linewebtoon:episode:author')['content']
+        imgs = soup.find('div', id='_imageList').find_all('img')
+        return {
+            'author': author,
+            #'title': title,
+            #'day': day,
+            #'month': month,
+            #'year': year,
+            'img': [i['data-url'] for i in imgs],
+            #'num': num,
+        }
+
+
+class SafelyEndangeredWebtoons(GenericWebToons):
+    """Class to retrieve Safely Endangered comics."""
+    # Also on https://www.safelyendangered.com
+    # Also on https://tumblr.safelyendangered.com
+    name = 'endangered-webtoons'
+    long_name = 'Safely Endangered (from Webtoons)'
+    url = 'http://www.webtoons.com/en/comedy/safely-endangered/list?title_no=352'
+
+
+
 class AbsurdoLapin(GenericNavigableComic):
     """Class to retrieve Absurdo Lapin comics."""
     name = 'absurdo'
@@ -6178,10 +6275,32 @@ class AbsurdoLapin(GenericNavigableComic):
         imgs = soup.find('div', id='content').find_all('img')
         return {
             'title': title,
-            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs],
             'tags': tags,
             'author': author,
         }
+
+
+#    class HackToon(GenericNavigableComic):
+#        """Class to retrieve HackToon comics."""
+#        name = 'hacktoon'
+#        long_name = 'Hack Toon'
+#        url = 'http://hacktoon.com'
+#
+#        @classmethod
+#        def get_first_comic_link(cls):
+#            """Get link to first comics."""
+#            return get_soup_at_url(cls.url).find('a', class_='nav-link nav-first')
+#
+#        @classmethod
+#        def get_navi_link(cls, last_soup, next_):
+#            """Get link to next or previous comic."""
+#            return last_soup.find('a', class_='nav-link nav-prev' if next_ else 'nav-link nav-next')
+#
+#        @classmethod
+#        def get_comic_info(cls, soup, link):
+#            """Get information about a particular comics."""
+#            print(link)
 
 
 def get_subclasses(klass):
@@ -6215,9 +6334,294 @@ def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     return ret
 
 
+def detect_comic(url):
+    """Function to detect how to implement a crawler from an URL."""
+    soup = get_soup_at_url(url)
+    navi_funcs = [
+        a_rel_next,
+        link_rel_next,
+        a_navi_navinext,
+        a_comicnavbase_comicnavnext,
+        a_navi_comicnavnext_navinext,
+        a_next,
+    ]
+    first_funcs = [
+        div_navfirst_a,
+        a_comicnavbase_comicnavfirst,
+        a_navi_navifirst,
+        a_first,
+    ]
+    title_funcs = [
+    ]
+    for func in navi_funcs:
+        prev, next_ = [func(soup, nex) for nex in (False, True)]
+        if prev or next_:
+            print(str(func) + " found prev " + str(prev) + " and next " + str(next_))
+            break
+    else:
+        print("No prev or next found")
+    for func in first_funcs:
+        first = func(soup)
+        if first:
+            print(str(func) + " found first " + str(first))
+            break
+    else:
+        print("No first found")
+    for func in title_funcs:
+        title = func(soup)
+        if title:
+            print(str(func) + " found title " + str(first))
+            break
+    else:
+        print("No title found")
+
+
+if __name__ == '__main__':
+    # detect_comic('http://www.exocomics.com/')
+    # detect_comic('https://hotcakescomics.com/egghead-12-4-17/')
+    # detect_comic('http://chainsawsuit.com/')
+    # detect_comic('http://existentialcomics.com')
+    # detect_comic('https://ptbd.jwels.berlin/') # get_a_rel_next
+    # detect_comic('http://www.harrymartincartoons.com/2017/08/31/flying-into-the-eclipse/')
+    # detect_comic('http://macadamvalley.com/242-lhommage/')
+    # detect_comic('http://oppressive-silence.com/')
+    # detect_comic('http://hacktoon.com/sat/2017/alice-and-bob-cant-p-np-anymore/')
+    # detect_comic('http://www.obion.fr/blog/2017/12/its-raining-again/')
+    detect_comic('http://ultimex.over-blog.com/2017/10/ultimex-256-tout-est-en-desordre.html')
+
 COMICS = set(get_subclasses(GenericComic))
 VALID_COMICS = [c for c in COMICS if c.name is not None]
 COMIC_NAMES = {c.name: c for c in VALID_COMICS}
 assert len(VALID_COMICS) == len(COMIC_NAMES)
 CLASS_NAMES = {c.__name__ for c in VALID_COMICS}
 assert len(VALID_COMICS) == len(CLASS_NAMES)
+CATEGORIES = {}
+for c in VALID_COMICS:
+    for cat in c.get_categories():
+        assert cat not in COMIC_NAMES
+        CATEGORIES.setdefault(cat, []).append(c.name)
+# for cat in sorted(CATEGORIES.keys()):
+#     print(cat, sorted(CATEGORIES[cat]))
+# print(CATEGORIES)
+# UNDER DEVELOPMENT STUFF - UNDER COMIC_NAMES DEFINITION NOT TO HAVE THEM IN THE LIST OF DETECTED CLASSES
+class BigFatComics(GenericNavigableComic):
+    """Class to retrieve Big Fat Comics."""
+    name = 'bigfat'
+    long_name = 'Big Fat Comics'
+    url = 'http://www.bigfatcomics.com'
+    get_url_from_link = join_cls_url_to_href
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.bigfatcomics.com/blog/2016/11/10/happy-little-accidents'
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find('a', class_='prev-item' if next_ else 'next-item')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        desc = soup.find('meta', property='og:description')['content']
+        date_str = soup.find('time', class_='published')['datetime']
+        day = string_to_date(date_str, "%Y-%m-%d")
+        div_content = (soup.find('div', class_="body entry-content") or
+                       soup.find('div', class_="special-content"))
+        imgs = div_content.find_all('img')
+        imgs = [i for i in imgs if i.get('src') is not None]
+        assert all('title' not in i or i['alt'] == i['title'] for i in imgs)
+        alt = imgs[0].get('alt', "") if imgs else []
+        return {
+            'title': title,
+            'alt': alt,
+            'description': desc,
+            'day': day.day,
+            'month': day.month,
+            'year': day.year,
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+        }
+
+
+class KlaireFaitGrr(object): # GenericNavigableComic): NOTREADY
+    """Class to retrieve Klaire Fait Grr comics."""
+    name = 'klaire'
+    long_name = 'Klaire Fait Grr'
+    url = 'http://www.klaire.fr'
+    get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.klaire.fr/oldies/20/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+        url2 = soup.find('link', rel='shortlink')['href']
+        title = soup.find('title').string
+        date_str = soup.find('time', class_='entry-date')['datetime']
+        # TODO
+
+class MirionMalle(GenericBlogspotComic): # NOTREADY
+    """Class to retrieve Mirion Malle comics."""
+    name = 'mirion'
+    long_name = 'Mirion Malle'
+    url = 'http://www.mirionmalle.com'
+    _categories = ('FRANCAIS', )
+    first_url = 'http://www.mirionmalle.com/2011/03/poussins-et-masques-grelots.html'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+        title = soup.find('title').string
+        imgs = []  # soup.find_all('link', rel='image_src')
+        author = soup.find('a', rel='author').string
+        return {
+            'img': [i['href'] for i in imgs],
+            'author': author,
+            'title': title,
+        }
+
+
+class Catacrac(GenericComic):
+    """Class to retrieve Catacrac comics."""
+    name = 'catacrac'
+    long_name = 'catacrac'
+    url = 'http://www.catacrac.net'
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        return
+        yield
+
+
+class LaBandePasDessinee(GenericComic):
+    """Class to retrieve les Bandes Pas Dessinees."""
+    name = "pasdessinee"
+    long_name = "La bande pas dessinee"
+    url = "http://www.labandepasdessinee.com"
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        next_comic = "TODO"
+        return
+        yield
+
+
+class HamletsDanish(GenericNavigableComic):
+    """Class to retrieve Hamlet's Danish comics."""
+    name = 'hamlet'
+    long_name = "Hamlet's Danish"
+    url = 'http://clayyount.com/hamlets-danish'
+    get_navi_link = get_a_next
+    get_first_comic_link = get_a_first
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+
+
+class YodaBlog(GenericNavigableComic):
+    """Class to retrieve Yoda Blog comics."""
+    name = 'yoda'
+    long_name = 'Yoda Blog'
+    url = 'http://www.yodablog.net'
+    get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'http://www.yodablog.net/?p=1'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+
+
+class FowlLanguage(GenericNavigableComic):
+    """Class to retrieve Fowl Language comics."""
+    # Also on http://fowllanguagecomics.tumblr.com
+    # Also on http://tapastic.com/series/Fowl-Language-Comics
+    # Also on http://www.gocomics.com/fowl-language
+    # name = 'fowllanguage'
+    long_name = 'Fowl Language Comics'
+    url = 'http://www.fowllanguagecomics.com'
+    _categories = ('FOWLLANGUAGE', )
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        print(link)
+
+
+class MoonBeardWebtoons(GenericWebToons):
+    """Class to retrieve MoonBeard comics."""
+    # Also on http://squireseses.tumblr.com
+    # Also on http://moonbeard.com
+    # name = 'moonbeard-webtoons'
+    long_name = 'Moon Beard (from Webtoons)'
+    url = 'http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471'
+    _categories = ('MOONBEARD', )
+
+
+class ExistentialComics(GenericNavigableComic):
+    """Class to retrieve Existential Comics."""
+    name = 'existential'
+    long_name = 'Existential Comics'
+    url = 'http://existentialcomics.com'
+
+# http://www.lrtoons.com/
+# http://oppressive-silence.com/
+# http://www.globecartoon.com/dessin/
+
+# https://fr.reddit.com/r/comics/comments/4jh9n1/lamp_oc/
+
+# https://fr.reddit.com/r/comics/comments/4jgdk0/sunday/
+# http://www.narcolepsyinc.com/home/
+
+# https://fr.reddit.com/r/comics/comments/4g0jh0/why_i_still_have_acne/
+# http://www.couldbeworse-comic.com/411.html
+
+# https://bognard.com
+
+# farside
+
+# brown paper bag comic
+
+# https://arcaderage.co/
+
+# http://existentialcomics.com/
+
+# http://www.newyorker.com/cartoons
+
+# https://hotcakescomics.com/
+
+# http://www.klaire.fr/gribouillages/dans-ton-com-happy-end/
+
+# http://www.bigfatcomics.com/
+
+# http://theobscuregentlemen.com/comic/men-of-war-reviled/
+
+# https://condenaststore.com/featured/two-children-converse-while-playing-with-blocks-joe-dator.html
+
+
+# https://earthtoplanet.com/
+
+# https://www.laquecomics.com/
+
+# exocomics
+
+# https://ptbd.jwels.berlin/
+
+# http://labeteestmechante.blogspot.fr/
+
+# https://www.instagram.com/nathanwpyle/?hl=fr
+
+# https://thenib.com/kasia-babis
+
+# https://www.tabulitcomics.com/
+
+# http://www.alarminglybad.com/
+
+# https://raphcomic.com/ also on webtoons
+
