@@ -1989,7 +1989,7 @@ class Penmen(GenericComicNotWorking, GenericNavigableComic):
         }
 
 
-class TheDoghouseDiaries(GenericDeletedComic, GenericNavigableComic):
+class TheDoghouseDiaries(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve The Dog House Diaries comics."""
     name = 'doghouse'
     long_name = 'The Dog House Diaries'
