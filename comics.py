@@ -6114,7 +6114,7 @@ class AbsurdoLapin(GenericNavigableComic):
         imgs = soup.find('div', id='content').find_all('img')
         return {
             'title': title,
-            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+            'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs],
             'tags': tags,
             'author': author,
         }
