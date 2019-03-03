@@ -3723,67 +3723,71 @@ class GloryOwlComix(GenericBlogspotComic):
         }
 
 
-class GenericSquareSpace(GenericNavigableComic):
-    """Generic class to retrieve comics using SquareSpace."""
-    _categories = ('SQUARESPACE', )
+class AtRandomComics(GenericNavigableComic):
+    """Class to retrieve At Random Comics."""
+    name = 'atrandom'
+    long_name = 'At Random Comics'
+    url = 'http://www.atrandomcomics.com'
+    first_url = 'http://www.atrandomcomics.com/at-random-comics-home/2015/5/5/can-of-worms'
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return last_soup.find('a', id='prevLink' if next_ else 'nextLink')
-
-    @classmethod
-    def get_images(cls, soup):
-        """Get image URLs for a comic."""
-        raise NotImplementedError
+        li = last_soup.find('li', class_='prev' if next_ else 'next')
+        return li.find('a') if li else None
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
-        desc = soup.find('meta', property='og:description')['content']
+        desc = soup.find('meta', property='og:description')
+        description = desc['content'] if desc else ''
         date_str = soup.find('time', itemprop='datePublished')["datetime"]
         day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
+        imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'img': cls.get_images(soup),
+            'img': [i['content'] for i in imgs],
             'month': day.month,
             'year': day.year,
             'day': day.day,
             'author': author,
-            'description': desc,
+            'description': description,
         }
 
 
-class AtRandomComics(GenericSquareSpace):
-    """Class to retrieve At Random Comics."""
-    name = 'atrandom'
-    long_name = 'At Random Comics'
-    url = 'http://www.atrandomcomics.com'
-    first_url = 'http://www.atrandomcomics.com/at-random-comics-home/2015/5/5/can-of-worms'
-
-    @classmethod
-    def get_images(cls, soup):
-        """Get image URLs for a comic."""
-        imgs = soup.find_all('meta', property='og:image')
-        return [i['content'] for i in imgs]
-
-
-class NothingSuspicious(GenericSquareSpace):
+class NothingSuspicious(GenericComicNotWorking):  # TODO
     """Class to retrieve Nothing Suspicious comics."""
     name = 'nothingsuspicious'
     long_name = 'Nothing Suspicious'
     url = 'https://nothingsuspicio.us'
     first_url = 'https://nothingsuspicio.us/?offset=1483592400908'
+    # get_url_from_link = join_cls_url_to_href
+    get_first_comic_link = simulate_first_link
 
     @classmethod
-    def get_images(cls, soup):
-        """Get image URLs for a comic."""
-        imgs = soup.find('div', class_='content-wrapper').find('img')
-        return [i['src'] for i in [imgs]]
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        # TODO
+        return last_soup.find('a', id='prevLink' if next_ else 'nextLink')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find("h1", class_="entry-title").string
+        date_str = soup.find('time')["datetime"]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        imgs = [] # TODO: soup.find('div', class_='content-wrapper').find('img')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+        }
 
 
 class DeathBulge(GenericComic):
