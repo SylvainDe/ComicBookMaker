@@ -3759,34 +3759,42 @@ class AtRandomComics(GenericNavigableComic):
         }
 
 
-class NothingSuspicious(GenericComicNotWorking):  # TODO
+class NothingSuspicious(GenericNavigableComic):
     """Class to retrieve Nothing Suspicious comics."""
     name = 'nothingsuspicious'
     long_name = 'Nothing Suspicious'
     url = 'https://nothingsuspicio.us'
-    first_url = 'https://nothingsuspicio.us/?offset=1483592400908'
-    # get_url_from_link = join_cls_url_to_href
+    first_url = 'https://nothingsuspicio.us/comic/0001-automatic-faucets'
+    get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        # TODO
-        return last_soup.find('a', id='prevLink' if next_ else 'nextLink')
+        nav = last_soup.find('nav', class_='pagination')
+        links = nav.find_all('a')
+        expected_string = 'Prev' if next_ else 'Next_'
+        for link in links:
+            if link.string == expected_string:
+                return link
+        return None
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find("h1", class_="entry-title").string
-        date_str = soup.find('time')["datetime"]
+        print(link)
+        title = soup.find('meta', property='og:title')['content']
+        date_str = soup.find('meta', itemprop='datePublished')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
-        imgs = [] # TODO: soup.find('div', class_='content-wrapper').find('img')
+        author = soup.find('meta', itemprop='author')['content']
+        imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'img': [i['src'] for i in imgs],
+            'img': [i['content'] for i in imgs],
             'month': day.month,
             'year': day.year,
             'day': day.day,
+            'author': author,
         }
 
 
