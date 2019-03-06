@@ -2356,14 +2356,15 @@ class RandomCrab(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
-        desc = soup.find('meta', property='og:description')['content']
+        desc = soup.find('meta', property='og:description')
+        desc_str = "" if desc is None else desc['content']
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         author = soup.find('a', rel='author').string
         return {
             'title': title,
-            'desc': desc,
+            'desc': desc_str,
             'img': [i['content'] for i in imgs],
             'month': day.month,
             'year': day.year,
