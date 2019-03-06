@@ -3773,7 +3773,7 @@ class NothingSuspicious(GenericNavigableComic):
         """Get link to next or previous comic."""
         nav = last_soup.find('nav', class_='pagination')
         links = nav.find_all('a')
-        expected_string = 'Prev' if next_ else 'Next_'
+        expected_string = 'Prev' if next_ else 'Next'
         for link in links:
             if link.string == expected_string:
                 return link
