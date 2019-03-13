@@ -5166,8 +5166,9 @@ class GenericGoComic(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        div = get_soup_at_url(cls.url).find('div', class_='gc-deck gc-deck--cta-1')
-        return div.find('a')
+        comics_link = get_soup_at_url(cls.url).find('a', attrs={'data-link': 'comics'})
+        comics_page = get_soup_at_url(cls.get_url_from_link(comics_link))
+        return comics_page.find('a', class_='fa btn btn-outline-secondary btn-circle fa fa-backward sm ')
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
