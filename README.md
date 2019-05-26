@@ -60,7 +60,7 @@ Comics supported
  * [Tales of Absurdity (from Tapastic)](http://tapastic.com/series/Tales-Of-Absurdity)
  * [Tales of Absurdity (from Tumblr)](http://talesofabsurdity.tumblr.com)
  * [Absurdo](https://absurdo.lapin.org)
- * [Alex Levesque](http://alexlevesque.com)
+ * [Alex Levesque](https://alexlevesque.com)
  * [Angry At Nothing](http://www.angryatnothing.net)
  * [Angry At Nothing (from Tapastic)](http://tapastic.com/series/Comics-yeah-definitely-comics-)
  * [Angry At Nothing (from Tumblr)](http://angryatnothing.tumblr.com)

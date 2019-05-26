@@ -4873,7 +4873,7 @@ class AlexLevesque(GenericTumblrV1):
     """Class to retrieve AlexLevesque comics."""
     name = 'alevesque'
     long_name = 'Alex Levesque'
-    url = 'http://alexlevesque.com'
+    url = 'https://alexlevesque.com'
     _categories = ('FRANCAIS', )
 
 
