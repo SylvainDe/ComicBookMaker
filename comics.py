@@ -6124,6 +6124,41 @@ class AbsurdoLapin(GenericNavigableComic):
         }
 
 
+class DogmoDog(GenericNavigableComic):
+    """Class to retrieve Dogmo Dogs comics."""
+    name = 'dogmo'
+    long_name = 'Dogmo Dog'
+    url = 'http://www.dogmodog.com'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_nav(cls, soup, title):
+        """Get the navigation elements from soup object."""
+        img = soup.find('img', title=title)
+        return None if img is None else img.parent
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return cls.get_nav(get_soup_at_url(cls.url), 'First')
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return cls.get_nav(last_soup, 'Next' if next_ else 'Previous')
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        div = soup.find('div', id='Comic')
+        if div is None:
+            return None
+        imgs = div.find_all('img')
+        return {
+            'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
+        }
+
+
 def get_subclasses(klass):
     """Gets the list of direct/indirect subclasses of a class"""
     subclasses = klass.__subclasses__()

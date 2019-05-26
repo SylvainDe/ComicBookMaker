@@ -146,6 +146,7 @@ Comics supported
  * [Dinosaur Comics](http://www.qwantz.com)
  * [Disco Bleach](http://discobleach.com)
  * [The Dog House Diaries](http://thedoghousediaries.com)
+ * [Dogmo Dog](http://www.dogmodog.com)
  * [Don't Be Dad (from Tapastic)](https://tapas.io/series/DontBeDad-Comics)
  * [Doodle For Food](https://www.doodleforfood.com)
  * [Doodle For Food (from Tapastic)](https://tapastic.com/series/Doodle-for-Food)
