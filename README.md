@@ -314,6 +314,8 @@ Comics supported
  * [Yesterday's Popcorn (from Tumblr)](http://yesterdayspopcorn.tumblr.com)
  * [Pundemonium](http://monstika.tumblr.com)
  * [Quarktees](http://www.quarktees.com/blogs/news)
+ * [Rae the Doe](https://www.raethedoe.com)
+ * [Rae the Doe (from Tumblr)](https://raethedoe.tumblr.com)
  * [Ted Rall](http://rall.com/comic)
  * [Ted Rall (from GoComics)](http://www.gocomics.com/ted-rall)
  * [Michael Ramirez](http://www.gocomics.com/michaelramirez)

@@ -2444,6 +2444,32 @@ class AnythingComic(GenericListableComic):
         }
 
 
+class RaeTheDoe(GenericListableComic):
+    """Class to retrieve Rae The Doe comics."""
+    # Also on https://raethedoe.tumblr.com
+    name = 'rae'
+    long_name = 'Rae the Doe'
+    url = 'https://www.raethedoe.com'
+    get_url_from_archive_element = get_href
+
+    @classmethod
+    def get_archive_elements(cls):
+        archive_url = urljoin_wrapper(cls.url, 'p/archive.html')
+        soup = get_soup_at_url(archive_url)
+        div_content = soup.find('div', class_="post-body entry-content")
+        return div_content.find_all('a')
+
+    @classmethod
+    def get_comic_info(cls, soup, a):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        imgs = soup.find_all('link', rel='image_src')
+        return {
+            'img': [i['href'] for i in imgs],
+            'title': title,
+        }
+
+
 class LonnieMillsap(GenericNavigableComic):
     """Class to retrieve Lonnie Millsap's comics."""
     name = 'millsap'
@@ -5109,6 +5135,14 @@ class OneGiantHand(GenericTumblrV1):
     name = 'onegianthand'
     long_name = 'One Giant Hand'
     url = 'http://onegianthand.com'
+
+
+class RaeTheDoeTumblr(GenericTumblrV1):
+    """Class to retrieve Rae The Doe comics."""
+    # Also on https://www.raethedoe.com
+    name = 'rae-tumblr'
+    long_name = 'Rae the Doe (from Tumblr)'
+    url = 'https://raethedoe.tumblr.com'
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
