@@ -114,7 +114,7 @@ def get_file_at_url(url, path, referer=None):
                 shutil.copyfileobj(response, out_file)
                 time.sleep(0.4)
                 return path
-    except (urllib.error.HTTPError, urllib.error.URLError):
+    except (urllib.error.HTTPError, urllib.error.URLError, ssl.CertificateError):
         return None
 
 
