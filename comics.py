@@ -450,16 +450,27 @@ class GenericLeMondeBlog(GenericNavigableComic):
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
     first_url = NotImplemented
-    date_format = "%d %B %Y"
+    get_date = NotImplemented
+
+    @classmethod
+    def get_date_time_published(cls, soup):
+        date_str = soup.find('time', class_='published')['datetime'][:10]
+        return string_to_date(date_str, "%Y-%m-%d")
+
+    @classmethod
+    def get_date_span_entry_date(cls, soup):
+        date_format = "%d %B %Y"
+        date_str = soup.find("span", class_="entry-date").string
+        return string_to_date(date_str, date_format, "fr_FR.utf8")
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url2 = soup.find('link', rel='shortlink')['href']
-        title = soup.find('meta', property='og:title')['content']
-        date_str = soup.find("span", class_="entry-date").string
-        day = string_to_date(date_str, cls.date_format, "fr_FR.utf8")
+        title_meta = soup.find('meta', property='og:title')
+        title = '' if title_meta is None else title_meta['content']
         imgs = soup.find_all('meta', property='og:image')
+        day = cls.get_date(soup)
         return {
             'title': title,
             'url2': url2,
@@ -476,6 +487,7 @@ class ZepWorld(GenericLeMondeBlog):
     long_name = "Zep World"
     url = "http://zepworld.blog.lemonde.fr"
     first_url = "http://zepworld.blog.lemonde.fr/2014/10/31/bientot-le-blog-de-zep/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class Vidberg(GenericLeMondeBlog):
@@ -485,6 +497,7 @@ class Vidberg(GenericLeMondeBlog):
     url = "http://vidberg.blog.lemonde.fr"
     # Not the first but I didn't find an efficient way to retrieve it
     first_url = "http://vidberg.blog.lemonde.fr/2012/02/09/revue-de-campagne-la-campagne-du-modem-semballe/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class Plantu(GenericLeMondeBlog):
@@ -493,6 +506,7 @@ class Plantu(GenericLeMondeBlog):
     long_name = "Plantu"
     url = "http://plantu.blog.lemonde.fr"
     first_url = "http://plantu.blog.lemonde.fr/2014/10/28/stress-test-a-bruxelles/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class XavierGorce(GenericLeMondeBlog):
@@ -501,6 +515,7 @@ class XavierGorce(GenericLeMondeBlog):
     long_name = "Xavier Gorce"
     url = "http://xaviergorce.blog.lemonde.fr"
     first_url = "http://xaviergorce.blog.lemonde.fr/2015/01/09/distinction/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class CartooningForPeace(GenericLeMondeBlog):
@@ -509,6 +524,7 @@ class CartooningForPeace(GenericLeMondeBlog):
     long_name = "Cartooning For Peace"
     url = "http://cartooningforpeace.blog.lemonde.fr"
     first_url = "http://cartooningforpeace.blog.lemonde.fr/2014/12/15/bado/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class Aurel(GenericLeMondeBlog):
@@ -517,6 +533,7 @@ class Aurel(GenericLeMondeBlog):
     long_name = "Aurel"
     url = "http://aurel.blog.lemonde.fr"
     first_url = "http://aurel.blog.lemonde.fr/2014/09/29/le-senat-repasse-a-droite/"
+    get_date = GenericLeMondeBlog.get_date_span_entry_date
 
 
 class LesCulottees(GenericLeMondeBlog):
@@ -525,6 +542,7 @@ class LesCulottees(GenericLeMondeBlog):
     long_name = 'Les Culottees'
     url = "http://lesculottees.blog.lemonde.fr"
     first_url = "http://lesculottees.blog.lemonde.fr/2016/01/11/clementine-delait-femme-a-barbe/"
+    get_date = GenericLeMondeBlog.get_date_span_entry_date
 
 
 class UneAnneeAuLycee(GenericLeMondeBlog):
@@ -533,6 +551,7 @@ class UneAnneeAuLycee(GenericLeMondeBlog):
     long_name = 'Une Annee au Lycee'
     url = 'http://uneanneeaulycee.blog.lemonde.fr'
     first_url = "http://uneanneeaulycee.blog.lemonde.fr/2016/06/13/la-semaine-du-bac-est-arrivee/"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class LisaMandel(GenericLeMondeBlog):
@@ -541,6 +560,7 @@ class LisaMandel(GenericLeMondeBlog):
     long_name = 'Lisa Mandel (HP, hors-service)'
     url = 'http://lisamandel.blog.lemonde.fr'
     first_url = 'http://lisamandel.blog.lemonde.fr/2016/02/23/premiers-jours-a-calais/'
+    get_date = GenericLeMondeBlog.get_date_span_entry_date
 
 
 class Avventura(GenericLeMondeBlog):
@@ -549,7 +569,7 @@ class Avventura(GenericLeMondeBlog):
     long_name = 'Avventura'
     url = 'http://lavventura.blog.lemonde.fr'
     first_url = 'http://lavventura.blog.lemonde.fr/2013/11/23/roma-paris-aller-simple/'
-    date_format = "%d/%m/%Y"
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class MorganNavarro(GenericLeMondeBlog):
@@ -558,6 +578,7 @@ class MorganNavarro(GenericLeMondeBlog):
     long_name = 'Morgan Navarro (Ma vie de reac)'
     url = 'http://morgannavarro.blog.lemonde.fr'
     first_url = 'http://morgannavarro.blog.lemonde.fr/2015/09/09/le-doute/'
+    get_date = GenericLeMondeBlog.get_date_time_published
 
 
 class EveVelo(GenericNavigableComic):
