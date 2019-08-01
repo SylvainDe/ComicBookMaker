@@ -105,7 +105,7 @@ Comics supported
  * [Calvin and Hobbes (from GoComics)](http://www.gocomics.com/calvinandhobbes)
  * [Cancer Owl (from Tumblr)](http://cancerowl.tumblr.com)
  * [Is It Canon (from Tapastic)](http://tapastic.com/series/isitcanon)
- * [Cassandra Calin (from Tapastic)](https://tapas.io/series/Cassandra-Comics)
+ * [Cassandra Calin (from Tapastic)](https://tapas.io/series/CassandraComics)
  * [Cassandra Calin (from Tumblr)](http://c-cassandra.tumblr.com)
  * [Catana](http://www.catanacomics.com)
  * [Caw4hw (from Tapastic)](https://tapas.io/series/CAW4HW)
