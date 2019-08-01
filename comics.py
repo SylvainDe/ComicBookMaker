@@ -581,6 +581,15 @@ class MorganNavarro(GenericLeMondeBlog):
     get_date = GenericLeMondeBlog.get_date_time_published
 
 
+class Micael(GenericLeMondeBlog):
+    """Class to retrieve Micael comics."""
+    name = 'micael'
+    long_name = "Micael (L'Air du temps)"
+    url = "https://www.lemonde.fr/blog/micael/"
+    first_url = 'https://www.lemonde.fr/blog/micael/2014/07/21/sattaquer-a-sartre/'
+    get_date = GenericLeMondeBlog.get_date_time_published
+
+
 class EveVelo(GenericNavigableComic):
     """Class to retrieve  Eve Velo comics."""
     name = 'evevelo'

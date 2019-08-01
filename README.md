@@ -250,6 +250,7 @@ Comics supported
  * [Mercworks](http://mercworks.net)
  * [Mercworks (from Tapastic)](https://tapastic.com/series/MercWorks)
  * [Mercworks (from Tumblr)](http://mercworks.tumblr.com)
+ * [Micael (L'Air du temps)](https://www.lemonde.fr/blog/micael/)
  * [Lonnie Millsap](http://www.lonniemillsap.com)
  * [Mister & Me](http://www.mister-and-me.com)
  * [Mister & Me (from GoComics)](http://www.gocomics.com/mister-and-me)
