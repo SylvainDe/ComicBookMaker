@@ -2711,7 +2711,6 @@ class TheAwkwardYeti(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
         link = last_soup.find('link', rel='next' if next_ else 'prev')
-        print(link)
         # Workaround because a page leads to 404 error
         if link:
             url = cls.get_url_from_link(link)
