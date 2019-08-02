@@ -2706,7 +2706,20 @@ class TheAwkwardYeti(GenericNavigableComic):
     url = 'http://theawkwardyeti.com'
     _categories = ('YETI', )
     get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        link = last_soup.find('link', rel='next' if next_ else 'prev')
+        print(link)
+        # Workaround because a page leads to 404 error
+        if link:
+            url = cls.get_url_from_link(link)
+            if url == 'http://theawkwardyeti.com/comic/change/':
+                next_url = 'http://theawkwardyeti.com/comic/hypothyroidism/'
+                prev_url = 'http://theawkwardyeti.com/comic/hyperthyroidism-works/'
+                return {'href': next_url if next_ else prev_url}
+        return link
 
     @classmethod
     def get_comic_info(cls, soup, link):
