@@ -4487,7 +4487,7 @@ class AComik(GenericTumblrV1):
     """Class to retrieve A Comik"""
     name = 'comik'
     long_name = 'A Comik'
-    url = 'http://acomik.com'
+    url = 'https://acomik.com'
 
 
 class ClassicRandy(GenericTumblrV1):

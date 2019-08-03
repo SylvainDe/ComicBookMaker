@@ -116,7 +116,7 @@ Comics supported
  * [Cinismo Ilustrado](http://cinismoilustrado.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
  * [Victims Of Circumsolar (from Tumblr)](https://victimsofcomics.tumblr.com)
- * [A Comik](http://acomik.com)
+ * [A Comik](https://acomik.com)
  * [Commit Strip (En)](http://www.commitstrip.com/en)
  * [Commit Strip (Fr)](http://www.commitstrip.com/fr)
  * [Over Compensating](http://www.overcompensating.com)
