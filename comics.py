@@ -527,7 +527,7 @@ class CartooningForPeace(GenericLeMondeBlog):
     get_date = GenericLeMondeBlog.get_date_time_published
 
 
-class Aurel(GenericLeMondeBlog):
+class Aurel(GenericDeletedComic, GenericLeMondeBlog):
     """Class to retrieve Aurel comics."""
     name = 'aurel'
     long_name = "Aurel"
