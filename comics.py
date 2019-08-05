@@ -4454,7 +4454,7 @@ class TheWorldIsFlatTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/The-World-is-Flat
     name = 'flatworld-tumblr'
     long_name = 'The World Is Flat (from Tumblr)'
-    url = 'http://theworldisflatcomics.com'
+    url = 'https://theworldisflatcomics.com'
 
 
 class DorrisMc(GenericTumblrV1):
@@ -5881,7 +5881,7 @@ class TheOdd1sOutTapa(GenericTapasticComic):
 
 class TheWorldIsFlatTapa(GenericTapasticComic):
     """Class to retrieve The World Is Flat Comics."""
-    # Also on http://theworldisflatcomics.tumblr.com
+    # Also on https://theworldisflatcomics.tumblr.com
     name = 'flatworld-tapa'
     long_name = 'The World Is Flat (from Tapastic)'
     url = 'https://tapastic.com/series/The-World-is-Flat'
