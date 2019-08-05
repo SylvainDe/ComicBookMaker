@@ -1939,7 +1939,7 @@ class SafelyEndangered(GenericNavigableComic):
     url = 'https://www.safelyendangered.com'
     get_navi_link = get_link_rel_next
     get_first_comic_link = simulate_first_link
-    first_url = 'https://www.safelyendangered.com/comic/ignored/'
+    first_url = 'https://www.safelyendangered.com/comic/clone/'
 
     @classmethod
     def get_comic_info(cls, soup, link):
