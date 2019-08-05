@@ -4462,7 +4462,7 @@ class DorrisMc(GenericTumblrV1):
     # Also on http://www.gocomics.com/dorris-mccomics
     name = 'dorrismc'
     long_name = 'Dorris Mc'
-    url = 'http://dorrismccomics.com'
+    url = 'https://dorrismccomics.com'
 
 
 class LeleozTumblr(GenericDeletedComic, GenericTumblrV1):
@@ -4636,7 +4636,7 @@ class WebcomicName(GenericTumblrV1):
     """Class to retrieve Webcomic Name comics."""
     name = 'webcomicname'
     long_name = 'Webcomic Name'
-    url = 'http://webcomicname.com'
+    url = 'https://webcomicname.com'
 
 
 class BooksOfAdam(GenericTumblrV1):
@@ -4878,7 +4878,7 @@ class Dustinteractive(GenericTumblrV1):
     """Class to retrieve Dustinteractive comics."""
     name = 'dustinteractive'
     long_name = 'Dustinteractive'
-    url = 'http://dustinteractive.com'
+    url = 'https://dustinteractive.com'
 
 
 class StickyCinemaFloor(GenericTumblrV1):
@@ -5476,7 +5476,7 @@ class GarfieldGoComics(GenericGoComic):
 
 class DorrisMcGoComics(GenericGoComic):
     """Class to retrieve Dorris Mc Comics"""
-    # Also on http://dorrismccomics.com
+    # Also on https://dorrismccomics.com
     name = 'dorrismc-goc'
     long_name = 'Dorris Mc (from GoComics)'
     url = 'http://www.gocomics.com/dorris-mccomics'
