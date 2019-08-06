@@ -3260,11 +3260,24 @@ class TheIsmComics(GenericDeletedComic, GenericWordPressInkblot):
     url = 'http://www.theism-comics.com'
 
 
-class WoodenPlankStudios(GenericWordPressInkblot):
+class WoodenPlankStudios(GenericNavigableComic):
     """Class to retrieve Wooden Plank Studios comics."""
     name = 'woodenplank'
     long_name = 'Wooden Plank Studios'
-    url = 'http://woodenplankstudios.com'
+    url = 'https://www.woodenplankstudios.com/comic/'
+    get_navi_link = get_link_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = 'https://www.woodenplankstudios.com/comic/professor-layton-and-the-curious-fetish/'
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('h1').string
+        imgs = soup.find('div', class_='webcomic-image').find_all('img')
+        return {
+            'title': title,
+            'img': [i['src'] for i in imgs],
+        }
 
 
 class ElectricBunnyComic(GenericNavigableComic):

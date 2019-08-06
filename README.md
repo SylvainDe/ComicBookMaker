@@ -411,7 +411,7 @@ Comics supported
  * [We Flaps (from Tumblr)](https://weflaps.tumblr.com)
  * [Will 5:00 Never Come ?](http://will5nevercome.com)
  * [Wondermark](http://wondermark.com)
- * [Wooden Plank Studios](http://woodenplankstudios.com)
+ * [Wooden Plank Studios](https://www.woodenplankstudios.com/comic/)
  * [Matt Wuerker](http://www.gocomics.com/mattwuerker)
  * [WuMo](http://www.gocomics.com/wumo)
  * [xkcd](http://xkcd.com)
