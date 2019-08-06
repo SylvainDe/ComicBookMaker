@@ -4871,7 +4871,7 @@ class IceCreamSandwichComics(GenericTumblrV1):
     """Class to retrieve Ice Cream Sandwich Comics."""
     name = 'icecream'
     long_name = 'Ice Cream Sandwich Comics'
-    url = 'http://icecreamsandwichcomics.com'
+    url = 'https://icecreamsandwichcomics.com'
 
 
 class Dustinteractive(GenericTumblrV1):

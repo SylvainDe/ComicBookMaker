@@ -203,7 +203,7 @@ Comics supported
  * [Hot Comics For Cool People (from Tapastic)](https://tapastic.com/series/Hot-Comics-For-Cool-People)
  * [Hot Comics For Cool People (from Tumblr)](http://hotcomicsforcoolpeople.tumblr.com)
  * [Huffy Penguin](http://huffy-penguin.tumblr.com)
- * [Ice Cream Sandwich Comics](http://icecreamsandwichcomics.com)
+ * [Ice Cream Sandwich Comics](https://icecreamsandwichcomics.com)
  * [Imogen Quest](http://imogenquest.net)
  * [Imogen Quest (from GoComics)](https://www.gocomics.com/imogen-quest)
  * [Imogen Quest (from Tumblr)](http://imoquest.tumblr.com)
