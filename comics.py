@@ -4682,7 +4682,7 @@ class JakeLikesOnions(GenericTumblrV1):
     """Class to retrieve Jake Likes Onions comics."""
     name = 'jake'
     long_name = 'Jake Likes Onions'
-    url = 'http://jakelikesonions.com'
+    url = 'https://jakelikesonions.com'
 
 
 class InYourFaceCakeTumblr(GenericTumblrV1):

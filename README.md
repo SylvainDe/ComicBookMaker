@@ -216,7 +216,7 @@ Comics supported
  * [In Your Face Cake (from Tumblr)](https://in-your-face-cake.tumblr.com)
  * [Irwin Cardozo](http://irwincardozocomics.tumblr.com)
  * [It Fools A Monster](http://itfoolsamonster.com)
- * [Jake Likes Onions](http://jakelikesonions.com)
+ * [Jake Likes Onions](https://jakelikesonions.com)
  * [James Of No Trades (from Tapastic)](https://tapas.io/series/James-of-No-Trades)
  * [James Of No Trades (from Tumblr)](http://jamesfregan.tumblr.com)
  * [My Jet Pack](http://myjetpack.tumblr.com)
