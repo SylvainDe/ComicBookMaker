@@ -900,7 +900,7 @@ class NeDroid(GenericNavigableComic):
         }
 
 
-class Garfield(GenericComicNotWorking, GenericNavigableComic): # See #50
+class Garfield(GenericComicNotWorking, GenericNavigableComic):  # See issue #50
     """Class to retrieve Garfield comics."""
     # Also on http://www.gocomics.com/garfield
     name = 'garfield'
