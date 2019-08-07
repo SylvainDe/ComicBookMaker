@@ -4721,7 +4721,7 @@ class TwistedDoodles(GenericTumblrV1):
     """Class to retrieve Twisted Doodles comics."""
     name = 'twisted'
     long_name = 'Twisted Doodles'
-    url = 'http://www.twisteddoodles.com'
+    url = 'https://www.twisteddoodles.com'
 
 
 class UbertoolTumblr(GenericTumblrV1):
