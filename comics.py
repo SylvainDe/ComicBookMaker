@@ -3952,7 +3952,7 @@ class Ptbd(GenericComic):
             'month': day.month,
             'year': day.year,
             'day': day.day,
-            'description': comic_json['content_html'], # TODO: to be decoded
+            'description': comic_json['content_html'],  # TODO: to be decoded
             'num': comic_json['id'],
         }
 
