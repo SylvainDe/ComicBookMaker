@@ -28,6 +28,7 @@ class Xkcd(GenericComic):
         first_num = last_comic['num'] if last_comic else 0
         last_num = load_json_at_url(json_url)['num']
 
+        cls.log("first_num:%d, last_num:%d" % (first_num, last_num))
         for num in range(first_num + 1, last_num + 1):
             comic = cls.get_comic_info(num)
             if comic is not None:
@@ -3915,6 +3916,47 @@ class DeathBulge(GenericComic):
             }
 
 
+class Ptbd(GenericComic):
+    "Class to retrieve Pretends to be drawing comics."""
+    # Also on https://tapas.io/series/ptbd
+    # Also on https://www.webtoons.com/en/challenge/pretends-to-be-drawing/list?title_no=109952
+    # Also on https://www.instagram.com/pretendstobedrawing/
+    name = 'ptbd'
+    long_name = 'Pretends to be drawing'
+    url = 'https://ptbd.jwels.berlin'
+    _categories = ('PTBD', )
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        json_url = urljoin_wrapper(cls.url, 'feed/json/')
+        json = load_json_at_url(json_url)
+        first_num = last_comic['num'] if last_comic else 0
+        for comic_json in json['items']:
+            if comic_json['id'] > first_num:
+                comic = cls.get_comic_info(comic_json)
+                if comic is not None:
+                    yield comic
+
+    @classmethod
+    def get_comic_info(cls, comic_json):
+        """Get information about a particular comics."""
+        # print(comic_json)
+        date_str = comic_json['date_modified'][:10]
+        day = string_to_date(date_str, "%Y-%m-%d")
+        return {
+            'url': comic_json['url'],
+            'title': comic_json['title'],
+            'author': comic_json['author']['name'],
+            'img': [comic_json['image']],
+            'month': day.month,
+            'year': day.year,
+            'day': day.day,
+            'description': comic_json['content_html'], # TODO: to be decoded
+            'num': comic_json['id'],
+        }
+
+
 class GenericTumblrV1(GenericComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
     _categories = ('TUMBLR', )
@@ -6172,6 +6214,17 @@ class MercworksTapa(GenericTapasticComic):
     long_name = 'Mercworks (from Tapastic)'
     url = 'https://tapastic.com/series/MercWorks'
     _categories = ('MERCWORKS', )
+
+
+class PtbdTapa(GenericTapasticComic):
+    "Class to retrieve Pretends to be drawing comics."""
+    # Also on https://ptbd.jwels.berlin
+    # Also on https://www.webtoons.com/en/challenge/pretends-to-be-drawing/list?title_no=109952
+    # Also on https://www.instagram.com/pretendstobedrawing/
+    name = 'ptbd-tapa'
+    long_name = 'Pretends to be drawing (from Tapastic)'
+    url = 'https://tapas.io/series/ptbd'
+    _categories = ('PTBD', )
 
 
 class AbsurdoLapin(GenericNavigableComic):

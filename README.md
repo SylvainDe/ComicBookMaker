@@ -313,6 +313,8 @@ Comics supported
  * [Poorly Drawn Lines (from Tumblr)](http://pdlcomics.tumblr.com)
  * [Yesterday's Popcorn (from Tapastic)](https://tapastic.com/series/Yesterdays-Popcorn)
  * [Yesterday's Popcorn (from Tumblr)](http://yesterdayspopcorn.tumblr.com)
+ * [Pretends to be drawing](https://ptbd.jwels.berlin)
+ * [Pretends to be drawing (from Tapastic)](https://tapas.io/series/ptbd)
  * [Pundemonium](http://monstika.tumblr.com)
  * [Quarktees](http://www.quarktees.com/blogs/news)
  * [Rae the Doe](https://www.raethedoe.com)
