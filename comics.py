@@ -4350,7 +4350,7 @@ class NellucNhoj(GenericTumblrV1):
     """Class to retrieve NellucNhoj comics."""
     name = 'nhoj'
     long_name = 'Nelluc Nhoj'
-    url = 'http://nellucnhoj.com'
+    url = 'https://nellucnhoj.com'
 
 
 class DownTheUpwardSpiralTumblr(GenericTumblrV1):
@@ -4442,7 +4442,7 @@ class ComicNuggets(GenericTumblrV1):
     """Class to retrieve Comic Nuggets."""
     name = 'nuggets'
     long_name = 'Comic Nuggets'
-    url = 'http://comicnuggets.com'
+    url = 'https://comicnuggets.com'
 
 
 class PigeonGazetteTumblr(GenericTumblrV1):
