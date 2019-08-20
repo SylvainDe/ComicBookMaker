@@ -537,7 +537,7 @@ class Aurel(GenericDeletedComic, GenericLeMondeBlog):
     get_date = GenericLeMondeBlog.get_date_span_entry_date
 
 
-class LesCulottees(GenericLeMondeBlog):
+class LesCulottees(GenericDeletedComic, GenericLeMondeBlog):
     """Class to retrieve Les Culottees comics."""
     name = 'culottees'
     long_name = 'Les Culottees'
@@ -555,7 +555,7 @@ class UneAnneeAuLycee(GenericLeMondeBlog):
     get_date = GenericLeMondeBlog.get_date_time_published
 
 
-class LisaMandel(GenericLeMondeBlog):
+class LisaMandel(GenericDeletedComic, GenericLeMondeBlog):
     """Class to retrieve Lisa Mandel comics."""
     name = 'mandel'
     long_name = 'Lisa Mandel (HP, hors-service)'
