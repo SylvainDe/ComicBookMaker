@@ -3866,7 +3866,6 @@ class NothingSuspicious(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        print(link)
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find('meta', itemprop='datePublished')['content'][:10]
         day = string_to_date(date_str, "%Y-%m-%d")
