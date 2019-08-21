@@ -4583,7 +4583,7 @@ class OrigamiHotDish(GenericTumblrV1):
     """Class to retrieve Origami Hot Dish comics."""
     name = 'origamihotdish'
     long_name = 'Origami Hot Dish'
-    url = 'http://origamihotdish.com'
+    url = 'https://origamihotdish.com'
 
 
 class HitAndMissComicsTumblr(GenericTumblrV1):
@@ -5231,7 +5231,7 @@ class OneGiantHand(GenericTumblrV1):
     # Also on https://www.instagram.com/onegianthand
     name = 'onegianthand'
     long_name = 'One Giant Hand'
-    url = 'http://onegianthand.com'
+    url = 'https://onegianthand.com'
 
 
 class RaeTheDoeTumblr(GenericTumblrV1):
