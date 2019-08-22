@@ -4198,7 +4198,7 @@ class PearShapedComics(GenericTumblrV1):
     """Class to retrieve Pear Shaped Comics."""
     name = 'pearshaped'
     long_name = 'Pear-Shaped Comics'
-    url = 'http://pearshapedcomics.com'
+    url = 'https://pearshapedcomics.com'
 
 
 class PondScumComics(GenericTumblrV1):

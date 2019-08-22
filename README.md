@@ -293,7 +293,7 @@ Comics supported
  * [Perry Bible Fellowship](http://pbfcomics.com)
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
- * [Pear-Shaped Comics](http://pearshapedcomics.com)
+ * [Pear-Shaped Comics](https://pearshapedcomics.com)
  * [Penmen](http://penmen.com)
  * [Peter Lauris](http://peterlauris.com/comics)
  * [PhD Comics](http://phdcomics.com/comics/archive.php)
