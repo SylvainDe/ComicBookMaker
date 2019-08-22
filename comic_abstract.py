@@ -186,9 +186,8 @@ class GenericComic(object):
         are basically dictionnaries with the following property :
             - 'url' is linked to a string
             - 'img' is linked to a list of url (that will get downloaded)
-            - 'day'/'month'/'year' are self explicit. They are linked to
-                integers corresponding to the comic dates. There should be
-                all of them or none of them
+            - 'date' is an optional date object (with 'day', 'month' and
+                'year' attribute) - if none is provided, today is used.
             - more fields can be provided."""
         raise NotImplementedError
 
@@ -226,17 +225,18 @@ class GenericComic(object):
                 cls.log("got %s" % str(comic))
                 assert 'url' in comic
                 assert 'img' in comic
-                if 'day' in comic:
-                    assert all(isinstance(comic.get(k), int) for k in ['day', 'month', 'year'])
-                else:
-                    assert all(k not in comic for k in ['day', 'month', 'year'])
-                    day = date.today()
-                    comic['day'], comic['month'], comic['year'] = \
-                        day.day, day.month, day.year
+                assert 'day' not in comic
+                assert 'month' not in comic
+                assert 'year' not in comic
+                date_ = comic.pop('date', date.today())
+                comic['day'], comic['month'], comic['year'] = date_.day, date_.month, date_.year
                 prefix = comic.get('prefix', '')
+                assert 'local_img' not in comic
                 comic['local_img'] = [cls.get_file_in_output_dir(i, prefix, referer=comic['url'])
                                       for i in comic['img']]
+                assert 'comic' not in comic
                 comic['comic'] = cls.long_name
+                assert 'new' not in comic
                 comic['new'] = None  # "'new' in comic" to check if new
                 new_comics.append(comic)
                 cls.print_comic(comic)

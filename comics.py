@@ -48,9 +48,7 @@ class Xkcd(GenericComic):
             'url': urljoin_wrapper(cls.url, str(num)),
             'prefix': '%d-' % num,
             'img': [comic_json['img']],
-            'day': int(comic_json['day']),
-            'month': int(comic_json['month']),
-            'year': int(comic_json['year']),
+            'date': date(int(comic_json['year']), int(comic_json['month']), int(comic_json['day'])),
             'link': comic_json['link'],
             'news': comic_json['news'],
             'safe_title': comic_json['safe_title'],
@@ -438,9 +436,7 @@ class ExtraFabulousComics(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'prefix': title + '-'
         }
 
@@ -476,9 +472,7 @@ class GenericLeMondeBlog(GenericNavigableComic):
             'title': title,
             'url2': url2,
             'img': [convert_iri_to_plain_ascii_uri(i['content']) for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -614,9 +608,7 @@ class EveVelo(GenericNavigableComic):
         imgs = soup.find('div', id='comicimagewrap').find_all('img')
         return {
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -646,9 +638,7 @@ class Rall(GenericComicNotWorking, GenericNavigableComic):
         return {
             'title': title,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'description': desc,
             'img': [i['src'] for i in imgs],
         }
@@ -684,9 +674,7 @@ class Dilem(GenericNavigableComic):
             'short_url': short_url,
             'title': title,
             'img': [i['content'] for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
         }
 
 
@@ -708,14 +696,11 @@ class SpaceAvalanche(GenericNavigableComic):
         url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
         title = link['title']
         url = cls.get_url_from_link(link)
-        year, month, day = [int(s)
-                            for s in url_date_re.match(url).groups()]
+        year, month, day = [int(s) for s in url_date_re.match(url).groups()]
         imgs = soup.find("div", class_="entry").find_all("img")
         return {
             'title': title,
-            'day': day,
-            'month': month,
-            'year': year,
+            'date': date(year, month, day),
             'img': [i['src'] for i in imgs],
         }
 
@@ -748,9 +733,7 @@ class ZenPencils(GenericNavigableComic):
         return {
             'title': title,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -776,9 +759,7 @@ class ItsTheTie(GenericNavigableComic):
         imgs_src = [i.get('oversrc') or i.get('src') for i in imgs]
         return {
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': imgs_src,
         }
 
@@ -803,9 +784,7 @@ class PenelopeBagieu(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -840,9 +819,7 @@ class OneOneOneOneComic(GenericNavigableComic):
         imgs = soup.find('div', class_='cms mw6').find_all('img')
         return {
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -866,9 +843,7 @@ class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [i['content'] for i in imgs],
         }
 
@@ -924,9 +899,7 @@ class Garfield(GenericComicNotWorking, GenericNavigableComic):  # See issue #50
         year, month, day = [int(s) for s in date_re.match(url).groups()]
         imgs = soup.find('div', class_='comic-display').find_all('img', class_='img-responsive')
         return {
-            'month': month,
-            'year': year,
-            'day': day,
+            'date': date(year, month, day),
             'img': [i['src'] for i in imgs],
         }
 
@@ -963,9 +936,7 @@ class Dilbert(GenericNavigableComic):
             'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -1068,9 +1039,7 @@ class TheGentlemanArmchair(GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -1096,9 +1065,7 @@ class ImogenQuest(GenericNavigableComic):
         assert all(i['alt'] == i['title'] for i in imgs)
         title2 = imgs[0]['title']
         return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
             'title': title,
             'title2': title2,
@@ -1142,9 +1109,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         return {
             'title': image1['title'],
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i)) for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -1198,9 +1163,7 @@ class Mercworks(GenericDeletedComic):  # Moved to Webtoons
             'img': [i['content'] for i in imgs],
             'title': title,
             'desc': desc,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -1236,9 +1199,7 @@ class BerkeleyMews(GenericListableComic):
             'title': link.string,
             'title2': title2,
             'img': [img_url],
-            'year': year,
-            'month': month,
-            'day': day,
+            'date': date(year, month, day),
         }
 
 
@@ -1266,9 +1227,7 @@ class GenericBouletCorp(GenericNavigableComic):
             'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs if i.get('src') is not None],
             'title': title,
             'texts': texts,
-            'year': year,
-            'month': month,
-            'day': day,
+            'date': date(year, month, day),
         }
 
 
@@ -1308,9 +1267,7 @@ class AmazingSuperPowers(GenericNavigableComic):
             'title': title,
             'author': author,
             'img': [img['src'] for img in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -1337,9 +1294,7 @@ class ToonHole(GenericNavigableComic):
             title = ""
         return {
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
         }
 
@@ -1373,9 +1328,7 @@ class Channelate(GenericNavigableComic):
             'url_extra': extra_url,
             'title': title,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -1410,9 +1363,7 @@ class CyanideAndHappiness(GenericNavigableComic):
         return {
             'num': num,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'prefix': '%d-' % num,
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
         }
@@ -1476,9 +1427,7 @@ class DinosaurComics(GenericListableComic):
         title = soup.find('title').string
         desc = soup.find('meta', property='og:description')['content']
         return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [i['content'] for i in imgs],
             'title': title,
             'description': desc,
@@ -1511,9 +1460,7 @@ class ButterSafe(GenericListableComic):
         assert img['alt'] == title
         return {
             'title': title,
-            'day': day,
-            'month': month,
-            'year': year,
+            'date': date(year, month, day),
             'img': [img['src']],
         }
 
@@ -1546,9 +1493,7 @@ class CalvinAndHobbes(GenericComic):
                     if comic_date > last_date:
                         yield {
                             'url': month_url,
-                            'year': int(year),
-                            'month': int(month),
-                            'day': int(day),
+                            'date': comic_date,
                             'img': ['%s%s/%s/%s' % (cls.url, year, month, img_src)],
                         }
                         last_date = comic_date
@@ -1754,9 +1699,7 @@ class MonkeyUser(GenericNavigableComic):
         date_str = soup.find('span', class_='post-date').find('time').string
         day = string_to_date(date_str, "%d %b %Y")
         return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [i['content'] for i in imgs],
             'title': title,
             'description': desc,
@@ -1812,9 +1755,7 @@ class Wondermark(GenericListableComic):
             alt = ''
             title = ''
         return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': img_src,
             'title': title,
             'alt': alt,
@@ -1840,9 +1781,7 @@ class WarehouseComic(GenericNavigableComic):
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
         }
 
 
@@ -1925,9 +1864,7 @@ class RespawnComic(GenericNavigableComic):
         return {
             'title': title,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['content'] for i in imgs if i['content'] not in skip_imgs],
         }
 
@@ -1952,9 +1889,7 @@ class SafelyEndangered(GenericNavigableComic):
         alt = imgs[0]['alt']
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
             'title': title,
             'alt': alt,
@@ -1984,9 +1919,7 @@ class PicturesInBoxes(GenericDeletedComic, GenericNavigableComic):
         assert imgs
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
@@ -2016,9 +1949,7 @@ class Penmen(GenericComicNotWorking, GenericNavigableComic):
             'short_url': short_url,
             'img': [i['src'] for i in imgs],
             'tags': tags,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2083,9 +2014,7 @@ class InvisibleBread(GenericListableComic):
         assert len(imgs) == 1, imgs
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
             'title': title,
         }
@@ -2128,9 +2057,7 @@ class CompletelySeriousComics(GenericNavigableComic):
         alt = imgs[0]['title']
         assert all(i['title'] == i['alt'] == alt for i in imgs)
         return {
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'img': [i['src'] for i in imgs],
             'title': title,
             'alt': alt,
@@ -2182,9 +2109,7 @@ class LoadingComics(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2270,9 +2195,7 @@ class ThingsInSquares(GenericListableComic):
         tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
         imgs = soup.find_all('meta', property='og:image')
         return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'title': title,
             'title2': title2,
             'description': description,
@@ -2313,9 +2236,7 @@ class HappleTea(GenericNavigableComic):
             'title': title,
             'img': [i['src'] for i in imgs],
             'alt': ''.join(i['alt'] for i in imgs),
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'author': author,
         }
 
@@ -2370,9 +2291,7 @@ class PeterLauris(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2399,9 +2318,7 @@ class RandomCrab(GenericNavigableComic):
             'title': title,
             'desc': desc_str,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'author': author,
         }
 
@@ -2428,9 +2345,7 @@ class JuliasDrawings(GenericListableComic):
         return {
             'title': title,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2471,9 +2386,7 @@ class AnythingComic(GenericListableComic):
             'title': title,
             'alt': imgs[0].get('alt', ''),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2525,9 +2438,7 @@ class LonnieMillsap(GenericNavigableComic):
             'title': title,
             'author': author,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2561,9 +2472,7 @@ class WarAndPeas(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2602,9 +2511,7 @@ class ThorsThundershack(GenericNavigableComic):
         day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
         return {
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'author': author,
             'title': title,
             'alt': alt,
@@ -2635,9 +2542,7 @@ class GerbilWithAJetpack(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2663,9 +2568,7 @@ class EveryDayBlues(GenericDeletedComic, GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2693,9 +2596,7 @@ class BiterComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2734,9 +2635,7 @@ class TheAwkwardYeti(GenericNavigableComic):
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2786,9 +2685,7 @@ class MisterAndMe(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2816,9 +2713,7 @@ class LastPlaceComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2848,9 +2743,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2877,9 +2770,7 @@ class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not 
             'title': title,
             'alt': alt,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year
+            'date': day,
         }
 
 
@@ -2901,9 +2792,7 @@ class PlanC(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -2988,9 +2877,7 @@ class GenericBoumerie(GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -3042,9 +2929,7 @@ class UnearthedComics(GenericNavigableComic):
             'description': desc,
             'url2': short_url,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -3072,9 +2957,7 @@ class Optipess(GenericNavigableComic):
             'alt': alt,
             'author': author,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -3102,9 +2985,7 @@ class PainTrainComic(GenericNavigableComic):
             'short_url': short_url,
             'num': num,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'alt': alt,
             'title': title,
         }
@@ -3139,9 +3020,7 @@ class MoonBeard(GenericNavigableComic):
             'short_url': short_url,
             'num': num,
             'img': [i['src'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'title': title,
             'tags': tags,
             'alt': alt,
@@ -3172,9 +3051,7 @@ class SystemComic(GenericNavigableComic):
         return {
             'title': title,
             'description': desc,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
         }
 
@@ -3214,9 +3091,7 @@ class LittleLifeLines(GenericNavigableComic):
             'alt': alt,
             'description': desc_str,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
         }
 
@@ -3239,9 +3114,7 @@ class GenericWordPressInkblot(GenericNavigableComic):
         day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['src'] for i in imgs],
         }
 
@@ -3365,9 +3238,7 @@ class ManVersusManatee(GenericNavigableComic):
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -3411,9 +3282,7 @@ class Ubertool(GenericNavigableComic):
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -3593,9 +3462,7 @@ class MacadamValley(GenericDeletedComic, GenericNavigableComic):
         return {
             'title': title,
             'img': [i['src'] for i in [img]],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'author': author,
         }
 
@@ -3623,9 +3490,7 @@ class LightRoastComics(GenericNavigableComic):
         author = soup.find("span", class_="author vcard").find("a").string
         return {
             'img': [i['content'] for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'title': title,
             'author': author,
             'tags': ' '.join(t.string for t in soup.find_all('a', rel='category tag')),
@@ -3650,9 +3515,7 @@ class MarketoonistComics(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         return {
             'img': [i['content'] for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'title': title,
         }
 
@@ -3684,9 +3547,7 @@ class ConsoliaComics(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
         }
 
 
@@ -3741,9 +3602,7 @@ class Octopuns(GenericBlogspotComic):
         return {
             'img': [i['href'] for i in imgs],
             'title': title,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
         }
 
 
@@ -3781,9 +3640,7 @@ class GeekAndPoke(GenericNavigableComic):
             'alt': alt,
             'description': desc_str,
             'author': author,
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -3837,9 +3694,7 @@ class AtRandomComics(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'author': author,
             'description': description,
         }
@@ -3876,9 +3731,7 @@ class NothingSuspicious(GenericNavigableComic):
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'author': author,
         }
 
@@ -3911,9 +3764,7 @@ class DeathBulge(GenericComic):
                 'alt': comic_json['alt_text'],
                 'title': comic_json['title'],
                 'img': [urljoin_wrapper(cls.url, comic_json['comic'])],
-                'month': day.month,
-                'year': day.year,
-                'day': day.day,
+                'date': day,
             }
 
 
@@ -3950,9 +3801,7 @@ class Ptbd(GenericComic):
             'title': comic_json['title'],
             'author': comic_json['author']['name'],
             'img': [comic_json['image']],
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
             'description': comic_json['content_html'],  # TODO: to be decoded
             'num': comic_json['id'],
         }
@@ -4009,9 +3858,7 @@ class GenericTumblrV1(GenericComic):
         return {
             'url': cls.get_url_from_post(post),
             'url2': post['url-with-slug'],
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'title': title,
             'tags': tags,
             'img': [i.string for i in imgs],
@@ -5144,9 +4991,7 @@ class ItFoolsAMonster(GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'month': day.month,
-            'year': day.year,
-            'day': day.day,
+            'date': day,
         }
 
 
@@ -5263,13 +5108,10 @@ class HorovitzComics(GenericDeletedComic, GenericListableComic):
         title = link.string
         imgs = soup.find_all('img', id='comic')
         assert len(imgs) == 1, imgs
-        year, month, day = [int(s)
-                            for s in cls.img_re.match(imgs[0]['src']).groups()]
+        year, month, day = [int(s) for s in cls.img_re.match(imgs[0]['src']).groups()]
         return {
             'title': title,
-            'day': day,
-            'month': month,
-            'year': year,
+            'date': date(year, month, day),
             'img': [i['src'] for i in imgs],
             'num': num,
         }
@@ -5328,9 +5170,7 @@ class GenericGoComic(GenericNavigableComic):
         author = soup.find('meta', property='article:author')['content']
         tags = soup.find('meta', property='article:tag')['content']
         return {
-            'day': day.day,
-            'month': day.month,
-            'year': day.year,
+            'date': day,
             'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
@@ -5632,9 +5472,7 @@ class GenericTapasticComic(GenericListableComic):
             return None
         assert len(imgs) > 0, imgs
         return {
-            'day': day.day,
-            'year': day.year,
-            'month': day.month,
+            'date': day,
             'img': [i['src'] for i in imgs],
             'title': archive_elt['title'],
         }
