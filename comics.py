@@ -1961,15 +1961,17 @@ class SafelyEndangered(GenericNavigableComic):
         }
 
 
-class PicturesInBoxes(GenericNavigableComic):
+class PicturesInBoxes(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Pictures In Boxes comics."""
     # Also on https://picturesinboxescomic.tumblr.com
+    # Also on https://www.gocomics.com/pictures-in-boxes
     name = 'picturesinboxes'
     long_name = 'Pictures in Boxes'
     url = 'http://www.picturesinboxes.com'
     get_navi_link = get_a_navi_navinext
     get_first_comic_link = simulate_first_link
     first_url = 'http://www.picturesinboxes.com/2013/10/26/tetris/'
+    _categories = ('PICTURESINBOXES', )
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -4120,9 +4122,11 @@ class OctopunsTumblr(GenericTumblrV1):
 class PicturesInBoxesTumblr(GenericComicNotWorking, GenericTumblrV1):
     """Class to retrieve Pictures In Boxes comics."""
     # Also on http://www.picturesinboxes.com
+    # Also on https://www.gocomics.com/pictures-in-boxes
     name = 'picturesinboxes-tumblr'
     long_name = 'Pictures in Boxes (from Tumblr)'
     url = 'https://picturesinboxescomic.tumblr.com'
+    _categories = ('PICTURESINBOXES', )
 
 
 class TubeyToonsTumblr(GenericTumblrV1):
@@ -5601,6 +5605,16 @@ class ImogenQuestGoComics(GenericGoComic):
     long_name = 'Imogen Quest (from GoComics)'
     url = 'https://www.gocomics.com/imogen-quest'
     _categories = ('IMOGEN', )
+
+
+class PicturesInBoxesGoComics(GenericGoComic):
+    """Class to retrieve Pictures In Boxes comics."""
+    # Also on http://www.picturesinboxes.com
+    # Also on https://picturesinboxescomic.tumblr.com
+    name = 'picturesinboxes-goc'
+    long_name = 'Pictures in Boxes (from GoComics)'
+    url = 'https://www.gocomics.com/pictures-in-boxes'
+    _categories = ('PICTURESINBOXES', )
 
 
 class GenericTapasticComic(GenericListableComic):

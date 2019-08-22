@@ -298,6 +298,7 @@ Comics supported
  * [Peter Lauris](http://peterlauris.com/comics)
  * [PhD Comics](http://phdcomics.com/comics/archive.php)
  * [Pictures in Boxes](http://www.picturesinboxes.com)
+ * [Pictures in Boxes (from GoComics)](https://www.gocomics.com/pictures-in-boxes)
  * [Pictures in Boxes (from Tumblr)](https://picturesinboxescomic.tumblr.com)
  * [Pie Comic](http://piecomic.tumblr.com)
  * [The Pigeon Gazette (from Tapastic)](https://tapastic.com/series/The-Pigeon-Gazette)
