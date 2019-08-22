@@ -873,7 +873,7 @@ class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
         }
 
 
-class NeDroid(GenericNavigableComic):
+class NeDroid(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
     name = 'nedroid'
     long_name = 'NeDroid'
@@ -1637,7 +1637,7 @@ class Quarktees(GenericNavigableComic):
         }
 
 
-class OverCompensating(GenericNavigableComic):
+class OverCompensating(GenericComicNotWorking, GenericNavigableComic):  # Now WIGU ?
     """Class to retrieve the Over Compensating comics."""
     name = 'compensating'
     long_name = 'Over Compensating'
@@ -2138,7 +2138,7 @@ class CompletelySeriousComics(GenericNavigableComic):
         }
 
 
-class PoorlyDrawnLines(GenericListableComic):
+class PoorlyDrawnLines(GenericComicNotWorking, GenericListableComic):
     """Class to retrieve Poorly Drawn Lines comics."""
     # Also on http://pdlcomics.tumblr.com
     name = 'poorlydrawn'
