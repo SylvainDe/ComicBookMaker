@@ -693,7 +693,7 @@ class SpaceAvalanche(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        url_date_re = re.compile('.*/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
+        url_date_re = re.compile('.*/(?P<year>[0-9]*)/(?P<month>[0-9]*)/(?P<day>[0-9]*)/.*$')
         title = link['title']
         url = cls.get_url_from_link(link)
         year, month, day = [int(s) for s in url_date_re.match(url).groups()]
@@ -862,7 +862,7 @@ class NeDroid(GenericComicNotWorking, GenericNavigableComic):
         """Get information about a particular comics."""
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
         short_url = cls.get_url_from_link(soup.find('link', rel='shortlink'))
-        num = int(short_url_re.match(short_url).groups()[0])
+        num = int(short_url_re.match(short_url).group(1))
         imgs = soup.find('div', id='comic').find_all('img')
         assert len(imgs) == 1, imgs
         title = imgs[0]['alt']
@@ -895,8 +895,8 @@ class Garfield(GenericComicNotWorking, GenericNavigableComic):  # See issue #50
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
-        date_re = re.compile('^%s/comic/([0-9]*)/([0-9]*)/([0-9]*)' % cls.url)
-        year, month, day = [int(s) for s in date_re.match(url).groups()]
+        url_date_re = re.compile('^%s/comic/(?P<year>[0-9]*)/(?P<month>[0-9]*)/(?P<day>[0-9]*)' % cls.url)
+        year, month, day = [int(s) for s in url_date_re.match(url).groups()]
         imgs = soup.find('div', class_='comic-display').find_all('img', class_='img-responsive')
         return {
             'date': date(year, month, day),
@@ -1186,14 +1186,14 @@ class BerkeleyMews(GenericListableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        comic_date_re = re.compile('.*/([0-9]*)-([0-9]*)-([0-9]*)-.*')
+        url_date_re = re.compile('.*/(?P<year>[0-9]*)-(?P<month>[0-9]*)-(?P<day>[0-9]*)-.*')
         url = cls.get_url_from_archive_element(link)
-        num = int(cls.comic_num_re.match(url).groups()[0])
+        num = int(cls.comic_num_re.match(url).group(1))
         img = soup.find('div', id='comic').find('img')
         assert all(i['alt'] == i['title'] for i in [img])
         title2 = img['title']
         img_url = img['src']
-        year, month, day = [int(s) for s in comic_date_re.match(img_url).groups()]
+        year, month, day = [int(s) for s in url_date_re.match(img_url).groups()]
         return {
             'num': num,
             'title': link.string,
@@ -1218,8 +1218,8 @@ class GenericBouletCorp(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url = cls.get_url_from_link(link)
-        date_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/' % cls.url)
-        year, month, day = [int(s) for s in date_re.match(url).groups()]
+        url_date_re = re.compile('^%s/(?P<year>[0-9]*)/(?P<month>[0-9]*)/(?P<day>[0-9]*)/' % cls.url)
+        year, month, day = [int(s) for s in url_date_re.match(url).groups()]
         imgs = soup.find('div', id='notes').find('div', class_='storycontent').find_all('img')
         texts = '  '.join(t for t in (i.get('title') for i in imgs) if t)
         title = soup.find('title').string
@@ -1381,7 +1381,7 @@ class MrLovenstein(GenericComic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         # TODO: more info from http://www.mrlovenstein.com/archive
         comic_num_re = re.compile('^/comic/([0-9]*)$')
-        nums = [int(comic_num_re.match(link['href']).groups()[0])
+        nums = [int(comic_num_re.match(link['href']).group(1))
                 for link in get_soup_at_url(cls.url).find_all('a', href=comic_num_re)]
         first, last = min(nums), max(nums)
         if last_comic:
@@ -1419,7 +1419,7 @@ class DinosaurComics(GenericListableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(link)
-        num = int(cls.comic_link_re.match(url).groups()[0])
+        num = int(cls.comic_link_re.match(url).group(1))
         date_str = link.string
         text = link.next_sibling.string
         day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
@@ -1442,7 +1442,7 @@ class ButterSafe(GenericListableComic):
     long_name = 'ButterSafe'
     url = 'https://www.buttersafe.com'
     get_url_from_archive_element = get_href
-    comic_link_re = re.compile('^%s/([0-9]*)/([0-9]*)/([0-9]*)/.*' % url)
+    comic_link_re = re.compile('^%s/(?P<year>[0-9]*)/(?P<month>[0-9]*)/(?P<day>[0-9]*)/.*' % url)
 
     @classmethod
     def get_archive_elements(cls):
@@ -1478,8 +1478,7 @@ class CalvinAndHobbes(GenericComic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         last_date = get_date_for_comic(
             last_comic) if last_comic else date(1985, 11, 1)
-        link_re = re.compile('^([0-9]*)/([0-9]*)/')
-        img_re = re.compile('')
+        link_re = re.compile('^(?P<year>[0-9]*)/(?P<month>[0-9]*)/')
         for link in get_soup_at_url(cls.url).find_all('a', href=link_re):
             url = link['href']
             year, month = link_re.match(url).groups()
@@ -1488,7 +1487,7 @@ class CalvinAndHobbes(GenericComic):
                 month_url = urljoin_wrapper(cls.url, url)
                 for img in get_soup_at_url(month_url).find_all('img', src=img_re):
                     img_src = img['src']
-                    day = int(img_re.match(img_src).groups()[0])
+                    day = int(img_re.match(img_src).group(1))
                     comic_date = date(int(year), int(month), day)
                     if comic_date > last_date:
                         yield {
@@ -1506,7 +1505,6 @@ class AbstruseGoose(GenericListableComic):
     url = 'http://abstrusegoose.com'
     get_url_from_archive_element = get_href
     comic_url_re = re.compile('^%s/([0-9]*)$' % url)
-    comic_img_re = re.compile('^%s/strips/.*' % url)
 
     @classmethod
     def get_archive_elements(cls):
@@ -1516,8 +1514,9 @@ class AbstruseGoose(GenericListableComic):
     @classmethod
     def get_comic_info(cls, soup, archive_elt):
         comic_url = cls.get_url_from_archive_element(archive_elt)
-        num = int(cls.comic_url_re.match(comic_url).groups()[0])
-        imgs = soup.find_all('img', src=cls.comic_img_re)
+        num = int(cls.comic_url_re.match(comic_url).group(1))
+        img_re = re.compile('^%s/strips/.*' % url)
+        imgs = soup.find_all('img', src=img_re)
         return {
             'num': num,
             'title': archive_elt.string,
@@ -1605,7 +1604,7 @@ class OverCompensating(GenericComicNotWorking, GenericNavigableComic):  # Now WI
         img_src_re = re.compile('^/oc/comics/.*')
         comic_num_re = re.compile('.*comic=([0-9]*)$')
         comic_url = cls.get_url_from_link(link)
-        num = int(comic_num_re.match(comic_url).groups()[0])
+        num = int(comic_num_re.match(comic_url).group(1))
         img = soup.find('img', src=img_src_re)
         return {
             'num': num,
@@ -1972,8 +1971,8 @@ class TheDoghouseDiaries(GenericComicNotWorking, GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        comic_img_re = re.compile('^dhdcomics/.*')
-        img = soup.find('img', src=comic_img_re)
+        img_re = re.compile('^dhdcomics/.*')
+        img = soup.find('img', src=img_re)
         comic_url = cls.get_url_from_link(link)
         return {
             'title': soup.find('h2', id='titleheader').string,
@@ -2007,7 +2006,7 @@ class InvisibleBread(GenericListableComic):
         title = td.find('a').string
         month_and_day = td.previous_sibling.string
         link_re = re.compile('^%s/([0-9]+)/' % cls.url)
-        year = link_re.match(url).groups()[0]
+        year = link_re.match(url).group(1)
         date_str = month_and_day + ' ' + year
         day = string_to_date(date_str, '%b %d %Y')
         imgs = [soup.find('div', id='comic').find('img')]
@@ -2975,7 +2974,7 @@ class PainTrainComic(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
-        num = int(short_url_re.match(short_url).groups()[0])
+        num = int(short_url_re.match(short_url).group(1))
         imgs = soup.find('div', id='comic').find_all('img')
         alt = imgs[0]['title']
         assert all(i['alt'] == i['title'] == alt for i in imgs)
@@ -3008,7 +3007,7 @@ class MoonBeard(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         short_url = soup.find('link', rel='shortlink')['href']
         short_url_re = re.compile('^%s/\\?p=([0-9]*)' % cls.url)
-        num = int(short_url_re.match(short_url).groups()[0])
+        num = int(short_url_re.match(short_url).group(1))
         imgs = soup.find('div', id='comic').find_all('img')
         alt = imgs[0]['title']
         assert all(i['alt'] == i['title'] == alt for i in imgs)
@@ -5096,7 +5095,7 @@ class HorovitzComics(GenericDeletedComic, GenericListableComic):
     # Also on https://horovitzcomics.tumblr.com
     url = 'http://www.horovitzcomics.com'
     _categories = ('HOROVITZ', )
-    img_re = re.compile('.*comics/([0-9]*)/([0-9]*)/([0-9]*)/.*$')
+    img_re = re.compile('.*comics/(?P<year>[0-9]*)/(?P<month>[0-9]*)/(?P<day>[0-9]*)/.*$')
     link_re = NotImplemented
     get_url_from_archive_element = join_cls_url_to_href
 
@@ -5104,7 +5103,7 @@ class HorovitzComics(GenericDeletedComic, GenericListableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         href = link['href']
-        num = int(cls.link_re.match(href).groups()[0])
+        num = int(cls.link_re.match(href).group(1))
         title = link.string
         imgs = soup.find_all('img', id='comic')
         assert len(imgs) == 1, imgs
