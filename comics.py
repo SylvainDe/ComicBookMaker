@@ -4639,7 +4639,7 @@ class TheyCanTalk(GenericTumblrV1):
     """Class to retrieve They Can Talk comics."""
     name = 'theycantalk'
     long_name = 'They Can Talk'
-    url = 'http://theycantalk.com'
+    url = 'https://theycantalk.com'
 
 
 class Will5NeverCome(GenericTumblrV1):
@@ -4770,7 +4770,7 @@ class Shitfest(GenericTumblrV1):
     """Class to retrieve Shitfest comics."""
     name = 'shitfest'
     long_name = 'Shitfest'
-    url = 'http://shitfestcomic.com'
+    url = 'https://shitfestcomic.com'
 
 
 class IceCreamSandwichComics(GenericTumblrV1):
@@ -4874,7 +4874,7 @@ class SkeletonClaw(GenericTumblrV1):
     """Class to retrieve Skeleton Claw comics."""
     name = 'skeletonclaw'
     long_name = 'Skeleton Claw'
-    url = 'http://skeletonclaw.com'
+    url = 'https://skeletonclaw.com'
 
 
 class MrsFrolleinTumblr(GenericTumblrV1):
