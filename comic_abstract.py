@@ -202,7 +202,7 @@ class GenericComic(object):
         cls.print_text(comic['url'])
 
     @classmethod
-    def update(cls):
+    def update(cls, saving_freq=100):
         """Update the database : get the latest comics and save in the DB.
 
         This is a wrapper around get_next_comic() providing the following
@@ -221,7 +221,7 @@ class GenericComic(object):
         try:
             last_comic = cls.get_last_comic(comics)
             cls.log("last comic is %s" % ('None' if last_comic is None else last_comic['url']))
-            for comic in cls.get_next_comic(last_comic):
+            for i, comic in enumerate(cls.get_next_comic(last_comic), 1):
                 cls.log("got %s" % str(comic))
                 assert 'url' in comic
                 assert 'img' in comic
@@ -240,13 +240,21 @@ class GenericComic(object):
                 comic['new'] = None  # "'new' in comic" to check if new
                 new_comics.append(comic)
                 cls.print_comic(comic)
+                if i % saving_freq == 0:
+                    end = time.time()
+                    delta = end - start
+                    print(cls.name, ": got", i,
+                          "comics in", delta, "seconds so far - saving just in case")
+                    cls._save_db(comics + new_comics)
         finally:
-            end = time.time()
             if new_comics:
-                print()
+                end = time.time()
+                new_len, delta = len(new_comics), end - start
+                print(cls.name, ": got", new_len,
+                      "comics in", delta, "seconds")
                 cls._save_db(comics + new_comics)
-                print(cls.name, ": added", len(new_comics),
-                      "comics in", end - start, "seconds")
+                print(cls.name, ": added", new_len,
+                      "comics in", delta, "seconds")
             else:
                 print(cls.name, ": nothing new")
         cls.log("done")
