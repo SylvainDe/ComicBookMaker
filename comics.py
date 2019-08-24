@@ -1501,6 +1501,7 @@ class AbstruseGoose(GenericListableComic):
     url = 'http://abstrusegoose.com'
     get_url_from_archive_element = get_href
     comic_url_re = re.compile('^%s/([0-9]*)$' % url)
+    img_re = re.compile('^%s/strips/.*' % url)
 
     @classmethod
     def get_archive_elements(cls):
@@ -1511,8 +1512,7 @@ class AbstruseGoose(GenericListableComic):
     def get_comic_info(cls, soup, archive_elt):
         comic_url = cls.get_url_from_archive_element(archive_elt)
         num = int(cls.comic_url_re.match(comic_url).group(1))
-        img_re = re.compile('^%s/strips/.*' % url)
-        imgs = soup.find_all('img', src=img_re)
+        imgs = soup.find_all('img', src=cls.img_re)
         return {
             'num': num,
             'title': archive_elt.string,
