@@ -4015,7 +4015,7 @@ class GoneIntoRapture(GenericTumblrV1):
     # Also on http://tapastic.com/series/Goneintorapture
     name = 'rapture'
     long_name = 'Gone Into Rapture'
-    url = 'http://goneintorapture.com'
+    url = 'https://goneintorapture.com'
 
 
 class TheOatmealTumblr(GenericTumblrV1):
@@ -4515,7 +4515,7 @@ class Robospunk(GenericTumblrV1):
     """Class to retrieve Robospunk comics."""
     name = 'robospunk'
     long_name = 'Robospunk'
-    url = 'http://robospunk.com'
+    url = 'https://robospunk.com'
 
 
 class BananaTwinky(GenericTumblrV1):
@@ -5520,7 +5520,7 @@ class OwlTurdTapastic(GenericTapasticComic):
 class GoneIntoRaptureTapastic(GenericTapasticComic):
     """Class to retrieve Gone Into Rapture comics."""
     # Also on http://goneintorapture.tumblr.com
-    # Also on http://goneintorapture.com
+    # Also on https://goneintorapture.com
     name = 'rapture-tapa'
     long_name = 'Gone Into Rapture (from Tapastic)'
     url = 'http://tapastic.com/series/Goneintorapture'
