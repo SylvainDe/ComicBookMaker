@@ -1455,7 +1455,7 @@ class ButterSafe(GenericListableComic):
         assert img['alt'] == title
         return {
             'title': title,
-            'date': regexp_match_to_date(cls.comics_link_re.match(url)),
+            'date': regexp_match_to_date(cls.comic_link_re.match(url)),
             'img': [img['src']],
         }
 
