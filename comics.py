@@ -432,11 +432,10 @@ class ExtraFabulousComics(GenericNavigableComic):
         imgs = soup.find_all('meta', property='og:image')
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'prefix': title + '-'
         }
 
@@ -467,12 +466,11 @@ class GenericLeMondeBlog(GenericNavigableComic):
         title_meta = soup.find('meta', property='og:title')
         title = '' if title_meta is None else title_meta['content']
         imgs = soup.find_all('meta', property='og:image')
-        day = cls.get_date(soup)
         return {
             'title': title,
             'url2': url2,
             'img': [convert_iri_to_plain_ascii_uri(i['content']) for i in imgs],
-            'date': day,
+            'date': cls.get_date(soup),
         }
 
 
@@ -604,11 +602,11 @@ class EveVelo(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2').string
         date_str = soup.find('div', class_="headingsub").find('b').string
-        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%d %b %Y, %I:%M %p")  # 29th Mar 2018, 8:59 AM
+        date_ = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%d %b %Y, %I:%M %p")  # 29th Mar 2018, 8:59 AM
         imgs = soup.find('div', id='comicimagewrap').find_all('img')
         return {
             'title': title,
-            'date': day,
+            'date': date_,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -631,14 +629,13 @@ class Rall(GenericComicNotWorking, GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         author = soup.find("span", class_="author vcard").find("a").string
         date_str = soup.find("span", class_="entry-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         desc = soup.find('meta', property='og:description')['content']
         imgs = soup.find('div', class_='entry-content').find_all('img')
         imgs = imgs[:-7]  # remove social media buttons
         return {
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'description': desc,
             'img': [i['src'] for i in imgs],
         }
@@ -667,14 +664,12 @@ class Dilem(GenericNavigableComic):
         short_url = soup.find('link', rel='shortlink')['href']
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         imgs = soup.find_all('meta', property='og:image')
-        date_str = soup.find('span', property='dc:date')['content']
-        date_str = date_str[:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
+        date_str = soup.find('span', property='dc:date')['content'][:10]
         return {
             'short_url': short_url,
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -725,14 +720,13 @@ class ZenPencils(GenericNavigableComic):
         author = post.find("span", class_="post-author").find("a").string
         title = soup.find('h2', class_='post-title').string
         date_str = post.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         assert imgs
         assert all(i['alt'] == i['title'] for i in imgs)
         assert all(i['alt'] in (title, "") for i in imgs)
         return {
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -753,12 +747,11 @@ class ItsTheTie(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('title').string
         date_str = soup.find('time')['datetime'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find('div', id='comic').find_all('img')
         imgs_src = [i.get('oversrc') or i.get('src') for i in imgs]
         return {
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': imgs_src,
         }
 
@@ -777,13 +770,12 @@ class PenelopeBagieu(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         date_str = soup.find('h2', class_='date-header').string
-        day = string_to_date(date_str, "%A %d %B %Y", "fr_FR.utf8")
         imgs = soup.find('div', class_='entry-body').find_all('img')
         title = soup.find('h3', class_='entry-header').string
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%A %d %B %Y", "fr_FR.utf8"),
         }
 
 
@@ -814,11 +806,10 @@ class OneOneOneOneComic(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('title').string
         date_str = soup.find('div', class_='flex justify-between grey-3').find('p').string
-        day = string_to_date(date_str, "%a, %b %d, %Y")  # Thu, Apr 24, 2014
         imgs = soup.find('div', class_='cms mw6').find_all('img')
         return {
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%a, %b %d, %Y"),  # Thu, Apr 24, 2014
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -838,11 +829,10 @@ class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h1', class_='comic-title').find('a').string
         date_str = soup.find('header', class_='comic-meta entry-meta').find('a').string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'img': [i['content'] for i in imgs],
         }
 
@@ -925,7 +915,6 @@ class Dilbert(GenericNavigableComic):
         imgs = soup.find_all('meta', property='og:image')
         desc = soup.find('meta', property='og:description')['content']
         date_str = soup.find('meta', property='article:publish_date')['content']
-        day = string_to_date(date_str, "%B %d, %Y")
         author = soup.find('meta', property='article:author')['content']
         tags = soup.find('meta', property='article:tag')['content']
         return {
@@ -934,7 +923,7 @@ class Dilbert(GenericNavigableComic):
             'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -1031,13 +1020,12 @@ class TheGentlemanArmchair(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -1058,12 +1046,11 @@ class ImogenQuest(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', class_='comicpane').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
         title2 = imgs[0]['title']
         return {
-            'date': day,
+            'date': string_to_date(date_str, '%B %d, %Y'),
             'img': [i['src'] for i in imgs],
             'title': title,
             'title2': title2,
@@ -1103,11 +1090,10 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         image_url2 = aftercomic.find('img')['src'] if aftercomic else ''
         imgs = [image_url1] + ([image_url2] if image_url2 else [])
         date_str = soup.find('div', class_='cc-publishtime').contents[0]
-        day = string_to_date(date_str, "Posted %B %d, %Y at %I:%M %p")
         return {
             'title': image1['title'],
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i)) for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "Posted %B %d, %Y at %I:%M %p"),
         }
 
 
@@ -1155,13 +1141,12 @@ class Mercworks(GenericDeletedComic):  # Moved to Webtoons
         metadesc = soup.find('meta', property='og:description')
         desc = metadesc['content'] if metadesc else ""
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'img': [i['content'] for i in imgs],
             'title': title,
             'desc': desc,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -1255,7 +1240,6 @@ class AmazingSuperPowers(GenericNavigableComic):
         """Get information about a particular comics."""
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         title = ' '.join(i['title'] for i in imgs)
         assert all(i['alt'] == i['title'] for i in imgs)
@@ -1263,7 +1247,7 @@ class AmazingSuperPowers(GenericNavigableComic):
             'title': title,
             'author': author,
             'img': [img['src'] for img in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -1280,7 +1264,6 @@ class ToonHole(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         date_str = soup.find('div', class_='entry-meta').contents[0].strip()
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         if imgs:
             img = imgs[0]
@@ -1290,7 +1273,7 @@ class ToonHole(GenericNavigableComic):
             title = ""
         return {
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'img': [convert_iri_to_plain_ascii_uri(i['src']) for i in imgs],
         }
 
@@ -1309,7 +1292,6 @@ class Channelate(GenericNavigableComic):
         """Get information about a particular comics."""
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%Y/%m/%d')
         title = soup.find('meta', property='og:title')['content']
         post = soup.find('div', id='comic')
         imgs = post.find_all('img') if post else []
@@ -1324,7 +1306,7 @@ class Channelate(GenericNavigableComic):
             'url_extra': extra_url,
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, '%Y/%m/%d'),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -1354,12 +1336,11 @@ class CyanideAndHappiness(GenericNavigableComic):
         url2 = soup.find('meta', property='og:url')['content']
         num = int(url2.split('/')[-2])
         date_str, _, author = soup.find('div', id='comic-author').text.strip().partition('\nby ')
-        day = string_to_date(date_str, '%Y.%m.%d')
         imgs = soup.find_all('img', id='main-comic')
         return {
             'num': num,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, '%Y.%m.%d'),
             'prefix': '%d-' % num,
             'img': [convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i['src'])) for i in imgs]
         }
@@ -1418,12 +1399,11 @@ class DinosaurComics(GenericListableComic):
         num = int(cls.comic_link_re.match(url).group(1))
         date_str = link.string
         text = link.next_sibling.string
-        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
         imgs = soup.find_all('meta', property='og:image')
         title = soup.find('title').string
         desc = soup.find('meta', property='og:description')['content']
         return {
-            'date': day,
+            'date': string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y"),
             'img': [i['content'] for i in imgs],
             'title': title,
             'description': desc,
@@ -1692,9 +1672,8 @@ class MonkeyUser(GenericNavigableComic):
         desc = soup.find('meta', property='og:description')['content']
         imgs = soup.find_all('meta', property='og:image')
         date_str = soup.find('span', class_='post-date').find('time').string
-        day = string_to_date(date_str, "%d %b %Y")
         return {
-            'date': day,
+            'date': string_to_date(date_str, "%d %b %Y"),
             'img': [i['content'] for i in imgs],
             'title': title,
             'description': desc,
@@ -1737,7 +1716,6 @@ class Wondermark(GenericListableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         date_str = soup.find('div', class_='postdate').find('em').string
-        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y")
         div = soup.find('div', id='comic')
         if div:
             img = div.find('img')
@@ -1750,7 +1728,7 @@ class Wondermark(GenericListableComic):
             alt = ''
             title = ''
         return {
-            'date': day,
+            'date': string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y"),
             'img': img_src,
             'title': title,
             'alt': alt,
@@ -1771,12 +1749,11 @@ class WarehouseComic(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -1848,9 +1825,7 @@ class RespawnComic(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
-        date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content']
-        date_str = date_str[:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
+        date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content'][:10]
         imgs = soup.find_all('meta', property='og:image')
         skip_imgs = {
             'http://respawncomic.com/wp-content/uploads/2016/03/site/HAROLD2.png',
@@ -1859,7 +1834,7 @@ class RespawnComic(GenericNavigableComic):
         return {
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [i['content'] for i in imgs if i['content'] not in skip_imgs],
         }
 
@@ -1879,12 +1854,11 @@ class SafelyEndangered(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', id='comic').find_all('img')
         alt = imgs[0]['alt']
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
-            'date': day,
+            'date': string_to_date(date_str, '%B %d, %Y'),
             'img': [i['src'] for i in imgs],
             'title': title,
             'alt': alt,
@@ -1909,12 +1883,11 @@ class PicturesInBoxes(GenericDeletedComic, GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', class_='comicpane').find_all('img')
         assert imgs
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
-            'date': day,
+            'date': string_to_date(date_str, '%B %d, %Y'),
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
@@ -1938,13 +1911,12 @@ class Penmen(GenericComicNotWorking, GenericNavigableComic):
         short_url = soup.find('link', rel='shortlink')['href']
         tags = ' '.join(t.string for t in soup.find_all('a', rel='tag'))
         date_str = soup.find('time')['datetime'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
             'short_url': short_url,
             'img': [i['src'] for i in imgs],
             'tags': tags,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -2004,12 +1976,11 @@ class InvisibleBread(GenericListableComic):
         link_re = re.compile('^%s/([0-9]+)/' % cls.url)
         year = link_re.match(url).group(1)
         date_str = month_and_day + ' ' + year
-        day = string_to_date(date_str, '%b %d %Y')
         imgs = [soup.find('div', id='comic').find('img')]
         assert len(imgs) == 1, imgs
         assert all(i['title'] == i['alt'] == title for i in imgs)
         return {
-            'date': day,
+            'date': string_to_date(date_str, '%b %d %Y'),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
             'title': title,
         }
@@ -2046,13 +2017,12 @@ class CompletelySeriousComics(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find('span', class_='post-author').contents[1].string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', class_='comicpane').find_all('img')
         assert imgs
         alt = imgs[0]['title']
         assert all(i['title'] == i['alt'] == alt for i in imgs)
         return {
-            'date': day,
+            'date': string_to_date(date_str, '%B %d, %Y'),
             'img': [i['src'] for i in imgs],
             'title': title,
             'alt': alt,
@@ -2099,12 +2069,11 @@ class LoadingComics(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h1').string
         date_str = soup.find('span', class_='date').string.strip()
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', class_='comic').find_all('img', alt='', title='')
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2182,7 +2151,6 @@ class ThingsInSquares(GenericListableComic):
         _, td2, td3 = tr.find_all('td')
         a = td2.find('a')
         date_str = td3.string
-        day = string_to_date(date_str, "%m.%d.%y")
         title = a.string
         title2 = soup.find('meta', property='og:title')['content']
         desc = soup.find('meta', property='og:description')
@@ -2190,7 +2158,7 @@ class ThingsInSquares(GenericListableComic):
         tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
         imgs = soup.find_all('meta', property='og:image')
         return {
-            'date': day,
+            'date': string_to_date(date_str, "%m.%d.%y"),
             'title': title,
             'title2': title2,
             'description': description,
@@ -2225,13 +2193,12 @@ class HappleTea(GenericNavigableComic):
         title = post.find('h2', class_='post-title').string
         author = post.find('a', rel='author').string
         date_str = post.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
             'alt': ''.join(i['alt'] for i in imgs),
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'author': author,
         }
 
@@ -2281,12 +2248,11 @@ class PeterLauris(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('meta', attrs={'name': 'twitter:title'})['content']
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -2306,14 +2272,13 @@ class RandomCrab(GenericNavigableComic):
         desc = soup.find('meta', property='og:description')
         desc_str = "" if desc is None else desc['content']
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         author = soup.find('a', rel='author').string
         return {
             'title': title,
             'desc': desc_str,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'author': author,
         }
 
@@ -2334,13 +2299,12 @@ class JuliasDrawings(GenericListableComic):
     def get_comic_info(cls, soup, archive_elt):
         """Get information about a particular comics."""
         date_str = soup.find('meta', property='og:article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         title = soup.find('h3', class_='p-post-title').string
         imgs = soup.find('section', class_='post-content').find_all('img')
         return {
             'title': title,
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -2373,7 +2337,6 @@ class AnythingComic(GenericListableComic):
         title = link.string
         imgs = soup.find_all('img', id='comic_image')
         date_str = td_date.string
-        day = string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y, %I:%M %p")
         assert len(imgs) == 1, imgs
         assert all(i.get('alt') == i.get('title') for i in imgs)
         return {
@@ -2381,7 +2344,7 @@ class AnythingComic(GenericListableComic):
             'title': title,
             'alt': imgs[0].get('alt', ''),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'date': day,
+            'date': string_to_date(remove_st_nd_rd_th_from_date(date_str), "%B %d, %Y, %I:%M %p"),
         }
 
 
@@ -2427,13 +2390,12 @@ class LonnieMillsap(GenericNavigableComic):
         post = soup.find('div', class_='post-content')
         author = post.find("span", class_="post-author").find("a").string
         date_str = post.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = post.find("div", class_="entry").find_all("img")
         return {
             'title': title,
             'author': author,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2463,11 +2425,10 @@ class WarAndPeas(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find_all('meta', property='og:image')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -2503,10 +2464,9 @@ class ThorsThundershack(GenericNavigableComic):
         assert all(i['title'] == i['alt'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
         date_str = soup.find('time', itemprop='datePublished')["datetime"]
-        day = string_to_date(date_str, "%Y-%m-%d %H:%M:%S")
         return {
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d %H:%M:%S"),
             'author': author,
             'title': title,
             'alt': alt,
@@ -2528,7 +2488,6 @@ class GerbilWithAJetpack(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         alt = imgs[0]['alt']
         assert all(i['alt'] == i['title'] == alt for i in imgs)
@@ -2537,7 +2496,7 @@ class GerbilWithAJetpack(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2555,7 +2514,6 @@ class EveryDayBlues(GenericDeletedComic, GenericNavigableComic):
         title = soup.find("h2", class_="post-title").string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%d. %B %Y", "de_DE.utf8")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] == title for i in imgs)
         assert len(imgs) <= 1, imgs
@@ -2563,7 +2521,7 @@ class EveryDayBlues(GenericDeletedComic, GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%d. %B %Y", "de_DE.utf8"),
         }
 
 
@@ -2581,7 +2539,6 @@ class BiterComics(GenericNavigableComic):
         title = soup.find("h1", class_="entry-title").string
         author = soup.find("span", class_="author vcard").find("a").string
         date_str = soup.find("span", class_="entry-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) == 1, imgs
@@ -2591,7 +2548,7 @@ class BiterComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2624,13 +2581,12 @@ class TheAwkwardYeti(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(idx > 0 or i['alt'] == i['title'] for idx, i in enumerate(imgs))
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2670,7 +2626,6 @@ class MisterAndMe(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) <= 1, imgs
@@ -2680,7 +2635,7 @@ class MisterAndMe(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2698,7 +2653,6 @@ class LastPlaceComics(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         assert len(imgs) <= 1, imgs
@@ -2708,7 +2662,7 @@ class LastPlaceComics(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2729,7 +2683,6 @@ class TalesOfAbsurdity(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
@@ -2738,7 +2691,7 @@ class TalesOfAbsurdity(GenericNavigableComic):
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2756,7 +2709,6 @@ class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not 
         title = soup.find('h2', class_='post-title').string
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i['alt'] == i['title'] for i in imgs)
         alt = imgs[0]['alt'] if imgs else ""
@@ -2765,7 +2717,7 @@ class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not 
             'title': title,
             'alt': alt,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2782,12 +2734,11 @@ class PlanC(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find("span", class_="post-date").string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'title': title,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2864,7 +2815,6 @@ class GenericBoumerie(GenericNavigableComic):
         short_url = soup.find('link', rel='shortlink')['href']
         author = soup.find("span", class_="post-author").find("a").string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, cls.date_format, cls.lang)
         imgs = soup.find('div', id='comic').find_all('img')
         assert all(i['alt'] == i['title'] for i in imgs)
         return {
@@ -2872,7 +2822,7 @@ class GenericBoumerie(GenericNavigableComic):
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, cls.date_format, cls.lang),
         }
 
 
@@ -2916,7 +2866,6 @@ class UnearthedComics(GenericNavigableComic):
         title = title_elt.string if title_elt else ""
         desc = soup.find('meta', property='og:description')
         date_str = soup.find('time', class_='published updated hidden')['datetime']
-        day = string_to_date(date_str, "%Y-%m-%d")
         post = soup.find('div', class_="entry content entry-content type-portfolio")
         imgs = post.find_all('img')
         return {
@@ -2924,7 +2873,7 @@ class UnearthedComics(GenericNavigableComic):
             'description': desc,
             'url2': short_url,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -2946,13 +2895,12 @@ class Optipess(GenericNavigableComic):
         alt = imgs[0]['title'] if imgs else ""
         assert all(i['alt'] == i['title'] == alt for i in imgs)
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         return {
             'title': title,
             'alt': alt,
             'author': author,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -2975,12 +2923,11 @@ class PainTrainComic(GenericNavigableComic):
         alt = imgs[0]['title']
         assert all(i['alt'] == i['title'] == alt for i in imgs)
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%d/%m/%Y")
         return {
             'short_url': short_url,
             'num': num,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%d/%m/%Y"),
             'alt': alt,
             'title': title,
         }
@@ -3008,14 +2955,13 @@ class MoonBeard(GenericNavigableComic):
         alt = imgs[0]['title']
         assert all(i['alt'] == i['title'] == alt for i in imgs)
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         tags = ' '.join(t['content'] for t in soup.find_all('meta', property='article:tag'))
         author = soup.find('span', class_='post-author').string
         return {
             'short_url': short_url,
             'num': num,
             'img': [i['src'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
             'title': title,
             'tags': tags,
             'alt': alt,
@@ -3041,12 +2987,11 @@ class SystemComic(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         desc = soup.find('meta', property='og:description')['content']
         date_str = soup.find('time')["datetime"]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find('figure').find_all('img')
         return {
             'title': title,
             'description': desc,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [i['src'] for i in imgs],
         }
 
@@ -3075,7 +3020,6 @@ class LittleLifeLines(GenericNavigableComic):
         desc = soup.find('meta', property='og:description')
         desc_str = "" if desc is None else desc['content']
         date_str = soup.find('time', class_='published')['datetime']
-        day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
         div_content = soup.find('div', class_="body entry-content")
         imgs = div_content.find_all('img')
@@ -3086,7 +3030,7 @@ class LittleLifeLines(GenericNavigableComic):
             'alt': alt,
             'description': desc_str,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [i['src'] for i in imgs],
         }
 
@@ -3106,10 +3050,9 @@ class GenericWordPressInkblot(GenericNavigableComic):
         title = soup.find('meta', property='og:title')['content']
         imgs = soup.find('div', class_='webcomic-image').find_all('img')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [i['src'] for i in imgs],
         }
 
@@ -3229,11 +3172,10 @@ class ManVersusManatee(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         imgs = soup.find('div', id='comic').find_all('img')
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -3272,12 +3214,11 @@ class Ubertool(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('h2', class_='post-title').string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, "%B %d, %Y")
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%B %d, %Y"),
         }
 
 
@@ -3450,14 +3391,12 @@ class MacadamValley(GenericDeletedComic, GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("h1", class_="entry-title").string
         img = soup.find('div', class_='entry-content').find('img')
-        date_str = soup.find('time', class_='entry-date')['datetime']
-        date_str = date_str[:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
+        date_str = soup.find('time', class_='entry-date')['datetime'][:10]
         author = soup.find('a', rel='author').string
         return {
             'title': title,
             'img': [i['src'] for i in [img]],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'author': author,
         }
 
@@ -3480,12 +3419,11 @@ class LightRoastComics(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find_all('meta', property='og:image')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         title = soup.find('meta', property='og:title')['content']
         author = soup.find("span", class_="author vcard").find("a").string
         return {
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'title': title,
             'author': author,
             'tags': ' '.join(t.string for t in soup.find_all('a', rel='category tag')),
@@ -3506,11 +3444,10 @@ class MarketoonistComics(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find_all('meta', property='og:image')
         date_str = soup.find('meta', property='article:published_time')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         title = soup.find('meta', property='og:title')['content']
         return {
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'title': title,
         }
 
@@ -3537,12 +3474,11 @@ class ConsoliaComics(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find('time')["datetime"]
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
         }
 
 
@@ -3592,12 +3528,11 @@ class Octopuns(GenericBlogspotComic):
         """Get information about a particular comics."""
         title = soup.find('h3', class_='post-title entry-title').string
         date_str = soup.find('h2', class_='date-header').string
-        day = string_to_date(date_str, "%A, %B %d, %Y")
         imgs = soup.find_all('link', rel='image_src')
         return {
             'img': [i['href'] for i in imgs],
             'title': title,
-            'date': day,
+            'date': string_to_date(date_str, "%A, %B %d, %Y"),
         }
 
 
@@ -3622,7 +3557,6 @@ class GeekAndPoke(GenericNavigableComic):
         desc = soup.find('meta', property='og:description')
         desc_str = "" if desc is None else desc['content']
         date_str = soup.find('time', class_='published')['datetime']
-        day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
         div_content = (soup.find('div', class_="body entry-content") or
                        soup.find('div', class_="special-content"))
@@ -3635,7 +3569,7 @@ class GeekAndPoke(GenericNavigableComic):
             'alt': alt,
             'description': desc_str,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [urljoin_wrapper(cls.url, i['src']) for i in imgs],
         }
 
@@ -3683,13 +3617,12 @@ class AtRandomComics(GenericNavigableComic):
         desc = soup.find('meta', property='og:description')
         description = desc['content'] if desc else ''
         date_str = soup.find('time', itemprop='datePublished')["datetime"]
-        day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('a', rel='author').string
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'author': author,
             'description': description,
         }
@@ -3720,13 +3653,12 @@ class NothingSuspicious(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
         date_str = soup.find('meta', itemprop='datePublished')['content'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         author = soup.find('meta', itemprop='author')['content']
         imgs = soup.find_all('meta', property='og:image')
         return {
             'title': title,
             'img': [i['content'] for i in imgs],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'author': author,
         }
 
@@ -3751,7 +3683,6 @@ class DeathBulge(GenericComic):
             pagination = json['pagination_links']
             comic_json = json['comic']
             date_str = comic_json['timestamp'][:10]
-            day = string_to_date(date_str, "%Y-%m-%d")
             yield {
                 'json_url': json_url,
                 'num': num,
@@ -3759,7 +3690,7 @@ class DeathBulge(GenericComic):
                 'alt': comic_json['alt_text'],
                 'title': comic_json['title'],
                 'img': [urljoin_wrapper(cls.url, comic_json['comic'])],
-                'date': day,
+                'date': string_to_date(date_str, "%Y-%m-%d"),
             }
 
 
@@ -3790,13 +3721,12 @@ class Ptbd(GenericComic):
         """Get information about a particular comics."""
         # print(comic_json)
         date_str = comic_json['date_modified'][:10]
-        day = string_to_date(date_str, "%Y-%m-%d")
         return {
             'url': comic_json['url'],
             'title': comic_json['title'],
             'author': comic_json['author']['name'],
             'img': [comic_json['image']],
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'description': comic_json['content_html'],  # TODO: to be decoded
             'num': comic_json['id'],
         }
@@ -3840,7 +3770,6 @@ class GenericTumblrV1(GenericComic):
             return None
         tumblr_id = int(post['id'])
         api_url = cls.get_api_url_for_id(tumblr_id)
-        day = datetime.datetime.fromtimestamp(int(post['unix-timestamp'])).date()
         caption = post.find('photo-caption')
         title = caption.string if caption else ""
         tags = ' '.join(t.string for t in post.find_all('tag'))
@@ -3853,7 +3782,7 @@ class GenericTumblrV1(GenericComic):
         return {
             'url': cls.get_url_from_post(post),
             'url2': post['url-with-slug'],
-            'date': day,
+            'date': datetime.datetime.fromtimestamp(int(post['unix-timestamp'])).date(),
             'title': title,
             'tags': tags,
             'img': [i.string for i in imgs],
@@ -4980,13 +4909,12 @@ class ItFoolsAMonster(GenericNavigableComic):
         title = soup.find('h2', class_='post-title').string
         author = soup.find('a', rel='author').string
         date_str = soup.find('span', class_='post-date').string
-        day = string_to_date(date_str, '%B %d, %Y')
         imgs = soup.find('div', id='comic').find_all('img')
         return {
             'img': [i['src'] for i in imgs],
             'title': title,
             'author': author,
-            'date': day,
+            'date': string_to_date(date_str, '%B %d, %Y'),
         }
 
 
@@ -5159,12 +5087,11 @@ class GenericGoComic(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         date_str = soup.find('meta', property='article:published_time')['content']
-        day = string_to_date(date_str, "%Y-%m-%d")
         imgs = soup.find_all('meta', property='og:image')
         author = soup.find('meta', property='article:author')['content']
         tags = soup.find('meta', property='article:tag')['content']
         return {
-            'date': day,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
             'img': [i['content'] for i in imgs],
             'author': author,
             'tags': tags,
@@ -5459,14 +5386,13 @@ class GenericTapasticComic(GenericListableComic):
     def get_comic_info(cls, soup, archive_elt):
         """Get information about a particular comics."""
         timestamp = int(archive_elt['publishDate']) / 1000.0
-        day = datetime.datetime.fromtimestamp(timestamp).date()
         imgs = soup.find_all('img', class_='art-image')
         if not imgs:
             # print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
             return None
         assert len(imgs) > 0, imgs
         return {
-            'date': day,
+            'date': datetime.datetime.fromtimestamp(timestamp).date(),
             'img': [i['src'] for i in imgs],
             'title': archive_elt['title'],
         }
