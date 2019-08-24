@@ -1824,18 +1824,12 @@ class RespawnComic(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find('meta', property='og:title')['content']
-        author = soup.find('meta', attrs={'name': 'shareaholic:article_author_name'})['content']
-        date_str = soup.find('meta', attrs={'name': 'shareaholic:article_published_time'})['content'][:10]
+        author = soup.find('a', rel='author').string
         imgs = soup.find_all('meta', property='og:image')
-        skip_imgs = {
-            'http://respawncomic.com/wp-content/uploads/2016/03/site/HAROLD2.png',
-            'http://respawncomic.com/wp-content/uploads/2016/03/site/DEVA.png'
-        }
         return {
             'title': title,
             'author': author,
-            'date': string_to_date(date_str, "%Y-%m-%d"),
-            'img': [i['content'] for i in imgs if i['content'] not in skip_imgs],
+            'img': [i['content'] for i in imgs],
         }
 
 
