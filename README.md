@@ -196,7 +196,7 @@ Comics supported
  * [Heck if I Know comics (from Tumblr)](http://heckifiknowcomics.com)
  * [Hit and Miss Comics](https://hitandmisscomics.tumblr.com)
  * [HM Blanc](http://hmblanc.tumblr.com)
- * [Hoomph](http://hoom.ph)
+ * [Hoomph](https://hoom.ph)
  * [Horovitz (from Tumblr)](https://horovitzcomics.tumblr.com)
  * [Horovitz Classic](http://www.horovitzcomics.com)
  * [Horovitz New](http://www.horovitzcomics.com)

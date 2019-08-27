@@ -4399,7 +4399,7 @@ class Hoomph(GenericTumblrV1):
     """Class to retrieve Hoomph comics."""
     name = 'hoomph'
     long_name = 'Hoomph'
-    url = 'http://hoom.ph'
+    url = 'https://hoom.ph'
 
 
 class BFGFSTumblr(GenericTumblrV1):
