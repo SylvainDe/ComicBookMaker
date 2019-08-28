@@ -5674,7 +5674,7 @@ class TumbleDryTapa(GenericTapasticComic):
     """Class to retrieve Tumble Dry comics."""
     # Also on http://tumbledrycomics.com
     name = 'tumbledry-tapa'
-    long_name = 'Tumblr Dry (from Tapastic)'
+    long_name = 'Tumble Dry (from Tapastic)'
     url = 'https://tapastic.com/series/TumbleDryComics'
 
 
