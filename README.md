@@ -113,7 +113,7 @@ Comics supported
  * [Channelate](http://www.channelate.com)
  * [Cheese Cornz (from Tumblr)](https://cheesecornz.tumblr.com)
  * [Chuckle-A-duck](http://chuckleaduck.com)
- * [Cinismo Ilustrado](http://cinismoilustrado.com)
+ * [Cinismo Ilustrado](https://cinismoilustrado.com)
  * [Victims Of Circumsolar](http://www.victimsofcircumsolar.com)
  * [Victims Of Circumsolar (from Tumblr)](https://victimsofcomics.tumblr.com)
  * [A Comik](https://acomik.com)

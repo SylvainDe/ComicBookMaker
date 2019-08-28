@@ -4963,7 +4963,7 @@ class CinismoIlustrado(GenericTumblrV1):
     """Class to retrieve CinismoIlustrado comics."""
     name = 'cinismo'
     long_name = 'Cinismo Ilustrado'
-    url = 'http://cinismoilustrado.com'
+    url = 'https://cinismoilustrado.com'
     _categories = ('ESPANOL', )
 
 
