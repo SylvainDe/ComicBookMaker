@@ -4874,13 +4874,6 @@ class TheseInsideJokesTumblr(GenericTumblrV1):
     url = 'http://theseinsidejokes.tumblr.com'
 
 
-class RustledJimmies(GenericComicNotWorking):  # Not a tumblr anymore
-    """Class to retrieve Rustled Jimmies comics."""
-    name = 'restled'
-    long_name = 'Rustled Jimmies'
-    url = 'http://rustledjimmies.net'
-
-
 class SinewynTumblr(GenericTumblrV1):
     """Class to retrieve Sinewyn comics."""
     # Also on https://sinewyn.wordpress.com
@@ -4909,6 +4902,46 @@ class ItFoolsAMonster(GenericNavigableComic):
             'title': title,
             'author': author,
             'date': string_to_date(date_str, '%B %d, %Y'),
+        }
+
+
+class RustledJimmies(GenericNavigableComic):
+    """Class to retrieve Rustled Jimmies comics."""
+    name = 'rustled'
+    long_name = 'Rustled Jimmies'
+    url = 'http://rustledjimmies.net'
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find('a', class_='page-last')
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        link = last_soup.find('a', class_='page-prev' if next_ else 'page-next')
+        # Workaround because a next arrow links to https://rustledjimmies.net/comic/
+        if link:
+            url = cls.get_url_from_link(link)
+            if url == 'https://rustledjimmies.net/comic/ ':
+                print("Invalid link to ", url)
+                return None
+        return link
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find('meta', property='og:title')['content']
+        author = soup.find('meta', attrs={'name': 'author'})['content']
+        post = soup.find('article', class_='post')
+        imgs = post.find_all('img')
+        date_str = soup.find('meta', property='article:published_time')['content'][:10]
+        return {
+            'title': title,
+            'author': author,
+            'date': string_to_date(date_str, "%Y-%m-%d"),
+            'img': [urljoin_wrapper(cls.url, i['data-src'] if i.has_attr('data-src') else i['src']) for i in imgs],
         }
 
 
