@@ -2900,6 +2900,7 @@ class Optipess(GenericNavigableComic):
 
 class PainTrainComic(GenericNavigableComic):
     """Class to retrieve Pain Train Comics."""
+    # Also on https://paintraincomic.tumblr.com
     name = 'paintrain'
     long_name = 'Pain Train Comics'
     url = 'http://paintraincomic.com'
@@ -5039,6 +5040,14 @@ class RaeTheDoeTumblr(GenericTumblrV1):
     name = 'rae-tumblr'
     long_name = 'Rae the Doe (from Tumblr)'
     url = 'https://raethedoe.tumblr.com'
+
+
+class PainTrainComicTumblr(GenericTumblrV1):
+    """Class to retrieve Pain Train Comics."""
+    # Also on http://paintraincomic.com
+    name = 'paintrain-tumblr'
+    long_name = 'Pain Train Comics (from Tumblr)'
+    url = 'https://paintraincomic.tumblr.com'
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):

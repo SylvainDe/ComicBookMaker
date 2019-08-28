@@ -290,6 +290,7 @@ Comics supported
  * [Owl Turd / Shen Comix (from Tapastic)](https://tapas.io/series/Shen-Comix)
  * [Owl Turd / Shen Comix (from Tumblr)](https://shencomix.tumblr.com)
  * [Pain Train Comics](http://paintraincomic.com)
+ * [Pain Train Comics (from Tumblr)](https://paintraincomic.tumblr.com)
  * [Perry Bible Fellowship](http://pbfcomics.com)
  * [Peanuts](http://www.gocomics.com/peanuts)
  * [Pearls Before Swine](http://www.gocomics.com/pearlsbeforeswine)
