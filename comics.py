@@ -472,11 +472,11 @@ class ExtraFabulousComics(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find_all("meta", property="og:image")
         title = soup.find("meta", property="og:title")["content"]
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         return {
             "title": title,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "prefix": title + "-",
         }
 
@@ -492,8 +492,8 @@ class GenericLeMondeBlog(GenericNavigableComic):
 
     @classmethod
     def get_date_time_published(cls, soup):
-        date_str = soup.find("time", class_="published")["datetime"][:10]
-        return string_to_date(date_str, "%Y-%m-%d")
+        date_str = soup.find("time", class_="published")["datetime"]
+        return isoformat_to_date(date_str)
 
     @classmethod
     def get_date_span_entry_date(cls, soup):
@@ -723,12 +723,12 @@ class Dilem(GenericNavigableComic):
         short_url = soup.find("link", rel="shortlink")["href"]
         title = soup.find("meta", attrs={"name": "twitter:title"})["content"]
         imgs = soup.find_all("meta", property="og:image")
-        date_str = soup.find("span", property="dc:date")["content"][:10]
+        date_str = soup.find("span", property="dc:date")["content"]
         return {
             "short_url": short_url,
             "title": title,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -813,12 +813,12 @@ class ItsTheTie(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find("title").string
-        date_str = soup.find("time")["datetime"][:10]
+        date_str = soup.find("time")["datetime"]
         imgs = soup.find("div", id="comic").find_all("img")
         imgs_src = [i.get("oversrc") or i.get("src") for i in imgs]
         return {
             "title": title,
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "img": imgs_src,
         }
 
@@ -1242,13 +1242,13 @@ class Mercworks(GenericDeletedComic):  # Moved to Webtoons
         title = soup.find("meta", property="og:title")["content"]
         metadesc = soup.find("meta", property="og:description")
         desc = metadesc["content"] if metadesc else ""
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         imgs = soup.find_all("meta", property="og:image")
         return {
             "img": [i["content"] for i in imgs],
             "title": title,
             "desc": desc,
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -2043,13 +2043,13 @@ class Penmen(GenericComicNotWorking, GenericNavigableComic):
         imgs = soup.find("div", class_="entry-content").find_all("img")
         short_url = soup.find("link", rel="shortlink")["href"]
         tags = " ".join(t.string for t in soup.find_all("a", rel="tag"))
-        date_str = soup.find("time")["datetime"][:10]
+        date_str = soup.find("time")["datetime"]
         return {
             "title": title,
             "short_url": short_url,
             "img": [i["src"] for i in imgs],
             "tags": tags,
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -2395,12 +2395,12 @@ class PeterLauris(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find("meta", attrs={"name": "twitter:title"})["content"]
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         imgs = soup.find_all("meta", property="og:image")
         return {
             "title": title,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -2420,14 +2420,14 @@ class RandomCrab(GenericNavigableComic):
         title = soup.find("meta", property="og:title")["content"]
         desc = soup.find("meta", property="og:description")
         desc_str = "" if desc is None else desc["content"]
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         imgs = soup.find_all("meta", property="og:image")
         author = soup.find("a", rel="author").string
         return {
             "title": title,
             "desc": desc_str,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "author": author,
         }
 
@@ -2448,15 +2448,13 @@ class JuliasDrawings(GenericListableComic):
     @classmethod
     def get_comic_info(cls, soup, archive_elt):
         """Get information about a particular comics."""
-        date_str = soup.find("meta", property="og:article:published_time")["content"][
-            :10
-        ]
+        date_str = soup.find("meta", property="og:article:published_time")["content"]
         title = soup.find("h3", class_="p-post-title").string
         imgs = soup.find("section", class_="post-content").find_all("img")
         return {
             "title": title,
             "img": [urljoin_wrapper(cls.url, i["src"]) for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -2584,11 +2582,11 @@ class WarAndPeas(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("meta", property="og:image")
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         return {
             "title": title,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
         }
 
 
@@ -3237,10 +3235,10 @@ class GenericWordPressInkblot(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find("div", class_="webcomic-image").find_all("img")
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         return {
             "title": title,
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "img": [i["src"] for i in imgs],
         }
 
@@ -3579,12 +3577,12 @@ class MacadamValley(GenericDeletedComic, GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("h1", class_="entry-title").string
         img = soup.find("div", class_="entry-content").find("img")
-        date_str = soup.find("time", class_="entry-date")["datetime"][:10]
+        date_str = soup.find("time", class_="entry-date")["datetime"]
         author = soup.find("a", rel="author").string
         return {
             "title": title,
             "img": [i["src"] for i in [img]],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "author": author,
         }
 
@@ -3607,12 +3605,12 @@ class LightRoastComics(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find_all("meta", property="og:image")
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         title = soup.find("meta", property="og:title")["content"]
         author = soup.find("span", class_="author vcard").find("a").string
         return {
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "title": title,
             "author": author,
             "tags": " ".join(t.string for t in soup.find_all("a", rel="category tag")),
@@ -3633,11 +3631,11 @@ class MarketoonistComics(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find_all("meta", property="og:image")
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         title = soup.find("meta", property="og:title")["content"]
         return {
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "title": title,
         }
 
@@ -3850,13 +3848,13 @@ class NothingSuspicious(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
-        date_str = soup.find("meta", itemprop="datePublished")["content"][:10]
+        date_str = soup.find("meta", itemprop="datePublished")["content"]
         author = soup.find("meta", itemprop="author")["content"]
         imgs = soup.find_all("meta", property="og:image")
         return {
             "title": title,
             "img": [i["content"] for i in imgs],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "author": author,
         }
 
@@ -3881,7 +3879,6 @@ class DeathBulge(GenericComic):
             json = load_json_at_url(json_url)
             pagination = json["pagination_links"]
             comic_json = json["comic"]
-            date_str = comic_json["timestamp"][:10]
             yield {
                 "json_url": json_url,
                 "num": num,
@@ -3889,7 +3886,7 @@ class DeathBulge(GenericComic):
                 "alt": comic_json["alt_text"],
                 "title": comic_json["title"],
                 "img": [urljoin_wrapper(cls.url, comic_json["comic"])],
-                "date": string_to_date(date_str, "%Y-%m-%d"),
+                "date": isoformat_to_date(comic_json["timestamp"]),
             }
 
 
@@ -3919,13 +3916,12 @@ class Ptbd(GenericComic):
     def get_comic_info(cls, comic_json):
         """Get information about a particular comics."""
         # print(comic_json)
-        date_str = comic_json["date_modified"][:10]
         return {
             "url": comic_json["url"],
             "title": comic_json["title"],
             "author": comic_json["author"]["name"],
             "img": [comic_json["image"]],
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(comic_json["date_modified"]),
             "description": comic_json["content_html"],  # TODO: to be decoded
             "num": comic_json["id"],
         }
@@ -5278,11 +5274,11 @@ class RustledJimmies(GenericNavigableComic):
         author = soup.find("meta", attrs={"name": "author"})["content"]
         post = soup.find("article", class_="post")
         imgs = post.find_all("img")
-        date_str = soup.find("meta", property="article:published_time")["content"][:10]
+        date_str = soup.find("meta", property="article:published_time")["content"]
         return {
             "title": title,
             "author": author,
-            "date": string_to_date(date_str, "%Y-%m-%d"),
+            "date": isoformat_to_date(date_str),
             "img": [
                 urljoin_wrapper(
                     cls.url, i["data-src"] if i.has_attr("data-src") else i["src"]
@@ -6605,7 +6601,7 @@ def remove_st_nd_rd_th_from_date(string):
 def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     """Function to convert string to date object.
     Wrapper around datetime.datetime.strptime."""
-    # format described in https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+    # format described in https://docs.python.org/3.8/library/datetime.html#strftime-and-strptime-behavior
     prev_locale = locale.setlocale(locale.LC_ALL)
     if local != prev_locale:
         locale.setlocale(locale.LC_ALL, local)
@@ -6613,6 +6609,12 @@ def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     if local != prev_locale:
         locale.setlocale(locale.LC_ALL, prev_locale)
     return ret
+
+
+def isoformat_to_date(string):
+    """Fonction to convert string in isoformat to date object."""
+    # 2019-08-17T14:25:35+00:00
+    return string_to_date(string[:10], "%Y-%m-%d")
 
 
 def dict_to_date(d):
