@@ -5844,7 +5844,7 @@ class GenericTapasticComic(GenericListableComic):
         # Information is stored in the javascript part
         # I don't know the clean way to get it so this is the ugly way.
         string = [
-            s[len(pref) : -len(suff)]
+            s[len(pref):-len(suff)]
             for s in (
                 s.decode("utf-8").strip() for s in urlopen_wrapper(cls.url).readlines()
             )
