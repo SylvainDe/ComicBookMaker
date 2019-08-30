@@ -4026,7 +4026,7 @@ class HeckIfIKnowComicsTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/Regular
     name = 'heck-tumblr'
     long_name = 'Heck if I Know comics (from Tumblr)'
-    url = 'http://heckifiknowcomics.com'
+    url = 'https://heckifiknowcomics.com'
 
 
 class MyJetPack(GenericTumblrV1):
@@ -4376,7 +4376,7 @@ class TalesOfAbsurdityTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/Tales-Of-Absurdity
     name = 'absurdity-tumblr'
     long_name = 'Tales of Absurdity (from Tumblr)'
-    url = 'http://talesofabsurdity.tumblr.com'
+    url = 'https://talesofabsurdity.tumblr.com'
     _categories = ('ABSURDITY', )
 
 
@@ -4565,7 +4565,7 @@ class Will5NeverCome(GenericTumblrV1):
     """Class to retrieve Will 5:00 Never Come comics."""
     name = 'will5'
     long_name = 'Will 5:00 Never Come ?'
-    url = 'http://will5nevercome.com'
+    url = 'https://will5nevercome.com'
 
 
 class Sephko(GenericTumblrV1):
@@ -5564,7 +5564,7 @@ class GoneIntoRaptureTapastic(GenericTapasticComic):
 
 class HeckIfIKnowComicsTapa(GenericTapasticComic):
     """Class to retrieve Heck If I Know Comics."""
-    # Also on http://heckifiknowcomics.com
+    # Also on https://heckifiknowcomics.com
     name = 'heck-tapa'
     long_name = 'Heck if I Know comics (from Tapastic)'
     url = 'http://tapastic.com/series/Regular'
