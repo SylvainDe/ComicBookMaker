@@ -26,6 +26,7 @@ class Xkcd(GenericComic):
     name = "xkcd"
     long_name = "xkcd"
     url = "http://xkcd.com"
+    _categories = ("GEEKY",)
 
     @classmethod
     def get_next_comic(cls, last_comic):
@@ -2239,6 +2240,7 @@ class TurnOffUs(GenericListableComic):
     name = "turnoffus"
     long_name = "Turn Off Us"
     url = "http://turnoff.us"
+    _categories = ("GEEKY",)
     get_url_from_archive_element = join_cls_url_to_href
 
     @classmethod
@@ -2415,6 +2417,7 @@ class JuliasDrawings(GenericListableComic):
     name = "julia"
     long_name = "Julia's Drawings"
     url = "https://drawings.jvns.ca"
+    _categories = ("GEEKY",)
     get_url_from_archive_element = get_href
 
     @classmethod
@@ -2504,6 +2507,65 @@ class RaeTheDoe(GenericListableComic):
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("link", rel="image_src")
         return {"img": [i["href"] for i in imgs], "title": title}
+
+
+class HowDnsWorksComics(GenericListableComic):
+    """Class to retrieve How DNS Works Comics."""
+    name = "dns"
+    long_name = "How DNS works"
+    url = "https://howdns.works"
+    get_url_from_archive_element = join_cls_url_to_href
+    _categories = ("GEEKY",)
+
+    @classmethod
+    def get_archive_elements(cls):
+        soup = get_soup_at_url(urljoin_wrapper(cls.url, "episodes"))
+        return soup.find("ul", class_="episode-list").find_all("a")
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_elt):
+        """Get information about a particular comics."""
+        author = soup.find("meta", attrs={"name": "author"})["content"]
+        tags = soup.find("meta", attrs={"name": "keywords"})["content"]
+        title = soup.find("h1").string
+        # TODO: How to handle SVGs ?
+        imgs = soup.find("ul", class_="group").find_all("svg")
+        cls.log("% svg ignored" % len(imgs))
+        return {
+            "img": [],
+            "author": author,
+            "title": title,
+            "tags": tags,
+        }
+
+
+
+class HowHttpsWorksComics(GenericListableComic):
+    """Class to retrieve How HTTPS Works Comics."""
+    name = "https"
+    long_name = "How HTTPS works"
+    url = "https://howhttps.works"
+    get_url_from_archive_element = join_cls_url_to_href
+    _categories = ("GEEKY",)
+
+    @classmethod
+    def get_archive_elements(cls):
+        soup = get_soup_at_url(urljoin_wrapper(cls.url, "episodes"))
+        return soup.find_all("a", class_="db link black dim")
+
+    @classmethod
+    def get_comic_info(cls, soup, archive_elt):
+        """Get information about a particular comics."""
+        author = soup.find("meta", attrs={"name": "twitter:creator"})["content"]
+        title = soup.find("title").string
+        # TODO: How to handle SVGs ?
+        imgs = soup.find("div", class_="flex flex-wrap comic pv3").find_all("svg")
+        cls.log("% svg ignored" % len(imgs))
+        return {
+            "img": [],
+            "author": author,
+            "title": title,
+        }
 
 
 class LonnieMillsap(GenericNavigableComic):
@@ -2909,6 +2971,7 @@ class GenericCommitStrip(GenericNavigableComic):
     get_navi_link = get_a_rel_next
     get_first_comic_link = simulate_first_link
     first_url = NotImplemented
+    _categories = ("GEEKY",)
 
     @classmethod
     def get_comic_info(cls, soup, link):
@@ -3712,6 +3775,7 @@ class GeekAndPoke(GenericNavigableComic):
     name = "geek"
     long_name = "Geek And Poke"
     url = "http://geek-and-poke.com"
+    _categories = ("GEEKY",)
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
     first_url = "http://geek-and-poke.com/geekandpoke/2006/8/27/a-new-place-for-a-not-so-old-blog.html"
