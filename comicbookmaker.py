@@ -82,7 +82,7 @@ def main():
     for name in args.excluded:
         for klass in COMICS_DICT[name]:
             comic_classes.remove(klass)
-    comic_classes = sorted(comic_classes, key=operator.attrgetter('name'))
+    comic_classes = sorted(comic_classes, key=lambda c: c.name.lower())
     logging.debug('Starting')
     for action in args.action:
         method_name = arg_to_method.get(action)
