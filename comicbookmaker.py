@@ -5,7 +5,6 @@
 import book
 import argparse
 import logging
-import operator
 from comics import COMICS_DICT
 
 
@@ -42,7 +41,7 @@ def main():
         'delete_last': 'delete_last',
         'delete_all': 'delete_all',
     }
-    comic_names = sorted(COMICS_DICT.keys())
+    comic_names = sorted(COMICS_DICT.keys(), key=lambda s: s.lower())
     parser = argparse.ArgumentParser(
         description='Downloads webcomics and generates ebooks for offline reading')
     parser.add_argument(
