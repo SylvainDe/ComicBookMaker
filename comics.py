@@ -2539,7 +2539,6 @@ class HowDnsWorksComics(GenericListableComic):
         }
 
 
-
 class HowHttpsWorksComics(GenericListableComic):
     """Class to retrieve How HTTPS Works Comics."""
     name = "https"
