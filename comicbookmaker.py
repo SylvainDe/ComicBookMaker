@@ -5,7 +5,8 @@
 import book
 import argparse
 import logging
-from comics import COMIC_NAMES
+import operator
+from comics import COMICS_DICT
 
 
 def get_file_content_until_tag(path, tag):
@@ -41,19 +42,19 @@ def main():
         'delete_last': 'delete_last',
         'delete_all': 'delete_all',
     }
-    comic_names = sorted(COMIC_NAMES.keys())
+    comic_names = sorted(COMICS_DICT.keys())
     parser = argparse.ArgumentParser(
         description='Downloads webcomics and generates ebooks for offline reading')
     parser.add_argument(
         '--comic', '-c',
         action='append',
-        help=('comics to be considered (default: ALL)'),
+        help=('comics to be considered (default: ALL) - categories can be used'),
         choices=comic_names,
         default=[])
     parser.add_argument(
         '--excluded', '-e',
         action='append',
-        help=('comics to be excluded'),
+        help=('comics to be excluded - categories can be used'),
         choices=comic_names,
         default=[])
     parser.add_argument(
@@ -70,11 +71,19 @@ def main():
         default=logging.CRITICAL)
     args = parser.parse_args()
     logger.setLevel(args.loglevel)
+    # Apply default value
     if not args.comic:
-        args.comic = comic_names
+        args.comic = ['ALL']
     if not args.action:
         args.action = ['update']
-    comic_classes = [COMIC_NAMES[c] for c in sorted(set(args.comic) - set(args.excluded))]
+    comic_classes = set()
+    for name in args.comic:
+        for klass in COMICS_DICT[name]:
+            comic_classes.add(klass)
+    for name in args.excluded:
+        for klass in COMICS_DICT[name]:
+            comic_classes.remove(klass)
+    comic_classes = sorted(comic_classes, key=operator.attrgetter('name'))
     logging.debug('Starting')
     for action in args.action:
         method_name = arg_to_method.get(action)

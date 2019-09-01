@@ -4357,7 +4357,7 @@ class AsPerUsualTumblr(GenericTumblrV1):
     name = "usual-tumblr"
     long_name = "As Per Usual (from Tumblr)"
     url = "http://as-per-usual.tumblr.com"
-    categories = ("DAMILEE",)
+    _categories = ("DAMILEE",)
 
 
 class HotComicsForCoolPeopleTumblr(GenericTumblrV1):
@@ -4369,7 +4369,7 @@ class HotComicsForCoolPeopleTumblr(GenericTumblrV1):
     name = "hotcomics-tumblr"
     long_name = "Hot Comics For Cool People (from Tumblr)"
     url = "http://hotcomicsforcoolpeople.tumblr.com"
-    categories = ("DAMILEE",)
+    _categories = ("DAMILEE",)
 
 
 class OneOneOneOneComicTumblr(GenericTumblrV1):
@@ -6060,7 +6060,7 @@ class HotComicsForCoolPeopleTapa(GenericTapasticComic):
     name = "hotcomics-tapa"
     long_name = "Hot Comics For Cool People (from Tapastic)"
     url = "https://tapastic.com/series/Hot-Comics-For-Cool-People"
-    categories = ("DAMILEE",)
+    _categories = ("DAMILEE",)
 
 
 class OneOneOneOneComicTapa(GenericTapasticComic):
@@ -6604,9 +6604,17 @@ def regexp_match_to_date(match):
     return dict_to_date(match.groupdict())
 
 
+# Collect comics
 COMICS = set(get_subclasses(GenericComic))
 VALID_COMICS = [c for c in COMICS if c.name is not None]
-COMIC_NAMES = {c.name: c for c in VALID_COMICS}
-assert len(VALID_COMICS) == len(COMIC_NAMES)
-CLASS_NAMES = {c.__name__ for c in VALID_COMICS}
-assert len(VALID_COMICS) == len(CLASS_NAMES)
+# Create dict mapping names and categories to comics
+COMICS_DICT = {}
+for comic in VALID_COMICS:
+    name = comic.name
+    assert name not in COMICS_DICT
+    assert name.lower() == name
+    COMICS_DICT[name] = [comic]
+    for cat in comic.get_categories():
+        assert cat.upper() == cat
+        assert cat.lower() != cat
+        COMICS_DICT.setdefault(cat, []).append(comic)
