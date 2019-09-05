@@ -6606,7 +6606,13 @@ class DogmoDog(GenericNavigableComic):
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
-        return cls.get_nav(last_soup, "Next" if next_ else "Previous")
+        link = cls.get_nav(last_soup, "Next" if next_ else "Previous")
+        # Trick because a next can lead to an error page
+        if link:
+            url = cls.get_url_from_link(link)
+            if url == "http://www.dogmodog.com/error.php":
+                return None
+        return link
 
     @classmethod
     def get_comic_info(cls, soup, link):
