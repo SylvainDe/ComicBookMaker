@@ -2924,26 +2924,13 @@ class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not 
         }
 
 
-class PlanC(GenericNavigableComic):
+class PlanC(GenericDeletedComic):
     """Class to retrieve Plan C comics."""
 
+    # Also on https://www.webtoons.com/en/challenge/plan-c/list?title_no=77831
     name = "planc"
     long_name = "Plan C"
     url = "http://www.plancomic.com"
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_a_navi_comicnavnext_navinext
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find("h2", class_="post-title").string
-        date_str = soup.find("span", class_="post-date").string
-        imgs = soup.find("div", id="comic").find_all("img")
-        return {
-            "title": title,
-            "img": [i["src"] for i in imgs],
-            "date": string_to_date(date_str, "%B %d, %Y"),
-        }
 
 
 class BuniComic(GenericNavigableComic):
