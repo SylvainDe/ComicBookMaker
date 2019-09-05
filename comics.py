@@ -5290,7 +5290,6 @@ class RustledJimmies(GenericNavigableComic):
         if link:
             url = cls.get_url_from_link(link)
             if url == "https://rustledjimmies.net/comic/ ":
-                print("Invalid link to ", url)
                 return None
         return link
 
