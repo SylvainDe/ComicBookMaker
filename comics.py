@@ -1080,30 +1080,6 @@ class DeadlyPanel(
         return {"img": [i["src"] for i in imgs]}
 
 
-class TheGentlemanArmchair(GenericNavigableComic):
-    """Class to retrieve The Gentleman Armchair comics."""
-
-    name = "gentlemanarmchair"
-    long_name = "The Gentleman Armchair"
-    url = "http://thegentlemansarmchair.com"
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find("h2", class_="post-title").string
-        author = soup.find("span", class_="post-author").find("a").string
-        date_str = soup.find("span", class_="post-date").string
-        imgs = soup.find("div", id="comic").find_all("img")
-        return {
-            "img": [i["src"] for i in imgs],
-            "title": title,
-            "author": author,
-            "date": string_to_date(date_str, "%B %d, %Y"),
-        }
-
-
 class ImogenQuest(GenericNavigableComic):
     """Class to retrieve Imogen Quest comics."""
 
@@ -5418,6 +5394,24 @@ class PainTrainComicTumblr(GenericTumblrV1):
     name = "paintrain-tumblr"
     long_name = "Pain Train Comics (from Tumblr)"
     url = "https://paintraincomic.tumblr.com"
+
+
+class TheGentlemanArmchair(GenericTumblrV1):
+    """Class to retrieve The Gentleman Armchair comics."""
+
+    # Also on https://www.gocomics.com/the-gentlemans-armchair
+    # Also on https://www.webtoons.com/en/comedy/the-gentlemans-armchair/list?title_no=469
+    name = "gentlemanarmchair"
+    long_name = "The Gentleman Armchair"
+    url = "https://thegentlemansarmchair.com"
+
+
+class SpfComics(GenericTumblrV1):
+    """Class to retrieve SPF comics."""
+
+    name = "spf"
+    long_name = "SPF Comics"""
+    url = "https://spfcomics.com"
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
