@@ -1624,19 +1624,13 @@ class PhDComics(GenericNavigableComic):
     name = "phd"
     long_name = "PhD Comics"
     url = "http://phdcomics.com/comics/archive.php"
-
-    @classmethod
-    def get_first_comic_link(cls):
-        """Get link to first comics."""
-        soup = get_soup_at_url(cls.url)
-        img = soup.find(
-            "img", src="http://phdcomics.com/comics/images/first_button.gif"
-        )
-        return None if img is None else img.parent
+    get_first_comic_link = simulate_first_link
+    first_url = "http://phdcomics.com/comics/archive.php?comicid=1"
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
+        # Prev does not work ?
         url = "http://phdcomics.com/comics/images/%s_button.gif" % (
             "next" if next_ else "prev"
         )
