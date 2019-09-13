@@ -277,6 +277,7 @@ Comics supported
  * [Nothing Suspicious](https://nothingsuspicio.us)
  * [Comic Nuggets](https://comicnuggets.com)
  * [The Oatmeal (from Tumblr)](http://oatmeal.tumblr.com)
+ * [The Obscure Gentlemen](https://theobscuregentlemen.com)
  * [Octopuns](http://www.octopuns.net)
  * [Octopuns (from Tumblr)](http://octopuns.tumblr.com)
  * [Off The Leash Dog](http://offtheleashdogcartoons.com)

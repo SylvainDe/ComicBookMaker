@@ -3400,6 +3400,47 @@ class Ubertool(GenericNavigableComic):
         }
 
 
+class ObscureGentlemen(GenericNavigableComic):
+    """Class to retrieve The Obscure Gentlemen comics."""
+
+    # Also on https://www.webtoons.com/en/challenge/the-obscure-gentlemen/list?title_no=25110&page=1
+    name = "obscuregentlemen"
+    long_name = "The Obscure Gentlemen"
+    url = "https://theobscuregentlemen.com"
+    get_first_comic_link = get_a_comicnavbase_comicnavfirst
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        # Based on get_a_comicnavbase_comicnavnext but with workaround
+        link = last_soup.find(
+            "a",
+            class_="comic-nav-base comic-nav-next"
+            if next_
+            else "comic-nav-base comic-nav-previous",
+        )
+        # Workaround because a page leads to 404 error
+        if link:
+            url = cls.get_url_from_link(link)
+            if url == "https://theobscuregentlemen.com/comic/4848/":
+                next_url = "https://theobscuregentlemen.com/comic/let-him-win/"
+                prev_url = "https://theobscuregentlemen.com/comic/kiss-of-steel/"
+                return {"href": next_url if next_ else prev_url}
+        return link
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        author = soup.find("a", rel="author").string
+        title = soup.find("h2", class_="post-title").string
+        imgs = soup.find("div", id="comic").find_all("img")
+        return {
+            "img": [convert_iri_to_plain_ascii_uri(i["src"]) for i in imgs],
+            "title": title,
+            "author": author,
+        }
+
+
 class EarthExplodes(GenericNavigableComic):
     """Class to retrieve The Earth Explodes comics."""
 
