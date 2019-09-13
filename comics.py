@@ -5280,6 +5280,29 @@ class ItFoolsAMonster(GenericNavigableComic):
         }
 
 
+class EatMyPaint(GenericNavigableComic):
+    """Class to retrieve Eat My Paint comics."""
+
+    # Also on https://eatmypaint.tumblr.com
+    # Also on https://www.webtoons.com/en/challenge/eatmypaint/list?title_no=31150&page=1
+    # Also on https://tapas.io/series/eatmypaint
+    name = "eatmypaint"
+    long_name = "Eat My Paint"
+    url = "https://www.eatmypaint.co.uk"
+    _categories = ("EATMYPAINT",)
+    get_first_comic_link = get_a_navi_navifirst
+    get_navi_link = get_a_navi_comicnavnext_navinext
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        imgs = soup.find("div", id="comic").find_all("img") + \
+               soup.find_all("img", class_="hiddenPanel")
+        return {
+            "img": [i["src"] for i in imgs],
+        }
+
+
 class RustledJimmies(GenericNavigableComic):
     """Class to retrieve Rustled Jimmies comics."""
 
@@ -5386,6 +5409,8 @@ class EatMyPaintTumblr(GenericTumblrV1):
     """Class to retrieve Eat My Paint comics."""
 
     # Also on https://tapas.io/series/eatmypaint
+    # Also on https://www.webtoons.com/en/challenge/eatmypaint/list?title_no=31150&page=1
+    # Also on https://www.eatmypaint.co.uk
     name = "eatmypaint-tumblr"
     long_name = "Eat My Paint (from Tumblr)"
     url = "https://eatmypaint.tumblr.com"
@@ -6504,6 +6529,8 @@ class EatMyPaintTapa(GenericTapasticComic):
     """Class to retrieve Eat My Paint comics."""
 
     # Also on https://eatmypaint.tumblr.com
+    # Also on https://www.webtoons.com/en/challenge/eatmypaint/list?title_no=31150&page=1
+    # Also on https://www.eatmypaint.co.uk
     name = "eatmypaint-tapa"
     long_name = "Eat My Paint (from Tapastic)"
     url = "https://tapas.io/series/eatmypaint"
