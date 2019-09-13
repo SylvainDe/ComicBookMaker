@@ -5297,7 +5297,7 @@ class EatMyPaint(GenericNavigableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find("div", id="comic").find_all("img") + \
-               soup.find_all("img", class_="hiddenPanel")
+            soup.find_all("img", class_="hiddenPanel")
         return {
             "img": [i["src"] for i in imgs],
         }
