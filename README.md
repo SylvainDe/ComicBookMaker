@@ -55,6 +55,7 @@ Comics supported
  * [1111 Comics](http://www.1111comics.me)
  * [1111 Comics (from Tapastic)](https://tapastic.com/series/1111-Comics)
  * [1111 Comics (from Tumblr)](http://comics1111.tumblr.com)
+ * [3MB Comics](https://www.3mbcomics.com)
  * [Abstruse Goose](http://abstrusegoose.com)
  * [Tales of Absurdity](http://talesofabsurdity.com)
  * [Tales of Absurdity (from Tapastic)](http://tapastic.com/series/Tales-Of-Absurdity)

@@ -5480,6 +5480,14 @@ class SpfComics(GenericTumblrV1):
     url = "https://spfcomics.com"
 
 
+class ThreeMbComics(GenericTumblrV1):
+    """Class to retrieve 3mb Comics."""
+
+    name = "3mb"
+    long_name = "3MB Comics"
+    url = "https://www.3mbcomics.com"
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
 
