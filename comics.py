@@ -828,7 +828,7 @@ class PenelopeBagieu(GenericNavigableComic):
 class OneOneOneOneComic(GenericNavigableComic):
     """Class to retrieve 1111 Comics."""
 
-    # Also on http://comics1111.tumblr.com
+    # Also on https://comics1111.tumblr.com
     # Also on https://tapastic.com/series/1111-Comics
     name = "1111"
     long_name = "1111 Comics"
@@ -869,7 +869,7 @@ class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Angry at Nothing comics."""
 
     # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
-    # Also on http://angryatnothing.tumblr.com
+    # Also on https://angryatnothing.tumblr.com
     name = "angry"
     long_name = "Angry At Nothing"
     url = "http://www.angryatnothing.net"
@@ -1209,7 +1209,7 @@ class Mercworks(GenericDeletedComic):  # Moved to Webtoons
 class BerkeleyMews(GenericListableComic):
     """Class to retrieve Berkeley Mews comics."""
 
-    # Also on http://mews.tumblr.com
+    # Also on https://mews.tumblr.com
     # Also on http://www.gocomics.com/berkeley-mews
     name = "berkeley"
     long_name = "Berkeley Mews"
@@ -2969,7 +2969,7 @@ class CommitStripEn(GenericCommitStrip):
 class GenericBoumerie(GenericNavigableComic):
     """Generic class to retrieve Boumeries comics in different languages."""
 
-    # Also on http://boumeries.tumblr.com
+    # Also on https://boumeries.tumblr.com
     get_first_comic_link = get_a_navi_navifirst
     get_navi_link = get_link_rel_next
     date_format = NotImplemented
@@ -4440,7 +4440,7 @@ class OneOneOneOneComicTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/1111-Comics
     name = "1111-tumblr"
     long_name = "1111 Comics (from Tumblr)"
-    url = "http://comics1111.tumblr.com"
+    url = "https://comics1111.tumblr.com"
     _categories = ("ONEONEONEONE",)
 
 
@@ -4460,7 +4460,7 @@ class BerkeleyMewsTumblr(GenericTumblrV1):
     # Also on http://www.berkeleymews.com
     name = "berkeley-tumblr"
     long_name = "Berkeley Mews (from Tumblr)"
-    url = "http://mews.tumblr.com"
+    url = "https://mews.tumblr.com"
     _categories = ("BERKELEY",)
 
 
@@ -4915,7 +4915,7 @@ class BlazersAtDawn(GenericTumblrV1):
 
     name = "blazers"
     long_name = "Blazers At Dawn"
-    url = "http://blazersatdawn.tumblr.com"
+    url = "https://blazersatdawn.tumblr.com"
 
 
 class ArtByMoga(
@@ -5001,7 +5001,7 @@ class AngryAtNothingTumblr(GenericTumblrV1):
     # Also on http://tapastic.com/series/Comics-yeah-definitely-comics-
     name = "angry-tumblr"
     long_name = "Angry At Nothing (from Tumblr)"
-    url = "http://angryatnothing.tumblr.com"
+    url = "https://angryatnothing.tumblr.com"
 
 
 class ShanghaiTango(GenericTumblrV1):
@@ -5184,7 +5184,7 @@ class BrooklynCartoonsTumblr(GenericTumblrV1):
     # Also on https://www.instagram.com/brooklyncartoons
     name = "brooklyn-tumblr"
     long_name = "Brooklyn Cartoons (from Tumblr)"
-    url = "http://brooklyncartoons.tumblr.com"
+    url = "https://brooklyncartoons.tumblr.com"
 
 
 class GemmaCorrellTumblr(GenericTumblrV1):
@@ -5373,7 +5373,7 @@ class BoumeriesTumblr(GenericTumblrV1):
     # Also on http://comics.boumerie.com
     name = "boumeries-tumblr"
     long_name = "Boumeries (from Tumblr)"
-    url = "http://boumeries.tumblr.com/"
+    url = "https://boumeries.tumblr.com/"
     _categories = ("BOUMERIES",)
 
 
@@ -5757,7 +5757,7 @@ class TheAwkwardYetiGoComic(GenericGoComic):
 class BerkeleyMewsGoComics(GenericGoComic):
     """Class to retrieve Berkeley Mews comics."""
 
-    # Also on http://mews.tumblr.com
+    # Also on https://mews.tumblr.com
     # Also on http://www.berkeleymews.com
     name = "berkeley-goc"
     long_name = "Berkeley Mews (from GoComics)"
@@ -6116,7 +6116,7 @@ class AngryAtNothingTapa(GenericTapasticComic):
     """Class to retrieve Angry at Nothing comics."""
 
     # Also on http://www.angryatnothing.net
-    # Also on http://angryatnothing.tumblr.com
+    # Also on https://angryatnothing.tumblr.com
     name = "angry-tapa"
     long_name = "Angry At Nothing (from Tapastic)"
     url = "http://tapastic.com/series/Comics-yeah-definitely-comics-"
@@ -6178,7 +6178,7 @@ class OneOneOneOneComicTapa(GenericTapasticComic):
     """Class to retrieve 1111 Comics."""
 
     # Also on http://www.1111comics.me
-    # Also on http://comics1111.tumblr.com
+    # Also on https://comics1111.tumblr.com
     name = "1111-tapa"
     long_name = "1111 Comics (from Tapastic)"
     url = "https://tapastic.com/series/1111-Comics"
