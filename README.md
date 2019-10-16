@@ -143,6 +143,7 @@ Comics supported
  * [According To Devin](http://accordingtodevin.tumblr.com)
  * [Mr Ethan Diamond](http://mrethandiamond.tumblr.com)
  * [Dilbert](http://dilbert.com)
+ * [Dilbert Classics (from GoComics)](http://www.gocomics.com/dilbert-classics)
  * [Ali Dilem](http://information.tv5monde.com/dilem)
  * [Dinosaur Comics](http://www.qwantz.com)
  * [Disco Bleach](http://discobleach.com)

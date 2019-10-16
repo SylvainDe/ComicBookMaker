@@ -952,7 +952,7 @@ class Garfield(GenericComicNotWorking, GenericNavigableComic):  # See issue #50
         }
 
 
-class Dilbert(GenericNavigableComic):
+class Dilbert(GenericComicNotWorking, GenericNavigableComic):  # Am I blacklisted?
     """Class to retrieve Dilbert comics."""
 
     # Also on http://www.gocomics.com/dilbert-classics
@@ -5827,6 +5827,15 @@ class FoxTrotClassics(GenericGoComic):
     name = "foxtrot-classics"
     long_name = "FoxTrot Classics"
     url = "http://www.gocomics.com/foxtrotclassics"
+
+
+class DilbertClassics(GenericGoComic):
+    """Class to retrieve Dilbert comics."""
+
+    # Also on http://dilbert.com
+    name = "dilbert-goc"
+    long_name = "Dilbert Classics (from GoComics)"
+    url = "http://www.gocomics.com/dilbert-classics"
 
 
 class MisterAndMeGoComics(GenericDeletedComic, GenericGoComic):
