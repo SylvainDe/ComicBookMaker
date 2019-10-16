@@ -167,6 +167,8 @@ Comics supported
  * [Safely Endangered (from Tumblr)](https://tumblr.safelyendangered.com)
  * [Eve Velo - chroniques du velotaf](http://evevelo.the-comic.org)
  * [My Extra Life](http://www.myextralife.com)
+ * [False Knees (from Tapastic)](https://tapas.io/series/FalseKnees)
+ * [False Knees (from Tumblr)](https://falseknees.tumblr.com)
  * [Fat Awesome](http://fatawesome.com/comics)
  * [Fat Awesome (from Tumblr)](http://fatawesomecomedy.tumblr.com)
  * [The World Is Flat (from Tapastic)](https://tapastic.com/series/The-World-is-Flat)

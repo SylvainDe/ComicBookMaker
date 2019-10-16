@@ -5488,6 +5488,18 @@ class ThreeMbComics(GenericTumblrV1):
     url = "https://www.3mbcomics.com"
 
 
+class FalseKneesTumblr(GenericTumblrV1):
+    """Class to retrieve False Knees comics."""
+
+    # Also on https://falseknees.com
+    # Also on https://tapas.io/series/FalseKnees
+    # Also on http://www.webtoons.com/en/challenge/false-knees/list?title_no=79544
+    name = "falseknees-tumblr"
+    long_name = "False Knees (from Tumblr)"
+    url = "https://falseknees.tumblr.com"
+    _categories = ("FALSEKNEES",)
+
+
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
     """Generic class to handle the logic common to the different comics from Horovitz."""
 
@@ -6400,6 +6412,18 @@ class DownTheUpwardSpiralTapa(GenericTapasticComic):
     name = "spiral-tapa"
     long_name = "Down the Upward Spiral (from Tapastic)"
     url = "https://tapastic.com/series/Down-the-Upward-Spiral"
+
+
+class FalseKneesTapa(GenericTapasticComic):
+    """Class to retrieve False Knees comics."""
+
+    # Also on https://falseknees.com
+    # Also on https://falseknees.tumblr.com
+    # Also on http://www.webtoons.com/en/challenge/false-knees/list?title_no=79544
+    name = "falseknees-tapa"
+    long_name = "False Knees (from Tapastic)"
+    url = "https://tapas.io/series/FalseKnees"
+    _categories = ("FALSEKNEES",)
 
 
 class UbertoolTapa(GenericTapasticComic):
