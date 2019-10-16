@@ -310,6 +310,7 @@ Comics supported
  * [Pie Comic](http://piecomic.tumblr.com)
  * [The Pigeon Gazette (from Tapastic)](https://tapastic.com/series/The-Pigeon-Gazette)
  * [The Pigeon Gazette (from Tumblr)](http://thepigeongazette.tumblr.com)
+ * [Pizza Dad (from Tapastic)](https://tapas.io/series/PizzaDad)
  * [Plan C](http://www.plancomic.com)
  * [Plantu](http://plantu.blog.lemonde.fr)
  * [Pleasant Thoughts](http://pleasant-thoughts.com)

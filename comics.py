@@ -6379,6 +6379,17 @@ class NamelessPCs(GenericTapasticComic):
     name = "namelesspcs-tapa"
     long_name = "NamelessPCs (from Tapastic)"
     url = "https://tapastic.com/series/NamelessPC"
+    _categories = ("WESLEYHALL",)
+
+
+class PizzaDad(GenericTapasticComic):
+    """Class to retrieve Pizza Dad comics."""
+
+    # Also on http://pizzadad.pizza
+    name = "pizzadad-tapa"
+    long_name = "Pizza Dad (from Tapastic)"
+    url = "https://tapas.io/series/PizzaDad"
+    _categories = ("WESLEYHALL",)
 
 
 class DownTheUpwardSpiralTapa(GenericTapasticComic):
