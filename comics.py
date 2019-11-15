@@ -1400,7 +1400,7 @@ class CyanideAndHappiness(GenericNavigableComic):
     @classmethod
     def get_first_comic_link(cls):
         """Get link to first comics."""
-        return get_soup_at_url(cls.url).find("a", title="Oldest short")
+        return get_soup_at_url(cls.url).find("a", title="Oldest comic")
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
