@@ -2443,13 +2443,15 @@ class JuliasDrawings(GenericListableComic):
         }
 
 
-class AnythingComic(GenericListableComic):
+class AnythingComic(GenericComicNotWorking, GenericListableComic):
     """Class to retrieve Anything Comics."""
 
+    # Also on https://www.smackjeeves.com/discover/articleList?titleNo=50399
     # Also on http://tapastic.com/series/anything
     name = "anythingcomic"
     long_name = "Anything Comic"
     url = "http://www.anythingcomic.com"
+    _categories = ("ANYTHING",)
 
     @classmethod
     def get_archive_elements(cls):
@@ -6055,9 +6057,11 @@ class AnythingComicTapastic(GenericTapasticComic):
     """Class to retrieve Anything Comics."""
 
     # Also on http://www.anythingcomic.com
+    # Also on https://www.smackjeeves.com/discover/articleList?titleNo=50399
     name = "anythingcomic-tapa"
     long_name = "Anything Comic (from Tapastic)"
     url = "http://tapastic.com/series/anything"
+    _categories = ("ANYTHING",)
 
 
 class UnearthedComicsTapastic(GenericTapasticComic):
