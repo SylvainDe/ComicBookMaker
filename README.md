@@ -77,6 +77,8 @@ Comics supported
  * [Ma vie est tout a fait fascinante (Bagieu)](https://www.penelope-jolicoeur.com)
  * [Banana Twinky](https://bananatwinky.tumblr.com)
  * [BarteNerds (from Tapastic)](https://tapastic.com/series/BarteNERDS)
+ * [Becks Comics](https://www.beckscomics.com)
+ * [Becks Comics (from Tapastic)](https://tapas.io/series/beckscomics)
  * [Jim Benton](http://www.gocomics.com/jim-benton-cartoons)
  * [Berkeley Mews](http://www.berkeleymews.com)
  * [Berkeley Mews (from GoComics)](http://www.gocomics.com/berkeley-mews)

@@ -646,6 +646,41 @@ class EveVelo(GenericNavigableComic):
         }
 
 
+class BecksComics(GenericNavigableComic):
+    """Class to retrieve Becks Comics."""
+    # Also on https://www.instagram.com/beckscomics/
+    # Also on https://tapas.io/series/beckscomics
+    name = "becks"
+    long_name = "Becks Comics"
+    url = "https://www.beckscomics.com"
+    _categories = ("BECKS",)
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find("li", class_="link-first").find("a")
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        li = last_soup.find("li", class_="link-next" if next_ else "link-prev")
+        return li.find("a") if li else None
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find("h1", class_="entry-title").string
+        date_str = soup.find("time", class_="entry-date")["datetime"]
+        author = soup.find("span", class_="author vcard").find("a").string
+        imgs = soup.find("div", class_="entry-content").find_all("img")
+        return {
+            "title": title,
+            "date": isoformat_to_date(date_str),
+            "author": author,
+            "img": [i["src"] for i in imgs],
+        }
+
+
 class Rall(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Ted Rall comics."""
 
@@ -6632,6 +6667,16 @@ class PtbdTapa(GenericTapasticComic):
     long_name = "Pretends to be drawing (from Tapastic)"
     url = "https://tapas.io/series/ptbd"
     _categories = ("PTBD",)
+
+
+class BecksComicsTapa(GenericTapasticComic):
+    """Class to retrieve Becks Comics."""
+    # Also on https://www.beckscomics.com
+    # Also on https://www.instagram.com/beckscomics/
+    name = "becks-tapa"
+    long_name = "Becks Comics (from Tapastic)"
+    url = "https://tapas.io/series/beckscomics"
+    _categories = ("BECKS",)
 
 
 class AbsurdoLapin(GenericNavigableComic):
