@@ -648,6 +648,7 @@ class EveVelo(GenericNavigableComic):
 
 class BecksComics(GenericNavigableComic):
     """Class to retrieve Becks Comics."""
+
     # Also on https://www.instagram.com/beckscomics/
     # Also on https://tapas.io/series/beckscomics
     name = "becks"
@@ -2518,6 +2519,7 @@ class RaeTheDoe(GenericListableComic):
 
 class HowDnsWorksComics(GenericListableComic):
     """Class to retrieve How DNS Works Comics."""
+
     name = "dns"
     long_name = "How DNS works"
     url = "https://howdns.works"
@@ -2548,6 +2550,7 @@ class HowDnsWorksComics(GenericListableComic):
 
 class HowHttpsWorksComics(GenericListableComic):
     """Class to retrieve How HTTPS Works Comics."""
+
     name = "https"
     long_name = "How HTTPS works"
     url = "https://howhttps.works"
@@ -6675,6 +6678,7 @@ class PtbdTapa(GenericTapasticComic):
 
 class BecksComicsTapa(GenericTapasticComic):
     """Class to retrieve Becks Comics."""
+
     # Also on https://www.beckscomics.com
     # Also on https://www.instagram.com/beckscomics/
     name = "becks-tapa"
