@@ -5516,7 +5516,7 @@ class SpfComics(GenericTumblrV1):
     """Class to retrieve SPF comics."""
 
     name = "spf"
-    long_name = "SPF Comics"""
+    long_name = "SPF Comics"
     url = "https://spfcomics.com"
 
 
