@@ -4137,7 +4137,7 @@ class ItsTheTieTumblr(GenericTumblrV1):
     _categories = ("TIE",)
 
 
-class OctopunsTumblr(GenericTumblrV1):
+class OctopunsTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Octopuns comics."""
 
     # Also on http://www.octopuns.net
@@ -4710,7 +4710,7 @@ class RobbieAndBobby(GenericTumblrV1):
     url = "http://robbieandbobby.tumblr.com"
 
 
-class ElectricBunnyComicTumblr(GenericTumblrV1):
+class ElectricBunnyComicTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Electric Bunny Comics."""
 
     # Also on http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell
@@ -4988,7 +4988,7 @@ class RockPaperCynicTumblr(GenericTumblrV1):
     url = "http://rockpapercynic.tumblr.com"
 
 
-class DeadlyPanelTumblr(GenericTumblrV1):
+class DeadlyPanelTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve Deadly Panel comics."""
 
     # Also on http://www.deadlypanel.com
@@ -5250,7 +5250,7 @@ class WeFlapsTumblr(GenericTumblrV1):
     url = "https://weflaps.tumblr.com"
 
 
-class TheseInsideJokesTumblr(GenericTumblrV1):
+class TheseInsideJokesTumblr(GenericDeletedComic, GenericTumblrV1):
     """Class to retrieve These Inside Jokes comics."""
 
     # Also on http://www.theseinsidejokes.com
