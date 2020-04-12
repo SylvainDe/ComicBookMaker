@@ -1932,25 +1932,15 @@ class BigFootJustice(GenericNavigableComic):
         return {"img": [i["src"] for i in imgs], "title": title}
 
 
-class RespawnComic(GenericNavigableComic):
+class RespawnComic(GenericDeletedComic):  # The website still exists but comics seem to be on Tapas now
     """Class to retrieve Respawn Comic."""
 
     # Also on https://respawncomic.tumblr.com
+    # Also on https://tapas.io/series/respawncomic
     name = "respawn"
     long_name = "Respawn Comic"
     url = "http://respawncomic.com "
     _categories = ("RESPAWN",)
-    get_navi_link = get_a_rel_next
-    get_first_comic_link = simulate_first_link
-    first_url = "http://respawncomic.com/comic/c0001/"
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find("meta", property="og:title")["content"]
-        author = soup.find("a", rel="author").string
-        imgs = soup.find_all("meta", property="og:image")
-        return {"title": title, "author": author, "img": [i["content"] for i in imgs]}
 
 
 class SafelyEndangered(GenericNavigableComic):
@@ -4497,9 +4487,11 @@ class RespawnComicTumblr(GenericTumblrV1):
     """Class to retrieve Respawn Comic."""
 
     # Also on http://respawncomic.com
+    # Also on https://tapas.io/series/respawncomic
     name = "respawn-tumblr"
     long_name = "Respawn Comic (from Tumblr)"
     url = "https://respawncomic.tumblr.com"
+    _categories = ("RESPAWN",)
 
 
 class ChrisHallbeckTumblr(GenericTumblrV1):
@@ -6656,6 +6648,17 @@ class BecksComicsTapa(GenericTapasticComic):
     long_name = "Becks Comics (from Tapastic)"
     url = "https://tapas.io/series/beckscomics"
     _categories = ("BECKS",)
+
+
+class RespawnComicTapa(GenericTapasticComic):
+    """Class to retrieve Respawn Comic."""
+
+    # Also on http://respawncomic.com
+    # Also on https://respawncomic.tumblr.com
+    name = "respawn-tapa"
+    long_name = "Respawn Comic (from Tapastic)"
+    url = "https://tapas.io/series/respawncomic"
+    _categories = ("RESPAWN",)
 
 
 class AbsurdoLapin(GenericNavigableComic):

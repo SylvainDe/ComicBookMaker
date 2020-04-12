@@ -341,6 +341,7 @@ Comics supported
  * [Gone Into Rapture](https://goneintorapture.com)
  * [Gone Into Rapture (from Tapastic)](http://tapastic.com/series/Goneintorapture)
  * [Respawn Comic](http://respawncomic.com )
+ * [Respawn Comic (from Tapastic)](https://tapas.io/series/respawncomic)
  * [Respawn Comic (from Tumblr)](https://respawncomic.tumblr.com)
  * [Robbie And Bobby (from Tumblr)](http://robbieandbobby.tumblr.com)
  * [Robospunk](https://robospunk.com)
