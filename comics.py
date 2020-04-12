@@ -2075,7 +2075,7 @@ class InvisibleBread(GenericListableComic):
     # Also on http://www.gocomics.com/invisible-bread
     name = "invisiblebread"
     long_name = "Invisible Bread"
-    url = "http://invisiblebread.com"
+    url = "https://invisiblebread.com"
 
     @classmethod
     def get_archive_elements(cls):
