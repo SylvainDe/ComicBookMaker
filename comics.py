@@ -5856,7 +5856,7 @@ class GarfieldGoComics(GenericGoComic):
     _categories = ("GARFIELD",)
 
 
-class DorrisMcGoComics(GenericGoComic):
+class DorrisMcGoComics(GenericDeletedComic, GenericGoComic):
     """Class to retrieve Dorris Mc Comics"""
 
     # Also on https://dorrismccomics.com
