@@ -781,7 +781,7 @@ class SpaceAvalanche(GenericNavigableComic):
 class ZenPencils(GenericNavigableComic):
     """Class to retrieve ZenPencils comics."""
 
-    # Also on http://zenpencils.tumblr.com
+    # Also on https://zenpencils.tumblr.com
     # Also on http://www.gocomics.com/zen-pencils
     name = "zenpencils"
     long_name = "Zen Pencils"
@@ -814,7 +814,7 @@ class ZenPencils(GenericNavigableComic):
 class ItsTheTie(GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
 
-    # Also on http://itsthetie.tumblr.com
+    # Also on https://itsthetie.tumblr.com
     # Also on https://tapastic.com/series/itsthetie
     name = "tie"
     long_name = "It's the tie"
@@ -1051,7 +1051,7 @@ class VictimsOfCircumsolar(GenericDeletedComic, GenericNavigableComic):
 class ThreeWordPhrase(GenericNavigableComic):
     """Class to retrieve Three Word Phrase comics."""
 
-    # Also on http://www.threewordphrase.tumblr.com
+    # Also on https://www.threewordphrase.tumblr.com
     name = "threeword"
     long_name = "Three Word Phrase"
     url = "http://threewordphrase.com"
@@ -1119,7 +1119,7 @@ class DeadlyPanel(
 class ImogenQuest(GenericNavigableComic):
     """Class to retrieve Imogen Quest comics."""
 
-    # Also on http://imoquest.tumblr.com
+    # Also on https://imoquest.tumblr.com
     # Also on https://www.gocomics.com/imogen-quest
     name = "imogen"
     long_name = "Imogen Quest"
@@ -1159,7 +1159,7 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
 
     # Also on http://www.gocomics.com/saturday-morning-breakfast-cereal
-    # Also on http://smbc-comics.tumblr.com
+    # Also on https://smbc-comics.tumblr.com
     name = "smbc"
     long_name = "Saturday Morning Breakfast Cereal"
     url = "http://www.smbc-comics.com"
@@ -1216,7 +1216,7 @@ class PerryBibleFellowship(GenericListableComic):  # Is now navigable too
 class Mercworks(GenericDeletedComic):  # Moved to Webtoons
     """Class to retrieve Mercworks comics."""
 
-    # Also on http://mercworks.tumblr.com
+    # Also on https://mercworks.tumblr.com
     # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
     # Also on https://tapastic.com/series/MercWorks
     name = "mercworks"
@@ -1907,7 +1907,7 @@ class JustSayEh(GenericDeletedComic, GenericNavigableComic):
 class MouseBearComedy(GenericComicNotWorking):  # Website has changed
     """Class to retrieve Mouse Bear Comedy comics."""
 
-    # Also on http://mousebearcomedy.tumblr.com
+    # Also on https://mousebearcomedy.tumblr.com
     name = "mousebear"
     long_name = "Mouse Bear Comedy"
     url = "http://www.mousebearcomedy.com/category/comics/"
@@ -2147,7 +2147,7 @@ class CompletelySeriousComics(GenericNavigableComic):
 class PoorlyDrawnLines(GenericComicNotWorking, GenericListableComic):
     """Class to retrieve Poorly Drawn Lines comics."""
 
-    # Also on http://pdlcomics.tumblr.com
+    # Also on https://pdlcomics.tumblr.com
     name = "poorlydrawn"
     long_name = "Poorly Drawn Lines"
     url = "https://www.poorlydrawnlines.com"
@@ -2350,7 +2350,7 @@ class RockPaperScissors(GenericNavigableComic):
 class FatAwesomeComics(GenericDeletedComic):
     """Class to retrieve Fat Awesome Comics."""
 
-    # Also on http://fatawesomecomedy.tumblr.com
+    # Also on https://fatawesomecomedy.tumblr.com
     name = "fatawesome"
     long_name = "Fat Awesome"
     url = "http://fatawesome.com/comics"
@@ -2756,7 +2756,7 @@ class TheAwkwardYeti(GenericNavigableComic):
     """Class to retrieve The Awkward Yeti comics."""
 
     # Also on http://www.gocomics.com/the-awkward-yeti
-    # Also on http://larstheyeti.tumblr.com
+    # Also on https://larstheyeti.tumblr.com
     # Also on https://tapastic.com/series/TheAwkwardYeti
     name = "yeti"
     long_name = "The Awkward Yeti"
@@ -3119,7 +3119,7 @@ class PainTrainComic(GenericNavigableComic):
 class MoonBeard(GenericNavigableComic):
     """Class to retrieve MoonBeard comics."""
 
-    # Also on http://squireseses.tumblr.com
+    # Also on https://squireseses.tumblr.com
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
     name = "moonbeard"
     long_name = "Moon Beard"
@@ -3591,7 +3591,7 @@ class MakeItStoopid(GenericDeletedComic, GenericNavigableComic):
 class OffTheLeashDog(GenericNavigableComic):
     """Class to retrieve Off The Leash Dog comics."""
 
-    # Also on http://rupertfawcettsdoggyblog.tumblr.com
+    # Also on https://rupertfawcettsdoggyblog.tumblr.com
     # Also on http://www.rupertfawcettcartoons.com
     name = "offtheleash"
     long_name = "Off The Leash Dog"
@@ -4098,7 +4098,7 @@ class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     # Also on http://www.smbc-comics.com
     name = "smbc-tumblr"
     long_name = "Saturday Morning Breakfast Cereal (from Tumblr)"
-    url = "http://smbc-comics.tumblr.com"
+    url = "https://smbc-comics.tumblr.com"
     _categories = ("SMBC",)
 
 
@@ -4115,7 +4115,7 @@ class IrwinCardozo(GenericTumblrV1):
 
     name = "irwinc"
     long_name = "Irwin Cardozo"
-    url = "http://irwincardozocomics.tumblr.com"
+    url = "https://irwincardozocomics.tumblr.com"
 
 
 class AccordingToDevin(GenericTumblrV1):
@@ -4123,7 +4123,7 @@ class AccordingToDevin(GenericTumblrV1):
 
     name = "devin"
     long_name = "According To Devin"
-    url = "http://accordingtodevin.tumblr.com"
+    url = "https://accordingtodevin.tumblr.com"
 
 
 class ItsTheTieTumblr(GenericTumblrV1):
@@ -4133,7 +4133,7 @@ class ItsTheTieTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/itsthetie
     name = "tie-tumblr"
     long_name = "It's the tie (from Tumblr)"
-    url = "http://itsthetie.tumblr.com"
+    url = "https://itsthetie.tumblr.com"
     _categories = ("TIE",)
 
 
@@ -4184,7 +4184,7 @@ class PieComic(GenericTumblrV1):
 
     name = "pie"
     long_name = "Pie Comic"
-    url = "http://piecomic.tumblr.com"
+    url = "https://piecomic.tumblr.com"
 
 
 class MrEthanDiamond(GenericTumblrV1):
@@ -4192,7 +4192,7 @@ class MrEthanDiamond(GenericTumblrV1):
 
     name = "diamond"
     long_name = "Mr Ethan Diamond"
-    url = "http://mrethandiamond.tumblr.com"
+    url = "https://mrethandiamond.tumblr.com"
 
 
 class Flocci(GenericTumblrV1):
@@ -4200,7 +4200,7 @@ class Flocci(GenericTumblrV1):
 
     name = "flocci"
     long_name = "floccinaucinihilipilification"
-    url = "http://floccinaucinihilipilificationa.tumblr.com"
+    url = "https://floccinaucinihilipilificationa.tumblr.com"
 
 
 class UpAndOut(GenericTumblrV1):
@@ -4209,7 +4209,7 @@ class UpAndOut(GenericTumblrV1):
     # Also on http://tapastic.com/series/UP-and-OUT
     name = "upandout"
     long_name = "Up And Out (from Tumblr)"
-    url = "http://upandoutcomic.tumblr.com"
+    url = "https://upandoutcomic.tumblr.com"
 
 
 class Pundemonium(GenericTumblrV1):
@@ -4217,7 +4217,7 @@ class Pundemonium(GenericTumblrV1):
 
     name = "pundemonium"
     long_name = "Pundemonium"
-    url = "http://monstika.tumblr.com"
+    url = "https://monstika.tumblr.com"
 
 
 class PoorlyDrawnLinesTumblr(GenericTumblrV1):
@@ -4226,7 +4226,7 @@ class PoorlyDrawnLinesTumblr(GenericTumblrV1):
     # Also on http://poorlydrawnlines.com
     name = "poorlydrawn-tumblr"
     long_name = "Poorly Drawn Lines (from Tumblr)"
-    url = "http://pdlcomics.tumblr.com"
+    url = "https://pdlcomics.tumblr.com"
     _categories = ("POORLYDRAWN",)
 
 
@@ -4243,7 +4243,7 @@ class PondScumComics(GenericTumblrV1):
 
     name = "pond"
     long_name = "Pond Scum"
-    url = "http://pondscumcomic.tumblr.com"
+    url = "https://pondscumcomic.tumblr.com"
 
 
 class MercworksTumblr(GenericTumblrV1):
@@ -4254,7 +4254,7 @@ class MercworksTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/MercWorks
     name = "mercworks-tumblr"
     long_name = "Mercworks (from Tumblr)"
-    url = "http://mercworks.tumblr.com"
+    url = "https://mercworks.tumblr.com"
     _categories = ("MERCWORKS",)
 
 
@@ -4276,7 +4276,7 @@ class VectorBelly(GenericTumblrV1):
     # Also on http://vectorbelly.com
     name = "vector"
     long_name = "Vector Belly"
-    url = "http://vectorbelly.tumblr.com"
+    url = "https://vectorbelly.tumblr.com"
 
 
 class GoneIntoRapture(GenericTumblrV1):
@@ -4295,7 +4295,7 @@ class TheOatmealTumblr(GenericTumblrV1):
     # Also on http://theoatmeal.com
     name = "oatmeal-tumblr"
     long_name = "The Oatmeal (from Tumblr)"
-    url = "http://oatmeal.tumblr.com"
+    url = "https://oatmeal.tumblr.com"
 
 
 class HeckIfIKnowComicsTumblr(GenericTumblrV1):
@@ -4312,7 +4312,7 @@ class MyJetPack(GenericTumblrV1):
 
     name = "jetpack"
     long_name = "My Jet Pack"
-    url = "http://myjetpack.tumblr.com"
+    url = "https://myjetpack.tumblr.com"
 
 
 class CheerUpEmoKidTumblr(GenericTumblrV1):
@@ -4331,7 +4331,7 @@ class ForLackOfABetterComic(GenericTumblrV1):
     # Also on http://forlackofabettercomic.com
     name = "lack"
     long_name = "For Lack Of A Better Comic"
-    url = "http://forlackofabettercomic.tumblr.com"
+    url = "https://forlackofabettercomic.tumblr.com"
 
 
 class ZenPencilsTumblr(GenericTumblrV1):
@@ -4341,7 +4341,7 @@ class ZenPencilsTumblr(GenericTumblrV1):
     # Also on http://www.gocomics.com/zen-pencils
     name = "zenpencils-tumblr"
     long_name = "Zen Pencils (from Tumblr)"
-    url = "http://zenpencils.tumblr.com"
+    url = "https://zenpencils.tumblr.com"
     _categories = ("ZENPENCILS",)
 
 
@@ -4351,7 +4351,7 @@ class ThreeWordPhraseTumblr(GenericTumblrV1):
     # Also on http://threewordphrase.com
     name = "threeword-tumblr"
     long_name = "Three Word Phrase (from Tumblr)"
-    url = "http://threewordphrase.tumblr.com"
+    url = "https://threewordphrase.tumblr.com"
 
 
 class TimeTrabbleTumblr(GenericTumblrV1):
@@ -4360,7 +4360,7 @@ class TimeTrabbleTumblr(GenericTumblrV1):
     # Also on http://timetrabble.com
     name = "timetrabble-tumblr"
     long_name = "Time Trabble (from Tumblr)"
-    url = "http://timetrabble.tumblr.com"
+    url = "https://timetrabble.tumblr.com"
 
 
 class SafelyEndangeredTumblr(GenericTumblrV1):
@@ -4378,7 +4378,7 @@ class MouseBearComedyTumblr(GenericTumblrV1):
     # Also on http://www.mousebearcomedy.com/category/comics/
     name = "mousebear-tumblr"
     long_name = "Mouse Bear Comedy (from Tumblr)"
-    url = "http://mousebearcomedy.tumblr.com"
+    url = "https://mousebearcomedy.tumblr.com"
 
 
 class BouletCorpTumblr(GenericTumblrV1):
@@ -4399,7 +4399,7 @@ class TheAwkwardYetiTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/TheAwkwardYeti
     name = "yeti-tumblr"
     long_name = "The Awkward Yeti (from Tumblr)"
-    url = "http://larstheyeti.tumblr.com"
+    url = "https://larstheyeti.tumblr.com"
     _categories = ("YETI",)
 
 
@@ -4418,7 +4418,7 @@ class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/Down-the-Upward-Spiral
     name = "spiral-tumblr"
     long_name = "Down the Upward Spiral (from Tumblr)"
-    url = "http://downtheupwardspiral.tumblr.com"
+    url = "https://downtheupwardspiral.tumblr.com"
 
 
 class AsPerUsualTumblr(GenericTumblrV1):
@@ -4427,7 +4427,7 @@ class AsPerUsualTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/AsPerUsual
     name = "usual-tumblr"
     long_name = "As Per Usual (from Tumblr)"
-    url = "http://as-per-usual.tumblr.com"
+    url = "https://as-per-usual.tumblr.com"
     _categories = ("DAMILEE",)
 
 
@@ -4439,7 +4439,7 @@ class HotComicsForCoolPeopleTumblr(GenericTumblrV1):
     # Also on http://hcfcp.com (links to tumblr)
     name = "hotcomics-tumblr"
     long_name = "Hot Comics For Cool People (from Tumblr)"
-    url = "http://hotcomicsforcoolpeople.tumblr.com"
+    url = "https://hotcomicsforcoolpeople.tumblr.com"
     _categories = ("DAMILEE",)
 
 
@@ -4460,7 +4460,7 @@ class JhallComicsTumblr(GenericTumblrV1):
     # Also on http://jhallcomics.com
     name = "jhall-tumblr"
     long_name = "Jhall Comics (from Tumblr)"
-    url = "http://jhallcomics.tumblr.com"
+    url = "https://jhallcomics.tumblr.com"
 
 
 class BerkeleyMewsTumblr(GenericTumblrV1):
@@ -4480,7 +4480,7 @@ class JoanCornellaTumblr(GenericTumblrV1):
     # Also on http://joancornella.net
     name = "cornella-tumblr"
     long_name = "Joan Cornella (from Tumblr)"
-    url = "http://cornellajoan.tumblr.com"
+    url = "https://cornellajoan.tumblr.com"
 
 
 class RespawnComicTumblr(GenericTumblrV1):
@@ -4521,7 +4521,7 @@ class PigeonGazetteTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/The-Pigeon-Gazette
     name = "pigeon-tumblr"
     long_name = "The Pigeon Gazette (from Tumblr)"
-    url = "http://thepigeongazette.tumblr.com"
+    url = "https://thepigeongazette.tumblr.com"
 
 
 class CancerOwl(GenericTumblrV1):
@@ -4530,7 +4530,7 @@ class CancerOwl(GenericTumblrV1):
     # Also on http://cancerowl.com
     name = "cancerowl-tumblr"
     long_name = "Cancer Owl (from Tumblr)"
-    url = "http://cancerowl.tumblr.com"
+    url = "https://cancerowl.tumblr.com"
 
 
 class FowlLanguageTumblr(GenericTumblrV1):
@@ -4541,7 +4541,7 @@ class FowlLanguageTumblr(GenericTumblrV1):
     # Also on http://www.gocomics.com/fowl-language
     name = "fowllanguage-tumblr"
     long_name = "Fowl Language Comics (from Tumblr)"
-    url = "http://fowllanguagecomics.tumblr.com"
+    url = "https://fowllanguagecomics.tumblr.com"
     _categories = ("FOWLLANGUAGE",)
 
 
@@ -4552,7 +4552,7 @@ class TheOdd1sOutTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/Theodd1sout
     name = "theodd-tumblr"
     long_name = "The Odd 1s Out (from Tumblr)"
-    url = "http://theodd1sout.tumblr.com"
+    url = "https://theodd1sout.tumblr.com"
 
 
 class TheUnderfoldTumblr(GenericTumblrV1):
@@ -4579,7 +4579,7 @@ class FatAwesomeComicsTumblr(GenericTumblrV1):
     # Also on http://fatawesome.com/comics
     name = "fatawesome-tumblr"
     long_name = "Fat Awesome (from Tumblr)"
-    url = "http://fatawesomecomedy.tumblr.com"
+    url = "https://fatawesomecomedy.tumblr.com"
 
 
 class TheWorldIsFlatTumblr(GenericTumblrV1):
@@ -4616,7 +4616,7 @@ class MoonBeardTumblr(GenericTumblrV1):
     # Also on http://www.webtoons.com/en/comedy/moon-beard/list?title_no=471
     name = "moonbeard-tumblr"
     long_name = "Moon Beard (from Tumblr)"
-    url = "http://squireseses.tumblr.com"
+    url = "https://squireseses.tumblr.com"
     _categories = ("MOONBEARD",)
 
 
@@ -4633,7 +4633,7 @@ class ClassicRandy(GenericTumblrV1):
 
     name = "randy"
     long_name = "Classic Randy"
-    url = "http://classicrandy.tumblr.com"
+    url = "https://classicrandy.tumblr.com"
 
 
 class DagssonTumblr(GenericTumblrV1):
@@ -4649,7 +4649,7 @@ class LinsEditionsTumblr(GenericTumblrV1):
     """Class to retrieve L.I.N.S. Editions comics."""
 
     # Also on https://linsedition.com
-    # Now on http://warandpeas.tumblr.com
+    # Now on https://warandpeas.tumblr.com
     name = "lins-tumblr"
     long_name = "L.I.N.S. Editions (from Tumblr)"
     url = "https://linscomics.tumblr.com"
@@ -4662,7 +4662,7 @@ class WarAndPeasTumblr(GenericTumblrV1):
     # Was on https://linscomics.tumblr.com
     name = "warandpeas-tumblr"
     long_name = "War And Peas (from Tumblr)"
-    url = "http://warandpeas.tumblr.com"
+    url = "https://warandpeas.tumblr.com"
     _categories = ("WARANDPEAS", "LINS")
 
 
@@ -4687,7 +4687,7 @@ class HMBlanc(GenericTumblrV1):
 
     name = "hmblanc"
     long_name = "HM Blanc"
-    url = "http://hmblanc.tumblr.com"
+    url = "https://hmblanc.tumblr.com"
 
 
 class TalesOfAbsurdityTumblr(GenericTumblrV1):
@@ -4707,7 +4707,7 @@ class RobbieAndBobby(GenericTumblrV1):
     # Also on http://robbieandbobby.com
     name = "robbie-tumblr"
     long_name = "Robbie And Bobby (from Tumblr)"
-    url = "http://robbieandbobby.tumblr.com"
+    url = "https://robbieandbobby.tumblr.com"
 
 
 class ElectricBunnyComicTumblr(GenericDeletedComic, GenericTumblrV1):
@@ -4753,7 +4753,7 @@ class CassandraCalinTumblr(GenericTumblrV1):
     # Also on https://tapas.io/series/CassandraComics
     name = "cassandra-tumblr"
     long_name = "Cassandra Calin (from Tumblr)"
-    url = "http://c-cassandra.tumblr.com"
+    url = "https://c-cassandra.tumblr.com"
 
 
 class DougWasTaken(GenericTumblrV1):
@@ -4777,7 +4777,7 @@ class CEstPasEnRegardantSesPompes(GenericTumblrV1):
 
     name = "cperspqccltt"
     long_name = "C Est Pas En Regardant Ses Pompes (...)"
-    url = "http://marcoandco.tumblr.com"
+    url = "https://marcoandco.tumblr.com"
 
 
 class TheGrohlTroll(GenericDeletedComic, GenericTumblrV1):
@@ -4811,7 +4811,7 @@ class HarkAVagrant(GenericTumblrV1):
     # Also on http://www.harkavagrant.com
     name = "hark-tumblr"
     long_name = "Hark A Vagrant (from Tumblr)"
-    url = "http://beatonna.tumblr.com"
+    url = "https://beatonna.tumblr.com"
 
 
 class OurSuperAdventureTumblr(GenericTumblrV1):
@@ -4822,7 +4822,7 @@ class OurSuperAdventureTumblr(GenericTumblrV1):
     # http://sarahgraley.com
     name = "superadventure-tumblr"
     long_name = "Our Super Adventure (from Tumblr)"
-    url = "http://sarahssketchbook.tumblr.com"
+    url = "https://sarahssketchbook.tumblr.com"
 
 
 class JakeLikesOnions(GenericTumblrV1):
@@ -4866,7 +4866,7 @@ class YesterdaysPopcornTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/Yesterdays-Popcorn
     name = "popcorn-tumblr"
     long_name = "Yesterday's Popcorn (from Tumblr)"
-    url = "http://yesterdayspopcorn.tumblr.com"
+    url = "https://yesterdayspopcorn.tumblr.com"
 
 
 class TwistedDoodles(GenericTumblrV1):
@@ -4946,7 +4946,7 @@ class VerbalVomitTumblr(GenericTumblrV1):
     # Also on http://www.verbal-vomit.com
     name = "vomit-tumblr"
     long_name = "Verbal Vomit (from Tumblr)"
-    url = "http://verbalvomits.tumblr.com"
+    url = "https://verbalvomits.tumblr.com"
 
 
 class LibraryComic(GenericTumblrV1):
@@ -4966,7 +4966,7 @@ class TizzyStitchBirdTumblr(GenericTumblrV1):
     # Also on http://www.webtoons.com/en/challenge/tizzy-stitchbird/list?title_no=50082
     name = "tizzy-tumblr"
     long_name = "Tizzy Stitch Bird (from Tumblr)"
-    url = "http://tizzystitchbird.tumblr.com"
+    url = "https://tizzystitchbird.tumblr.com"
 
 
 class VictimsOfCircumsolarTumblr(GenericTumblrV1):
@@ -4985,7 +4985,7 @@ class RockPaperCynicTumblr(GenericTumblrV1):
     # Also on https://tapastic.com/series/rockpapercynic
     name = "rpc-tumblr"
     long_name = "Rock Paper Cynic (from Tumblr)"
-    url = "http://rockpapercynic.tumblr.com"
+    url = "https://rockpapercynic.tumblr.com"
 
 
 class DeadlyPanelTumblr(GenericDeletedComic, GenericTumblrV1):
@@ -5031,7 +5031,7 @@ class OffTheLeashDogTumblr(GenericTumblrV1):
     # Also on http://www.rupertfawcettcartoons.com
     name = "offtheleash-tumblr"
     long_name = "Off The Leash Dog (from Tumblr)"
-    url = "http://rupertfawcettsdoggyblog.tumblr.com"
+    url = "https://rupertfawcettsdoggyblog.tumblr.com"
     _categories = ("FAWCETT",)
 
 
@@ -5042,7 +5042,7 @@ class ImogenQuestTumblr(GenericTumblrV1):
     # Also on https://www.gocomics.com/imogen-quest
     name = "imogen-tumblr"
     long_name = "Imogen Quest (from Tumblr)"
-    url = "http://imoquest.tumblr.com"
+    url = "https://imoquest.tumblr.com"
     _categories = ("IMOGEN",)
 
 
@@ -5084,7 +5084,7 @@ class IncidentalComicsTumblr(GenericTumblrV1):
     # Also on http://www.incidentalcomics.com
     name = "incidental-tumblr"
     long_name = "Incidental Comics (from Tumblr)"
-    url = "http://incidentalcomics.tumblr.com"
+    url = "https://incidentalcomics.tumblr.com"
 
 
 class APleasantWasteOfTimeTumblr(GenericTumblrV1):
@@ -5112,7 +5112,7 @@ class DeepDarkFearsTumblr(GenericTumblrV1):
 
     name = "deep-dark-fears-tumblr"
     long_name = "Deep Dark Fears (from Tumblr)"
-    url = "http://deep-dark-fears.tumblr.com"
+    url = "https://deep-dark-fears.tumblr.com"
 
 
 class DakotaMcDadzean(GenericTumblrV1):
@@ -5120,7 +5120,7 @@ class DakotaMcDadzean(GenericTumblrV1):
 
     name = "dakota"
     long_name = "Dakota McDadzean"
-    url = "http://dakotamcfadzean.tumblr.com"
+    url = "https://dakotamcfadzean.tumblr.com"
 
 
 class ExtraFabulousComicsTumblr(GenericTumblrV1):
@@ -5150,7 +5150,7 @@ class JamesOfNoTradesTumblr(GenericTumblrV1):
     # Also on https://tapas.io/series/James-of-No-Trades
     name = "jamesofnotrades-tumblr"
     long_name = "James Of No Trades (from Tumblr)"
-    url = "http://jamesfregan.tumblr.com"
+    url = "https://jamesfregan.tumblr.com"
     _categories = ("JAMESOFNOTRADES",)
 
 
@@ -5203,7 +5203,7 @@ class GemmaCorrellTumblr(GenericTumblrV1):
     # Also on http://www.gemmacorrell.com/portfolio/comics/
     name = "gemma-tumblr"
     long_name = "Gemma Correll (from Tumblr)"
-    url = "http://gemmacorrell.tumblr.com"
+    url = "https://gemmacorrell.tumblr.com"
 
 
 class RobotatertotTumblr(GenericTumblrV1):
@@ -5220,7 +5220,7 @@ class HuffyPenguin(GenericTumblrV1):
 
     name = "huffypenguin"
     long_name = "Huffy Penguin"
-    url = "http://huffy-penguin.tumblr.com"
+    url = "https://huffy-penguin.tumblr.com"
 
 
 class CowardlyComicsTumblr(GenericTumblrV1):
@@ -5230,7 +5230,7 @@ class CowardlyComicsTumblr(GenericTumblrV1):
     # Also on http://www.webtoons.com/en/challenge/cowardly-comics/list?title_no=65893
     name = "cowardly-tumblr"
     long_name = "Cowardly Comics (from Tumblr)"
-    url = "http://cowardlycomics.tumblr.com"
+    url = "https://cowardlycomics.tumblr.com"
 
 
 class Caw4hwTumblr(GenericTumblrV1):
@@ -5739,7 +5739,7 @@ class SandersenGocomic(GenericGoComic):
 class SaturdayMorningBreakfastCerealGoComic(GenericGoComic):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
 
-    # Also on http://smbc-comics.tumblr.com
+    # Also on https://smbc-comics.tumblr.com
     # Also on http://www.smbc-comics.com
     name = "smbc-goc"
     long_name = "Saturday Morning Breakfast Cereal (from GoComics)"
@@ -5769,7 +5769,7 @@ class RallGoComic(GenericGoComic):
 class TheAwkwardYetiGoComic(GenericGoComic):
     """Class to retrieve The Awkward Yeti comics."""
 
-    # Also on http://larstheyeti.tumblr.com
+    # Also on https://larstheyeti.tumblr.com
     # Also on http://theawkwardyeti.com
     # Also on https://tapastic.com/series/TheAwkwardYeti
     name = "yeti-goc"
@@ -5803,7 +5803,7 @@ class FowlLanguageGoComics(GenericGoComic):
 
     # Also on http://www.fowllanguagecomics.com
     # Also on http://tapastic.com/series/Fowl-Language-Comics
-    # Also on http://fowllanguagecomics.tumblr.com
+    # Also on https://fowllanguagecomics.tumblr.com
     name = "fowllanguage-goc"
     long_name = "Fowl Language Comics (from GoComics)"
     url = "http://www.gocomics.com/fowl-language"
@@ -5913,7 +5913,7 @@ class ImogenQuestGoComics(GenericGoComic):
     """Class to retrieve Imogen Quest comics."""
 
     # Also on http://imogenquest.net
-    # Also on http://imoquest.tumblr.com
+    # Also on https://imoquest.tumblr.com
     name = "imogen-goc"
     long_name = "Imogen Quest (from GoComics)"
     url = "https://www.gocomics.com/imogen-quest"
@@ -5983,7 +5983,7 @@ class FowlLanguageTapa(GenericTapasticComic):
     """Class to retrieve Fowl Language comics."""
 
     # Also on http://www.fowllanguagecomics.com
-    # Also on http://fowllanguagecomics.tumblr.com
+    # Also on https://fowllanguagecomics.tumblr.com
     # Also on http://www.gocomics.com/fowl-language
     name = "fowllanguage-tapa"
     long_name = "Fowl Language Comics (from Tapastic)"
@@ -6132,7 +6132,7 @@ class BigFootJusticeTapa(GenericTapasticComic):
 class UpAndOutTapa(GenericTapasticComic):
     """Class to retrieve Up & Out comics."""
 
-    # Also on http://upandoutcomic.tumblr.com
+    # Also on https://upandoutcomic.tumblr.com
     name = "upandout-tapa"
     long_name = "Up And Out (from Tapastic)"
     url = "http://tapastic.com/series/UP-and-OUT"
@@ -6171,7 +6171,7 @@ class TheAwkwardYetiTapa(GenericTapasticComic):
 
     # Also on http://www.gocomics.com/the-awkward-yeti
     # Also on http://theawkwardyeti.com
-    # Also on http://larstheyeti.tumblr.com
+    # Also on https://larstheyeti.tumblr.com
     name = "yeti-tapa"
     long_name = "The Awkward Yeti (from Tapastic)"
     url = "https://tapastic.com/series/TheAwkwardYeti"
@@ -6181,7 +6181,7 @@ class TheAwkwardYetiTapa(GenericTapasticComic):
 class AsPerUsualTapa(GenericTapasticComic):
     """Class to retrieve As Per Usual comics."""
 
-    # Also on http://as-per-usual.tumblr.com
+    # Also on https://as-per-usual.tumblr.com
     name = "usual-tapa"
     long_name = "As Per Usual (from Tapastic)"
     url = "https://tapastic.com/series/AsPerUsual"
@@ -6191,7 +6191,7 @@ class AsPerUsualTapa(GenericTapasticComic):
 class HotComicsForCoolPeopleTapa(GenericTapasticComic):
     """Class to retrieve Hot Comics For Cool People."""
 
-    # Also on http://hotcomicsforcoolpeople.tumblr.com
+    # Also on https://hotcomicsforcoolpeople.tumblr.com
     # Also on http://hotcomics.biz (links to tumblr)
     # Also on http://hcfcp.com (links to tumblr)
     name = "hotcomics-tapa"
@@ -6275,7 +6275,7 @@ class RandoWisTapa(GenericTapasticComic):
 class PigeonGazetteTapa(GenericTapasticComic):
     """Class to retrieve The Pigeon Gazette comics."""
 
-    # Also on http://thepigeongazette.tumblr.com
+    # Also on https://thepigeongazette.tumblr.com
     name = "pigeon-tapa"
     long_name = "The Pigeon Gazette (from Tapastic)"
     url = "https://tapastic.com/series/The-Pigeon-Gazette"
@@ -6285,7 +6285,7 @@ class TheOdd1sOutTapa(GenericTapasticComic):
     """Class to retrieve The Odd 1s Out comics."""
 
     # Also on http://theodd1sout.com
-    # Also on http://theodd1sout.tumblr.com
+    # Also on https://theodd1sout.tumblr.com
     name = "theodd-tapa"
     long_name = "The Odd 1s Out (from Tapastic)"
     url = "https://tapastic.com/series/Theodd1sout"
@@ -6353,7 +6353,7 @@ class CassandraCalinTapa(GenericTapasticComic):
     """Class to retrieve C. Cassandra comics."""
 
     # Also on http://cassandracalin.com
-    # Also on http://c-cassandra.tumblr.com
+    # Also on https://c-cassandra.tumblr.com
     name = "cassandra-tapa"
     long_name = "Cassandra Calin (from Tapastic)"
     url = "https://tapas.io/series/CassandraComics"
@@ -6372,7 +6372,7 @@ class YesterdaysPopcornTapastic(GenericTapasticComic):
     """Class to retrieve Yesterday's Popcorn comics."""
 
     # Also on http://www.yesterdayspopcorn.com
-    # Also on http://yesterdayspopcorn.tumblr.com
+    # Also on https://yesterdayspopcorn.tumblr.com
     name = "popcorn-tapa"
     long_name = "Yesterday's Popcorn (from Tapastic)"
     url = "https://tapastic.com/series/Yesterdays-Popcorn"
@@ -6382,7 +6382,7 @@ class OurSuperAdventureTapastic(GenericDeletedComic, GenericTapasticComic):
     """Class to retrieve Our Super Adventure comics."""
 
     # Also on http://www.oursuperadventure.com
-    # http://sarahssketchbook.tumblr.com
+    # https://sarahssketchbook.tumblr.com
     # http://sarahgraley.com
     name = "superadventure-tapastic"
     long_name = "Our Super Adventure (from Tapastic)"
@@ -6413,7 +6413,7 @@ class DownTheUpwardSpiralTapa(GenericTapasticComic):
     """Class to retrieve Down The Upward Spiral comics."""
 
     # Also on http://www.downtheupwardspiral.com
-    # Also on http://downtheupwardspiral.tumblr.com
+    # Also on https://downtheupwardspiral.tumblr.com
     name = "spiral-tapa"
     long_name = "Down the Upward Spiral (from Tapastic)"
     url = "https://tapastic.com/series/Down-the-Upward-Spiral"
@@ -6464,7 +6464,7 @@ class TizzyStitchBirdTapa(GenericTapasticComic):
     """Class to retrieve Tizzy Stitch Bird comics."""
 
     # Also on http://tizzystitchbird.com
-    # Also on http://tizzystitchbird.tumblr.com
+    # Also on https://tizzystitchbird.tumblr.com
     # Also on http://www.webtoons.com/en/challenge/tizzy-stitchbird/list?title_no=50082
     name = "tizzy-tapa"
     long_name = "Tizzy Stitch Bird (from Tapastic)"
@@ -6475,7 +6475,7 @@ class RockPaperCynicTapa(GenericTapasticComic):
     """Class to retrieve RockPaperCynic comics."""
 
     # Also on http://www.rockpapercynic.com
-    # Also on http://rockpapercynic.tumblr.com
+    # Also on https://rockpapercynic.tumblr.com
     name = "rpc-tapa"
     long_name = "Rock Paper Cynic (from Tapastic)"
     url = "https://tapastic.com/series/rockpapercynic"
@@ -6494,7 +6494,7 @@ class ItsTheTieTapa(GenericTapasticComic):
     """Class to retrieve It's the tie comics."""
 
     # Also on http://itsthetie.com
-    # Also on http://itsthetie.tumblr.com
+    # Also on https://itsthetie.tumblr.com
     name = "tie-tapa"
     long_name = "It's the tie (from Tapastic)"
     url = "https://tapastic.com/series/itsthetie"
@@ -6506,7 +6506,7 @@ class JamesOfNoTradesTapa(GenericTapasticComic):
 
     # Also on http://jamesofnotrades.com
     # Also on http://www.webtoons.com/en/challenge/james-of-no-trades/list?title_no=43422
-    # Also on http://jamesfregan.tumblr.com
+    # Also on https://jamesfregan.tumblr.com
     name = "jamesofnotrades-tapa"
     long_name = "James Of No Trades (from Tapastic)"
     url = "https://tapas.io/series/James-of-No-Trades"
@@ -6535,7 +6535,7 @@ class InYourFaceCakeTapa(GenericTapasticComic):
 class CowardlyComicsTapa(GenericTapasticComic):
     """Class to retrieve Cowardly Comics."""
 
-    # Also on http://cowardlycomics.tumblr.com
+    # Also on https://cowardlycomics.tumblr.com
     # Also on http://www.webtoons.com/en/challenge/cowardly-comics/list?title_no=65893
     name = "cowardly-tapa"
     long_name = "Cowardly Comics (from Tapastic)"
@@ -6621,7 +6621,7 @@ class MercworksTapa(GenericTapasticComic):
 
     # Also on http://mercworks.net
     # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
-    # Also on http://mercworks.tumblr.com
+    # Also on https://mercworks.tumblr.com
     name = "mercworks-tapa"
     long_name = "Mercworks (from Tapastic)"
     url = "https://tapastic.com/series/MercWorks"
