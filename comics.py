@@ -4009,7 +4009,7 @@ class GenericTumblrV1(GenericComic):
     @classmethod
     def get_comic_info(cls, post):
         """Get information about a particular comics."""
-        type_ = post["type"]
+        type_ = post["type"].lower()
         if type_ != "photo":
             return None
         tumblr_id = int(post["id"])
