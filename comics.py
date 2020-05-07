@@ -5963,7 +5963,9 @@ class GenericTapasticComic(GenericComic):
     def get_comic_info(cls, archive_elt):
         """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(archive_elt)
-        title = archive_elt.find("div", class_="info__title").string.strip()
+        info_title = archive_elt.find("div", class_="info__title")
+        title_raw = info_title.get_text()
+        title = title_raw.strip()
         episode_num = int(archive_elt["data-scene-number"])
         episode_id = int(archive_elt["data-id"])
         info = archive_elt.find("div", class_="info__tag").string
