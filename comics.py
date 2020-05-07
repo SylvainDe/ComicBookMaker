@@ -4089,7 +4089,6 @@ class GenericTumblrV1(GenericComic):
             for p in posts2.find_all("post"):
                 yield p
 
-
     @classmethod
     def get_posts(cls, last_comic):
         """Get posts using API."""
