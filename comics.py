@@ -3983,6 +3983,9 @@ class GenericTumblrV1(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for Tumblr comics."""
+        if not cls.check_last_comic(last_comic):
+            return []
+
         for p in reversed(cls.get_posts(last_comic)):
             comic = cls.get_comic_info(p)
             if comic is not None:
@@ -4060,14 +4063,10 @@ class GenericTumblrV1(GenericComic):
         return comic is not None and comic["tumblr-id"] == int(post["id"])
 
     @classmethod
-    def get_posts(cls, last_comic, nb_post_per_call=10):
-        """Get posts using API. nb_post_per_call is max 50.
+    def yield_posts(cls, nb_post_per_call=10):
+        """Yield posts using API. nb_post_per_call is max 50.
 
-        Posts are retrieved from newer to older as per the tumblr v1 api
-        but are returned in chronological order."""
-        if not cls.check_last_comic(last_comic):
-            return []
-
+        Posts are retrieved from newer to older as per the tumblr v1 api."""
         api_url = cls.get_api_url()
         soup = get_soup_at_url(api_url)
         posts = soup.find("posts")
@@ -4076,7 +4075,7 @@ class GenericTumblrV1(GenericComic):
                 "Could not get post info from url %s - problem with GDPR disclaimer?"
                 % api_url
             )
-            return []
+            return
 
         posts_acc = []
         start, total = int(posts["start"]), int(posts["total"])
@@ -4089,9 +4088,17 @@ class GenericTumblrV1(GenericComic):
             # This may happen and should be handled in the future
             assert total == total2, "%d != %d" % (total, total2)
             for p in posts2.find_all("post"):
-                if cls.post_corresponds_to_comic(p, last_comic):
-                    return posts_acc
-                posts_acc.append(p)
+                yield p
+
+
+    @classmethod
+    def get_posts(cls, last_comic):
+        """Get posts using API.."""
+        posts_acc = []
+        for p in cls.yield_posts():
+            if cls.post_corresponds_to_comic(p, last_comic):
+                return posts_acc
+            posts_acc.append(p)
         if last_comic is None:
             return posts_acc
         print("Did not find %s : there might be a problem" % last_comic["url"])
