@@ -53,7 +53,7 @@ Here is the little to know before contributing :
 Comics supported
 ----------------
  * [1111 Comics](http://www.1111comics.me)
- * [1111 Comics (from Tapastic)](https://tapastic.com/series/1111-Comics)
+ * [1111 Comics (from Tapastic)](http://tapastic.com/series/1111-Comics)
  * [1111 Comics (from Tumblr)](https://comics1111.tumblr.com)
  * [3MB Comics](https://www.3mbcomics.com)
  * [Abstruse Goose](http://abstrusegoose.com)
@@ -354,7 +354,7 @@ Comics supported
  * [Rock Paper Scissors](http://rps-comics.com)
  * [Rustled Jimmies](http://rustledjimmies.net)
  * [Sarah Andersen (from GoComics)](http://www.gocomics.com/sarahs-scribbles)
- * [Sarah Andersen (from Tapastic)](http://tapastic.com/series/Doodle-Time)
+ * [Sarah Andersen (from Tapastic)](https://tapas.io/series/Doodle-Time)
  * [Scandinavia And The World](http://satwcomic.com)
  * [Savage Chicken (from GoComics)](http://www.gocomics.com/savage-chickens)
  * [Sephko](https://sephko.tumblr.com)

@@ -4077,7 +4077,6 @@ class GenericTumblrV1(GenericComic):
             )
             return
 
-        posts_acc = []
         start, total = int(posts["start"]), int(posts["total"])
         assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
@@ -4093,7 +4092,7 @@ class GenericTumblrV1(GenericComic):
 
     @classmethod
     def get_posts(cls, last_comic):
-        """Get posts using API.."""
+        """Get posts using API."""
         posts_acc = []
         for p in cls.yield_posts():
             if cls.post_corresponds_to_comic(p, last_comic):
@@ -5945,43 +5944,84 @@ class PicturesInBoxesGoComics(GenericGoComic):
     _categories = ("PICTURESINBOXES",)
 
 
-class GenericTapasticComic(GenericComicNotWorking, GenericListableComic):  # get_archive_elements finds nothing
+class GenericTapasticComic(GenericComic):
     """Generic class to handle the logic common to comics from tapastic.com."""
 
     _categories = ("TAPASTIC",)
 
     @classmethod
-    def get_comic_info(cls, soup, archive_elt):
+    def get_next_comic(cls, last_comic):
+        """Generic implementation of get_next_comic for Tapastic comics."""
+        if not cls.check_last_comic(last_comic):
+            return []
+
+        for e in reversed(cls.get_archive_elements(last_comic)):
+            comic = cls.get_comic_info(e)
+            if comic is not None:
+                yield comic
+
+    @classmethod
+    def get_comic_info(cls, archive_elt):
         """Get information about a particular comics."""
-        timestamp = int(archive_elt["publishDate"]) / 1000.0
-        imgs = soup.find_all("img", class_="art-image")
-        if not imgs:
-            # print("Comic %s is being uploaded, retry later" % cls.get_url_from_archive_element(archive_elt))
-            return None
+        url = cls.get_url_from_archive_element(archive_elt)
+        title = archive_elt.find("div", class_="info__title").string.strip()
+        episode_num = int(archive_elt["data-scene-number"])
+        episode_id = int(archive_elt["data-id"])
+        info = archive_elt.find("div", class_="info__tag").string
+        date, sep, views = info.partition("&bullet")
+        views = views.strip()
+        soup = get_soup_at_url(url)
+        imgs = soup.find_all("img", class_="content__img js-lazy")
         assert len(imgs) > 0, imgs
         return {
-            "date": datetime.datetime.fromtimestamp(timestamp).date(),
-            "img": [i["src"] for i in imgs],
-            "title": archive_elt["title"],
+            "url": url,
+            "date": string_to_date(date.strip(), "%b %d, %Y"),
+            "img": [i["data-src"] for i in imgs],
+            "title": title,
+            "episode_num": episode_num,
+            "episode_id": episode_id,
         }
 
     @classmethod
-    def get_url_from_archive_element(cls, archive_elt):
-        return "http://tapastic.com/episode/" + str(archive_elt["id"])
+    def check_last_comic(cls, last_comic):
+        """Check that last comic seems to be valid."""
+        return True
 
     @classmethod
-    def get_archive_elements(cls):
-        pref, suff = "episodeList : ", ","
-        # Information is stored in the javascript part
-        # I don't know the clean way to get it so this is the ugly way.
-        string = [
-            s[len(pref):-len(suff)]
-            for s in (
-                s.decode("utf-8").strip() for s in urlopen_wrapper(cls.url).readlines()
-            )
-            if s.startswith(pref) and s.endswith(suff)
-        ][0]
-        return json.loads(string)
+    def archive_element_corresponds_to_comic(cls, elt, comic):
+        return comic is not None and comic["url"] == cls.get_url_from_archive_element(elt)
+
+    @classmethod
+    def yield_archive_elements(cls):
+        """Yield posts."""
+        url = cls.url
+        while True:
+            soup = get_soup_at_url(url)
+            for li in soup.find_all("li", class_="content__item"):
+                a = li.find("a")
+                assert a
+                yield a
+            next_button = soup.find("a", class_="paging__button paging__button--img paging__button--next g-act")
+            if next_button is None:
+                return
+            url = urljoin_wrapper(url, next_button['href'])
+
+    @classmethod
+    def get_archive_elements(cls, last_comic):
+        """Get archive elements."""
+        elts_acc = []
+        for elt in cls.yield_archive_elements():
+            if cls.archive_element_corresponds_to_comic(elt, last_comic):
+                return elts_acc
+            elts_acc.append(elt)
+        if last_comic is None:
+            return elts_acc
+        print("Did not find %s : there might be a problem" % last_comic["url"])
+        return []
+
+    @classmethod
+    def get_url_from_archive_element(cls, archive_elt):
+        return urljoin_wrapper(cls.url, archive_elt["href"])
 
 
 class VegetablesForDessert(GenericTapasticComic):
@@ -6028,7 +6068,7 @@ class SandersenTapastic(GenericTapasticComic):
     # Also on http://www.gocomics.com/sarahs-scribbles
     name = "sandersen-tapa"
     long_name = "Sarah Andersen (from Tapastic)"
-    url = "http://tapastic.com/series/Doodle-Time"
+    url = "https://tapas.io/series/Doodle-Time"
 
 
 class TubeyToonsTapastic(GenericTapasticComic):
@@ -6221,7 +6261,7 @@ class OneOneOneOneComicTapa(GenericTapasticComic):
     # Also on https://comics1111.tumblr.com
     name = "1111-tapa"
     long_name = "1111 Comics (from Tapastic)"
-    url = "https://tapastic.com/series/1111-Comics"
+    url = "http://tapastic.com/series/1111-Comics"
     _categories = ("ONEONEONEONE",)
 
 
