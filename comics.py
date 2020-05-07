@@ -3983,7 +3983,7 @@ class GenericTumblrV1(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for Tumblr comics."""
-        for p in cls.get_posts(last_comic):
+        for p in reversed(cls.get_posts(last_comic)):
             comic = cls.get_comic_info(p)
             if comic is not None:
                 yield comic
@@ -3993,10 +3993,6 @@ class GenericTumblrV1(GenericComic):
         if not url.startswith(cls.url):
             print("url '%s' does not start with '%s'" % (url, cls.url))
         return url
-
-    @classmethod
-    def get_url_from_post(cls, post):
-        return cls.check_url(post["url"])
 
     @classmethod
     def get_api_url(cls):
@@ -4024,7 +4020,7 @@ class GenericTumblrV1(GenericComic):
         # Images are in multiple resolutions - taking the first one
         imgs = [photo.find("photo-url") for photo in photo_tags]
         return {
-            "url": cls.get_url_from_post(post),
+            "url": cls.check_url(post["url"]),
             "url2": post["url-with-slug"],
             "date": datetime.datetime.fromtimestamp(int(post["unix-timestamp"])).date(),
             "title": title,
@@ -4035,20 +4031,15 @@ class GenericTumblrV1(GenericComic):
         }
 
     @classmethod
-    def get_posts(cls, last_comic, nb_post_per_call=10):
-        """Get posts using API. nb_post_per_call is max 50.
-
-        Posts are retrieved from newer to older as per the tumblr v1 api
-        but are returned in chronological order."""
-        waiting_for_id = last_comic["tumblr-id"] if last_comic else None
-        posts_acc = []
+    def check_last_comic(cls, last_comic):
+        """Check that last comic seems to be valid."""
+        # Sometimes, tumblr posts are deleted. When previous post is deleted, we
+        # might end up spending a lot of time looking for something that
+        # doesn't exist. Failing early and clearly might be a better option.
         if last_comic is not None:
-            # cls.check_url(last_comic['url'])
             cls.check_url(last_comic["api_url"])
-            # Sometimes, tumblr posts are deleted. When previous post is deleted, we
-            # might end up spending a lot of time looking for something that
-            # doesn't exist. Failing early and clearly might be a better option.
-            last_api_url = cls.get_api_url_for_id(waiting_for_id)
+            last_id = last_comic["tumblr-id"]
+            last_api_url = cls.get_api_url_for_id(last_id)
             try:
                 get_soup_at_url(last_api_url)
             except urllib.error.HTTPError:
@@ -4061,7 +4052,22 @@ class GenericTumblrV1(GenericComic):
                         "Did not find previous post %s : it might have been deleted"
                         % last_api_url
                     )
-                return reversed(posts_acc)
+                return False
+        return True
+
+    @classmethod
+    def post_corresponds_to_comic(cls, post, comic):
+        return comic is not None and comic["tumblr-id"] == int(post["id"])
+
+    @classmethod
+    def get_posts(cls, last_comic, nb_post_per_call=10):
+        """Get posts using API. nb_post_per_call is max 50.
+
+        Posts are retrieved from newer to older as per the tumblr v1 api
+        but are returned in chronological order."""
+        if not cls.check_last_comic(last_comic):
+            return []
+
         api_url = cls.get_api_url()
         soup = get_soup_at_url(api_url)
         posts = soup.find("posts")
@@ -4071,6 +4077,8 @@ class GenericTumblrV1(GenericComic):
                 % api_url
             )
             return []
+
+        posts_acc = []
         start, total = int(posts["start"]), int(posts["total"])
         assert start == 0
         for starting_num in range(0, total, nb_post_per_call):
@@ -4081,13 +4089,12 @@ class GenericTumblrV1(GenericComic):
             # This may happen and should be handled in the future
             assert total == total2, "%d != %d" % (total, total2)
             for p in posts2.find_all("post"):
-                tumblr_id = int(p["id"])
-                if waiting_for_id and waiting_for_id == tumblr_id:
-                    return reversed(posts_acc)
+                if cls.post_corresponds_to_comic(p, last_comic):
+                    return posts_acc
                 posts_acc.append(p)
-        if waiting_for_id is None:
-            return reversed(posts_acc)
-        print("Did not find %s : there might be a problem" % waiting_for_id)
+        if last_comic is None:
+            return posts_acc
+        print("Did not find %s : there might be a problem" % last_comic["url"])
         return []
 
 
