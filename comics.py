@@ -1887,7 +1887,7 @@ class WarehouseComic(GenericNavigableComic):
 class JustSayEh(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Just Say Eh comics."""
 
-    # Also on http//tapastic.com/series/Just-Say-Eh
+    # Also on https://tapas.io/series/Just-Say-Eh
     name = "justsayeh"
     long_name = "Just Say Eh"
     url = "http://www.justsayeh.com"
@@ -5943,14 +5943,14 @@ class PicturesInBoxesGoComics(GenericGoComic):
     _categories = ("PICTURESINBOXES",)
 
 
-class GenericTapasticComic(GenericComic):
-    """Generic class to handle the logic common to comics from tapastic.com."""
+class GenericTapasComic(GenericComic):
+    """Generic class to handle the logic common to comics from https://tapas.io ."""
 
-    _categories = ("TAPASTIC",)
+    _categories = ("TAPAS",)
 
     @classmethod
     def get_next_comic(cls, last_comic):
-        """Generic implementation of get_next_comic for Tapastic comics."""
+        """Generic implementation of get_next_comic for Tapas comics."""
         if not cls.check_last_comic(last_comic):
             return []
 
@@ -6025,7 +6025,7 @@ class GenericTapasticComic(GenericComic):
         return urljoin_wrapper(cls.url, archive_elt["href"])
 
 
-class VegetablesForDessert(GenericTapasticComic):
+class VegetablesForDessert(GenericTapasComic):
     """Class to retrieve Vegetables For Dessert comics."""
 
     # Also on http://vegetablesfordessert.tumblr.com
@@ -6034,19 +6034,19 @@ class VegetablesForDessert(GenericTapasticComic):
     url = "https://tapas.io/series/vegetablesfordessert"
 
 
-class FowlLanguageTapa(GenericTapasticComic):
+class FowlLanguageTapas(GenericTapasComic):
     """Class to retrieve Fowl Language comics."""
 
     # Also on http://www.fowllanguagecomics.com
     # Also on https://fowllanguagecomics.tumblr.com
     # Also on http://www.gocomics.com/fowl-language
     name = "fowllanguage-tapa"
-    long_name = "Fowl Language Comics (from Tapastic)"
+    long_name = "Fowl Language Comics (from Tapas.io)"
     url = "https://tapas.io/series/Fowl-Language-Comics"
     _categories = ("FOWLLANGUAGE",)
 
 
-class OscillatingProfundities(GenericTapasticComic):
+class OscillatingProfundities(GenericTapasComic):
     """Class to retrieve Oscillating Profundities comics."""
 
     name = "oscillating"
@@ -6054,7 +6054,7 @@ class OscillatingProfundities(GenericTapasticComic):
     url = "https://tapas.io/series/oscillatingprofundities"
 
 
-class ZnoflatsComics(GenericTapasticComic):
+class ZnoflatsComics(GenericTapasComic):
     """Class to retrieve Znoflats comics."""
 
     name = "znoflats"
@@ -6062,359 +6062,359 @@ class ZnoflatsComics(GenericTapasticComic):
     url = "https://tapas.io/series/Znoflats-Comics"
 
 
-class SandersenTapastic(GenericTapasticComic):
+class SandersenTapas(GenericTapasComic):
     """Class to retrieve Sarah Andersen comics."""
 
     # Also on http://sarahcandersen.com
     # Also on http://www.gocomics.com/sarahs-scribbles
     name = "sandersen-tapa"
-    long_name = "Sarah Andersen (from Tapastic)"
+    long_name = "Sarah Andersen (from Tapas.io)"
     url = "https://tapas.io/series/Doodle-Time"
 
 
-class TubeyToonsTapastic(GenericTapasticComic):
+class TubeyToonsTapas(GenericTapasComic):
     """Class to retrieve TubeyToons comics."""
 
     # Also on http://tubeytoons.com
     # Also on https://tubeytoons.tumblr.com
     name = "tubeytoons-tapa"
-    long_name = "Tubey Toons (from Tapastic)"
+    long_name = "Tubey Toons (from Tapas.io)"
     url = "https://tapas.io/series/Tubey-Toons"
     _categories = ("TUNEYTOONS",)
 
 
-class AnythingComicTapastic(GenericTapasticComic):
+class AnythingComicTapas(GenericTapasComic):
     """Class to retrieve Anything Comics."""
 
     # Also on http://www.anythingcomic.com
     # Also on https://www.smackjeeves.com/discover/articleList?titleNo=50399
     name = "anythingcomic-tapa"
-    long_name = "Anything Comic (from Tapastic)"
+    long_name = "Anything Comic (from Tapas.io)"
     url = "https://tapas.io/series/anything"
     _categories = ("ANYTHING",)
 
 
-class UnearthedComicsTapastic(GenericTapasticComic):
+class UnearthedComicsTapas(GenericTapasComic):
     """Class to retrieve Unearthed comics."""
 
     # Also on http://unearthedcomics.com
     # Also on https://unearthedcomics.tumblr.com
     name = "unearthed-tapa"
-    long_name = "Unearthed Comics (from Tapastic)"
+    long_name = "Unearthed Comics (from Tapas.io)"
     url = "https://tapas.io/series/UnearthedComics"
     _categories = ("UNEARTHED",)
 
 
-class EverythingsStupidTapastic(GenericTapasticComic):
+class EverythingsStupidTapas(GenericTapasComic):
     """Class to retrieve Everything's stupid Comics."""
 
     # Also on http://www.webtoons.com/en/challenge/everythings-stupid/list?title_no=14591
     # Also on http://everythingsstupid.net
     name = "stupid-tapa"
-    long_name = "Everything's Stupid (from Tapastic)"
+    long_name = "Everything's Stupid (from Tapas.io)"
     url = "https://tapas.io/series/EverythingsStupid"
 
 
-class JustSayEhTapastic(GenericTapasticComic):
+class JustSayEhTapas(GenericTapasComic):
     """Class to retrieve Just Say Eh comics."""
 
     # Also on http://www.justsayeh.com
     name = "justsayeh-tapa"
-    long_name = "Just Say Eh (from Tapastic)"
+    long_name = "Just Say Eh (from Tapas.io)"
     url = "https://tapas.io/series/Just-Say-Eh"
 
 
-class ThorsThundershackTapastic(GenericTapasticComic):
+class ThorsThundershackTapas(GenericTapasComic):
     """Class to retrieve Thor's Thundershack comics."""
 
     # Also on http://www.thorsthundershack.com
     name = "thor-tapa"
-    long_name = "Thor's Thundershack (from Tapastic)"
+    long_name = "Thor's Thundershack (from Tapas.io)"
     url = "https://tapas.io/series/Thors-Thundershac"
     _categories = ("THOR",)
 
 
-class OwlTurdTapastic(GenericTapasticComic):
+class OwlTurdTapas(GenericTapasComic):
     """Class to retrieve Owl Turd / Shen comix."""
 
     # Also on http://shencomix.com
     # Also on http://shencomix.tumblr.com
     # Also on https://www.gocomics.com/shen-comix
     name = "owlturd-tapa"
-    long_name = "Owl Turd / Shen Comix (from Tapastic)"
+    long_name = "Owl Turd / Shen Comix (from Tapas.io)"
     url = "https://tapas.io/series/Shen-Comix"
     _categories = ("OWLTURD", "SHENCOMIX")
 
 
-class GoneIntoRaptureTapastic(GenericTapasticComic):
+class GoneIntoRaptureTapas(GenericTapasComic):
     """Class to retrieve Gone Into Rapture comics."""
 
     # Also on http://goneintorapture.tumblr.com
     # Also on https://goneintorapture.com
     name = "rapture-tapa"
-    long_name = "Gone Into Rapture (from Tapastic)"
+    long_name = "Gone Into Rapture (from Tapas.io)"
     url = "https://tapas.io/series/Goneintorapture"
 
 
-class HeckIfIKnowComicsTapa(GenericTapasticComic):
+class HeckIfIKnowComicsTapas(GenericTapasComic):
     """Class to retrieve Heck If I Know Comics."""
 
     # Also on https://heckifiknowcomics.com
     name = "heck-tapa"
-    long_name = "Heck if I Know comics (from Tapastic)"
+    long_name = "Heck if I Know comics (from Tapas.io)"
     url = "https://tapas.io/series/Regular"
 
 
-class CheerUpEmoKidTapa(GenericTapasticComic):
+class CheerUpEmoKidTapas(GenericTapasComic):
     """Class to retrieve CheerUpEmoKid comics."""
 
     # Also on http://www.cheerupemokid.com
     # Also on https://enzocomics.tumblr.com
     name = "cuek-tapa"
-    long_name = "Cheer Up Emo Kid (from Tapastic)"
+    long_name = "Cheer Up Emo Kid (from Tapas.io)"
     url = "https://tapas.io/series/CUEK"
 
 
-class BigFootJusticeTapa(GenericTapasticComic):
+class BigFootJusticeTapas(GenericTapasComic):
     """Class to retrieve Big Foot Justice comics."""
 
     # Also on http://bigfootjustice.com
     name = "bigfoot-tapa"
-    long_name = "Big Foot Justice (from Tapastic)"
+    long_name = "Big Foot Justice (from Tapas.io)"
     url = "https://tapas.io/series/bigfoot-justice"
 
 
-class UpAndOutTapa(GenericTapasticComic):
+class UpAndOutTapas(GenericTapasComic):
     """Class to retrieve Up & Out comics."""
 
     # Also on https://upandoutcomic.tumblr.com
     name = "upandout-tapa"
-    long_name = "Up And Out (from Tapastic)"
+    long_name = "Up And Out (from Tapas.io)"
     url = "https://tapas.io/series/UP-and-OUT"
 
 
-class ToonHoleTapa(GenericTapasticComic):
+class ToonHoleTapas(GenericTapasComic):
     """Class to retrieve Toon Holes comics."""
 
     # Also on http://www.toonhole.com
     name = "toonhole-tapa"
-    long_name = "Toon Hole (from Tapastic)"
+    long_name = "Toon Hole (from Tapas.io)"
     url = "https://tapas.io/series/TOONHOLE"
 
 
-class AngryAtNothingTapa(GenericTapasticComic):
+class AngryAtNothingTapas(GenericTapasComic):
     """Class to retrieve Angry at Nothing comics."""
 
     # Also on http://www.angryatnothing.net
     # Also on https://angryatnothing.tumblr.com
     name = "angry-tapa"
-    long_name = "Angry At Nothing (from Tapastic)"
+    long_name = "Angry At Nothing (from Tapas.io)"
     url = "https://tapas.io/series/Comics-yeah-definitely-comics-"
 
 
-class LeleozTapa(GenericTapasticComic):
+class LeleozTapas(GenericTapasComic):
     """Class to retrieve Leleoz comics."""
 
     # Also on http://leleozcomics.tumblr.com
     name = "leleoz-tapa"
-    long_name = "Leleoz (from Tapastic)"
+    long_name = "Leleoz (from Tapas.io)"
     url = "https://tapas.io/series/Leleoz"
 
 
-class TheAwkwardYetiTapa(GenericTapasticComic):
+class TheAwkwardYetiTapas(GenericTapasComic):
     """Class to retrieve The Awkward Yeti comics."""
 
     # Also on http://www.gocomics.com/the-awkward-yeti
     # Also on http://theawkwardyeti.com
     # Also on https://larstheyeti.tumblr.com
     name = "yeti-tapa"
-    long_name = "The Awkward Yeti (from Tapastic)"
+    long_name = "The Awkward Yeti (from Tapas.io)"
     url = "https://tapas.io/series/TheAwkwardYeti"
     _categories = ("YETI",)
 
 
-class AsPerUsualTapa(GenericTapasticComic):
+class AsPerUsualTapas(GenericTapasComic):
     """Class to retrieve As Per Usual comics."""
 
     # Also on https://as-per-usual.tumblr.com
     name = "usual-tapa"
-    long_name = "As Per Usual (from Tapastic)"
+    long_name = "As Per Usual (from Tapas.io)"
     url = "https://tapas.io/series/AsPerUsual"
     categories = ("DAMILEE",)
 
 
-class HotComicsForCoolPeopleTapa(GenericTapasticComic):
+class HotComicsForCoolPeopleTapas(GenericTapasComic):
     """Class to retrieve Hot Comics For Cool People."""
 
     # Also on https://hotcomicsforcoolpeople.tumblr.com
     # Also on http://hotcomics.biz (links to tumblr)
     # Also on http://hcfcp.com (links to tumblr)
     name = "hotcomics-tapa"
-    long_name = "Hot Comics For Cool People (from Tapastic)"
+    long_name = "Hot Comics For Cool People (from Tapas.io)"
     url = "https://tapas.io/series/Hot-Comics-For-Cool-People"
     _categories = ("DAMILEE",)
 
 
-class OneOneOneOneComicTapa(GenericTapasticComic):
+class OneOneOneOneComicTapas(GenericTapasComic):
     """Class to retrieve 1111 Comics."""
 
     # Also on http://www.1111comics.me
     # Also on https://comics1111.tumblr.com
     name = "1111-tapa"
-    long_name = "1111 Comics (from Tapastic)"
+    long_name = "1111 Comics (from Tapas.io)"
     url = "https://tapas.io/series/1111-Comics"
     _categories = ("ONEONEONEONE",)
 
 
-class TumbleDryTapa(GenericTapasticComic):
+class TumbleDryTapas(GenericTapasComic):
     """Class to retrieve Tumble Dry comics."""
 
     # Also on http://tumbledrycomics.com
     name = "tumbledry-tapa"
-    long_name = "Tumble Dry (from Tapastic)"
+    long_name = "Tumble Dry (from Tapas.io)"
     url = "https://tapas.io/series/TumbleDryComics"
 
 
-class DeadlyPanelTapa(GenericTapasticComic):
+class DeadlyPanelTapas(GenericTapasComic):
     """Class to retrieve Deadly Panel comics."""
 
     # Also on http://www.deadlypanel.com
     # Also on https://deadlypanel.tumblr.com
     name = "deadly-tapa"
-    long_name = "Deadly Panel (from Tapastic)"
+    long_name = "Deadly Panel (from Tapas.io)"
     url = "https://tapas.io/series/deadlypanel"
 
 
-class ChrisHallbeckMaxiTapa(GenericTapasticComic):
+class ChrisHallbeckMaxiTapas(GenericTapasComic):
     """Class to retrieve Chris Hallbeck comics."""
 
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://maximumble.com
     name = "hallbeckmaxi-tapa"
-    long_name = "Chris Hallback - Maximumble (from Tapastic)"
+    long_name = "Chris Hallback - Maximumble (from Tapas.io)"
     url = "https://tapas.io/series/Maximumble"
     _categories = ("HALLBACK",)
 
 
-class ChrisHallbeckMiniTapa(GenericDeletedComic, GenericTapasticComic):
+class ChrisHallbeckMiniTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve Chris Hallbeck comics."""
 
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://minimumble.com
     name = "hallbeckmini-tapa"
-    long_name = "Chris Hallback - Minimumble (from Tapastic)"
+    long_name = "Chris Hallback - Minimumble (from Tapas.io)"
     url = "https://tapas.io/series/Minimumble"
     _categories = ("HALLBACK",)
 
 
-class ChrisHallbeckBiffTapa(GenericDeletedComic, GenericTapasticComic):
+class ChrisHallbeckBiffTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve Chris Hallbeck comics."""
 
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
     name = "hallbeckbiff-tapa"
-    long_name = "Chris Hallback - The Book of Biff (from Tapastic)"
+    long_name = "Chris Hallback - The Book of Biff (from Tapas.io)"
     url = "https://tapas.io/series/Biff"
     _categories = ("HALLBACK",)
 
 
-class RandoWisTapa(GenericTapasticComic):
+class RandoWisTapas(GenericTapasComic):
     """Class to retrieve RandoWis comics."""
 
     # Also on https://randowis.com
     name = "randowis-tapa"
-    long_name = "RandoWis (from Tapastic)"
+    long_name = "RandoWis (from Tapas.io)"
     url = "https://tapas.io/series/RandoWis"
 
 
-class PigeonGazetteTapa(GenericTapasticComic):
+class PigeonGazetteTapas(GenericTapasComic):
     """Class to retrieve The Pigeon Gazette comics."""
 
     # Also on https://thepigeongazette.tumblr.com
     name = "pigeon-tapa"
-    long_name = "The Pigeon Gazette (from Tapastic)"
+    long_name = "The Pigeon Gazette (from Tapas.io)"
     url = "https://tapas.io/series/The-Pigeon-Gazette"
 
 
-class TheOdd1sOutTapa(GenericTapasticComic):
+class TheOdd1sOutTapas(GenericTapasComic):
     """Class to retrieve The Odd 1s Out comics."""
 
     # Also on http://theodd1sout.com
     # Also on https://theodd1sout.tumblr.com
     name = "theodd-tapa"
-    long_name = "The Odd 1s Out (from Tapastic)"
+    long_name = "The Odd 1s Out (from Tapas.io)"
     url = "https://tapas.io/series/Theodd1sout"
 
 
-class TheWorldIsFlatTapa(GenericTapasticComic):
+class TheWorldIsFlatTapas(GenericTapasComic):
     """Class to retrieve The World Is Flat Comics."""
 
     # Also on https://theworldisflatcomics.tumblr.com
     name = "flatworld-tapa"
-    long_name = "The World Is Flat (from Tapastic)"
+    long_name = "The World Is Flat (from Tapas.io)"
     url = "https://tapas.io/series/The-World-is-Flat"
 
 
-class MisterAndMeTapa(GenericTapasticComic):
+class MisterAndMeTapas(GenericTapasComic):
     """Class to retrieve Mister & Me Comics."""
 
     # Also on http://www.mister-and-me.com
     # Also on http://www.gocomics.com/mister-and-me
     name = "mister-tapa"
-    long_name = "Mister & Me (from Tapastic)"
+    long_name = "Mister & Me (from Tapas.io)"
     url = "https://tapas.io/series/Mister-and-Me"
 
 
-class TalesOfAbsurdityTapa(GenericDeletedComic, GenericTapasticComic):
+class TalesOfAbsurdityTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve Tales Of Absurdity comics."""
 
     # Also on http://talesofabsurdity.com
     # Also on http://talesofabsurdity.tumblr.com
     name = "absurdity-tapa"
-    long_name = "Tales of Absurdity (from Tapastic)"
+    long_name = "Tales of Absurdity (from Tapas.io)"
     url = "https://tapas.io/series/Tales-Of-Absurdity"
     _categories = ("ABSURDITY",)
 
 
-class BFGFSTapa(GenericTapasticComic):
+class BFGFSTapas(GenericTapasComic):
     """Class to retrieve BFGFS comics."""
 
     # Also on http://bfgfs.com
     # Also on https://bfgfs.tumblr.com
     name = "bfgfs-tapa"
-    long_name = "BFGFS (from Tapastic)"
+    long_name = "BFGFS (from Tapas.io)"
     url = "https://tapas.io/series/BFGFS"
 
 
-class DoodleForFoodTapa(GenericTapasticComic):
+class DoodleForFoodTapas(GenericTapasComic):
     """Class to retrieve Doodle For Food comics."""
 
     # Also on https://www.doodleforfood.com
     name = "doodle-tapa"
-    long_name = "Doodle For Food (from Tapastic)"
+    long_name = "Doodle For Food (from Tapas.io)"
     url = "https://tapas.io/series/Doodle-for-Food"
 
 
-class MrLovensteinTapa(GenericTapasticComic):
+class MrLovensteinTapas(GenericTapasComic):
     """Class to retrieve Mr Lovenstein comics."""
 
     # Also on http://www.mrlovenstein.com
     name = "mrlovenstein-tapa"
-    long_name = "Mr. Lovenstein (from Tapastic)"
+    long_name = "Mr. Lovenstein (from Tapas.io)"
     url = "https://tapas.io/series/MrLovenstein"
 
 
-class CassandraCalinTapa(GenericTapasticComic):
+class CassandraCalinTapas(GenericTapasComic):
     """Class to retrieve C. Cassandra comics."""
 
     # Also on http://cassandracalin.com
     # Also on https://c-cassandra.tumblr.com
     name = "cassandra-tapa"
-    long_name = "Cassandra Calin (from Tapastic)"
+    long_name = "Cassandra Calin (from Tapas.io)"
     url = "https://tapas.io/series/CassandraComics"
 
 
-class WafflesAndPancakes(GenericTapasticComic):
+class WafflesAndPancakes(GenericTapasComic):
     """Class to retrieve Waffles And Pancakes comics."""
 
     # Also on http://wandpcomic.com
@@ -6423,295 +6423,295 @@ class WafflesAndPancakes(GenericTapasticComic):
     url = "https://tapas.io/series/Waffles-and-Pancakes"
 
 
-class YesterdaysPopcornTapastic(GenericTapasticComic):
+class YesterdaysPopcornTapas(GenericTapasComic):
     """Class to retrieve Yesterday's Popcorn comics."""
 
     # Also on http://www.yesterdayspopcorn.com
     # Also on https://yesterdayspopcorn.tumblr.com
     name = "popcorn-tapa"
-    long_name = "Yesterday's Popcorn (from Tapastic)"
+    long_name = "Yesterday's Popcorn (from Tapas.io)"
     url = "https://tapas.io/series/Yesterdays-Popcorn"
 
 
-class OurSuperAdventureTapastic(GenericDeletedComic, GenericTapasticComic):
+class OurSuperAdventureTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve Our Super Adventure comics."""
 
     # Also on http://www.oursuperadventure.com
     # https://sarahssketchbook.tumblr.com
     # http://sarahgraley.com
-    name = "superadventure-tapastic"
-    long_name = "Our Super Adventure (from Tapastic)"
+    name = "superadventure-tapa"
+    long_name = "Our Super Adventure (from Tapas.io)"
     url = "https://tapas.io/series/Our-Super-Adventure"
 
 
-class NamelessPCs(GenericTapasticComic):
+class NamelessPCs(GenericTapasComic):
     """Class to retrieve Nameless PCs comics."""
 
     # Also on http://namelesspcs.com
     name = "namelesspcs-tapa"
-    long_name = "NamelessPCs (from Tapastic)"
+    long_name = "NamelessPCs (from Tapas.io)"
     url = "https://tapas.io/series/NamelessPC"
     _categories = ("WESLEYHALL",)
 
 
-class PizzaDad(GenericTapasticComic):
+class PizzaDad(GenericTapasComic):
     """Class to retrieve Pizza Dad comics."""
 
     # Also on http://pizzadad.pizza
     name = "pizzadad-tapa"
-    long_name = "Pizza Dad (from Tapastic)"
+    long_name = "Pizza Dad (from Tapas.io)"
     url = "https://tapas.io/series/PizzaDad"
     _categories = ("WESLEYHALL",)
 
 
-class DownTheUpwardSpiralTapa(GenericTapasticComic):
+class DownTheUpwardSpiralTapas(GenericTapasComic):
     """Class to retrieve Down The Upward Spiral comics."""
 
     # Also on http://www.downtheupwardspiral.com
     # Also on https://downtheupwardspiral.tumblr.com
     name = "spiral-tapa"
-    long_name = "Down the Upward Spiral (from Tapastic)"
+    long_name = "Down the Upward Spiral (from Tapas.io)"
     url = "https://tapas.io/series/Down-the-Upward-Spiral"
 
 
-class FalseKneesTapa(GenericTapasticComic):
+class FalseKneesTapas(GenericTapasComic):
     """Class to retrieve False Knees comics."""
 
     # Also on https://falseknees.com
     # Also on https://falseknees.tumblr.com
     # Also on http://www.webtoons.com/en/challenge/false-knees/list?title_no=79544
     name = "falseknees-tapa"
-    long_name = "False Knees (from Tapastic)"
+    long_name = "False Knees (from Tapas.io)"
     url = "https://tapas.io/series/FalseKnees"
     _categories = ("FALSEKNEES",)
 
 
-class UbertoolTapa(GenericTapasticComic):
+class UbertoolTapas(GenericTapasComic):
     """Class to retrieve Ubertool comics."""
 
     # Also on http://ubertoolcomic.com
     # Also on https://ubertool.tumblr.com
     name = "ubertool-tapa"
-    long_name = "Ubertool (from Tapastic)"
+    long_name = "Ubertool (from Tapas.io)"
     url = "https://tapas.io/series/ubertool"
     _categories = ("UBERTOOL",)
 
 
-class BarteNerdsTapa(GenericDeletedComic, GenericTapasticComic):
+class BarteNerdsTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve BarteNerds comics."""
 
     # Also on http://www.bartenerds.com
     name = "bartenerds-tapa"
-    long_name = "BarteNerds (from Tapastic)"
+    long_name = "BarteNerds (from Tapas.io)"
     url = "https://tapas.io/series/BarteNERDS"
 
 
-class SmallBlueYonderTapa(GenericTapasticComic):
+class SmallBlueYonderTapas(GenericTapasComic):
     """Class to retrieve Small Blue Yonder comics."""
 
     # Also on http://www.smallblueyonder.com
     name = "smallblue-tapa"
-    long_name = "Small Blue Yonder (from Tapastic)"
+    long_name = "Small Blue Yonder (from Tapas.io)"
     url = "https://tapas.io/series/Small-Blue-Yonder"
 
 
-class TizzyStitchBirdTapa(GenericTapasticComic):
+class TizzyStitchBirdTapas(GenericTapasComic):
     """Class to retrieve Tizzy Stitch Bird comics."""
 
     # Also on http://tizzystitchbird.com
     # Also on https://tizzystitchbird.tumblr.com
     # Also on http://www.webtoons.com/en/challenge/tizzy-stitchbird/list?title_no=50082
     name = "tizzy-tapa"
-    long_name = "Tizzy Stitch Bird (from Tapastic)"
+    long_name = "Tizzy Stitch Bird (from Tapas.io)"
     url = "https://tapas.io/series/TizzyStitchbird"
 
 
-class RockPaperCynicTapa(GenericTapasticComic):
+class RockPaperCynicTapas(GenericTapasComic):
     """Class to retrieve RockPaperCynic comics."""
 
     # Also on http://www.rockpapercynic.com
     # Also on https://rockpapercynic.tumblr.com
     name = "rpc-tapa"
-    long_name = "Rock Paper Cynic (from Tapastic)"
+    long_name = "Rock Paper Cynic (from Tapas.io)"
     url = "https://tapas.io/series/rockpapercynic"
 
 
-class IsItCanonTapa(GenericTapasticComic):
+class IsItCanonTapas(GenericTapasComic):
     """Class to retrieve Is It Canon comics."""
 
     # Also on http://www.isitcanon.com
     name = "canon-tapa"
-    long_name = "Is It Canon (from Tapastic)"
+    long_name = "Is It Canon (from Tapas.io)"
     url = "https://tapas.io/series/isitcanon"
 
 
-class ItsTheTieTapa(GenericTapasticComic):
+class ItsTheTieTapas(GenericTapasComic):
     """Class to retrieve It's the tie comics."""
 
     # Also on http://itsthetie.com
     # Also on https://itsthetie.tumblr.com
     name = "tie-tapa"
-    long_name = "It's the tie (from Tapastic)"
+    long_name = "It's the tie (from Tapas.io)"
     url = "https://tapas.io/series/itsthetie"
     _categories = ("TIE",)
 
 
-class JamesOfNoTradesTapa(GenericTapasticComic):
+class JamesOfNoTradesTapas(GenericTapasComic):
     """Class to retrieve JamesOfNoTrades comics."""
 
     # Also on http://jamesofnotrades.com
     # Also on http://www.webtoons.com/en/challenge/james-of-no-trades/list?title_no=43422
     # Also on https://jamesfregan.tumblr.com
     name = "jamesofnotrades-tapa"
-    long_name = "James Of No Trades (from Tapastic)"
+    long_name = "James Of No Trades (from Tapas.io)"
     url = "https://tapas.io/series/James-of-No-Trades"
     _categories = ("JAMESOFNOTRADES",)
 
 
-class MomentumTapa(GenericTapasticComic):
+class MomentumTapas(GenericTapasComic):
     """Class to retrieve Momentum comics."""
 
     # Also on http://www.momentumcomic.com
     name = "momentum-tapa"
-    long_name = "Momentum (from Tapastic)"
+    long_name = "Momentum (from Tapas.io)"
     url = "https://tapas.io/series/momentum"
 
 
-class InYourFaceCakeTapa(GenericTapasticComic):
+class InYourFaceCakeTapas(GenericTapasComic):
     """Class to retrieve In Your Face Cake comics."""
 
     # Also on https://in-your-face-cake.tumblr.com
     name = "inyourfacecake-tapa"
-    long_name = "In Your Face Cake (from Tapastic)"
+    long_name = "In Your Face Cake (from Tapas.io)"
     url = "https://tapas.io/series/In-Your-Face-Cake"
     _categories = ("INYOURFACECAKE",)
 
 
-class CowardlyComicsTapa(GenericTapasticComic):
+class CowardlyComicsTapas(GenericTapasComic):
     """Class to retrieve Cowardly Comics."""
 
     # Also on https://cowardlycomics.tumblr.com
     # Also on http://www.webtoons.com/en/challenge/cowardly-comics/list?title_no=65893
     name = "cowardly-tapa"
-    long_name = "Cowardly Comics (from Tapastic)"
+    long_name = "Cowardly Comics (from Tapas.io)"
     url = "https://tapas.io/series/CowardlyComics"
 
 
-class Caw4hwTapa(GenericTapasticComic):
+class Caw4hwTapas(GenericTapasComic):
     """Class to retrieve Caw4hw comics."""
 
     # Also on https://caw4hw.tumblr.com
     name = "caw4hw-tapa"
-    long_name = "Caw4hw (from Tapastic)"
+    long_name = "Caw4hw (from Tapas.io)"
     url = "https://tapas.io/series/CAW4HW"
 
 
-class DontBeDadTapa(GenericTapasticComic):
+class DontBeDadTapas(GenericTapasComic):
     """Class to retrieve Don't Be Dad comics."""
 
     # Also on https://dontbedad.com/
     # Also on http://www.webtoons.com/en/challenge/dontbedad/list?title_no=123074
     name = "dontbedad-tapa"
-    long_name = "Don't Be Dad (from Tapastic)"
+    long_name = "Don't Be Dad (from Tapas.io)"
     url = "https://tapas.io/series/DontBeDad-Comics"
 
 
-class APleasantWasteOfTimeTapa(GenericTapasticComic):
+class APleasantWasteOfTimeTapas(GenericTapasComic):
     """Class to retrieve A Pleasant Waste Of Time comics."""
 
     # Also on https://artjcf.tumblr.com
     name = "pleasant-waste-tapa"
-    long_name = "A Pleasant Waste Of Time (from Tapastic)"
+    long_name = "A Pleasant Waste Of Time (from Tapas.io)"
     url = "https://tapas.io/series/A-Pleasant-"
     _categories = ("WASTE",)
 
 
-class InfiniteImmortalBensTapa(GenericTapasticComic):
+class InfiniteImmortalBensTapas(GenericTapasComic):
     """Class to retrieve Infinite Immortal Bens comics."""
 
     # Also on http://www.webtoons.com/en/challenge/infinite-immortal-bens/list?title_no=32847
     # Also on https://infiniteimmortalbens.tumblr.com
     url = "https://tapas.io/series/Infinite-Immortal-Bens"
     name = "infiniteimmortal-tapa"
-    long_name = "Infinite Immortal Bens (from Tapastic)"
+    long_name = "Infinite Immortal Bens (from Tapas.io)"
     _categories = ("INFINITEIMMORTAL",)
 
 
-class EatMyPaintTapa(GenericTapasticComic):
+class EatMyPaintTapas(GenericTapasComic):
     """Class to retrieve Eat My Paint comics."""
 
     # Also on https://eatmypaint.tumblr.com
     # Also on https://www.webtoons.com/en/challenge/eatmypaint/list?title_no=31150&page=1
     # Also on https://www.eatmypaint.co.uk
     name = "eatmypaint-tapa"
-    long_name = "Eat My Paint (from Tapastic)"
+    long_name = "Eat My Paint (from Tapas.io)"
     url = "https://tapas.io/series/eatmypaint"
     _categories = ("EATMYPAINT",)
 
 
-class RoryTapastic(GenericTapasticComic):
+class RoryTapas(GenericTapasComic):
     """Class to retrieve Rory comics."""
 
     # Also on https://rorycomics.tumblr.com/
     name = "rory-tapa"
-    long_name = "Rory (from Tapastic)"
+    long_name = "Rory (from Tapas.io)"
     url = "https://tapas.io/series/rorycomics"
     _categories = ("RORY",)
 
 
-class LightRoastComicsTapa(GenericTapasticComic):
+class LightRoastComicsTapas(GenericTapasComic):
     """Class to retrieve Light Roast Comics."""
 
     # Also on http://lightroastcomics.com
     # Also on https://www.webtoons.com/en/challenge/light-roast-comics/list?title_no=171110&page=1
     # Also on https://www.instagram.com/lightroastcomics/?hl=fr
     name = "lightroast-tapa"
-    long_name = "Light Roast Comics (from Tapastic)"
+    long_name = "Light Roast Comics (from Tapas.io)"
     url = "https://tapas.io/series/Light-Roast-Comics"
     _categories = ("LIGHTROAST",)
 
 
-class MercworksTapa(GenericTapasticComic):
+class MercworksTapas(GenericTapasComic):
     """Class to retrieve Mercworks comics."""
 
     # Also on http://mercworks.net
     # Also on http://www.webtoons.com/en/comedy/mercworks/list?title_no=426
     # Also on https://mercworks.tumblr.com
     name = "mercworks-tapa"
-    long_name = "Mercworks (from Tapastic)"
+    long_name = "Mercworks (from Tapas.io)"
     url = "https://tapas.io/series/MercWorks"
     _categories = ("MERCWORKS",)
 
 
-class PtbdTapa(GenericTapasticComic):
+class PtbdTapas(GenericTapasComic):
     "Class to retrieve Pretends to be drawing comics." ""
     # Also on https://ptbd.jwels.berlin
     # Also on https://www.webtoons.com/en/challenge/pretends-to-be-drawing/list?title_no=109952
     # Also on https://www.instagram.com/pretendstobedrawing/
     name = "ptbd-tapa"
-    long_name = "Pretends to be drawing (from Tapastic)"
+    long_name = "Pretends to be drawing (from Tapas.io)"
     url = "https://tapas.io/series/ptbd"
     _categories = ("PTBD",)
 
 
-class BecksComicsTapa(GenericTapasticComic):
+class BecksComicsTapas(GenericTapasComic):
     """Class to retrieve Becks Comics."""
 
     # Also on https://www.beckscomics.com
     # Also on https://www.instagram.com/beckscomics/
     name = "becks-tapa"
-    long_name = "Becks Comics (from Tapastic)"
+    long_name = "Becks Comics (from Tapas.io)"
     url = "https://tapas.io/series/beckscomics"
     _categories = ("BECKS",)
 
 
-class RespawnComicTapa(GenericTapasticComic):
+class RespawnComicTapas(GenericTapasComic):
     """Class to retrieve Respawn Comic."""
 
     # Also on http://respawncomic.com
     # Also on https://respawncomic.tumblr.com
     name = "respawn-tapa"
-    long_name = "Respawn Comic (from Tapastic)"
+    long_name = "Respawn Comic (from Tapas.io)"
     url = "https://tapas.io/series/respawncomic"
     _categories = ("RESPAWN",)
 
