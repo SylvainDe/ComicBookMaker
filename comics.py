@@ -4099,7 +4099,7 @@ class GenericTumblrV1(GenericComic):
             posts_acc.append(p)
         if last_comic is None:
             return posts_acc
-        print("Did not find %s : there might be a problem" % last_comic["url"])
+        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(posts_acc)))
         return []
 
 
@@ -5990,7 +5990,7 @@ class GenericTapasticComic(GenericComic):
 
     @classmethod
     def archive_element_corresponds_to_comic(cls, elt, comic):
-        return comic is not None and comic["url"] == cls.get_url_from_archive_element(elt)
+        return comic is not None and int(elt["data-id"]) == comic['episode_id']
 
     @classmethod
     def yield_archive_elements(cls):
@@ -6017,7 +6017,7 @@ class GenericTapasticComic(GenericComic):
             elts_acc.append(elt)
         if last_comic is None:
             return elts_acc
-        print("Did not find %s : there might be a problem" % last_comic["url"])
+        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(elts_acc)))
         return []
 
     @classmethod
@@ -6420,7 +6420,7 @@ class WafflesAndPancakes(GenericTapasticComic):
     # Also on http://wandpcomic.com
     name = "waffles"
     long_name = "Waffles And Pancakes"
-    url = "http://tapastic.com/series/Waffles-and-Pancakes"
+    url = "https://tapas.io/series/Waffles-and-Pancakes"
 
 
 class YesterdaysPopcornTapastic(GenericTapasticComic):

@@ -420,7 +420,7 @@ Comics supported
  * [Vegetables For Dessert](http://tapastic.com/series/vegetablesfordessert)
  * [Vidberg - l'actu en patates](http://vidberg.blog.lemonde.fr)
  * [Verbal Vomit (from Tumblr)](https://verbalvomits.tumblr.com)
- * [Waffles And Pancakes](http://tapastic.com/series/Waffles-and-Pancakes)
+ * [Waffles And Pancakes](https://tapas.io/series/Waffles-and-Pancakes)
  * [War And Peas](https://warandpeas.com)
  * [War And Peas (from Tumblr)](https://warandpeas.tumblr.com)
  * [Warehouse Comic](http://warehousecomic.com)
