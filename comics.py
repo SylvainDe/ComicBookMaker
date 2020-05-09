@@ -290,7 +290,10 @@ class GenericListableComic(GenericComic):
             elif waiting_for_url == url:
                 waiting_for_url = None
         if waiting_for_url is not None:
-            print("Did not find previous comic %s in the %d comics found: there might be a problem" % (waiting_for_url, len(archive_elts)))
+            print(
+                "Did not find previous comic %s in the %d comics found: there might be a problem"
+                % (waiting_for_url, len(archive_elts))
+            )
 
 
 class GenericPaginatedListableComic(GenericComic):
@@ -305,6 +308,7 @@ class GenericPaginatedListableComic(GenericComic):
         - archive_element_corresponds_to_comic
         - get_comic_info
    """
+
     _categories = ("PAGINATEDLISTABLE",)
 
     @classmethod
@@ -328,7 +332,10 @@ class GenericPaginatedListableComic(GenericComic):
             archive_elements.append(elt)
         if last_comic is None:
             return archive_elements
-        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
+        print(
+            "Did not find previous comic %s in the %d comics found: there might be a problem"
+            % (last_comic["url"], len(archive_elements))
+        )
         return []
 
     @classmethod
@@ -5985,7 +5992,11 @@ class GenericTapasComic(GenericPaginatedListableComic):
     def get_comic_info(cls, archive_elt):
         """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(archive_elt)
-        coming_soon = archive_elt['class'] == ['ga-tracking', 'js-episode', 'js-coming-soon']
+        coming_soon = archive_elt["class"] == [
+            "ga-tracking",
+            "js-episode",
+            "js-coming-soon",
+        ]
         if coming_soon:
             print("Comic %s is being uploaded, retry later" % url)
             return None
@@ -6011,7 +6022,7 @@ class GenericTapasComic(GenericPaginatedListableComic):
 
     @classmethod
     def archive_element_corresponds_to_comic(cls, elt, comic):
-        return comic is not None and int(elt["data-id"]) == comic['episode_id']
+        return comic is not None and int(elt["data-id"]) == comic["episode_id"]
 
     @classmethod
     def yield_archive_elements(cls):
@@ -6023,10 +6034,13 @@ class GenericTapasComic(GenericPaginatedListableComic):
                 a = li.find("a")
                 assert a
                 yield a
-            next_button = soup.find("a", class_="paging__button paging__button--img paging__button--next g-act")
+            next_button = soup.find(
+                "a",
+                class_="paging__button paging__button--img paging__button--next g-act",
+            )
             if next_button is None:
                 return
-            url = urljoin_wrapper(url, next_button['href'])
+            url = urljoin_wrapper(url, next_button["href"])
 
     @classmethod
     def get_url_from_archive_element(cls, archive_elt):
