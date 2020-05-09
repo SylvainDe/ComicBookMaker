@@ -258,7 +258,7 @@ class GenericListableComic(GenericComic):
 
     @classmethod
     def get_archive_elements(cls):
-        """Get the archive elements (iterable)."""
+        """Get the archive elements (iterable) containing comics from older to newer."""
         raise NotImplementedError
 
     @classmethod
@@ -290,10 +290,7 @@ class GenericListableComic(GenericComic):
             elif waiting_for_url == url:
                 waiting_for_url = None
         if waiting_for_url is not None:
-            print(
-                "Did not find %s in the %d comics: there might be a problem"
-                % (waiting_for_url, len(archive_elts))
-            )
+            print("Did not find previous comic %s in the %d comics found: there might be a problem" % (waiting_for_url, len(archive_elts)))
 
 
 # Helper functions corresponding to get_first_comic_link/get_navi_link
@@ -3986,8 +3983,8 @@ class GenericTumblrV1(GenericComic):
         if not cls.check_last_comic(last_comic):
             return []
 
-        for p in reversed(cls.get_posts(last_comic)):
-            comic = cls.get_comic_info(p)
+        for e in reversed(cls.get_archive_elements(last_comic)):
+            comic = cls.get_comic_info(e)
             if comic is not None:
                 yield comic
 
@@ -4006,26 +4003,26 @@ class GenericTumblrV1(GenericComic):
         return cls.get_api_url() + "?id=%d" % (tumblr_id)
 
     @classmethod
-    def get_comic_info(cls, post):
+    def get_comic_info(cls, elt):
         """Get information about a particular comics."""
-        type_ = post["type"].lower()
+        type_ = elt["type"].lower()
         if type_ != "photo":
             return None
-        tumblr_id = int(post["id"])
+        tumblr_id = int(elt["id"])
         api_url = cls.get_api_url_for_id(tumblr_id)
-        caption = post.find("photo-caption")
+        caption = elt.find("photo-caption")
         title = caption.string if caption else ""
-        tags = " ".join(t.string for t in post.find_all("tag"))
-        # Photos may appear in 'photo' tags and/or straight in the post
-        photo_tags = post.find_all("photo")
+        tags = " ".join(t.string for t in elt.find_all("tag"))
+        # Photos may appear in 'photo' tags and/or straight in the element
+        photo_tags = elt.find_all("photo")
         if not photo_tags:
-            photo_tags = [post]
+            photo_tags = [elt]
         # Images are in multiple resolutions - taking the first one
         imgs = [photo.find("photo-url") for photo in photo_tags]
         return {
-            "url": cls.check_url(post["url"]),
-            "url2": post["url-with-slug"],
-            "date": datetime.datetime.fromtimestamp(int(post["unix-timestamp"])).date(),
+            "url": cls.check_url(elt["url"]),
+            "url2": elt["url-with-slug"],
+            "date": datetime.datetime.fromtimestamp(int(elt["unix-timestamp"])).date(),
             "title": title,
             "tags": tags,
             "img": [i.string for i in imgs],
@@ -4059,14 +4056,15 @@ class GenericTumblrV1(GenericComic):
         return True
 
     @classmethod
-    def post_corresponds_to_comic(cls, post, comic):
-        return comic is not None and comic["tumblr-id"] == int(post["id"])
+    def archive_element_corresponds_to_comic(cls, elt, comic):
+        return comic is not None and comic["tumblr-id"] == int(elt["id"])
 
     @classmethod
-    def yield_posts(cls, nb_post_per_call=10):
-        """Yield posts using API. nb_post_per_call is max 50.
+    def yield_archive_elements(cls):
+        """Yield archive elements from newer to older.
 
-        Posts are retrieved from newer to older as per the tumblr v1 api."""
+        Elements are retrieved as per the tumblr v1 api."""
+        nb_post_per_call=10  # max 50
         api_url = cls.get_api_url()
         soup = get_soup_at_url(api_url)
         posts = soup.find("posts")
@@ -4086,20 +4084,20 @@ class GenericTumblrV1(GenericComic):
             assert starting_num == start2, "%d != %d" % (starting_num, start2)
             # This may happen and should be handled in the future
             assert total == total2, "%d != %d" % (total, total2)
-            for p in posts2.find_all("post"):
-                yield p
+            for e in posts2.find_all("post"):
+                yield e
 
     @classmethod
-    def get_posts(cls, last_comic):
-        """Get posts using API."""
-        posts_acc = []
-        for p in cls.yield_posts():
-            if cls.post_corresponds_to_comic(p, last_comic):
-                return posts_acc
-            posts_acc.append(p)
+    def get_archive_elements(cls, last_comic):
+        """Get archive elements from newer to older, stopping at last_comic."""
+        archive_elements = []
+        for elt in cls.yield_archive_elements():
+            if cls.archive_element_corresponds_to_comic(elt, last_comic):
+                return archive_elements
+            archive_elements.append(elt)
         if last_comic is None:
-            return posts_acc
-        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(posts_acc)))
+            return archive_elements
+        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
         return []
 
 
@@ -5994,7 +5992,7 @@ class GenericTapasComic(GenericComic):
 
     @classmethod
     def yield_archive_elements(cls):
-        """Yield posts."""
+        """Yield archive elements from newer to older."""
         url = cls.url
         while True:
             soup = get_soup_at_url(url)
@@ -6009,15 +6007,15 @@ class GenericTapasComic(GenericComic):
 
     @classmethod
     def get_archive_elements(cls, last_comic):
-        """Get archive elements."""
-        elts_acc = []
+        """Get archive elements from newer to older, stopping at last_comic."""
+        archive_elements = []
         for elt in cls.yield_archive_elements():
             if cls.archive_element_corresponds_to_comic(elt, last_comic):
-                return elts_acc
-            elts_acc.append(elt)
+                return archive_elements
+            archive_elements.append(elt)
         if last_comic is None:
-            return elts_acc
-        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(elts_acc)))
+            return archive_elements
+        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
         return []
 
     @classmethod
