@@ -293,6 +293,65 @@ class GenericListableComic(GenericComic):
             print("Did not find previous comic %s in the %d comics found: there might be a problem" % (waiting_for_url, len(archive_elts)))
 
 
+class GenericPaginatedListableComic(GenericComic):
+    """Generic class for "paginated listable" comics : with a list of comics
+    accessible over multiple pages. Unlike GenericListableComic, getting the
+    whole list can be a expensive operation so we only want to retrieve
+    the part of the list we are interested in.
+
+    The method `get_next_comic` methods is implemented in terms of new
+    more specialized methods to be implemented/overridden:
+        - yield_archive_elements
+        - archive_element_corresponds_to_comic
+        - get_comic_info
+   """
+    _categories = ("PAGINATEDLISTABLE",)
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generic implementation of get_next_comic for GenericPaginatedListableComic."""
+        if not cls.check_last_comic(last_comic):
+            return []
+
+        for e in reversed(cls.get_archive_elements(last_comic)):
+            comic = cls.get_comic_info(e)
+            if comic is not None:
+                yield comic
+
+    @classmethod
+    def get_archive_elements(cls, last_comic):
+        """Get archive elements from newer to older, stopping at last_comic."""
+        archive_elements = []
+        for elt in cls.yield_archive_elements():
+            if cls.archive_element_corresponds_to_comic(elt, last_comic):
+                return archive_elements
+            archive_elements.append(elt)
+        if last_comic is None:
+            return archive_elements
+        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
+        return []
+
+    @classmethod
+    def check_last_comic(cls, last_comic):
+        """Check that last comic seems to be valid."""
+        return True
+
+    @classmethod
+    def get_comic_info(cls, elt):
+        """Get information about a particular comics."""
+        raise NotImplementedError
+
+    @classmethod
+    def yield_archive_elements(cls):
+        """Yield archive elements from newer to older."""
+        raise NotImplementedError
+
+    @classmethod
+    def archive_element_corresponds_to_comic(cls, elt, comic):
+        """Check is elements corresponds to comic object - return Boolean."""
+        raise NotImplementedError
+
+
 # Helper functions corresponding to get_first_comic_link/get_navi_link
 
 
@@ -3972,21 +4031,10 @@ class Ptbd(GenericComic):
         }
 
 
-class GenericTumblrV1(GenericComic):
+class GenericTumblrV1(GenericPaginatedListableComic):
     """Generic class to retrieve comics from Tumblr using the V1 API."""
 
     _categories = ("TUMBLR",)
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        """Generic implementation of get_next_comic for Tumblr comics."""
-        if not cls.check_last_comic(last_comic):
-            return []
-
-        for e in reversed(cls.get_archive_elements(last_comic)):
-            comic = cls.get_comic_info(e)
-            if comic is not None:
-                yield comic
 
     @classmethod
     def check_url(cls, url):
@@ -4086,19 +4134,6 @@ class GenericTumblrV1(GenericComic):
             assert total == total2, "%d != %d" % (total, total2)
             for e in posts2.find_all("post"):
                 yield e
-
-    @classmethod
-    def get_archive_elements(cls, last_comic):
-        """Get archive elements from newer to older, stopping at last_comic."""
-        archive_elements = []
-        for elt in cls.yield_archive_elements():
-            if cls.archive_element_corresponds_to_comic(elt, last_comic):
-                return archive_elements
-            archive_elements.append(elt)
-        if last_comic is None:
-            return archive_elements
-        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
-        return []
 
 
 class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
@@ -4827,7 +4862,7 @@ class HarkAVagrant(GenericTumblrV1):
 class OurSuperAdventureTumblr(GenericTumblrV1):
     """Class to retrieve Our Super Adventure comics."""
 
-    # Also on https://tapas.io/series/Our-Super-Adventure
+    # Also on https://tapas.io/series/OurSuperAdventure
     # Also on http://www.oursuperadventure.com
     # http://sarahgraley.com
     name = "superadventure-tumblr"
@@ -5941,21 +5976,10 @@ class PicturesInBoxesGoComics(GenericGoComic):
     _categories = ("PICTURESINBOXES",)
 
 
-class GenericTapasComic(GenericComic):
+class GenericTapasComic(GenericPaginatedListableComic):
     """Generic class to handle the logic common to comics from https://tapas.io ."""
 
     _categories = ("TAPAS",)
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        """Generic implementation of get_next_comic for Tapas comics."""
-        if not cls.check_last_comic(last_comic):
-            return []
-
-        for e in reversed(cls.get_archive_elements(last_comic)):
-            comic = cls.get_comic_info(e)
-            if comic is not None:
-                yield comic
 
     @classmethod
     def get_comic_info(cls, archive_elt):
@@ -5986,11 +6010,6 @@ class GenericTapasComic(GenericComic):
         }
 
     @classmethod
-    def check_last_comic(cls, last_comic):
-        """Check that last comic seems to be valid."""
-        return True
-
-    @classmethod
     def archive_element_corresponds_to_comic(cls, elt, comic):
         return comic is not None and int(elt["data-id"]) == comic['episode_id']
 
@@ -6008,19 +6027,6 @@ class GenericTapasComic(GenericComic):
             if next_button is None:
                 return
             url = urljoin_wrapper(url, next_button['href'])
-
-    @classmethod
-    def get_archive_elements(cls, last_comic):
-        """Get archive elements from newer to older, stopping at last_comic."""
-        archive_elements = []
-        for elt in cls.yield_archive_elements():
-            if cls.archive_element_corresponds_to_comic(elt, last_comic):
-                return archive_elements
-            archive_elements.append(elt)
-        if last_comic is None:
-            return archive_elements
-        print("Did not find previous comic %s in the %d comics found: there might be a problem" % (last_comic["url"], len(archive_elements)))
-        return []
 
     @classmethod
     def get_url_from_archive_element(cls, archive_elt):
@@ -6309,14 +6315,14 @@ class ChrisHallbeckMiniTapas(GenericDeletedComic, GenericTapasComic):
     _categories = ("HALLBACK",)
 
 
-class ChrisHallbeckBiffTapas(GenericDeletedComic, GenericTapasComic):
+class ChrisHallbeckBiffTapas(GenericTapasComic):
     """Class to retrieve Chris Hallbeck comics."""
 
     # Also on https://chrishallbeck.tumblr.com
     # Also on http://thebookofbiff.com
     name = "hallbeckbiff-tapa"
     long_name = "Chris Hallback - The Book of Biff (from Tapas.io)"
-    url = "https://tapas.io/series/Biff"
+    url = "https://tapas.io/series/The-Book-of-Biff"
     _categories = ("HALLBACK",)
 
 
@@ -6435,7 +6441,7 @@ class YesterdaysPopcornTapas(GenericTapasComic):
     url = "https://tapas.io/series/Yesterdays-Popcorn"
 
 
-class OurSuperAdventureTapas(GenericDeletedComic, GenericTapasComic):
+class OurSuperAdventureTapas(GenericTapasComic):
     """Class to retrieve Our Super Adventure comics."""
 
     # Also on http://www.oursuperadventure.com
@@ -6443,7 +6449,7 @@ class OurSuperAdventureTapas(GenericDeletedComic, GenericTapasComic):
     # http://sarahgraley.com
     name = "superadventure-tapa"
     long_name = "Our Super Adventure (from Tapas.io)"
-    url = "https://tapas.io/series/Our-Super-Adventure"
+    url = "https://tapas.io/series/OurSuperAdventure"
 
 
 class NamelessPCs(GenericTapasComic):
@@ -6499,7 +6505,7 @@ class UbertoolTapas(GenericTapasComic):
     _categories = ("UBERTOOL",)
 
 
-class BarteNerdsTapas(GenericDeletedComic, GenericTapasComic):
+class BarteNerdsTapas(GenericTapasComic):
     """Class to retrieve BarteNerds comics."""
 
     # Also on http://www.bartenerds.com
