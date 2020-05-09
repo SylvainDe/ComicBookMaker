@@ -9,10 +9,14 @@ import os
 import urllib.parse
 import datetime
 from itertools import chain
-from comic_abstract import get_date_for_comic, get_info_before_comic, get_info_after_comic
+from comic_abstract import (
+    get_date_for_comic,
+    get_info_before_comic,
+    get_info_after_comic,
+)
 
 # http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000234621
-KINDLEGEN_PATH = './kindlegen_linux_2.6_i386_v2_9/kindlegen'
+KINDLEGEN_PATH = "./kindlegen_linux_2.6_i386_v2_9/kindlegen"
 HTML_HEADER = """
 <html>
     <head>
@@ -78,8 +82,24 @@ XHTML_FOOTER = """
 
 </html>"""
 
-HTML_TAGS = HTML_HEADER, HTML_TOC_ITEM, HTML_START, HTML_COMIC_INFO, HTML_COMIC_ADDITIONAL_INFO, HTML_COMIC_IMG, HTML_FOOTER
-XHTML_TAGS = XHTML_HEADER, XHTML_TOC_ITEM, XHTML_START, XHTML_COMIC_INFO, XHTML_COMIC_ADDITIONAL_INFO, XHTML_COMIC_IMG, XHTML_FOOTER
+HTML_TAGS = (
+    HTML_HEADER,
+    HTML_TOC_ITEM,
+    HTML_START,
+    HTML_COMIC_INFO,
+    HTML_COMIC_ADDITIONAL_INFO,
+    HTML_COMIC_IMG,
+    HTML_FOOTER,
+)
+XHTML_TAGS = (
+    XHTML_HEADER,
+    XHTML_TOC_ITEM,
+    XHTML_START,
+    XHTML_COMIC_INFO,
+    XHTML_COMIC_ADDITIONAL_INFO,
+    XHTML_COMIC_IMG,
+    XHTML_FOOTER,
+)
 
 
 def collect_comics(comic_classes):
@@ -94,10 +114,13 @@ def filter_comics(comics):
     arguments."""
     comics = list(comics)
     initial_len = len(comics)
-    filtered_comics = [c for c in comics if 'new' in c]
+    filtered_comics = [c for c in comics if "new" in c]
     filtered_len = len(filtered_comics)
     if initial_len != filtered_len:
-        print("After filtering, %d out of %d comics were kept" % (filtered_len, initial_len))
+        print(
+            "After filtering, %d out of %d comics were kept"
+            % (filtered_len, initial_len)
+        )
     return filtered_comics
 
 
@@ -125,57 +148,63 @@ def make_book(comic_classes):
     """Create ebook - not finished."""
     comics = truncate_comics(sort_comics(filter_comics(collect_comics(comic_classes))))
     for i, c in enumerate(comics):
-        print(i, c['url'], get_date_for_comic(c))
+        print(i, c["url"], get_date_for_comic(c))
     if comics:
         make_book_from_comic_list(
             comics,
-            '%s from %s to %s' %
-            (' - '.join(sorted({c['comic'] for c in comics})),
-             min(get_date_for_comic(c) for c in comics).strftime('%x'),
-             max(get_date_for_comic(c) for c in comics).strftime('%x')),
-            'book.html')
+            "%s from %s to %s"
+            % (
+                " - ".join(sorted({c["comic"] for c in comics})),
+                min(get_date_for_comic(c) for c in comics).strftime("%x"),
+                max(get_date_for_comic(c) for c in comics).strftime("%x"),
+            ),
+            "book.html",
+        )
 
 
 def convert_unicode_to_html(text):
     """Convert unicode text to HTML by escaping it."""
-    return html.escape(text).encode('ascii', 'xmlcharrefreplace').decode()
+    return html.escape(text).encode("ascii", "xmlcharrefreplace").decode()
 
 
 def make_book_from_comic_list(comics, title, file_name, mobi=True):
     """Create book from a list of comics."""
-    cover = 'empty.jpg'
-    output_dir = 'generated_books'
+    cover = "empty.jpg"
+    output_dir = "generated_books"
     os.makedirs(output_dir, exist_ok=True)
     html_book = os.path.join(output_dir, file_name)
 
-    header, toc_item, start, com_info, com_add_info, com_img, footer = HTML_TAGS if mobi else XHTML_TAGS
+    header, toc_item, start, com_info, com_add_info, com_img, footer = (
+        HTML_TAGS if mobi else XHTML_TAGS
+    )
 
-    with open(html_book, 'w+') as book:
-        book.write(header % (
-            title,
-            cover,
-            ' '.join(sys.argv),
-            datetime.datetime.now().strftime('%c')
-        ))
+    with open(html_book, "w+") as book:
+        book.write(
+            header
+            % (title, cover, " ".join(sys.argv), datetime.datetime.now().strftime("%c"))
+        )
 
         for i, com in enumerate(comics):
-            book.write(toc_item % (i, com['url']))
+            book.write(toc_item % (i, com["url"]))
 
         book.write(start)
 
         for i, com in enumerate(comics):
-            book.write(com_info % (
-                i, com['url'], com['comic'], get_date_for_comic(com).strftime('%x')))
+            book.write(
+                com_info
+                % (i, com["url"], com["comic"], get_date_for_comic(com).strftime("%x"))
+            )
             for info in get_info_before_comic(com):
                 book.write(com_add_info % convert_unicode_to_html(info))
-            for path in com['local_img']:
+            for path in com["local_img"]:
                 if path is not None:
                     assert os.path.isfile(path)
                     book.write(
-                        com_img % urllib.parse.quote(os.path.relpath(path, output_dir)))
+                        com_img % urllib.parse.quote(os.path.relpath(path, output_dir))
+                    )
             for info in get_info_after_comic(com):
                 book.write(com_add_info % convert_unicode_to_html(info))
         book.write(footer)
 
     if mobi:
-        subprocess.call([KINDLEGEN_PATH, '-verbose', '-dont_append_source', html_book])
+        subprocess.call([KINDLEGEN_PATH, "-verbose", "-dont_append_source", html_book])
