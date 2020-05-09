@@ -4064,7 +4064,7 @@ class GenericTumblrV1(GenericComic):
         """Yield archive elements from newer to older.
 
         Elements are retrieved as per the tumblr v1 api."""
-        nb_post_per_call=10  # max 50
+        nb_post_per_call = 10  # max 50
         api_url = cls.get_api_url()
         soup = get_soup_at_url(api_url)
         posts = soup.find("posts")
