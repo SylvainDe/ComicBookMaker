@@ -2212,13 +2212,13 @@ class CompletelySeriousComics(GenericNavigableComic):
         }
 
 
-class PoorlyDrawnLines(GenericComicNotWorking, GenericListableComic):
+class PoorlyDrawnLines(GenericListableComic):
     """Class to retrieve Poorly Drawn Lines comics."""
 
     # Also on https://pdlcomics.tumblr.com
     name = "poorlydrawn"
     long_name = "Poorly Drawn Lines"
-    url = "https://www.poorlydrawnlines.com"
+    url = "http://www.poorlydrawnlines.com"
     _categories = ("POORLYDRAWN",)
     get_url_from_archive_element = get_href
 
