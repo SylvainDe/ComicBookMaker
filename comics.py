@@ -5961,6 +5961,10 @@ class GenericTapasComic(GenericComic):
     def get_comic_info(cls, archive_elt):
         """Get information about a particular comics."""
         url = cls.get_url_from_archive_element(archive_elt)
+        coming_soon = archive_elt['class'] == ['ga-tracking', 'js-episode', 'js-coming-soon']
+        if coming_soon:
+            print("Comic %s is being uploaded, retry later" % url)
+            return None
         info_title = archive_elt.find("div", class_="info__title")
         title_raw = info_title.get_text()
         title = title_raw.strip()
