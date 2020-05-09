@@ -988,7 +988,7 @@ class AngryAtNothing(GenericDeletedComic, GenericNavigableComic):
         }
 
 
-class NeDroid(GenericComicNotWorking, GenericNavigableComic):
+class NeDroid(GenericNavigableComic):
     """Class to retrieve NeDroid comics."""
 
     name = "nedroid"
@@ -1004,10 +1004,15 @@ class NeDroid(GenericComicNotWorking, GenericNavigableComic):
         short_url_re = re.compile("^%s/\\?p=([0-9]*)" % cls.url)
         short_url = cls.get_url_from_link(soup.find("link", rel="shortlink"))
         num = int(short_url_re.match(short_url).group(1))
-        imgs = soup.find("div", id="comic").find_all("img")
-        assert len(imgs) == 1, imgs
-        title = imgs[0]["alt"]
-        title2 = imgs[0]["title"]
+        div_comic = soup.find("div", id="comic")
+        if div_comic is None:
+            imgs = []
+            title = title2 = ""
+        else:
+            imgs = div_comic.find_all("img")
+            assert len(imgs) == 1, imgs
+            title = imgs[0]["alt"]
+            title2 = imgs[0]["title"]
         return {
             "short_url": short_url,
             "title": title,
