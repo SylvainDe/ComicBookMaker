@@ -1542,6 +1542,20 @@ class MrLovenstein(GenericComic):
     url = "http://www.mrlovenstein.com"
 
     @classmethod
+    def get_comic_info(cls, num):
+        url = urljoin_wrapper(cls.url, "/comic/%d" % num)
+        soup = get_soup_at_url(url)
+        imgs = list(reversed(soup.find_all("img", src=re.compile("^/images/comics/"))))
+        description = soup.find("meta", attrs={"name": "description"})["content"]
+        return {
+            "url": url,
+            "num": num,
+            "texts": "  ".join(t for t in (i.get("title") for i in imgs) if t),
+            "img": [urljoin_wrapper(url, i["src"]) for i in imgs],
+            "description": description,
+        }
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         # TODO: more info from http://www.mrlovenstein.com/archive
@@ -1554,19 +1568,9 @@ class MrLovenstein(GenericComic):
         if last_comic:
             first = last_comic["num"] + 1
         for num in range(first, last + 1):
-            url = urljoin_wrapper(cls.url, "/comic/%d" % num)
-            soup = get_soup_at_url(url)
-            imgs = list(
-                reversed(soup.find_all("img", src=re.compile("^/images/comics/")))
-            )
-            description = soup.find("meta", attrs={"name": "description"})["content"]
-            yield {
-                "url": url,
-                "num": num,
-                "texts": "  ".join(t for t in (i.get("title") for i in imgs) if t),
-                "img": [urljoin_wrapper(url, i["src"]) for i in imgs],
-                "description": description,
-            }
+            comic = cls.get_comic_info(num)
+            if comic is not None:
+                yield comic
 
 
 class DinosaurComics(GenericListableComic):
@@ -3983,6 +3987,22 @@ class DeathBulge(GenericComic):
     url = "http://www.deathbulge.com"
 
     @classmethod
+    def get_comic_info(cls, num):
+        json_url = urljoin_wrapper(cls.url, "api/comics/%d" % num)
+        json = load_json_at_url(json_url)
+        pagination = json["pagination_links"]
+        comic_json = json["comic"]
+        return {
+            "json_url": json_url,
+            "num": num,
+            "url": urljoin_wrapper(cls.url, "comics/%d" % num),
+            "alt": comic_json["alt_text"],
+            "title": comic_json["title"],
+            "img": [urljoin_wrapper(cls.url, comic_json["comic"])],
+            "date": isoformat_to_date(comic_json["timestamp"]),
+        }
+
+    @classmethod
     def get_next_comic(cls, last_comic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
         json_url = urljoin_wrapper(cls.url, "api/comics/1")
@@ -3991,19 +4011,10 @@ class DeathBulge(GenericComic):
         first_num = last_comic["num"] if last_comic else pagination["first"]
         last_num = pagination["last"]
         for num in range(first_num + 1, last_num):
-            json_url = urljoin_wrapper(cls.url, "api/comics/%d" % num)
-            json = load_json_at_url(json_url)
-            pagination = json["pagination_links"]
-            comic_json = json["comic"]
-            yield {
-                "json_url": json_url,
-                "num": num,
-                "url": urljoin_wrapper(cls.url, "comics/%d" % num),
-                "alt": comic_json["alt_text"],
-                "title": comic_json["title"],
-                "img": [urljoin_wrapper(cls.url, comic_json["comic"])],
-                "date": isoformat_to_date(comic_json["timestamp"]),
-            }
+            comic = cls.get_comic_info(num)
+            if comic is not None:
+                yield comic
+
 
 
 class Ptbd(GenericComic):
