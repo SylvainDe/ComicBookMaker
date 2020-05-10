@@ -133,7 +133,7 @@ class GenericComic(object):
         prev_date, prev_num = None, None
         today = date.today()
         for i, comic in enumerate(comics):
-            cls.print_comic(comic)
+            cls.print_comic(comic, i)
             url = comic.get("url")
             assert isinstance(url, str), "Url %s not a string" % url
             assert comic.get("comic") == cls.long_name
@@ -198,9 +198,13 @@ class GenericComic(object):
         print(cls.name, ":", text, " " * 10, "\r", end="")
 
     @classmethod
-    def print_comic(cls, comic):
+    def print_comic(cls, comic, index=None):
         """Print information about a comic."""
-        cls.print_text(comic["url"])
+        s = comic["url"]
+        if index is None:
+            cls.print_text(s)
+        else:
+            cls.print_text("%d %s" % (index, s))
 
     @classmethod
     def update(cls, saving_freq=100):
@@ -249,7 +253,7 @@ class GenericComic(object):
                 assert "new" not in comic
                 comic["new"] = None  # "'new' in comic" to check if new
                 new_comics.append(comic)
-                cls.print_comic(comic)
+                cls.print_comic(comic, i)
                 if i % saving_freq == 0:
                     end = time.time()
                     delta = end - start
