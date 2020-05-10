@@ -322,7 +322,7 @@ Comics supported
  * [A Pleasant Waste Of Time (from Tumblr)](https://artjcf.tumblr.com)
  * [Pom Comics / Piece of Me](http://www.pomcomic.com)
  * [Pond Scum](https://pondscumcomic.tumblr.com)
- * [Poorly Drawn Lines](https://www.poorlydrawnlines.com)
+ * [Poorly Drawn Lines](http://www.poorlydrawnlines.com)
  * [Poorly Drawn Lines (from Tumblr)](https://pdlcomics.tumblr.com)
  * [Yesterday's Popcorn (from Tapas.io)](https://tapas.io/series/Yesterdays-Popcorn)
  * [Yesterday's Popcorn (from Tumblr)](https://yesterdayspopcorn.tumblr.com)
