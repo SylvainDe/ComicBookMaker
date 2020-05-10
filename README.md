@@ -370,7 +370,7 @@ Comics supported
  * [Something Of That Ilk](http://www.somethingofthatilk.com)
  * [SPF Comics](https://spfcomics.com)
  * [Down the Upward Spiral (from Tapas.io)](https://tapas.io/series/Down-the-Upward-Spiral)
- * [Down the Upward Spiral (from Tumblr)](https://downtheupwardspiral.tumblr.com)
+ * [Down the Upward Spiral (from Tumblr)](https://downtheupwardspiral.com)
  * [Things in squares](http://www.thingsinsquares.com)
  * [Sticky Cinema Floor](https://stickycinemafloor.tumblr.com)
  * [Make it stoopid](http://makeitstoopid.com/comic.php)

@@ -4471,11 +4471,10 @@ class NellucNhoj(GenericTumblrV1):
 class DownTheUpwardSpiralTumblr(GenericTumblrV1):
     """Class to retrieve Down The Upward Spiral comics."""
 
-    # Also on http://www.downtheupwardspiral.com
     # Also on https://tapas.io/series/Down-the-Upward-Spiral
     name = "spiral-tumblr"
     long_name = "Down the Upward Spiral (from Tumblr)"
-    url = "https://downtheupwardspiral.tumblr.com"
+    url = "https://downtheupwardspiral.com"
 
 
 class AsPerUsualTumblr(GenericTumblrV1):
@@ -6495,7 +6494,6 @@ class DownTheUpwardSpiralTapas(GenericTapasComic):
     """Class to retrieve Down The Upward Spiral comics."""
 
     # Also on http://www.downtheupwardspiral.com
-    # Also on https://downtheupwardspiral.tumblr.com
     name = "spiral-tapa"
     long_name = "Down the Upward Spiral (from Tapas.io)"
     url = "https://tapas.io/series/Down-the-Upward-Spiral"
