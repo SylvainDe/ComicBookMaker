@@ -5519,11 +5519,12 @@ class PainTrainComicTumblr(GenericTumblrV1):
 class TheGentlemanArmchair(GenericTumblrV1):
     """Class to retrieve The Gentleman Armchair comics."""
 
+    # Used to be on https://thegentlemansarmchair.com
     # Also on https://www.gocomics.com/the-gentlemans-armchair
     # Also on https://www.webtoons.com/en/comedy/the-gentlemans-armchair/list?title_no=469
     name = "gentlemanarmchair"
     long_name = "The Gentleman Armchair"
-    url = "https://thegentlemansarmchair.com"
+    url = "https://thegentlemansarmchair.tumblr.com"
 
 
 class SpfComics(GenericTumblrV1):
