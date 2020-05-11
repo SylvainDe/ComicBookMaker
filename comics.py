@@ -1665,7 +1665,7 @@ class ButterSafe(GenericListableComic):
         return {
             "title": title,
             "date": regexp_match_to_date(cls.comic_link_re.match(url)),
-            "img": [img["src"]],
+            "img": [convert_iri_to_plain_ascii_uri(img["src"])],
         }
 
 
