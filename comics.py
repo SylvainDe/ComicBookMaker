@@ -1699,7 +1699,7 @@ class AbstruseGoose(GenericListableComic):
         return {
             "num": num,
             "title": archive_elt.string,
-            "img": [i["src"] for i in imgs],
+            "img": [convert_iri_to_plain_ascii_uri(i["src"]) for i in imgs],
         }
 
 
