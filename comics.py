@@ -31,15 +31,21 @@ class Xkcd(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generator to get the next comic. Implementation of GenericComic's abstract method."""
-        json_url = urljoin_wrapper(cls.url, "info.0.json")
-        first_num = last_comic["num"] if last_comic else 0
-        last_num = load_json_at_url(json_url)["num"]
-
+        first_num, last_num = cls.get_first_and_last_numbers()
+        if last_comic:
+            first_num = last_comic["num"]
         cls.log("first_num:%d, last_num:%d" % (first_num, last_num))
         for num in range(first_num + 1, last_num + 1):
             comic = cls.get_comic_info(num)
             if comic is not None:
                 yield comic
+
+    @classmethod
+    def get_first_and_last_numbers(cls):
+        """Get index of first and last available comics."""
+        json_url = urljoin_wrapper(cls.url, "info.0.json")
+        first_num, last_num = 0, load_json_at_url(json_url)["num"]
+        return first_num, last_num
 
     @classmethod
     def get_comic_info(cls, num):
@@ -1543,6 +1549,7 @@ class MrLovenstein(GenericComic):
 
     @classmethod
     def get_comic_info(cls, num):
+        # TODO: more info from http://www.mrlovenstein.com/archive
         url = urljoin_wrapper(cls.url, "/comic/%d" % num)
         soup = get_soup_at_url(url)
         imgs = list(reversed(soup.find_all("img", src=re.compile("^/images/comics/"))))
@@ -1556,18 +1563,24 @@ class MrLovenstein(GenericComic):
         }
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
-        # TODO: more info from http://www.mrlovenstein.com/archive
+    def get_first_and_last_numbers(cls):
+        """Get index of first and last available comics."""
         comic_num_re = re.compile("^/comic/([0-9]*)$")
         nums = [
             int(comic_num_re.match(link["href"]).group(1))
             for link in get_soup_at_url(cls.url).find_all("a", href=comic_num_re)
         ]
-        first, last = min(nums), max(nums)
+        first_num, last_num = min(nums), max(nums)
+        return first_num, last_num
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        first_num, last_num = cls.get_first_and_last_numbers()
         if last_comic:
-            first = last_comic["num"] + 1
-        for num in range(first, last + 1):
+            first_num = last_comic["num"] + 1
+        cls.log("first_num:%d, last_num:%d" % (first_num, last_num))
+        for num in range(first_num, last_num + 1):
             comic = cls.get_comic_info(num)
             if comic is not None:
                 yield comic
@@ -3979,13 +3992,21 @@ class DeathBulge(GenericComic):
         }
 
     @classmethod
-    def get_next_comic(cls, last_comic):
-        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+    def get_first_and_last_numbers(cls):
+        """Get index of first and last available comics."""
         json_url = urljoin_wrapper(cls.url, "api/comics/1")
         json = load_json_at_url(json_url)
         pagination = json["pagination_links"]
-        first_num = last_comic["num"] if last_comic else pagination["first"]
-        last_num = pagination["last"]
+        first_num, last_num = pagination["first"], pagination["last"]
+        return first_num, last_num
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
+        first_num, last_num = cls.get_first_and_last_numbers()
+        if last_comic:
+            first_num = last_comic["num"]
+        cls.log("first_num:%d, last_num:%d" % (first_num, last_num))
         for num in range(first_num + 1, last_num):
             comic = cls.get_comic_info(num)
             if comic is not None:
