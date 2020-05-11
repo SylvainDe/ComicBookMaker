@@ -2186,7 +2186,7 @@ class TubeyToons(GenericDeletedComic):
     name = "tubeytoons"
     long_name = "Tubey Toons"
     url = "http://tubeytoons.com"
-    _categories = ("TUNEYTOONS",)
+    _categories = ("TUBEYTOONS",)
 
 
 class CompletelySeriousComics(GenericNavigableComic):
@@ -4208,7 +4208,7 @@ class TubeyToonsTumblr(GenericTumblrV1):
     name = "tubeytoons-tumblr"
     long_name = "Tubey Toons (from Tumblr)"
     url = "https://tubeytoons.tumblr.com"
-    _categories = ("TUNEYTOONS",)
+    _categories = ("TUBEYTOONS",)
 
 
 class UnearthedComicsTumblr(GenericTumblrV1):
@@ -6093,7 +6093,7 @@ class TubeyToonsTapas(GenericTapasComic):
     name = "tubeytoons-tapa"
     long_name = "Tubey Toons (from Tapas.io)"
     url = "https://tapas.io/series/Tubey-Toons"
-    _categories = ("TUNEYTOONS",)
+    _categories = ("TUBEYTOONS",)
 
 
 class AnythingComicTapas(GenericTapasComic):
