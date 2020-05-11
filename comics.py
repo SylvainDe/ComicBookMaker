@@ -6739,10 +6739,21 @@ class AbsurdoLapin(GenericNavigableComic):
     @classmethod
     def get_nav(cls, soup):
         """Get the navigation elements from soup object."""
-        cont = soup.find("div", id="content")
+        cont = soup.find("div", id="content1")
         _, b2 = cont.find_all("div", class_="buttons")
-        # prev, first, last, next
-        return [li.find("a") for li in b2.find_all("li")]
+        links = b2.find_all("a")
+        nb_links = len(links)
+        if nb_links == 4:  # on most pages
+            prev, first, last, next_ = links
+        elif nb_links == 3:  # on first page
+            first, last, next_ = links
+            prev = None
+        elif nb_links == 2:  # on last page
+            prev, first = links
+            next_ = last = None
+        else:
+            assert False
+        return (prev, first, last, next_)
 
     @classmethod
     def get_first_comic_link(cls):
@@ -6760,7 +6771,7 @@ class AbsurdoLapin(GenericNavigableComic):
         author = soup.find("meta", attrs={"name": "author"})["content"]
         tags = soup.find("meta", attrs={"name": "keywords"})["content"]
         title = soup.find("title").string
-        imgs = soup.find("div", id="content").find_all("img")
+        imgs = soup.find("div", id="content1").find_all("img")
         return {
             "title": title,
             "img": [
