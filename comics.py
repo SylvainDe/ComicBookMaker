@@ -4011,7 +4011,7 @@ class DeathBulge(GenericNumberedComic):
         json = load_json_at_url(json_url)
         pagination = json["pagination_links"]
         first_num, last_num = pagination["first"], pagination["last"]
-        return first_num + 1, last_num - 1
+        return first_num, last_num
 
 
 class Ptbd(GenericComic):
