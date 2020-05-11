@@ -2950,31 +2950,12 @@ class TalesOfAbsurdity(GenericNavigableComic):
         }
 
 
-class EndlessOrigami(GenericComicNotWorking, GenericNavigableComic):  # Nav not working
+class EndlessOrigami(GenericDeletedComic):
     """Class to retrieve Endless Origami Comics."""
 
     name = "origami"
     long_name = "Endless Origami"
     url = "http://endlessorigami.com"
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
-
-    @classmethod
-    def get_comic_info(cls, soup, link):
-        """Get information about a particular comics."""
-        title = soup.find("h2", class_="post-title").string
-        author = soup.find("span", class_="post-author").find("a").string
-        date_str = soup.find("span", class_="post-date").string
-        imgs = soup.find("div", id="comic").find_all("img")
-        assert all(i["alt"] == i["title"] for i in imgs)
-        alt = imgs[0]["alt"] if imgs else ""
-        return {
-            "img": [i["src"] for i in imgs],
-            "title": title,
-            "alt": alt,
-            "author": author,
-            "date": string_to_date(date_str, "%B %d, %Y"),
-        }
 
 
 class PlanC(GenericDeletedComic):
