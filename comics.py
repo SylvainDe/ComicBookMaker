@@ -51,7 +51,7 @@ class GenericNumberedComic(GenericComic):
 
     @classmethod
     def get_first_and_last_numbers(cls):
-        """Get index of first and last available comics."""
+        """Get index of first and last available comics (as a tuple of int)."""
         raise NotImplementedError
 
     @classmethod
@@ -70,10 +70,9 @@ class Xkcd(GenericNumberedComic):
 
     @classmethod
     def get_first_and_last_numbers(cls):
-        """Get index of first and last available comics."""
+        """Get index of first and last available comics (as a tuple of int)."""
         json_url = urljoin_wrapper(cls.url, "info.0.json")
-        first_num, last_num = 1, load_json_at_url(json_url)["num"]
-        return first_num, last_num
+        return 1, load_json_at_url(json_url)["num"]
 
     @classmethod
     def get_comic_info(cls, num):
@@ -1590,14 +1589,13 @@ class MrLovenstein(GenericNumberedComic):
 
     @classmethod
     def get_first_and_last_numbers(cls):
-        """Get index of first and last available comics."""
+        """Get index of first and last available comics (as a tuple of int)."""
         comic_num_re = re.compile("^/comic/([0-9]*)$")
         nums = [
             int(comic_num_re.match(link["href"]).group(1))
             for link in get_soup_at_url(cls.url).find_all("a", href=comic_num_re)
         ]
-        first_num, last_num = min(nums), max(nums)
-        return first_num, last_num
+        return min(nums), max(nums)
 
 
 class DinosaurComics(GenericListableComic):
@@ -4006,12 +4004,11 @@ class DeathBulge(GenericNumberedComic):
 
     @classmethod
     def get_first_and_last_numbers(cls):
-        """Get index of first and last available comics."""
+        """Get index of first and last available comics (as a tuple of int)."""
         json_url = urljoin_wrapper(cls.url, "api/comics/1")
         json = load_json_at_url(json_url)
         pagination = json["pagination_links"]
-        first_num, last_num = pagination["first"], pagination["last"]
-        return first_num, last_num
+        return pagination["first"], pagination["last"]
 
 
 class Ptbd(GenericComic):
