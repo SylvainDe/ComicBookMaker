@@ -9,7 +9,10 @@ import ssl
 import json
 import shutil
 import gzip
-from bs4 import BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    BeautifulSoup = None
 import inspect
 import logging
 import time
