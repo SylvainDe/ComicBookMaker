@@ -1520,7 +1520,10 @@ class Channelate(GenericNavigableComic):
             "title": title,
             "author": author,
             "date": string_to_date(date_str, "%Y/%m/%d"),
-            "img": [urljoin_wrapper(cls.url, i["src"]) for i in imgs],
+            "img": [
+                convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i["src"]))
+                for i in imgs
+            ],
         }
 
 
