@@ -1641,7 +1641,7 @@ class ButterSafe(GenericListableComic):
         }
 
 
-class CalvinAndHobbes(GenericComic):
+class CalvinAndHobbes(GenericDeletedComic, GenericComic):
     """Class to retrieve Calvin and Hobbes comics."""
 
     # Also on http://www.gocomics.com/calvinandhobbes/
@@ -1649,30 +1649,6 @@ class CalvinAndHobbes(GenericComic):
     long_name = "Calvin and Hobbes"
     # This is not through any official webpage but eh...
     url = "http://marcel-oehler.marcellosendos.ch/comics/ch/"
-
-    @classmethod
-    def get_next_comic(cls, last_comic):
-        """Generator to get the next comic. Implementation of GenericComic's abstract method."""
-        last_date = get_date_for_comic(last_comic) if last_comic else date(1985, 11, 1)
-        link_re = re.compile("^(?P<year>[0-9]*)/(?P<month>[0-9]*)/")
-        for link in get_soup_at_url(cls.url).find_all("a", href=link_re):
-            url = link["href"]
-            gdict = link_re.match(url).groupdict()
-            year, month = gdict["year"], gdict["month"]
-            if date(int(year), int(month), 1) + timedelta(days=31) >= last_date:
-                img_re = re.compile("^%s%s([0-9]*)" % (year, month))
-                month_url = urljoin_wrapper(cls.url, url)
-                for img in get_soup_at_url(month_url).find_all("img", src=img_re):
-                    img_src = img["src"]
-                    day = int(img_re.match(img_src).group(1))
-                    comic_date = date(int(year), int(month), day)
-                    if comic_date > last_date:
-                        yield {
-                            "url": month_url,
-                            "date": comic_date,
-                            "img": ["%s%s/%s/%s" % (cls.url, year, month, img_src)],
-                        }
-                        last_date = comic_date
 
 
 class AbstruseGoose(GenericListableComic):
