@@ -3530,7 +3530,10 @@ class EarthExplodes(GenericNavigableComic):
         imgs = soup.find("div", id="image").find_all("img")
         alt = imgs[0].get("title", "")
         return {
-            "img": [urljoin_wrapper(cls.url, i["src"]) for i in imgs],
+            "img": [
+                convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i["src"]))
+                for i in imgs
+            ],
             "title": title,
             "alt": alt,
         }
