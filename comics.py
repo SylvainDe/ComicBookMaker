@@ -1996,15 +1996,15 @@ class BigFootJustice(GenericNavigableComic):
     name = "bigfoot"
     long_name = "Big Foot Justice"
     url = "http://bigfootjustice.com"
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_a_navi_comicnavnext_navinext
+    get_first_comic_link = simulate_first_link
+    first_url = "https://bigfootjustice.com/comic/iscale/"
+    get_navi_link = get_link_rel_next
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        imgs = soup.find("div", id="comic").find_all("img")
-        assert all(i["title"] == i["alt"] for i in imgs)
-        title = " ".join(i["title"] for i in imgs)
+        imgs = soup.find("div", id="one-comic-option").find_all("img")
+        title = soup.find("title").string
         return {"img": [i["src"] for i in imgs], "title": title}
 
 
