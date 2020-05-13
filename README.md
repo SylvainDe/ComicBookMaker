@@ -329,6 +329,7 @@ Comics supported
  * [Pretends to be drawing](https://ptbd.jwels.berlin)
  * [Pretends to be drawing (from Tapas.io)](https://tapas.io/series/ptbd)
  * [Pundemonium](https://monstika.tumblr.com)
+ * [The Quark Side (from Tumblr)](https://thequarkside.tumblr.com)
  * [Quarktees](http://www.quarktees.com/blogs/news)
  * [Rae the Doe](https://www.raethedoe.com)
  * [Rae the Doe (from Tumblr)](https://raethedoe.tumblr.com)

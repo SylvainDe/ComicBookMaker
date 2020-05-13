@@ -1736,9 +1736,11 @@ class PhDComics(GenericNavigableComic):
 class Quarktees(GenericNavigableComic):
     """Class to retrieve the Quarktees comics."""
 
+    # Also on https://thequarkside.tumblr.com
     name = "quarktees"
     long_name = "Quarktees"
     url = "http://www.quarktees.com/blogs/news"
+    _categories = ("QUARKSIDE",)
     get_url_from_link = join_cls_url_to_href
     get_first_comic_link = simulate_first_link
     first_url = "http://www.quarktees.com/blogs/news/12486621-coming-soon"
@@ -1751,7 +1753,11 @@ class Quarktees(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find("meta", property="og:title")["content"]
+        ogtitle = soup.find("meta", property="og:title")
+        if ogtitle is None:
+            cls.log("Not available for the time being?")
+            return None
+        title = ogtitle["content"]
         article = soup.find("div", class_="single-article")
         imgs = article.find_all("img")
         return {
@@ -5559,6 +5565,16 @@ class FalseKneesTumblr(GenericTumblrV1):
     long_name = "False Knees (from Tumblr)"
     url = "https://falseknees.tumblr.com"
     _categories = ("FALSEKNEES",)
+
+
+class QuarkSideTumblr(GenericTumblrV1):
+    """Class to retrieve Quark Side comics."""
+
+    # Also on http://www.quarktees.com/blogs/news
+    name = "quarkside-tumblr"
+    long_name = "The Quark Side (from Tumblr)"
+    url = "https://thequarkside.tumblr.com"
+    _categories = ("QUARKSIDE",)
 
 
 class HorovitzComics(GenericDeletedComic, GenericListableComic):
