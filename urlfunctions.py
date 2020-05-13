@@ -60,6 +60,7 @@ def urlopen_wrapper(url, referer=None):
         urllib.error.URLError,
         ConnectionResetError,
         ssl.CertificateError,
+        http.client.InvalidURL,
     ) as e:
         print("Exception %s for url %s" % (e, url))
         raise
@@ -125,7 +126,12 @@ def get_file_at_url(url, path, referer=None):
                 shutil.copyfileobj(response, out_file)
                 time.sleep(0.4)
                 return path
-    except (urllib.error.HTTPError, urllib.error.URLError, ssl.CertificateError):
+    except (
+        urllib.error.HTTPError,
+        urllib.error.URLError,
+        ssl.CertificateError,
+        http.client.InvalidURL,
+    ):
         return None
 
 
