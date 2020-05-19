@@ -346,7 +346,7 @@ class GenericPaginatedListableComic(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for GenericPaginatedListableComic."""
-        if not cls.check_last_comic(last_comic):
+        if last_comic is not None and not cls.check_last_comic(last_comic):
             return []
 
         for e in reversed(cls.get_archive_elements(last_comic)):
@@ -4094,24 +4094,22 @@ class GenericTumblrV1(GenericPaginatedListableComic):
         # Sometimes, tumblr posts are deleted. When previous post is deleted, we
         # might end up spending a lot of time looking for something that
         # doesn't exist. Failing early and clearly might be a better option.
-        if last_comic is not None:
-            cls.check_url(last_comic["api_url"])
-            last_id = last_comic["tumblr-id"]
-            last_api_url = cls.get_api_url_for_id(last_id)
+        assert last_comic is not None
+        cls.check_url(last_comic["api_url"])
+        last_api_url = cls.get_api_url_for_id(last_comic["tumblr-id"])
+        try:
+            get_soup_at_url(last_api_url)
+        except urllib.error.HTTPError:
             try:
-                get_soup_at_url(last_api_url)
+                get_soup_at_url(cls.url)
             except urllib.error.HTTPError:
-                try:
-                    get_soup_at_url(cls.url)
-                except urllib.error.HTTPError:
-                    print("Did not find previous post nor main url %s" % cls.url)
-                else:
-                    print(
-                        "Did not find previous post %s : it might have been deleted"
-                        % last_api_url
-                    )
-                return False
-        return True
+                print("Did not find previous post nor main url %s" % cls.url)
+            else:
+                print(
+                    "Did not find previous post %s : it might have been deleted"
+                    % last_api_url
+                )
+            return False
 
     @classmethod
     def archive_element_corresponds_to_comic(cls, elt, comic):
@@ -6000,6 +5998,24 @@ class GenericTapasComic(GenericPaginatedListableComic):
     """Generic class to handle the logic common to comics from https://tapas.io ."""
 
     _categories = ("TAPAS",)
+
+    @classmethod
+    def check_last_comic(cls, last_comic):
+        """Check that last comic seems to be valid."""
+        last_url = last_comic["url"]
+        try:
+            get_soup_at_url(last_url)
+        except urllib.error.HTTPError:
+            try:
+                get_soup_at_url(cls.url)
+            except urllib.error.HTTPError:
+                print("Did not find previous post nor main url %s" % cls.url)
+            else:
+                print(
+                    "Did not find previous post %s : it might have been deleted"
+                    % last_url
+                )
+            return False
 
     @classmethod
     def get_comic_info(cls, archive_elt):
