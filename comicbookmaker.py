@@ -77,6 +77,12 @@ def main():
         help=("log level (as per the Python logging module)"),
         default=logging.CRITICAL,
     )
+    parser.add_argument(
+        "--reverse",
+        "-r",
+        action="store_true",
+        help=("process comics in reversed order"),
+    )
     args = parser.parse_args()
     logger.setLevel(args.loglevel)
     # Apply default value
@@ -91,7 +97,9 @@ def main():
     for name in args.excluded:
         for klass in COMICS_DICT[name]:
             comic_classes.discard(klass)
-    comic_classes = sorted(comic_classes, key=lambda c: c.name.lower())
+    comic_classes = sorted(
+        comic_classes, key=lambda c: c.name.lower(), reverse=args.reverse
+    )
     logging.debug("Starting")
     for action in args.action:
         method_name = arg_to_method.get(action)
