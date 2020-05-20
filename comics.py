@@ -1145,7 +1145,11 @@ class VictimsOfCircumsolar(GenericDeletedComic, GenericNavigableComic):
         desc = soup.find_all("meta", property="og:description")[-1]["content"]
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i["title"] == i["alt"] == title for i in imgs)
-        return {"title": title, "description": desc, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "description": desc,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class ThreeWordPhrase(GenericNavigableComic):
@@ -1310,7 +1314,10 @@ class PerryBibleFellowship(GenericListableComic):  # Is now navigable too
         name = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("meta", property="og:image")
         assert len(imgs) == 1, imgs
-        return {"name": name, "img": [i["content"] for i in imgs]}
+        return {
+            "name": name,
+            "img": [i["content"] for i in imgs],
+        }
 
 
 class Mercworks(GenericDeletedComic):  # Moved to Webtoons
@@ -1730,7 +1737,10 @@ class PhDComics(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", attrs={"name": "twitter:title"})["content"]
         imgs = soup.find_all("meta", property="og:image")
-        return {"img": [i["content"] for i in imgs], "title": title}
+        return {
+            "img": [i["content"] for i in imgs],
+            "title": title,
+        }
 
 
 class Quarktees(GenericNavigableComic):
@@ -1821,7 +1831,11 @@ class Oglaf(GenericNavigableComic):
         assert len(strip_imgs) == 1, strip_imgs
         imgs = title_imgs + strip_imgs
         desc = " ".join(i["title"] for i in imgs)
-        return {"title": title, "img": [i["src"] for i in imgs], "description": desc}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+            "description": desc,
+        }
 
 
 class ScandinaviaAndTheWorld(GenericNavigableComic):
@@ -1844,7 +1858,11 @@ class ScandinaviaAndTheWorld(GenericNavigableComic):
         title = soup.find("meta", attrs={"name": "twitter:label1"})["content"]
         desc = soup.find("meta", property="og:description")["content"]
         imgs = soup.find_all("img", itemprop="image")
-        return {"title": title, "description": desc, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "description": desc,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class SomethingOfThatIlk(GenericDeletedComic):
@@ -1901,7 +1919,10 @@ class InfiniteMonkeyBusiness(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find("div", id="comic").find_all("img")
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class Wondermark(GenericListableComic):
@@ -1983,7 +2004,11 @@ class JustSayEh(GenericDeletedComic, GenericNavigableComic):
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i["alt"] == i["title"] for i in imgs)
         alt = imgs[0]["alt"]
-        return {"img": [i["src"] for i in imgs], "title": title, "alt": alt}
+        return {
+            "img": [i["src"] for i in imgs],
+            "title": title,
+            "alt": alt,
+        }
 
 
 class MouseBearComedy(GenericComicNotWorking):  # Website has changed
@@ -2011,7 +2036,10 @@ class BigFootJustice(GenericNavigableComic):
         """Get information about a particular comics."""
         imgs = soup.find("div", id="one-comic-option").find_all("img")
         title = soup.find("title").string
-        return {"img": [i["src"] for i in imgs], "title": title}
+        return {
+            "img": [i["src"] for i in imgs],
+            "title": title,
+        }
 
 
 class RespawnComic(GenericDeletedComic):  # The website still exists but comics seem to be on Tapas now
@@ -2309,7 +2337,10 @@ class DepressedAlien(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", attrs={"name": "twitter:title"})["content"]
         imgs = soup.find_all("meta", property="og:image")
-        return {"title": title, "img": [i["content"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["content"] for i in imgs],
+        }
 
 
 class TurnOffUs(GenericListableComic):
@@ -2332,7 +2363,10 @@ class TurnOffUs(GenericListableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("meta", property="og:image")
-        return {"title": title, "img": [i["content"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["content"] for i in imgs],
+        }
 
 
 class ThingsInSquares(GenericListableComic):
@@ -2586,7 +2620,10 @@ class RaeTheDoe(GenericListableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("link", rel="image_src")
-        return {"img": [i["href"] for i in imgs], "title": title}
+        return {
+            "img": [i["href"] for i in imgs],
+            "title": title,
+        }
 
 
 class HowDnsWorksComics(GenericListableComic):
@@ -2888,7 +2925,10 @@ class PleasantThoughts(GenericDeletedComic, GenericNavigableComic):
         post = soup.find("div", class_="post-content")
         title = post.find("h2", class_="post-title").string
         imgs = post.find("div", class_="entry").find_all("img")
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class MisterAndMe(GenericNavigableComic):
@@ -2991,7 +3031,10 @@ class BuniComic(GenericNavigableComic):
         imgs = soup.find("div", id="comic").find_all("img")
         assert all(i["alt"] == i["title"] for i in imgs)
         title = imgs[0]["title"] if imgs else soup.find("title").string
-        return {"img": [i["src"] for i in imgs], "title": title}
+        return {
+            "img": [i["src"] for i in imgs],
+            "title": title,
+        }
 
 
 class GenericCommitStrip(GenericNavigableComic):
@@ -3347,7 +3390,10 @@ class WoodenPlankStudios(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("h1").string
         imgs = soup.find("div", class_="webcomic-image").find_all("img")
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class ElectricBunnyComic(GenericNavigableComic):
@@ -3375,7 +3421,10 @@ class ElectricBunnyComic(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("meta", property="og:title")["content"]
         imgs = soup.find_all("meta", property="og:image")
-        return {"title": title, "img": [i["content"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["content"] for i in imgs],
+        }
 
 
 class SheldonComics(GenericNavigableComic):
@@ -3406,7 +3455,10 @@ class SheldonComics(GenericNavigableComic):
         assert all(i["alt"] == i["title"] for i in imgs)
         assert len(imgs) == 1, imgs
         title = imgs[0]["title"]
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class ManVersusManatee(GenericNavigableComic):
@@ -3445,7 +3497,10 @@ class TheMeerkatguy(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("title").string
         imgs = soup.find_all("meta", property="og:image")
-        return {"img": [i["content"] for i in imgs], "title": title}
+        return {
+            "img": [i["content"] for i in imgs],
+            "title": title,
+        }
 
 
 class Ubertool(GenericNavigableComic):
@@ -3651,7 +3706,10 @@ class MakeItStoopid(GenericDeletedComic, GenericNavigableComic):
         """Get information about a particular comics."""
         title = link["title"]
         imgs = soup.find_all("img", id="comicimg")
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class OffTheLeashDog(GenericNavigableComic):
@@ -3672,7 +3730,10 @@ class OffTheLeashDog(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("h1", class_="entry-title").string
         imgs = soup.find("div", class_="entry-content").find_all("img")
-        return {"title": title, "img": [i["src"] for i in imgs]}
+        return {
+            "title": title,
+            "img": [i["src"] for i in imgs],
+        }
 
 
 class MacadamValley(GenericDeletedComic, GenericNavigableComic):
@@ -3817,7 +3878,11 @@ class TuMourrasMoinsBete(GenericBlogspotComic):
         title = soup.find("title").string
         imgs = soup.find("div", itemprop="description articleBody").find_all("img")
         author = soup.find("span", itemprop="author").string
-        return {"img": [i["src"] for i in imgs], "author": author, "title": title}
+        return {
+            "img": [i["src"] for i in imgs],
+            "author": author,
+            "title": title,
+        }
 
 
 class Octopuns(GenericBlogspotComic):
@@ -3898,7 +3963,11 @@ class GloryOwlComix(GenericBlogspotComic):
         title = soup.find("title").string
         imgs = soup.find_all("link", rel="image_src")
         author = soup.find("a", rel="author").string
-        return {"img": [i["href"] for i in imgs], "author": author, "title": title}
+        return {
+            "img": [i["href"] for i in imgs],
+            "author": author,
+            "title": title,
+        }
 
 
 class AtRandomComics(GenericNavigableComic):
@@ -5427,7 +5496,10 @@ class KickstandComics(GenericNavigableComic):
         """Get information about a particular comics."""
         title = soup.find("h2", class_="post-title").string
         imgs = soup.find("div", id="comic").find_all("img")
-        return {"img": [i["src"] for i in imgs], "title": title}
+        return {
+            "img": [i["src"] for i in imgs],
+            "title": title,
+        }
 
 
 class BoumeriesTumblr(GenericTumblrV1):
@@ -6858,7 +6930,9 @@ class DogmoDog(GenericNavigableComic):
         if div is None:
             return None
         imgs = div.find_all("img")
-        return {"img": [urljoin_wrapper(cls.url, i["src"]) for i in imgs]}
+        return {
+            "img": [urljoin_wrapper(cls.url, i["src"]) for i in imgs],
+        }
 
 
 def get_subclasses(klass):
