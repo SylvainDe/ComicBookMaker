@@ -4213,6 +4213,43 @@ class GenericTumblrV1(GenericPaginatedListableComic):
                 yield e
 
 
+class GenericDeletedTumblrV1(GenericDeletedComic, GenericTumblrV1):
+    """Generic class for deleted tumblrs.
+
+    It can be useful to check that the comic is indeed still deleted."""
+
+    _categories = ("DELETEDTUMBLR",)
+
+    @classmethod
+    def url_is_reachable(cls, url):
+        try:
+            get_soup_at_url(url)
+            return True
+        except urllib.error.HTTPError:
+            return False
+        except urllib.error.URLError:
+            return False
+
+    @classmethod
+    def check_urls(cls, last_comic):
+        urls = [cls.url]
+        if last_comic is not None:
+            urls.append(last_comic["api_url"])
+            urls.append(last_comic["url"])
+        for url in urls:
+            if cls.url_is_reachable(url):
+                print(
+                    "Tumblr is expected to be deleted but URL %s is reachable" % (url)
+                )
+
+    @classmethod
+    def get_next_comic(cls, last_comic):
+        """Implementation of get_next_comic returning no comics."""
+        cls.check_urls(last_comic)
+        cls.log("comic is considered as empty - returning no comic")
+        return []
+
+
 class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     """Class to retrieve Saturday Morning Breakfast Cereal comics."""
 
@@ -4224,7 +4261,7 @@ class SaturdayMorningBreakfastCerealTumblr(GenericTumblrV1):
     _categories = ("SMBC",)
 
 
-class AHammADay(GenericDeletedComic, GenericTumblrV1):
+class AHammADay(GenericTumblrV1):  # Seems to be empty
     """Class to retrieve class A Hamm A Day comics."""
 
     name = "hamm"
@@ -4259,7 +4296,7 @@ class ItsTheTieTumblr(GenericTumblrV1):
     _categories = ("TIE",)
 
 
-class OctopunsTumblr(GenericDeletedComic, GenericTumblrV1):
+class OctopunsTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Octopuns comics."""
 
     # Also on http://www.octopuns.net
@@ -4721,7 +4758,7 @@ class DorrisMc(GenericTumblrV1):
     url = "https://dorrismccomics.com"
 
 
-class LeleozTumblr(GenericDeletedComic, GenericTumblrV1):
+class LeleozTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Leleoz comics."""
 
     # Also on https://tapas.io/series/Leleoz
@@ -4831,7 +4868,7 @@ class RobbieAndBobby(GenericTumblrV1):
     url = "https://robbieandbobby.tumblr.com"
 
 
-class ElectricBunnyComicTumblr(GenericDeletedComic, GenericTumblrV1):
+class ElectricBunnyComicTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Electric Bunny Comics."""
 
     # Also on http://www.electricbunnycomics.com/View/Comic/153/Welcome+to+Hell
@@ -4901,7 +4938,9 @@ class CEstPasEnRegardantSesPompes(GenericTumblrV1):
     url = "https://marcoandco.tumblr.com"
 
 
-class TheGrohlTroll(GenericDeletedComic, GenericTumblrV1):
+class TheGrohlTroll(
+    GenericDeletedComic, GenericTumblrV1
+):  # It takes a long time to err
     """Class to retrieve The Grohl Troll comics."""
 
     name = "grohltroll"
@@ -5009,7 +5048,7 @@ class UbertoolTumblr(GenericTumblrV1):
     _categories = ("UBERTOOL",)
 
 
-class LittleLifeLinesTumblr(GenericDeletedComic, GenericTumblrV1):
+class LittleLifeLinesTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Little Life Lines comics."""
 
     # Also on http://www.littlelifelines.com
@@ -5109,7 +5148,7 @@ class RockPaperCynicTumblr(GenericTumblrV1):
     url = "https://rockpapercynic.tumblr.com"
 
 
-class DeadlyPanelTumblr(GenericDeletedComic, GenericTumblrV1):
+class DeadlyPanelTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Deadly Panel comics."""
 
     # Also on http://www.deadlypanel.com
@@ -5275,7 +5314,7 @@ class JamesOfNoTradesTumblr(GenericTumblrV1):
     _categories = ("JAMESOFNOTRADES",)
 
 
-class InfiniteGuff(GenericDeletedComic, GenericTumblrV1):
+class InfiniteGuff(GenericDeletedTumblrV1):  # Used to be a Tumblr
     """Class to retrieve Infinite Guff comics."""
 
     # Also on https://www.instagram.com/infiniteguff/
