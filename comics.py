@@ -1971,19 +1971,46 @@ class WarehouseComic(GenericNavigableComic):
     name = "warehouse"
     long_name = "Warehouse Comic"
     url = "http://warehousecomic.com"
-    get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
+    get_url_from_link = join_cls_url_to_href
+
+    @classmethod
+    def get_nav(cls, soup):
+        """Get the navigation elements from soup object."""
+        divnav = soup.find("div", id="comicNav")
+        first, prev, next_, new = divnav.find_all("a")
+        prev_n, next_n = (
+            int(re.search("[0-9]+", href).group(0))
+            for href in [prev["href"], next_["href"]]
+        )
+        # Workaround around navigation bug:
+        # After last comic n, we still have a next button to comic with n+1 in the url
+        # but it actually contains image for comic n (and a next link to n)
+        if next_n - prev_n != 2:
+            next_ = None
+        return (first, prev, next_)
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return cls.get_nav(get_soup_at_url(cls.url))[0]
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return cls.get_nav(last_soup)[2 if next_ else 1]
 
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find("h2", class_="post-title").string
-        date_str = soup.find("span", class_="post-date").string
-        imgs = soup.find("div", id="comic").find_all("img")
+        # Workaround around navigation bug
+        next_ = cls.get_nav(soup)[2]
+        if next_ is None:
+            return None
         return {
-            "img": [i["src"] for i in imgs],
-            "title": title,
-            "date": string_to_date(date_str, "%B %d, %Y"),
+            "img": [
+                urljoin_wrapper(cls.url, i["src"])
+                for i in [soup.find("div", align="center").find("img")]
+            ],
         }
 
 
