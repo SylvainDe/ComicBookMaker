@@ -18,6 +18,10 @@ import locale
 import urllib
 
 DEFAULT_LOCAL = "en_GB.UTF-8"
+# Technical switch to have a faster feedback when things go wrong.
+# This could lead to additional requests to be performed and/or
+# additional diagnosis information to be printed to the user.
+PERFORM_CHECK = False
 
 
 class GenericNumberedComic(GenericComic):
@@ -182,7 +186,8 @@ class GenericNavigableComic(GenericComic):
             else cls.get_first_comic_link()
         )
         cls.log("next/first comic will be %s (url is %s)" % (str(next_comic), url))
-        # cls.check_navigation(url)
+        if PERFORM_CHECK:
+            cls.check_navigation(url)
         while next_comic:
             prev_url, url = url, cls.get_url_from_link(next_comic)
             if prev_url == url:
@@ -346,7 +351,7 @@ class GenericPaginatedListableComic(GenericComic):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Generic implementation of get_next_comic for GenericPaginatedListableComic."""
-        if last_comic is not None and not cls.check_last_comic(last_comic):
+        if last_comic is not None and not cls.last_comic_is_valid(last_comic):
             return []
 
         for e in reversed(cls.get_archive_elements(last_comic)):
@@ -371,8 +376,15 @@ class GenericPaginatedListableComic(GenericComic):
         return []
 
     @classmethod
-    def check_last_comic(cls, last_comic):
-        """Check that last comic seems to be valid."""
+    def last_comic_is_valid(cls, last_comic):
+        """Check that last comic seems to be valid.
+
+        Retrieving the list of comics to find a comic which does not exist
+        anymore can be time consumming. When it is possible, it can be easier
+        to check that the comic we are looking for is valid.
+
+        Default behavior is to assume that the last comic is valid but this
+        can be overridden with a more precise implementation in subclasses."""
         return True
 
     @classmethod
@@ -4185,7 +4197,7 @@ class GenericTumblrV1(GenericPaginatedListableComic):
         }
 
     @classmethod
-    def check_last_comic(cls, last_comic):
+    def last_comic_is_valid(cls, last_comic):
         """Check that last comic seems to be valid."""
         # Sometimes, tumblr posts are deleted. When previous post is deleted, we
         # might end up spending a lot of time looking for something that
@@ -4272,7 +4284,8 @@ class GenericDeletedTumblrV1(GenericDeletedComic, GenericTumblrV1):
     @classmethod
     def get_next_comic(cls, last_comic):
         """Implementation of get_next_comic returning no comics."""
-        cls.check_urls(last_comic)
+        if PERFORM_CHECK:
+            cls.check_urls(last_comic)
         cls.log("comic is considered as empty - returning no comic")
         return []
 
@@ -6138,7 +6151,7 @@ class GenericTapasComic(GenericPaginatedListableComic):
     _categories = ("TAPAS",)
 
     @classmethod
-    def check_last_comic(cls, last_comic):
+    def last_comic_is_valid(cls, last_comic):
         """Check that last comic seems to be valid."""
         last_url = last_comic["url"]
         try:
