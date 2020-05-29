@@ -4755,7 +4755,7 @@ class LolNeinTumblr(GenericTumblrV1):
     # Also on http://lolnein.com
     name = "lolnein-tumblr"
     long_name = "Lol Nein (from Tumblr)"
-    url = "http://lolneincom.tumblr.com"
+    url = "https://lolnein.tumblr.com"
 
 
 class FatAwesomeComicsTumblr(GenericTumblrV1):

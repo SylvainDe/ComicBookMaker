@@ -247,7 +247,7 @@ Comics supported
  * [L.I.N.S. Editions](https://linsedition.com)
  * [L.I.N.S. Editions (from Tumblr)](https://linscomics.tumblr.com)
  * [Loading Artist](http://www.loadingartist.com/latest)
- * [Lol Nein (from Tumblr)](http://lolneincom.tumblr.com)
+ * [Lol Nein (from Tumblr)](https://lolnein.tumblr.com)
  * [Mike Luckovich](http://www.gocomics.com/mikeluckovich)
  * [Lunar Baboon](http://www.gocomics.com/lunarbaboon)
  * [Une Annee au Lycee](http://uneanneeaulycee.blog.lemonde.fr)
