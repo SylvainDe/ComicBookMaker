@@ -228,6 +228,7 @@ Comics supported
  * [Jake Likes Onions](https://jakelikesonions.com)
  * [James Of No Trades (from Tapas.io)](https://tapas.io/series/James-of-No-Trades)
  * [James Of No Trades (from Tumblr)](https://jamesfregan.tumblr.com)
+ * [The Jenkins](https://thejenkinscomic.wordpress.com)
  * [My Jet Pack](https://myjetpack.tumblr.com)
  * [Jhall Comics (from Tumblr)](https://jhallcomics.tumblr.com)
  * [Joey Alison Sayers (from GoComics)](http://www.gocomics.com/joey-alison-sayers-comics)
