@@ -894,7 +894,7 @@ class ZenPencils(GenericNavigableComic):
     long_name = "Zen Pencils"
     url = "http://zenpencils.com"
     _categories = ("ZENPENCILS",)
-    get_navi_link = get_link_rel_next
+    get_navi_link = get_a_navi_comicnavnext_navinext
     get_first_comic_link = simulate_first_link
     first_url = "http://zenpencils.com/comic/1-ralph-waldo-emerson-make-them-cry/"
 
@@ -1295,14 +1295,16 @@ class SaturdayMorningBreakfastCereal(GenericNavigableComic):
         aftercomic = soup.find("div", id="aftercomic")
         image_url2 = aftercomic.find("img")["src"] if aftercomic else ""
         imgs = [image_url1] + ([image_url2] if image_url2 else [])
-        date_str = soup.find("div", class_="cc-publishtime").contents[0]
+        ld_json = soup.find('script', type="application/ld+json").string
+        json_content = json.loads(ld_json)
         return {
             "title": image1["title"],
             "img": [
                 convert_iri_to_plain_ascii_uri(urljoin_wrapper(cls.url, i))
                 for i in imgs
             ],
-            "date": string_to_date(date_str, "Posted %B %d, %Y at %I:%M %p"),
+            "author": json_content["author"],
+            "date": isoformat_to_date(json_content["datePublished"]),
         }
 
 
@@ -2652,7 +2654,7 @@ class RaeTheDoe(GenericListableComic):
         archive_url = urljoin_wrapper(cls.url, "p/archive.html")
         soup = get_soup_at_url(archive_url)
         div_content = soup.find("div", class_="post-body entry-content")
-        return div_content.find_all("a")
+        return div_content.find_all("a")[:-1]
 
     @classmethod
     def get_comic_info(cls, soup, a):
@@ -4070,7 +4072,7 @@ class AtRandomComics(GenericNavigableComic):
         }
 
 
-class NothingSuspicious(GenericNavigableComic):
+class NothingSuspicious(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Nothing Suspicious comics."""
 
     name = "nothingsuspicious"
@@ -6691,7 +6693,7 @@ class PizzaDad(GenericTapasComic):
     _categories = ("WESLEYHALL",)
 
 
-class DownTheUpwardSpiralTapas(GenericTapasComic):
+class DownTheUpwardSpiralTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve Down The Upward Spiral comics."""
 
     # Also on http://www.downtheupwardspiral.com
