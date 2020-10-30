@@ -2083,7 +2083,9 @@ class BigFootJustice(GenericNavigableComic):
         }
 
 
-class RespawnComic(GenericDeletedComic):  # The website still exists but comics seem to be on Tapas now
+class RespawnComic(
+    GenericDeletedComic
+):  # The website still exists but comics seem to be on Tapas now
     """Class to retrieve Respawn Comic."""
 
     # Also on https://respawncomic.tumblr.com
@@ -4288,6 +4290,7 @@ class GenericDeletedTumblrV1(GenericDeletedComic, GenericTumblrV1):
 
     @classmethod
     def url_is_reachable(cls, url):
+        "Check if a given url is reachable. Return True or False."""
         try:
             get_soup_at_url(url)
             return True
@@ -4298,6 +4301,7 @@ class GenericDeletedTumblrV1(GenericDeletedComic, GenericTumblrV1):
 
     @classmethod
     def check_urls(cls, last_comic):
+        """Check if URLs are reachable. Log something if they are."""
         urls = [cls.url]
         if last_comic is not None:
             urls.append(last_comic["api_url"])
@@ -5535,8 +5539,9 @@ class EatMyPaint(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        imgs = soup.find("div", id="comic").find_all("img") + \
-            soup.find_all("img", class_="hiddenPanel")
+        imgs = soup.find("div", id="comic").find_all("img") + soup.find_all(
+            "img", class_="hiddenPanel"
+        )
         return {
             "img": [i["src"] for i in imgs],
         }

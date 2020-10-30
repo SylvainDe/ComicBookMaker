@@ -9,6 +9,7 @@ import ssl
 import json
 import shutil
 import gzip
+
 try:
     from bs4 import BeautifulSoup
 except ImportError:
