@@ -2942,14 +2942,11 @@ class TheAwkwardYeti(GenericNavigableComic):
     @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
-        title = soup.find("h2", class_="post-title").string
-        date_str = soup.find("span", class_="post-date").string
-        imgs = soup.find("div", id="comic").find_all("img")
-        assert all(idx > 0 or i["alt"] == i["title"] for idx, i in enumerate(imgs))
+        title = soup.find("a", class_="c-blog-title").string
+        imgs = soup.find_all("meta", property="og:image")
         return {
-            "img": [i["src"] for i in imgs],
+            "img": [i["content"] for i in imgs],
             "title": title,
-            "date": string_to_date(date_str, "%B %d, %Y"),
         }
 
 
