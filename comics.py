@@ -2311,7 +2311,6 @@ class PoorlyDrawnLines(GenericListableComic):
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         imgs = soup.find("div", class_="post").find_all("img")
-        assert len(imgs) <= 1, imgs
         return {
             "img": [i["src"] for i in imgs],
             "title": imgs[0].get("title", "") if imgs else "",
