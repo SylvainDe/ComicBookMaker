@@ -870,6 +870,12 @@ class SpaceAvalanche(GenericNavigableComic):
         }
 
     @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        img = last_soup.find("img", alt="Next Comic" if next_ else "Previous Comic")
+        return img.parent if img else None
+
+    @classmethod
     def get_comic_info(cls, soup, link):
         """Get information about a particular comics."""
         url_date_re = re.compile(
