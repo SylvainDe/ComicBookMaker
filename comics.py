@@ -2924,7 +2924,8 @@ class TheAwkwardYeti(GenericNavigableComic):
     long_name = "The Awkward Yeti"
     url = "http://theawkwardyeti.com"
     _categories = ("YETI",)
-    get_first_comic_link = get_a_navi_navifirst
+    get_first_comic_link = simulate_first_link
+    first_url = "https://theawkwardyeti.com/comic/0912-reading/"
 
     @classmethod
     def get_navi_link(cls, last_soup, next_):
