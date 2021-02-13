@@ -3446,9 +3446,21 @@ class WoodenPlankStudios(GenericNavigableComic):
     name = "woodenplank"
     long_name = "Wooden Plank Studios"
     url = "https://www.woodenplankstudios.com/comic/"
-    get_navi_link = get_link_rel_next
-    get_first_comic_link = simulate_first_link
-    first_url = "https://www.woodenplankstudios.com/comic/professor-layton-and-the-curious-fetish/"
+
+    @classmethod
+    def get_first_comic_link(cls):
+        """Get link to first comics."""
+        return get_soup_at_url(cls.url).find(
+            "a",
+            class_="webcomic-link webcomic1-link first-webcomic-link first-webcomic1-link",
+        )
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find(
+            "a", class_="webcomic-link webcomic1-link previous-webcomic-link previous-webcomic1-link" if next_ else "webcomic-link webcomic1-link previous-webcomic-link previous-webcomic1-link"
+        )
 
     @classmethod
     def get_comic_info(cls, soup, link):
