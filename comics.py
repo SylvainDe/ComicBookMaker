@@ -918,7 +918,7 @@ class ZenPencils(GenericNavigableComic):
         }
 
 
-class ItsTheTie(GenericNavigableComic):
+class ItsTheTie(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve It's the tie comics."""
 
     # Also on https://itsthetie.tumblr.com
@@ -2765,7 +2765,7 @@ class LinsEditions(GenericDeletedComic):  # Permanently moved to warandpeas
     _categories = ("WARANDPEAS", "LINS")
 
 
-class WarAndPeas(GenericNavigableComic):
+class WarAndPeas(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve War And Peas comics."""
 
     name = "warandpeas"
@@ -3171,7 +3171,7 @@ class BoumerieFr(GenericBoumerie):
     lang = "fr_FR.utf8"
 
 
-class UnearthedComics(GenericNavigableComic):
+class UnearthedComics(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Unearthed comics."""
 
     # Also on https://tapas.io/series/UnearthedComics
@@ -3526,7 +3526,7 @@ class SheldonComics(GenericNavigableComic):
         }
 
 
-class ManVersusManatee(GenericNavigableComic):
+class ManVersusManatee(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Man Versus Manatee comics."""
 
     url = "http://manvsmanatee.com"
@@ -3634,7 +3634,7 @@ class ObscureGentlemen(GenericNavigableComic):
         }
 
 
-class EarthExplodes(GenericNavigableComic):
+class EarthExplodes(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve The Earth Explodes comics."""
 
     name = "earthexplodes"
@@ -4525,7 +4525,7 @@ class TheOatmealTumblr(GenericTumblrV1):
     url = "https://oatmeal.tumblr.com"
 
 
-class HeckIfIKnowComicsTumblr(GenericTumblrV1):
+class HeckIfIKnowComicsTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Heck If I Know Comics."""
 
     # Also on https://tapas.io/series/Regular
@@ -4552,7 +4552,7 @@ class CheerUpEmoKidTumblr(GenericTumblrV1):
     url = "https://enzocomics.tumblr.com"
 
 
-class ForLackOfABetterComic(GenericTumblrV1):
+class ForLackOfABetterComic(GenericDeletedTumblrV1):
     """Class to retrieve For Lack Of A Better Comics."""
 
     # Also on http://forlackofabettercomic.com
@@ -4590,7 +4590,7 @@ class TimeTrabbleTumblr(GenericTumblrV1):
     url = "https://timetrabble.tumblr.com"
 
 
-class SafelyEndangeredTumblr(GenericTumblrV1):
+class SafelyEndangeredTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Safely Endangered comics."""
 
     # Also on https://www.safelyendangered.com
@@ -4781,7 +4781,7 @@ class TheOdd1sOutTumblr(GenericTumblrV1):
     url = "https://theodd1sout.tumblr.com"
 
 
-class TheUnderfoldTumblr(GenericTumblrV1):
+class TheUnderfoldTumblr(GenericDeletedTumblrV1):
     """Class to retrieve The Underfold comics."""
 
     # Also on http://theunderfold.com
@@ -4945,7 +4945,7 @@ class ElectricBunnyComicTumblr(GenericDeletedTumblrV1):
     url = "http://electricbunnycomics.tumblr.com"
 
 
-class Hoomph(GenericTumblrV1):
+class Hoomph(GenericDeletedTumblrV1):
     """Class to retrieve Hoomph comics."""
 
     name = "hoomph"
@@ -5361,7 +5361,7 @@ class ExtraFabulousComicsTumblr(GenericTumblrV1):
     _categories = ("EFC",)
 
 
-class AlexLevesque(GenericTumblrV1):
+class AlexLevesque(GenericComicNotWorking, GenericTumblrV1):
     """Class to retrieve AlexLevesque comics."""
 
     name = "alevesque"
@@ -5399,7 +5399,7 @@ class SkeletonClaw(GenericTumblrV1):
     url = "https://skeletonclaw.com"
 
 
-class MrsFrolleinTumblr(GenericTumblrV1):
+class MrsFrolleinTumblr(GenericDeletedTumblrV1):
     """Class to retrieve Mrs Frollein comics."""
 
     # Also on http://www.webtoons.com/en/challenge/mrsfrollein/list?title_no=51710
@@ -5717,7 +5717,7 @@ class TheGentlemanArmchair(GenericTumblrV1):
     url = "https://thegentlemansarmchair.tumblr.com"
 
 
-class SpfComics(GenericTumblrV1):
+class SpfComics(GenericDeletedTumblrV1):
     """Class to retrieve SPF comics."""
 
     name = "spf"
@@ -6032,7 +6032,7 @@ class BerkeleyMewsGoComics(GenericGoComic):
     _categories = ("BERKELEY",)
 
 
-class SheldonGoComics(GenericGoComic):
+class SheldonGoComics(GenericDeletedComic, GenericGoComic):
     """Class to retrieve Sheldon comics."""
 
     # Also on http://www.sheldoncomics.com
@@ -6163,7 +6163,7 @@ class ImogenQuestGoComics(GenericGoComic):
     _categories = ("IMOGEN",)
 
 
-class PicturesInBoxesGoComics(GenericGoComic):
+class PicturesInBoxesGoComics(GenericDeletedComic, GenericGoComic):
     """Class to retrieve Pictures In Boxes comics."""
 
     # Also on http://www.picturesinboxes.com
@@ -6775,7 +6775,7 @@ class IsItCanonTapas(GenericTapasComic):
     url = "https://tapas.io/series/isitcanon"
 
 
-class ItsTheTieTapas(GenericTapasComic):
+class ItsTheTieTapas(GenericDeletedComic, GenericTapasComic):
     """Class to retrieve It's the tie comics."""
 
     # Also on http://itsthetie.com
@@ -7001,7 +7001,7 @@ class AbsurdoLapin(GenericNavigableComic):
         }
 
 
-class DogmoDog(GenericNavigableComic):
+class DogmoDog(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Dogmo Dogs comics."""
 
     name = "dogmo"
