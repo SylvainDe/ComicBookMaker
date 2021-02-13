@@ -2488,7 +2488,7 @@ class RockPaperScissors(GenericNavigableComic):
     long_name = "Rock Paper Scissors"
     url = "http://rps-comics.com"
     get_first_comic_link = get_a_navi_navifirst
-    get_navi_link = get_link_rel_next
+    get_navi_link = get_a_navi_comicnavnext_navinext
 
     @classmethod
     def get_comic_info(cls, soup, link):
