@@ -723,7 +723,7 @@ class Micael(GenericLeMondeBlog):
 
 
 class EveVelo(GenericNavigableComic):
-    """Class to retrieve  Eve Velo comics."""
+    """Class to retrieve Eve Velo comics."""
 
     name = "evevelo"
     long_name = "Eve Velo - chroniques du velotaf"
