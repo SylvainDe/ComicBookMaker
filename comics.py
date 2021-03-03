@@ -17,7 +17,7 @@ import json
 import locale
 import urllib
 
-DEFAULT_LOCALE = "en_GB.UTF-8"
+DEFAULT_LOCAL = "en_GB.UTF-8"
 # Technical switch to have a faster feedback when things go wrong.
 # This could lead to additional requests to be performed and/or
 # additional diagnosis information to be printed to the user.
@@ -7081,15 +7081,15 @@ def remove_st_nd_rd_th_from_date(string):
     )
 
 
-def string_to_date(string, date_format, locale=DEFAULT_LOCALE):
+def string_to_date(string, date_format, local=DEFAULT_LOCAL):
     """Function to convert string to date object.
     Wrapper around datetime.datetime.strptime."""
     # format described in https://docs.python.org/3.8/library/datetime.html#strftime-and-strptime-behavior
     prev_locale = locale.setlocale(locale.LC_ALL)
-    if locale != prev_locale:
-        locale.setlocale(locale.LC_ALL, locale)
+    if local != prev_locale:
+        locale.setlocale(locale.LC_ALL, local)
     ret = datetime.datetime.strptime(string, date_format).date()
-    if locale != prev_locale:
+    if local != prev_locale:
         locale.setlocale(locale.LC_ALL, prev_locale)
     return ret
 
