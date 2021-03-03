@@ -3451,7 +3451,7 @@ class WoodenPlankStudios(GenericNavigableComic):
 
     name = "woodenplank"
     long_name = "Wooden Plank Studios"
-    url = "https://www.woodenplankstudios.com/comic/"
+    url = "https://www.woodenplankstudios.com"
 
     @classmethod
     def get_first_comic_link(cls):
@@ -3465,7 +3465,7 @@ class WoodenPlankStudios(GenericNavigableComic):
     def get_navi_link(cls, last_soup, next_):
         """Get link to next or previous comic."""
         return last_soup.find(
-            "a", class_="webcomic-link webcomic1-link previous-webcomic-link previous-webcomic1-link" if next_ else "webcomic-link webcomic1-link previous-webcomic-link previous-webcomic1-link"
+            "a", class_="webcomic-link webcomic1-link next-webcomic-link next-webcomic1-link" if next_ else "webcomic-link webcomic1-link previous-webcomic-link previous-webcomic1-link"
         )
 
     @classmethod
