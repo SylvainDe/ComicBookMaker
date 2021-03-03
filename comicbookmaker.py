@@ -5,6 +5,7 @@
 import book
 import argparse
 import logging
+import random
 from comics import COMICS_DICT
 
 
@@ -83,6 +84,12 @@ def main():
         action="store_true",
         help=("process comics in reversed order"),
     )
+    parser.add_argument(
+        "--random",
+        "-R",
+        action="store_true",
+        help=("process comics in random order"),
+    )
     args = parser.parse_args()
     logger.setLevel(args.loglevel)
     # Apply default value
@@ -97,14 +104,18 @@ def main():
     for name in args.excluded:
         for klass in COMICS_DICT[name]:
             comic_classes.discard(klass)
-    comic_classes = sorted(
-        comic_classes, key=lambda c: c.name.lower(), reverse=args.reverse
-    )
+    comic_classes = list(comic_classes)
+    if args.random:
+        random.shuffle(comic_classes)
+    else:
+        comic_classes.sort(key=lambda c: c.name.lower(), reverse=args.reverse)
     logging.debug("Starting")
     for action in args.action:
         method_name = arg_to_method.get(action)
         if method_name is not None:
             for com in comic_classes:
+                if args.random:
+                    print(com.name)
                 getattr(com, method_name)()
         elif action == "book":
             book.make_book(comic_classes)
