@@ -3454,6 +3454,7 @@ class EverythingsStupid(GenericWordPressInkblot):
     name = "stupid"
     long_name = "Everything's Stupid"
     url = "http://everythingsstupid.net"
+    get_navi_link = get_a_rel_next
 
 
 class TheIsmComics(GenericDeletedComic, GenericWordPressInkblot):
