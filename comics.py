@@ -1985,7 +1985,7 @@ class Wondermark(GenericListableComic):
         }
 
 
-class WarehouseComic(GenericNavigableComic):
+class WarehouseComic(GenericDeletedComic, GenericNavigableComic):
     """Class to retrieve Warehouse Comic comics."""
 
     name = "warehouse"
