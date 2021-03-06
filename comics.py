@@ -3007,12 +3007,31 @@ class MisterAndMe(GenericNavigableComic):
         }
 
 
-class LastPlaceComics(GenericDeletedComic):
+class LastPlaceComics(GenericNavigableComic):
     """Class to retrieve Last Place Comics."""
 
     name = "lastplace"
     long_name = "Last Place Comics"
     url = "http://lastplacecomics.com"
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = "https://lastplacecomics.com/corona-face/"
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find("meta", property="og:title")["content"]
+        author = soup.find("meta", attrs={"name": "twitter:data1"})["content"]
+        date_str = soup.find("meta", property="article:published_time")["content"]
+        desc = soup.find("meta", property="og:description")["content"]
+        imgs = soup.find_all("meta", property="og:image")
+        return {
+            "img": [i["content"] for i in imgs],
+            "title": title,
+            "author": author,
+            "description": desc,
+            "date": isoformat_to_date(date_str),
+        }
 
 
 class TalesOfAbsurdity(GenericNavigableComic):
