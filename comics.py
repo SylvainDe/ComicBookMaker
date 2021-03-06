@@ -3400,7 +3400,7 @@ class Jenkins(GenericNavigableComic):
     name = "jenkins"
     long_name = "The Jenkins"
     url = "https://thejenkinscomic.wordpress.com"
-    get_navi_link = get_link_rel_next
+    get_navi_link = get_a_rel_next
     get_first_comic_link = simulate_first_link
     first_url = "https://thejenkinscomic.wordpress.com/2016/10/15/first-blog-post/"
 
