@@ -3864,6 +3864,29 @@ class MacadamValley(GenericDeletedComic, GenericNavigableComic):
         }
 
 
+class WorkChroniclesComics(GenericNavigableComic):
+    """Class to retrieve Work Chronicles Comics."""
+
+    name = 'workchronicles'
+    long_name = 'Work Chronicles'
+    url = 'https://workchronicles.com/comics/'
+    get_navi_link = get_a_rel_next
+    get_first_comic_link = simulate_first_link
+    first_url = "https://workchronicles.com/we-need-innovative-features/"
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        """Get information about a particular comics."""
+        title = soup.find("meta", property="og:title")["content"]
+        date_str = soup.find("meta", property="article:published_time")["content"]
+        imgs = soup.find_all("meta", property="og:image")
+        return {
+            "img": [i["content"] for i in imgs],
+            "date": isoformat_to_date(date_str),
+            "title": title,
+        }
+
+
 class LightRoastComics(GenericNavigableComic):
     """Class to retrieve Light Roast Comics."""
 
