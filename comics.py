@@ -7062,6 +7062,32 @@ class AbsurdoLapin(GenericNavigableComic):
         }
 
 
+class AuFondDuTrou(GenericNavigableComic):
+
+    name = "fonddutrou"
+    long_name = "Au fond du trou"
+    url = "http://aufonddutrou.fr"
+    _categories = ("FRANCAIS",)
+    get_first_comic_link = simulate_first_link
+    first_url = "http://aufonddutrou.fr/strip-1/"
+
+    @classmethod
+    def get_navi_link(cls, last_soup, next_):
+        """Get link to next or previous comic."""
+        return last_soup.find("a", class_="single-navigation previous-post" if next_ else "single-navigation next-post")
+
+    @classmethod
+    def get_comic_info(cls, soup, link):
+        date_str = soup.find("span", class_="post-date").string
+        imgs = soup.find("div", class_="post-content").find_all("img")
+        title = soup.find("h1", class_="post-title").string
+        return {
+            "date": string_to_date(date_str, "%d %B %Y", "fr_FR.utf8"),
+            "img": [convert_iri_to_plain_ascii_uri(i["src"]) for i in imgs],
+            "title": title,
+        }
+
+
 class DogmoDog(GenericComicNotWorking, GenericNavigableComic):
     """Class to retrieve Dogmo Dogs comics."""
 

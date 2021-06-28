@@ -176,6 +176,7 @@ Comics supported
  * [The World Is Flat (from Tapas.io)](https://tapas.io/series/The-World-is-Flat)
  * [The World Is Flat (from Tumblr)](https://theworldisflatcomics.com)
  * [floccinaucinihilipilification](https://floccinaucinihilipilificationa.tumblr.com)
+ * [Au fond du trou](http://aufonddutrou.fr)
  * [Cartooning For Peace](http://cartooningforpeace.blog.lemonde.fr)
  * [Fowl Language Comics (from GoComics)](http://www.gocomics.com/fowl-language)
  * [Fowl Language Comics (from Tapas.io)](https://tapas.io/series/Fowl-Language-Comics)
